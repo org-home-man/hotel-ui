@@ -2,10 +2,10 @@
   <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
     <span class="tool-bar">
       <!-- 主题切换 -->
-      <!--<theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>-->
+      <theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>
       <!-- 语言切换 -->
-      <el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor" :active-text-color="themeColor" mode="horizontal">
-        <el-menu-item index="1" v-popover:popover-lang>
+      <el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor" :active-text-color="themeColor" mode="horizontal" style="position: relative;">
+        <el-menu-item index="1" v-popover:popover-lang style="position: absolute;right:5px;">
             <!-- 语言切换 -->
             <li style="color:#fff;" class="fa fa-language fa-lg"></li>
             <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">
@@ -16,7 +16,7 @@
       </el-menu>
       <!--<lang-selector class="lang-selector"></lang-selector>-->
     </span>
-    <h2 class="title" style="padding-left:22px;" ></h2>
+    <h2 class="title" style="padding-left:22px;" >{{$t('common.title')}}</h2>
     <el-form-item prop="account">
       <el-input type="text" v-model="loginForm.account" auto-complete="off" :placeholder="$t('common.username')"></el-input>
     </el-form-item>
@@ -158,5 +158,17 @@
     .remember {
       margin: 0px 0px 35px 0px;
     }
+
+  }
+  .lang-item {
+    font-size: 16px;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+  }
+  .lang-item:hover {
+    font-size: 18px;
+    background: #b0d6ce4d;
   }
 </style>

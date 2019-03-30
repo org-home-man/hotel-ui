@@ -85,6 +85,7 @@ export default {
       .then(() => {
         sessionStorage.removeItem("user")
         this.$router.push("/login")
+        // store.state.app.menuRouteLoaded = false
         this.$api.login.logout().then((res) => {
           }).catch(function(res) {
         })
