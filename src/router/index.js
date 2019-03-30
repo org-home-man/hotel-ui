@@ -16,11 +16,15 @@ const router = new Router({
     {
       path: '/',
       name: Vue.$t('common.home'),
+      name: '首页',
       component: Home,
       children: [
         { 
           path: '', 
           name: Vue.$t('common.home'),
+        {
+          path: '',
+          name: 'serviceMng',
           component: Intro,
           meta: {
             icon: 'fa fa-home fa-lg',
