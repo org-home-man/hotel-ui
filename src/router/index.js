@@ -15,13 +15,9 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: Vue.$t('common.home'),
       name: '首页',
       component: Home,
       children: [
-        { 
-          path: '', 
-          name: Vue.$t('common.home'),
         {
           path: '',
           name: 'serviceMng',
