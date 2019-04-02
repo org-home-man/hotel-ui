@@ -9,7 +9,7 @@ import * as menu from './moudules/menu'
 import * as dict from './moudules/dict'
 import * as log from './moudules/log'
 import * as bizRoom from './moudules/bizRoom'
-import * as bizRoom from './moudules/bizHotel'
+import * as bizHotel from './moudules/bizHotel'
 
 
 // 默认全部导出
