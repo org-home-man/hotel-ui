@@ -1,16 +1,50 @@
 <template>
   <div class="container" style="width:99%;margin-top:-25px;">
 	<!--工具栏-->
-	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+	<div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
 		<el-form :inline="true" :model="filters" :size="size">
 			<el-form-item>
-				<el-input v-model="filters.label" placeholder="名称"></el-input>
+				<el-input v-model="filters.roomCode" :placeholder="$t('hotel.roomcode')"></el-input>
 			</el-form-item>
+      <el-form-item>
+        <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
+          <el-option :label="$t('hotel.roomtype.roomone')" value="01"></el-option>
+          <el-option :label="$t('hotel.roomtype.roomtwo')" value="02"></el-option>
+          <el-option :label="$t('hotel.roomtype.roomthree')" value="03"></el-option>
+          <el-option :label="$t('hotel.roomtype.roomfour')" value="04"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
+          <el-option :label="$t('hotel.roomstyle.roomvast')" value="01"></el-option>
+          <el-option :label="$t('hotel.roomstyle.roomild')" value="02"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
+          <el-option :label="$t('hotel.bedtype.bedone')" value="01"></el-option>
+          <el-option :label="$t('hotel.bedtype.bedtwo')" value="02"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
+          <el-option :label="$t('hotel.breaktype.breakno')" value="01"></el-option>
+          <el-option :label="$t('hotel.breaktype.breakha')" value="02"></el-option>
+          <el-option :label="$t('hotel.breaktype.breakal')" value="03"></el-option>
+          <el-option :label="$t('hotel.breaktype.breaksf')" value="04"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="filters.roomStock" :placeholder="$t('hotel.roomstock')"></el-input>
+      </el-form-item>
 			<el-form-item>
 				<kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary" @click="findPage(null)"/>
 			</el-form-item>
 			<el-form-item>
-				<kt-button :label="$t('action.add')" perms="info:bizRoom:add" type="primary" @click="handleAdd" />
+				<kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd" />
 			</el-form-item>
 		</el-form>
 	</div>
@@ -92,25 +126,29 @@ export default {
 		return {
 			size: 'small',
 			filters: {
-				label: ''
+        roomCode: '',
+        hotelName:'',
+        roomType:'',
+        roomStyle:'',
+        bedType:''
 			},
 			columns: [
-				{prop:"roomCode", label:"客房编号", minWidth:100},
-				{prop:"hotelCode", label:"酒店编码", minWidth:100},
-				{prop:"roomType", label:"房间类型", minWidth:100},
-				{prop:"roomStyle", label:"房间样式", minWidth:100},
-				{prop:"bedType", label:"床铺类型", minWidth:100},
-				{prop:"breakType", label:"餐食条件", minWidth:100},
-				{prop:"roomArea", label:"客房面积", minWidth:100},
+				{prop:"roomCode", label:"roomCode", minWidth:100},
+				{prop:"hotelCode", label:"hotelCode", minWidth:100},
+				{prop:"roomType", label:"roomType", minWidth:100},
+				{prop:"roomStyle", label:"roomStyle", minWidth:100},
+				{prop:"bedType", label:"bedType", minWidth:100},
+				{prop:"breakType", label:"breakType", minWidth:100},
+				{prop:"roomArea", label:"roomArea", minWidth:100},
 				{prop:"introC", label:"中文文字介绍", minWidth:100},
 				{prop:"introE", label:"英文文字介绍", minWidth:100},
-				{prop:"photo", label:"宣传照片", minWidth:100},
-				{prop:"roomStock", label:"默认库存数", minWidth:100},
-				{prop:"recommended", label:"是否本期推荐", minWidth:100},
-				{prop:"creatBy", label:"创建人员", minWidth:100},
-				{prop:"creatTime", label:"创建时间", minWidth:100},
-				{prop:"lastUpdateBy", label:"更新时间", minWidth:100},
-				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
+				{prop:"photo", label:"photo", minWidth:100},
+				{prop:"roomStock", label:"roomStock", minWidth:100},
+				{prop:"recommended", label:"recommended", minWidth:100},
+				// {prop:"creatBy", label:"创建人员", minWidth:100},
+				// {prop:"creatTime", label:"创建时间", minWidth:100},
+				// {prop:"lastUpdateBy", label:"更新时间", minWidth:100},
+				// {prop:"lastUpdateTime", label:"更新时间", minWidth:100},
 			],
 			pageRequest: { pageNum: 1, pageSize: 8 },
 			pageResult: {},
@@ -119,7 +157,7 @@ export default {
 			editDialogVisible: false, // 新增编辑界面是否显示
 			editLoading: false,
 			dataFormRules: {
-				label: [
+        roomCode: [
 					{ required: true, message: '请输入名称', trigger: 'blur' }
 				]
 			},
@@ -150,7 +188,7 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {label: {name:'label', value:this.filters.label}}
+			this.pageRequest.columnFilters = {roomCode: {name:'roomCode', value:this.filters.roomCode}}
 			this.$api.bizRoom.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res.data
 			}).then(data!=null?data.callback:'')
