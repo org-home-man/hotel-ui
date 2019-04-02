@@ -9,7 +9,7 @@ import * as menu from './moudules/menu'
 import * as dict from './moudules/dict'
 import * as log from './moudules/log'
 import * as bizRoom from './moudules/bizRoom'
-import * as bizHotel from './moudules/bizHotel'
+import * as bizHotl from './moudules/bizHotl'
 
 
 // 默认全部导出
@@ -22,5 +22,5 @@ export default {
     dict,
     log,
     bizRoom,
-    bizHotel
+    bizHotl
 }
