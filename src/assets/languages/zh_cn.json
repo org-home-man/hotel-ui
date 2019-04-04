@@ -125,9 +125,23 @@
       "breakal": "含早餐和午餐",
       "breaksf": "可自行烹饪"
     },
+    "hotelType": {
+      "hotelType": "酒店类型",
+      "hotelChis": "中式",
+      "hotelJpa": "日式",
+      "hotelAmra": "美式"
+    },
+    "hotelLevel": {
+      "hotelLevel": "酒店星级",
+      "hotelLevel3": "3星级",
+      "hotelLevel4": "4星级",
+      "hotelLevel5": "5星级"
+    },
     "roomstock": "库存数",
     "roomcode": "酒店编号",
-    "hotelname": "酒店名称"
+    "hotelname": "酒店名称",
+    "cityCode" : "区市町村",
+    "provinceCode" : "都道府县"
   }
 
 }
