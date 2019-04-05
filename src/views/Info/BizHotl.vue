@@ -1,11 +1,40 @@
 <template>
   <div class="container" style="width:99%;margin-top:-25px;">
 	<!--工具栏-->
-	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+	<div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
 		<el-form :inline="true" :model="filters" :size="size">
-			<el-form-item>
-				<el-input v-model="filters.label" placeholder="名称"></el-input>
-			</el-form-item>
+
+      <el-form-item>
+        <el-input v-model="filters.roomCode" :placeholder="$t('hotel.roomcode')"></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-input v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode')"></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-input v-model="filters.cityCode" :placeholder="$t('hotel.cityCode')"></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-input v-model="filters.hotelname" :placeholder="$t('hotel.hotelname')"></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
+          <el-option :label="$t('hotel.hotelType.hotelChis')" value="01"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelJpa')" value="02"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelAmra')" value="03"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel3')" value="03"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel4')" value="04"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel5')" value="05"></el-option>
+        </el-select>
+      </el-form-item>
+
 			<el-form-item>
 				<kt-button :label="$t('action.search')" perms="sys:bizHotl:view" type="primary" @click="findPage(null)"/>
 			</el-form-item>
@@ -27,40 +56,41 @@
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
-			<el-form-item label="酒店编号" prop="hotelCode"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="酒店编号" prop="hotelCode" >
 				<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="国家编码" prop="countryCode"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="国家编码" prop="countryCode" >
 				<el-input v-model="dataForm.countryCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="都道府县" prop="provinceCode"  v-if="dataForm.isPrimaryKey">
+
+			<el-form-item label="都道府县" prop="provinceCode" >
 				<el-input v-model="dataForm.provinceCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="区市町村" prop="cityCode"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="区市町村" prop="cityCode" >
 				<el-input v-model="dataForm.cityCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店类型" prop="hotelType"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="酒店类型" prop="hotelType"  >
 				<el-input v-model="dataForm.hotelType" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店星级" prop="hotelLevel"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="酒店星级" prop="hotelLevel">
 				<el-input v-model="dataForm.hotelLevel" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店中文名称" prop="hotelCname"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="酒店中文名称" prop="hotelCname">
 				<el-input v-model="dataForm.hotelCname" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店英文名称" prop="hotelEname"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="酒店英文名称" prop="hotelEname">
 				<el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建人员" prop="creatCy"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="创建人员" prop="creatCy">
 				<el-input v-model="dataForm.creatCy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建时间" prop="creatTime"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="创建时间" prop="creatTime">
 				<el-input v-model="dataForm.creatTime" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新人员" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="更新人员" prop="lastUpdateBy">
 				<el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新时间" prop="lastUpdateTime"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="更新时间" prop="lastUpdateTime">
 				<el-input v-model="dataForm.lastUpdateTime" auto-complete="off"></el-input>
 			</el-form-item>
 		</el-form>
