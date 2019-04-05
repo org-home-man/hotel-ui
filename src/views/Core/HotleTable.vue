@@ -117,7 +117,7 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
-			this.delete(row.id)
+			this.delete(row.hotelCode)
 		},
 		// 批量删除
 		handleBatchDelete: function () {
