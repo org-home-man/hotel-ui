@@ -11,30 +11,23 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
-          <el-option :label="$t('hotel.roomtype.roomone')" value="01"></el-option>
-          <el-option :label="$t('hotel.roomtype.roomtwo')" value="02"></el-option>
-          <el-option :label="$t('hotel.roomtype.roomthree')" value="03"></el-option>
-          <el-option :label="$t('hotel.roomtype.roomfour')" value="04"></el-option>
+          <el-option v-for="rt in paraConfig.roomtype" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
-          <el-option :label="$t('hotel.roomstyle.roomvast')" value="01"></el-option>
-          <el-option :label="$t('hotel.roomstyle.roomild')" value="02"></el-option>
+          <el-option v-for="rs in paraConfig.roomstyle" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
-          <el-option :label="$t('hotel.bedtype.bedone')" value="01"></el-option>
-          <el-option :label="$t('hotel.bedtype.bedtwo')" value="02"></el-option>
+          <el-option v-for="bt in paraConfig.bedtype" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
-          <el-option :label="$t('hotel.breaktype.breakno')" value="01"></el-option>
-          <el-option :label="$t('hotel.breaktype.breakha')" value="02"></el-option>
-          <el-option :label="$t('hotel.breaktype.breakal')" value="03"></el-option>
-          <el-option :label="$t('hotel.breaktype.breaksf')" value="04"></el-option>
+          <el-option v-for="bk in paraConfig.breaktype" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -49,19 +42,24 @@
 		</el-form>
 	</div>
 	<!--表格内容栏-->
-	<kt-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
+	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
 		:data="pageResult" :columns="columns" 
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-	</kt-table>
+	</room-table>
 	<!--新增编辑界面-->
-	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
+	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true">
 			<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店编码" prop="hotelCode"  >
-				<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
-			</el-form-item>
+
+      <el-form-item label="酒店名称" prop="hotelCode" auto-complete="off" >
+        <el-select v-model="dataForm.hotelCode" >
+          <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>
+        </el-select>
+      </el-form-item>
+
+
 			<el-form-item label="房间类型" prop="roomType" >
 				<el-input v-model="dataForm.roomType" auto-complete="off"></el-input>
 			</el-form-item>
@@ -114,12 +112,12 @@
 </template>
 
 <script>
-import KtTable from "@/views/Core/KtTable"
+import RoomTable from "@/views/Core/RoomTable"
 import KtButton from "@/views/Core/KtButton"
 import { format } from "@/utils/datetime"
 export default {
 	components:{
-			KtTable,
+      RoomTable,
 			KtButton
 	},
 	data() {
@@ -140,8 +138,8 @@ export default {
 				{prop:"bedType", label:"bedType", minWidth:100},
 				{prop:"breakType", label:"breakType", minWidth:100},
 				{prop:"roomArea", label:"roomArea", minWidth:100},
-				{prop:"introC", label:"中文文字介绍", minWidth:100},
-				{prop:"introE", label:"英文文字介绍", minWidth:100},
+				// {prop:"introC", label:"中文文字介绍", minWidth:100},
+				// {prop:"introE", label:"英文文字介绍", minWidth:100},
 				{prop:"photo", label:"photo", minWidth:100},
 				{prop:"roomStock", label:"roomStock", minWidth:100},
 				{prop:"recommended", label:"recommended", minWidth:100},
@@ -179,7 +177,13 @@ export default {
 				creatTime: null,
 				lastUpdateBy: null,
 				lastUpdateTime: null,
-			}
+			},
+      hotelNames:[],
+      paraConfig:[],
+      sysPara:{},
+      bizHotl:[],
+      language:{}
+
 		}
 	},
 	methods: {
@@ -195,6 +199,8 @@ export default {
 		},
 		// 批量删除
 		handleDelete: function (data) {
+		  alert(data);
+		  console.log("data",data);
 			this.$api.bizRoom.batchDelete(data.params).then(data!=null?data.callback:'')
 		},
 		// 显示新增界面
@@ -222,6 +228,8 @@ export default {
 		},
 		// 显示编辑界面
 		handleEdit: function (params) {
+		  alert(params);
+		  console.log("param",params);
 			this.editDialogVisible = true
 			this.operation = false
 			this.dataForm = Object.assign({}, params.row)
@@ -249,11 +257,32 @@ export default {
 			})
 		},
 		// 时间格式化
-      	dateFormat: function (row, column, cellValue, index){
-          	return format(row[column.property])
-      	}
+  dateFormat: function (row, column, cellValue, index){
+    return format(row[column.property])
+  },
+    findHotlnmSelect : function() {
+		  this.bizHotl={};
+		  let params = Object.assign({}, this.bizHotl);
+      this.$api.bizHotl.findAllData(params).then((res) => {
+        this.hotelNames = res.data
+      })
+    },
+    findDataSelect : function () {
+		  this.sysPara={paraSubCode1:'bizroom'}
+      let params = Object.assign({}, this.sysPara);
+      this.$api.sysParaConfig.findKeyValue(params).then((res) => {
+        this.paraConfig = res.data
+        console.log(this.paraConfig);
+      })
+    },
+    localLanguageLoad:function () {
+      this.language={lge:this.$i18n.locale}
+    }
 	},
 	mounted() {
+    this.findDataSelect()
+    this.findHotlnmSelect()
+    this.localLanguageLoad()
 	}
 }
 </script>
