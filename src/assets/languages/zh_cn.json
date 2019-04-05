@@ -73,6 +73,7 @@
     "sysMonitor": "系统监控",
     "dictionariesMng": "字典管理",
     "configMng":"配置管理",
+    "infoMng": "信息维护",
     "hotelMng":"酒店信息维护",
     "guestMng":"客房信息维护",
     "quotMng":"牌价信息维护",
@@ -87,6 +88,46 @@
     "orderDetailRep":"订单明细报表",
     "houseStock":"未预定客房清单报表",
     "monthRep":"订单汇总月报表"
+  },
+  "table": {
+    "id": "编号",
+    "username": "用户名",
+    "password": "密码",
+    "org": "机构",
+    "role": "角色",
+    "mail": "邮箱",
+    "phone": "手机",
+    "state": "状态"
+
+  },
+  "hotel": {
+    "roomtype": {
+      "roomtype": "房间类型",
+      "roomone": "单人间",
+      "roomtwo": "双人间",
+      "roomthree": "三人间",
+      "roomfour": "家庭房（四人间）"
+    },
+    "roomstyle": {
+      "roomstyle": "房间样式",
+      "roomvast": "样式",
+      "roomild": "和式"
+    },
+    "bedtype": {
+      "bedtype": "床铺类型",
+      "bedone": "单人床",
+      "bedtwo": "双人床"
+    },
+    "breaktype": {
+      "breaktype": "餐食条件",
+      "breakno": "不含早餐",
+      "breakha": "有早餐",
+      "breakal": "含早餐和午餐",
+      "breaksf": "可自行烹饪"
+    },
+    "roomstock": "库存数",
+    "roomcode": "酒店编号",
+    "hotelname": "酒店名称"
   }
 
 }
