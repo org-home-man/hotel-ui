@@ -36,3 +36,11 @@ export const findPermissions = (params) => {
         params
     })
 }
+// 所有数据
+export const findAllData = (data) => {
+  return axios({
+    url: '/bizHotl/findAllData',
+    method: 'post',
+    data
+  })
+}
