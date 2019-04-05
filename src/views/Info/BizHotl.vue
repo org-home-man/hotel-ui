@@ -43,22 +43,21 @@
 			</el-form-item>
 		</el-form>
 	</div>
-	<!--表格内容栏
+	<!--表格内容栏-->
 	<kt-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
-		:data="pageResult" :columns="columns" 
+		:data="pageResult" :columns="columns"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
 	</kt-table>
-    -->
-    <kt-table permsEdit="sys:user:edit" permsDelete="sys:user:delete"
-              :data="pageResult" :columns="columns"
-              @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-    </kt-table>
+
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
-			<el-form-item label="酒店编号" prop="hotelCode" >
-				<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
-			</el-form-item>
+			<!--<el-form-item label="酒店编号" prop="hotelCode"   v-if="dataForm.isPrimaryKey">-->
+				<!--<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>-->
+			<!--</el-form-item>-->
+      <el-form-item label="酒店编号" prop="hotelCode"  v-if="dataForm.isPrimaryKey">
+      <el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
+      </el-form-item>
 			<el-form-item label="国家编码" prop="countryCode" >
 				<el-input v-model="dataForm.countryCode" auto-complete="off"></el-input>
 			</el-form-item>
@@ -81,16 +80,16 @@
 			<el-form-item label="酒店英文名称" prop="hotelEname">
 				<el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建人员" prop="creatCy">
+			<el-form-item label="创建人员" prop="creatCy" v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatCy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建时间" prop="creatTime">
+			<el-form-item label="创建时间" prop="creatTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatTime" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新人员" prop="lastUpdateBy">
+			<el-form-item label="更新人员" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新时间" prop="lastUpdateTime">
+			<el-form-item label="更新时间" prop="lastUpdateTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateTime" auto-complete="off"></el-input>
 			</el-form-item>
 		</el-form>
@@ -103,7 +102,7 @@
 </template>
 
 <script>
-import KtTable from "@/views/Core/KtTable"
+import KtTable from "@/views/Core/HotleTable"
 import KtButton from "@/views/Core/KtButton"
 import { format } from "@/utils/datetime"
 export default {
