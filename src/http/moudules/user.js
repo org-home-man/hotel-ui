@@ -1,6 +1,6 @@
 import axios from '../axios'
 
-/* 
+/*
  * 用户管理模块
  */
 
@@ -35,4 +35,22 @@ export const findPermissions = (params) => {
         method: 'get',
         params
     })
+}
+
+//根据用户名查找用户
+export const findByName = (params) =>{
+  return axios({
+    url: '/user/findByName',
+    method: 'get',
+    params
+  })
+}
+
+// 图片上传
+export const upload = (data) => {
+  return axios({
+    url: '/user/upload',
+    method: 'post',
+    data
+  })
 }
