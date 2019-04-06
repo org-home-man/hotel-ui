@@ -121,7 +121,7 @@ export default {
 		},
 		// 批量删除
 		handleBatchDelete: function () {
-			let ids = this.selections.map(item => item.id).toString()
+			let ids = this.selections.map(item => item.hotelCode).toString()
 			this.delete(ids)
 		},
 		// 删除操作
@@ -134,7 +134,7 @@ export default {
 				let params = []
 				let idArray = (ids+'').split(',')
 				for(var i=0; i<idArray.length; i++) {
-					params.push({'id':idArray[i]})
+					params.push({'hotelCode':idArray[i]})
         }
         this.loading = true
         let callback = res => {
