@@ -22,16 +22,18 @@
 
       <el-form-item>
         <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
-          <el-option :label="$t('hotel.hotelType.hotelChis')" value="01"></el-option>
-          <el-option :label="$t('hotel.hotelType.hotelJpa')" value="02"></el-option>
-          <el-option :label="$t('hotel.hotelType.hotelAmra')" value="03"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelTp1')" value="001"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelTp2')" value="002"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelTp3')" value="003"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel3')" value="03"></el-option>
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel4')" value="04"></el-option>
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel5')" value="05"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel1')" value="001"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel2')" value="002"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel3')" value="003"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel4')" value="004"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel5')" value="005"></el-option>
         </el-select>
       </el-form-item>
 
@@ -58,9 +60,12 @@
       <el-form-item label="酒店编号" prop="hotelCode"  v-if="dataForm.isPrimaryKey">
       <el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
       </el-form-item>
-			<el-form-item label="国家编码" prop="countryCode" >
-				<el-input v-model="dataForm.countryCode" auto-complete="off"></el-input>
-			</el-form-item>
+			<el-form-item label="国家编码" prop="countryCode" auto-complete="off" >
+        <el-select v-model="dataForm.countryCode">
+          <el-option :label="$t('hotel.countryCode.countryCodeValue')" value="JPN"></el-option>
+          <!--<el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>-->
+        </el-select>
+      </el-form-item>
 
 			<el-form-item label="都道府县" prop="provinceCode" >
 				<el-input v-model="dataForm.provinceCode" auto-complete="off"></el-input>
@@ -69,10 +74,22 @@
 				<el-input v-model="dataForm.cityCode" auto-complete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="酒店类型" prop="hotelType"  >
-				<el-input v-model="dataForm.hotelType" auto-complete="off"></el-input>
+        <!--<el-input v-model="dataForm.hotelType" auto-complete="off"></el-input>-->
+        <el-select v-model="dataForm.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
+          <el-option :label="$t('hotel.hotelType.hotelTp1')" value="001"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelTp2')" value="002"></el-option>
+          <el-option :label="$t('hotel.hotelType.hotelTp3')" value="003"></el-option>
+        </el-select>
 			</el-form-item>
 			<el-form-item label="酒店星级" prop="hotelLevel">
-				<el-input v-model="dataForm.hotelLevel" auto-complete="off"></el-input>
+				<!--<el-input v-model="dataForm.hotelLevel" auto-complete="off"></el-input>-->
+        <el-select v-model="dataForm.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel1')" value="001"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel2')" value="002"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel3')" value="003"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel4')" value="004"></el-option>
+          <el-option :label="$t('hotel.hotelLevel.hotelLevel5')" value="005"></el-option>
+        </el-select>
 			</el-form-item>
 			<el-form-item label="酒店中文名称" prop="hotelCname">
 				<el-input v-model="dataForm.hotelCname" auto-complete="off"></el-input>
@@ -80,6 +97,21 @@
 			<el-form-item label="酒店英文名称" prop="hotelEname">
 				<el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
 			</el-form-item>
+      <el-form-item label="酒店地址" prop="hotelAddr" >
+        <el-input v-model="dataForm.hotelAddr" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="酒店电话" prop="hotelPhone" >
+        <el-input v-model="dataForm.hotelPhone" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="酒店传真" prop="hotelFax">
+        <el-input v-model="dataForm.hotelFax" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="酒店网址" prop="hotelWeb">
+        <el-input v-model="dataForm.hotelWeb" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="更新人员" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
+        <el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
+      </el-form-item>
 			<el-form-item label="创建人员" prop="creatCy" v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatCy" auto-complete="off"></el-input>
 			</el-form-item>
@@ -125,7 +157,11 @@ export default {
 				{prop:"hotelLevel", label:"酒店星级", minWidth:100},
 				{prop:"hotelCname", label:"酒店中文名称", minWidth:100},
 				{prop:"hotelEname", label:"酒店英文名称", minWidth:100},
-				{prop:"creatCy", label:"创建人员", minWidth:100},
+        {prop:"hotelAddr", label:"酒店地址", minWidth:100},
+        {prop:"hotelPhone", label:"酒店电话", minWidth:100},
+        {prop:"hotelFax", label:"酒店传真", minWidth:100},
+        {prop:"hotelWeb", label:"酒店网址", minWidth:100},
+        {prop:"creatCy", label:"创建人员", minWidth:100},
 				{prop:"creatTime", label:"创建时间", minWidth:100},
 				{prop:"lastUpdateBy", label:"更新人员", minWidth:100},
 				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
@@ -151,6 +187,10 @@ export default {
 				hotelLevel: null,
 				hotelCname: null,
 				hotelEname: null,
+        hotelAddr: null,
+        hotelPhone: null,
+        hotelFax: null,
+        hotelWeb: null,
 				creatCy: null,
 				creatTime: null,
 				lastUpdateBy: null,
@@ -186,6 +226,10 @@ export default {
 				hotelLevel: null,
 				hotelCname: null,
 				hotelEname: null,
+        hotelAddr: null,
+        hotelPhone: null,
+        hotelFax: null,
+        hotelWeb: null,
 				creatCy: null,
 				creatTime: null,
 				lastUpdateBy: null,
