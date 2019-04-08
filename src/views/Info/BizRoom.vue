@@ -43,9 +43,10 @@
 	</div>
 	<!--表格内容栏-->
 	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
-		:data="pageResult" :columns="columns" 
+		:data="pageResult"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
 	</room-table>
+
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true" label-position="left">
@@ -100,12 +101,12 @@
         </el-select>
 			</el-form-item>
 
-      <el-form-item>
-        <el-checkbox v-model="checked3" label="备选项1" border></el-checkbox>
-      </el-form-item>
-      <el-form-item>
-        <el-checkbox v-model="checked3" label="备选项1" border></el-checkbox>
-      </el-form-item>
+      <!--<el-form-item>-->
+        <!--<el-checkbox v-model="" label="备选项1" border></el-checkbox>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item>-->
+        <!--<el-checkbox v-model="" label="备选项1" border></el-checkbox>-->
+      <!--</el-form-item>-->
 
       <el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">
         <el-input v-model="dataForm.photo" ></el-input>
@@ -142,6 +143,7 @@ export default {
 	},
 	data() {
 		return {
+
 			size: 'small',
 			filters: {
         roomCode: '',
@@ -151,22 +153,7 @@ export default {
         bedType:''
 			},
 			columns: [
-				{prop:"roomCode", label:"roomCode", minWidth:100},
-				{prop:"hotelCode", label:"hotelCode", minWidth:100},
-				{prop:"roomType", label:"roomType", minWidth:100},
-				{prop:"roomStyle", label:"roomStyle", minWidth:100},
-				{prop:"bedType", label:"bedType", minWidth:100},
-				{prop:"breakType", label:"breakType", minWidth:100},
-				{prop:"roomArea", label:"roomArea", minWidth:100},
-				// {prop:"introC", label:"中文文字介绍", minWidth:100},
-				// {prop:"introE", label:"英文文字介绍", minWidth:100},
-				{prop:"photo", label:"photo", minWidth:100},
-				{prop:"roomStock", label:"roomStock", minWidth:100},
-				{prop:"recommended", label:"recommended", minWidth:100},
-				// {prop:"creatBy", label:"创建人员", minWidth:100},
-				// {prop:"creatTime", label:"创建时间", minWidth:100},
-				// {prop:"lastUpdateBy", label:"更新时间", minWidth:100},
-				// {prop:"lastUpdateTime", label:"更新时间", minWidth:100},
+
 			],
 			pageRequest: { pageNum: 1, pageSize: 8 },
 			pageResult: {},
