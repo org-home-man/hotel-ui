@@ -5,10 +5,40 @@
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
-      <el-table-column v-for="column in columns" header-align="center" align="center"
-        :prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"
-        :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
-        :sortable="column.sortable==null?true:column.sortable">
+      <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
+        <!--:prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
+        <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
+        <!--:sortable="column.sortable==null?true:column.sortable">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      </el-table-column>
+      <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode')">
+      </el-table-column>
+      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode')">
+      </el-table-column>
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode')">
+      </el-table-column>
+      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType')">
+      </el-table-column>
+      <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
+      </el-table-column>
+      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+      </el-table-column>
+      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')">
+      </el-table-column>
+      <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')">
+      </el-table-column>
+      <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')">
+      </el-table-column>
+      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')">
+      </el-table-column>
+      <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
+      </el-table-column>
+      <el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">
+      </el-table-column>
+      <el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">
+      </el-table-column>
+      <el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
