@@ -5,10 +5,29 @@
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
-      <el-table-column v-for="column in columns" header-align="center" align="center"
-        :prop="column.prop" :label="$t('table.'+column.label)" :width="column.width" :min-width="column.minWidth"
-        :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
-        :sortable="column.sortable==null?true:column.sortable">
+      <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
+        <!--:prop="column.prop" :label="$t('table.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
+        <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
+        <!--:sortable="column.sortable==null?true:column.sortable">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      </el-table-column>
+      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+      </el-table-column>
+      <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode')">
+      </el-table-column>
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode')">
+      </el-table-column>
+      <el-table-column prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
+        <template slot-scope="scope">
+          <el-tag>{{$t('hotel.'+scope.row.roomType)}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="bedType" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
+      </el-table-column>
+      <el-table-column prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
+      </el-table-column>
+      <el-table-column prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
@@ -85,7 +104,8 @@ export default {
         pageSize: 10
       },
       loading: false,  // 加载标识
-      selections: []  // 列表选中列
+      selections: [],  // 列表选中列
+      language:{}
     }
   },
   methods: {
@@ -150,10 +170,14 @@ export default {
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
 			})
-		}
+		},
+    localLanguageLoad:function () {
+      this.language={lge:this.$i18n.locale}
+    }
   },
   mounted() {
     this.refreshPageRequest(1)
+    this.localLanguageLoad()
   }
 }
 </script>

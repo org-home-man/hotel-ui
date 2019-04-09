@@ -140,7 +140,8 @@
       "hotelLevel5": "5星级"
     },
     "roomstock": "库存数",
-    "roomcode": "酒店编号",
+    "hotelCode": "酒店编号",
+    "roomcode": "客房编号",
     "hotelname": "酒店名称",
     "cityCode" : "区市町村",
     "provinceCode" : "都道府县",
@@ -148,6 +149,13 @@
         "countryCode": "国家编码",
         "countryCodeValue" :"JNP"
     }
+    "provinceCode" : "都道府县",
+    "roomarea": "客房面积",
+    "introc": "中文介绍",
+    "introe": "英文介绍",
+    "roomstock": "默认库存数",
+    "recommended": "是否本期推荐",
+    "photo": "宣传图片"
   }
 
 }

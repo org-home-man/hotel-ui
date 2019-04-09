@@ -11,23 +11,23 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
-          <el-option v-for="rt in paraConfig.roomtype" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+          <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
-          <el-option v-for="rs in paraConfig.roomstyle" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+          <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
 
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
-          <el-option v-for="bt in paraConfig.bedtype" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
+          <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
-          <el-option v-for="bk in paraConfig.breaktype" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+          <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -43,53 +43,74 @@
 	</div>
 	<!--表格内容栏-->
 	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
-		:data="pageResult" :columns="columns" 
+		:data="pageResult"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
 	</room-table>
+
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true">
-			<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">
-				<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>
-			</el-form-item>
+		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true" label-position="left">
+			<!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
+				<!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
+			<!--</el-form-item>-->
 
-      <el-form-item label="酒店名称" prop="hotelCode" auto-complete="off" >
+      <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode"  auto-complete="off" >
         <el-select v-model="dataForm.hotelCode" >
           <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>
         </el-select>
       </el-form-item>
 
+			<el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off" >
+        <el-select v-model="dataForm.roomType" >
+          <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
+			</el-form-item>
 
-			<el-form-item label="房间类型" prop="roomType" >
-				<el-input v-model="dataForm.roomType" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off" >
+        <el-select v-model="dataForm.roomStyle" >
+          <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+        </el-select>
 			</el-form-item>
-			<el-form-item label="房间样式" prop="roomStyle"  >
-				<el-input v-model="dataForm.roomStyle" auto-complete="off"></el-input>
+
+			<el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
+        <el-select v-model="dataForm.bedType" >
+          <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
+        </el-select>
 			</el-form-item>
-			<el-form-item label="床铺类型" prop="bedType" >
-				<el-input v-model="dataForm.bedType" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
+        <el-select v-model="dataForm.breakType" >
+          <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+        </el-select>
 			</el-form-item>
-			<el-form-item label="餐食条件" prop="breakType" >
-				<el-input v-model="dataForm.breakType" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.roomarea')" prop="roomArea" auto-complete="off">
+				<el-input v-model="dataForm.roomArea" ></el-input>
 			</el-form-item>
-			<el-form-item label="客房面积" prop="roomArea" >
-				<el-input v-model="dataForm.roomArea" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.introc')" prop="introC" auto-complete="off">
+				<el-input v-model="dataForm.introC" ></el-input>
 			</el-form-item>
-			<el-form-item label="中文文字介绍" prop="introC" >
-				<el-input v-model="dataForm.introC" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.introe')" prop="introE"  auto-complete="off">
+				<el-input v-model="dataForm.introE"></el-input>
 			</el-form-item>
-			<el-form-item label="英文文字介绍" prop="introE" >
-				<el-input v-model="dataForm.introE" auto-complete="off"></el-input>
+
+			<el-form-item :label="$t('hotel.roomstock')" prop="roomStock"  auto-complete="off">
+				<el-input v-model="dataForm.roomStock" ></el-input>
 			</el-form-item>
-			<el-form-item label="宣传照片" prop="photo" >
-				<el-input v-model="dataForm.photo" auto-complete="off"></el-input>
+			<el-form-item :label="$t('hotel.recommended')" prop="recommended" auto-complete="off" >
+        <el-select v-model="dataForm.recommended" >
+          <el-option v-for="rm in paraConfig.breaktype" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>
+        </el-select>
 			</el-form-item>
-			<el-form-item label="默认库存数" prop="roomStock"  >
-				<el-input v-model="dataForm.roomStock" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="是否本期推荐" prop="recommended"  >
-				<el-input v-model="dataForm.recommended" auto-complete="off"></el-input>
-			</el-form-item>
+
+      <!--<el-form-item>-->
+        <!--<el-checkbox v-model="" label="备选项1" border></el-checkbox>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item>-->
+        <!--<el-checkbox v-model="" label="备选项1" border></el-checkbox>-->
+      <!--</el-form-item>-->
+
+      <el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">
+        <el-input v-model="dataForm.photo" ></el-input>
+      </el-form-item>
 			<!--<el-form-item label="创建人员" prop="creatBy"  v-if="dataForm.isPrimaryKey">-->
 				<!--<el-input v-model="dataForm.creatBy" auto-complete="off"></el-input>-->
 			<!--</el-form-item>-->
@@ -122,6 +143,7 @@ export default {
 	},
 	data() {
 		return {
+
 			size: 'small',
 			filters: {
         roomCode: '',
@@ -131,22 +153,7 @@ export default {
         bedType:''
 			},
 			columns: [
-				{prop:"roomCode", label:"roomCode", minWidth:100},
-				{prop:"hotelCode", label:"hotelCode", minWidth:100},
-				{prop:"roomType", label:"roomType", minWidth:100},
-				{prop:"roomStyle", label:"roomStyle", minWidth:100},
-				{prop:"bedType", label:"bedType", minWidth:100},
-				{prop:"breakType", label:"breakType", minWidth:100},
-				{prop:"roomArea", label:"roomArea", minWidth:100},
-				// {prop:"introC", label:"中文文字介绍", minWidth:100},
-				// {prop:"introE", label:"英文文字介绍", minWidth:100},
-				{prop:"photo", label:"photo", minWidth:100},
-				{prop:"roomStock", label:"roomStock", minWidth:100},
-				{prop:"recommended", label:"recommended", minWidth:100},
-				// {prop:"creatBy", label:"创建人员", minWidth:100},
-				// {prop:"creatTime", label:"创建时间", minWidth:100},
-				// {prop:"lastUpdateBy", label:"更新时间", minWidth:100},
-				// {prop:"lastUpdateTime", label:"更新时间", minWidth:100},
+
 			],
 			pageRequest: { pageNum: 1, pageSize: 8 },
 			pageResult: {},
