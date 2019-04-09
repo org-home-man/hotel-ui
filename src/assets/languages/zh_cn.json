@@ -148,7 +148,7 @@
     "countryCode": {
         "countryCode": "国家编码",
         "countryCodeValue" :"JNP"
-    }
+    },
     "provinceCode" : "都道府县",
     "roomarea": "客房面积",
     "introc": "中文介绍",
