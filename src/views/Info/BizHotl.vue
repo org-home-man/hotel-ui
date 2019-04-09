@@ -46,10 +46,10 @@
 		</el-form>
 	</div>
 	<!--表格内容栏-->
-	<kt-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
-		:data="pageResult" :columns="columns"
+	<hotel-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
+		:data="pageResult"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-	</kt-table>
+	</hotel-table>
 
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
@@ -139,7 +139,7 @@ import KtButton from "@/views/Core/KtButton"
 import { format } from "@/utils/datetime"
 export default {
 	components:{
-			KtTable,
+      HotleTable,
 			KtButton
 	},
 	data() {
@@ -149,22 +149,22 @@ export default {
 				label: ''
 			},
 			columns: [
-				{prop:"hotelCode", label:"酒店编号", minWidth:100},
-				{prop:"countryCode", label:"国家编码", minWidth:100},
-				{prop:"provinceCode", label:"都道府县", minWidth:100},
-				{prop:"cityCode", label:"区市町村", minWidth:100},
-				{prop:"hotelType", label:"酒店类型", minWidth:100},
-				{prop:"hotelLevel", label:"酒店星级", minWidth:100},
-				{prop:"hotelCname", label:"酒店中文名称", minWidth:100},
-				{prop:"hotelEname", label:"酒店英文名称", minWidth:100},
-        {prop:"hotelAddr", label:"酒店地址", minWidth:100},
-        {prop:"hotelPhone", label:"酒店电话", minWidth:100},
-        {prop:"hotelFax", label:"酒店传真", minWidth:100},
-        {prop:"hotelWeb", label:"酒店网址", minWidth:100},
-        {prop:"creatCy", label:"创建人员", minWidth:100},
-				{prop:"creatTime", label:"创建时间", minWidth:100},
-				{prop:"lastUpdateBy", label:"更新人员", minWidth:100},
-				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
+				// {prop:"hotelCode", label:"酒店编号", minWidth:100},
+				// {prop:"countryCode", label:"国家编码", minWidth:100},
+				// {prop:"provinceCode", label:"都道府县", minWidth:100},
+				// {prop:"cityCode", label:"区市町村", minWidth:100},
+				// {prop:"hotelType", label:"酒店类型", minWidth:100},
+				// {prop:"hotelLevel", label:"酒店星级", minWidth:100},
+				// {prop:"hotelCname", label:"酒店中文名称", minWidth:100},
+				// {prop:"hotelEname", label:"酒店英文名称", minWidth:100},
+        // {prop:"hotelAddr", label:"酒店地址", minWidth:100},
+        // {prop:"hotelPhone", label:"酒店电话", minWidth:100},
+        // {prop:"hotelFax", label:"酒店传真", minWidth:100},
+        // {prop:"hotelWeb", label:"酒店网址", minWidth:100},
+        // {prop:"creatCy", label:"创建人员", minWidth:100},
+				// {prop:"creatTime", label:"创建时间", minWidth:100},
+				// {prop:"lastUpdateBy", label:"更新人员", minWidth:100},
+				// {prop:"lastUpdateTime", label:"更新时间", minWidth:100},
 			],
 			pageRequest: { pageNum: 1, pageSize: 8 },
 			pageResult: {},
