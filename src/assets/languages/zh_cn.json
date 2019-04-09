@@ -127,12 +127,14 @@
     },
     "hotelType": {
       "hotelType": "酒店类型",
-      "hotelChis": "中式",
-      "hotelJpa": "日式",
-      "hotelAmra": "美式"
+      "hotelTp1": "豪华酒店",
+      "hotelTp2": "商务酒店",
+      "hotelTp3": "民宿/旅馆"
     },
     "hotelLevel": {
       "hotelLevel": "酒店星级",
+      "hotelLevel1": "1星级",
+      "hotelLevel2": "2星级",
       "hotelLevel3": "3星级",
       "hotelLevel4": "4星级",
       "hotelLevel5": "5星级"
@@ -141,7 +143,11 @@
     "roomcode": "酒店编号",
     "hotelname": "酒店名称",
     "cityCode" : "区市町村",
-    "provinceCode" : "都道府县"
+    "provinceCode" : "都道府县",
+    "countryCode": {
+        "countryCode": "国家编码",
+        "countryCodeValue" :"JNP"
+    }
   }
 
 }
