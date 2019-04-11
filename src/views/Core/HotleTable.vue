@@ -12,15 +12,22 @@
       <!--</el-table-column>-->
       <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
       </el-table-column>
-      <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode')">
+      <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
       </el-table-column>
       <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode')">
       </el-table-column>
       <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode')">
       </el-table-column>
-      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType')">
+      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
+        <template slot-scope="scope">
+          <!--<el-tag  closable > {{$t('hotel.'+scope.row.hotelType)}}</el-tag>-->
+          <el-table-column>{{$t('hotel.'+scope.row.hotelType)}} </el-table-column>
+        </template>
       </el-table-column>
       <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.hotelLevel)}} </el-table-column>
+        </template>
       </el-table-column>
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
@@ -61,7 +68,7 @@
 <script>
 import KtButton from "@/views/Core/KtButton"
 export default {
-  name: 'KtTable',
+  name: 'HotleTable',
   components:{
 			KtButton
 	},
@@ -115,12 +122,14 @@ export default {
         pageSize: 10
       },
       loading: false,  // 加载标识
-      selections: []  // 列表选中列
+      selections: [],  // 列表选中列
+      language:{}
     }
   },
   methods: {
     // 分页查询
     findPage: function () {
+      console.log("licy");
         this.loading = true
         let callback = res => {
           this.loading = false
@@ -179,10 +188,14 @@ export default {
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
 			})
-		}
+		},
+    localLanguageLoad:function () {
+      this.language={lge:this.$i18n.locale}
+    }
   },
   mounted() {
     this.refreshPageRequest(1)
+    this.localLanguageLoad()
   }
 }
 </script>
