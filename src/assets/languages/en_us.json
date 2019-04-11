@@ -99,5 +99,20 @@
     "state": "State"
 
 
+  },
+  "hotel": {
+    "roomtype": {
+      "roomtype": "room type",
+      "roomone": "single-room",
+      "roomtwo": "double-room",
+      "roomthree": "three-room",
+      "roomfour": "four-room"
+    },
+    "bedtype": {
+      "bedtype": "bed type",
+      "bedone": "single bed",
+      "bedtwo": "double bed"
+    }
+
   }
 }

@@ -43,7 +43,14 @@
     "delSuccess": "删除成功",
     "delFail": "删除失败",
     "sureSubmit": "确认提交吗?",
-    "noNull": "不能为空"
+    "noNull": "不能为空",
+    "incompleteInfo": "填入信息不全",
+    "pHotelName": "请选择酒店名",
+    "pRoomType": "请选择房间类型",
+    "pRoomStyle": "请选择房间样式",
+    "pBedType": "请选择床铺类型",
+    "pBreakType": "请选择餐食条件",
+    "pRoomStock": "请输入默认库存数"
   },
   "user": {
     "id": "编号",
@@ -154,8 +161,37 @@
     "introc": "中文介绍",
     "introe": "英文介绍",
     "roomstock": "默认库存数",
-    "recommended": "是否本期推荐",
-    "photo": "宣传图片"
+    "recommended": {
+      "recommended": "是否本期推荐",
+      "recommendok":"是",
+      "recommendno": "否"
+    },
+    "photo": "宣传图片",
+    "iswify" : "免费WIFI",
+    "isfront": "24H Font",
+    "isbarrifr": "无障碍通道",
+    "isbalcony": "阳台/露台",
+    "iskitchen": "厨房",
+    "iswindow": "窗户",
+    "isheat": "空调/暖气",
+    "isicebox": "冰箱",
+    "isiron": "熨衣设备",
+    "isnosmk": "禁烟房",
+    "islandscape": "景观房",
+    "ishighrise": "高楼层",
+    "ispark": "停车场",
+    "isgym": "健身房",
+    "isswmp": "游泳池",
+    "isbeach": "海滩",
+    "ishotsp": "温泉/大浴场",
+    "ischildct": "儿童中心",
+    "isroomserv": "客房服务",
+    "isknead": "按摩",
+    "islounge": "行政酒廊",
+    "issuper": "附近24H便利带你",
+    "isbus": "附近公交车",
+    "istrafic": "附近轨道交通",
+    "isrestau": "附近餐厅"
   }
 
 }
