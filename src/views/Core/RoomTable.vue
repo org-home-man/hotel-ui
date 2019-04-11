@@ -133,11 +133,6 @@ export default {
   components:{
 			KtButton
 	},
-  data() {
-    return{
-      show : false
-    }
-  },
   props: {
     columns: Array, // 表格列配置
     data: Object, // 表格分页数据
@@ -189,7 +184,8 @@ export default {
       },
       loading: false,  // 加载标识
       selections: [],  // 列表选中列
-      language:{}
+      language:{},
+      show : false
     }
   },
   methods: {
