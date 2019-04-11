@@ -137,7 +137,6 @@ export default {
 		return {
 			size: 'small',
 			filters: {
-				//label: '',
         hotelCode: '',
         hotelName:'',
         hotelType:'',
@@ -202,10 +201,11 @@ export default {
 		// 获取分页数据
 		findPage: function (data) {
       console.log("licy");
+      console.log(data);
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {label: {name:'label', value:this.filters.label}}
+			this.pageRequest.columnFilters = {hotel_code: {name:'hotel_code', value:this.filters.hotelCode}}
 			this.$api.bizHotl.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res.data
 			}).then(data!=null?data.callback:'')
@@ -236,6 +236,13 @@ export default {
 				lastUpdateBy: null,
 				lastUpdateTime: null,
 			}
+      /* 获取操作员 */
+      this.dataForm.creatCy = sessionStorage.getItem('user');
+      /* 获取操作时间 */
+      var date = new Date();
+      this.dataForm.creatTime = date;
+      //console.log(date);
+      /* */
 		},
 		// 显示编辑界面
 		handleEdit: function (params) {
