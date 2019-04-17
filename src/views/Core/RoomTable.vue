@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">
       </el-table-column>
-      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.countryCode')">
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
       </el-table-column>
       <el-table-column prop="roomTypeKey" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
