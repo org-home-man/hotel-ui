@@ -31,7 +31,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="filters.roomStock" :placeholder="$t('hotel.roomstock')"></el-input>
+        <el-input v-model="filters.inventory" :placeholder="$t('hotel.inventory')"></el-input>
       </el-form-item>
 			<el-form-item>
 				<kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary" @click="findPage(null)"/>
@@ -42,14 +42,20 @@
 		</el-form>
 	</div>
 	<!--表格内容栏-->
-	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
+	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete" permsPriceEdit="sys:bizRoom:editPrice" permsStockEdit="sys:bizRoom:editStock"
 		:data="pageResult"
-		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
+		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete" @handlePriceEdit="handlePriceEdit" @handleStockEdit="handleStockEdit">
 	</room-table>
 
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true" label-position="left">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{$t('sys.guestEdit')}}</el-breadcrumb-item>
+    </el-breadcrumb>
+
+		<el-form :model="dataForm" style="margin-top: 20px" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size" :inline="true" label-position="left">
 			<!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
 				<!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
 			<!--</el-form-item>-->
@@ -123,10 +129,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="$t('hotel.recommended.recommended')" prop="recommended" auto-complete="off" >
-            <el-select v-model="dataForm.recommended" >
-              <el-option v-for="rm in paraConfig.recommended" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>
-            </el-select>
+          <el-form-item >
+            <!--<el-select v-model="dataForm.recommended" perms="sys:bizRoom:check" type="primary">-->
+              <!--<el-option v-for="rm in paraConfig.recommended" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>-->
+            <!--</el-select>-->
+            <kt-checkbox trueLable="1" falseLable="2" :label="$t('hotel.recommended')" @changeValue="changeValue" :modelParent="dataForm.recommended" perms="sys:bizRoom:check"></kt-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -249,11 +256,10 @@
               ref="upload"
               :action="baseUrl+dataurl"
               list-type="picture-card"
-              with-credentials="true"
               :headers="headersInfo"
               :on-error="handlerror"
               :on-success="handlesuccess"
-              :file-list="dataForm.fileList"
+              :file-list="fileList"
               :auto-upload="false">
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -267,13 +273,261 @@
 			<el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
 			<el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
 		</div>
-	</el-dialog>
+  </el-dialog>
+
+    <!--牌价修改弹出框-->
+    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editPriceDialogVisible" :close-on-click-modal="false">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('sys.guestPriceEdit')}}</el-breadcrumb-item>
+      </el-breadcrumb>
+
+      <el-form style="margin-top: 20px" :model="priceForm" label-width="80px" :rules="priceFormRules" ref="priceForm" :size="size" :inline="true" label-position="left">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.roomcode')" prop="hotelCode"  auto-complete="off" >
+              <el-input v-model="priceForm.roomCode" :disabled="priceBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear"  auto-complete="off">
+              <el-date-picker
+                v-model="priceForm.priceYear"
+                align="right"
+                type="year"
+                :placeholder="$t('action.pPriceYear')">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.provinceCode')" prop="provinceCode"  auto-complete="off" >
+              <el-input v-model="priceForm.provinceCode" :disabled="priceBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.cityCode')" prop="cityCode" auto-complete="off" >
+              <el-input v-model="priceForm.cityCode" :disabled="priceBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.hotelCode')" prop="hotelCode"  auto-complete="off" >
+              <el-input v-model="priceForm.hotelCode" :disabled="priceBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+
+            <el-form-item  :label="$t('hotel.hotelname')" prop="hotelCName"  auto-complete="off" >
+              <el-input v-model="language.lge=='zh_cn'?priceForm.hotelCname:priceForm.hotelEname" :disabled="priceBoolean"></el-input>
+            </el-form-item>
+
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off" >
+              <el-select v-model="priceForm.roomType" :disabled="priceBoolean">
+                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="roomType" auto-complete="off" >
+              <el-select v-model="priceForm.bedType" :disabled="priceBoolean">
+                <el-option v-for="rt in paraConfig.bedtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <el-form-item :label="$t('hotel.priceDateInterval')" prop="priceDateInterval" auto-complete="off" >
+              <el-date-picker
+                v-model="priceForm.priceDateInterval"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.sPrice')" prop="sPrice" auto-complete="off" >
+              <el-input v-model="priceForm.sprice" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.tPrice')" prop="tPrice" auto-complete="off" >
+              <kt-input :modelValue="Number(priceForm.tprice)" perms="sys:bizRoom:input" @changInputValue="changInputValue"></kt-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.sRoomPrice')" prop="sPrice" auto-complete="off" >
+              <el-input v-model="priceForm.sRoomPrice" ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <el-form-item  auto-complete="off" >
+              <el-button type="primary" round @click="">输入</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button :size="size" @click.native="editPriceDialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button :size="size" type="primary" @click.native="submitPriceForm" :loading="editPriceLoading">{{$t('action.submit')}}</el-button>
+      </div>
+    </el-dialog>
+
+    <!--库存修改弹出框-->
+    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('sys.stockMng')}}</el-breadcrumb-item>
+      </el-breadcrumb>
+
+      <el-form style="margin-top: 20px" :model="stockForm" label-width="80px" :rules="stockFormRules" ref="stockForm" :size="size" :inline="true" label-position="left">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.roomcode')" prop="hotelCode"  auto-complete="off" >
+              <el-input v-model="stockForm.roomCode" :disabled="stockBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear"  auto-complete="off">
+              <el-date-picker
+                v-model="stockForm.stockYear"
+                align="right"
+                type="year"
+                :placeholder="$t('action.pPriceYear')">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.provinceCode')" prop="provinceCode"  auto-complete="off" >
+              <el-input v-model="stockForm.provinceCode" :disabled="stockBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.cityCode')" prop="cityCode" auto-complete="off" >
+              <el-input v-model="stockForm.cityCode" :disabled="stockBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item  :label="$t('hotel.hotelCode')" prop="hotelCode"  auto-complete="off" >
+              <el-input v-model="stockForm.hotelCode" :disabled="stockBoolean"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+
+            <el-form-item  :label="$t('hotel.hotelname')" prop="hotelCName"  auto-complete="off" >
+              <el-input v-model="language.lge=='zh_cn'?stockForm.hotelCname:stockForm.hotelEname" :disabled="stockBoolean"></el-input>
+            </el-form-item>
+
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off" >
+              <el-select v-model="stockForm.roomType" :disabled="stockBoolean">
+                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="roomType" auto-complete="off" >
+              <el-select v-model="stockForm.bedType" :disabled="stockBoolean">
+                <el-option v-for="rt in paraConfig.bedtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <el-form-item :label="$t('hotel.priceDateInterval')" prop="priceDateInterval" auto-complete="off" >
+              <el-date-picker
+                v-model="stockForm.stockDateInterval"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('hotel.inventory')" prop="sPrice" auto-complete="off" >
+              <el-input v-model="stockForm.inventory" ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <el-form-item  auto-complete="off" >
+              <el-button type="primary" round @click="">输入</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button :size="size" @click.native="editStockDialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button :size="size" type="primary" @click.native="submitStockForm" :loading="editStockLoading">{{$t('action.submit')}}</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
   import Cookies from "js-cookie";
   import RoomTable from "@/views/Core/RoomTable"
+  import KtInput from "@/views/Core/KtInput"
+  import KtCheckbox from "@/views/Core/KtCheckbox"
   import KtButton from "@/views/Core/KtButton"
   import { baseUrl } from '@/utils/global';
   import { format } from "@/utils/datetime"
@@ -282,10 +536,14 @@ export default {
 	components:{
     RoomTable,
     KtButton,
+    KtCheckbox,
+    KtInput
 	},
 	data() {
 		return {
 		  baseUrl:baseUrl,
+      priceBoolean:true,
+      stockBoolean:true,
       disableHotelName:false,
       dataurl:'/bizRoom/uploadFile',
 			size: 'small',
@@ -295,17 +553,21 @@ export default {
         roomType:'',
         bedType:'',
         breakType:'',
-        roomStock:''
+        inventory:''
 			},
 			columns: [
 
 			],
-			pageRequest: { pageNum: 1, pageSize: 8 },
+			pageRequest: { pageNum: 1, pageSize: 10 },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
 			editDialogVisible: false, // 新增编辑界面是否显示
+      editPriceDialogVisible: false, // 编辑牌价界面是否显示
+      editStockDialogVisible: false, // 编辑库存界面是否显示
 			editLoading: false,
+      editPriceLoading:false,
+      editStockLoading:false,
 			dataFormRules: {
         hotelCode: [
 					{ required: true, message: this.$t('action.pHotelName'), trigger: 'blur' }
@@ -327,6 +589,7 @@ export default {
         ]
 
 			},
+
 			// 新增编辑界面数据
 			dataForm: {
 				roomCode: null,
@@ -369,15 +632,88 @@ export default {
         creatBy: null,
         creatTime: null,
         lastUpdateBy: null,
-        lastUpdateTime: null,
-        fileList:[]
+        lastUpdateTime: null
 			},
+      //牌价界面新增数据
+      priceForm:{
+        roomCode: null,
+        hotelCode: null,
+        provinceCode:null,
+        cityCode:null,
+        roomType:null,
+        bedType:null,
+        priceYear:null,
+        priceDateInterval:null,
+        priceDateStart:null,
+        priceDateEnd:null,
+        sprice:null,
+        tprice:null,
+        sRoomPrice:null,
+        hotelCname: null,
+        hotelEname: null,
+        creatBy: null,
+        creatTime: null,
+        lastUpdateBy: null,
+        lastUpdateTime: null
+      },
+      //库存界面新增数据
+      stockForm:{
+        roomCode: null,
+        hotelCode: null,
+        provinceCode:null,
+        cityCode:null,
+        roomType:null,
+        bedType:null,
+        stockYear:null,
+        stockDateInterval:null,
+        inventory:null,
+        hotelCname: null,
+        hotelEname: null,
+        creatBy: null,
+        creatTime: null,
+        lastUpdateBy: null,
+        lastUpdateTime: null
+      },
+      priceFormRules:{//牌价界面规则限制
+
+      },
+      stockFormRules:{ // 库存页面规则限制
+
+      },
       hotelNames:[],
       paraConfig:[],
       sysPara:{},
       bizHotl:[],
       language:{},
-      headersInfo:{}
+      headersInfo:{},
+      fileList:[],
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      }
 
 		}
 	},
@@ -393,20 +729,20 @@ export default {
         roomType:{name:'roomType',value:this.filters.roomType},
         bedType:{name:'bedType',value:this.filters.bedType},
         breakType:{name:'breakType',value:this.filters.breakType},
-        roomStock:{name:'roomStock',value:this.filters.roomStock},
+        inventory:{name:'inventory',value:this.filters.inventory},
       }
 			this.$api.bizRoom.findPage(this.pageRequest).then((res) => {
+			  this.pageRequest={}
 				this.pageResult = res.data
 			}).then(data!=null?data.callback:'')
 		},
 		// 批量删除
 		handleDelete: function (data) {
-		  alert(data);
-		  console.log("data",data);
 			this.$api.bizRoom.batchDelete(data.params).then(data!=null?data.callback:'')
 		},
 		// 显示新增界面
 		handleAdd: function () {
+      this.disableHotelName = false
 			this.editDialogVisible = true
 			this.operation = true
 			this.dataForm = {
@@ -464,7 +800,22 @@ export default {
       this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
 			this.dataForm = Object.assign({}, params.row)
 		},
-
+    // 牌价编辑界面
+    handlePriceEdit:function(params) {
+      console.log("param",params);
+      this.editPriceDialogVisible = true
+      this.operation = false
+      this.priceForm.lastUpdateBy = sessionStorage.getItem("user")
+      this.priceForm = Object.assign({}, params.row)
+    },
+    //库存编辑界面
+    handleStockEdit:function(params) {
+      console.log("param",params);
+      this.editStockDialogVisible = true
+      this.operation = false
+      this.stockForm.lastUpdateBy = sessionStorage.getItem("user")
+      this.stockForm = Object.assign({}, params.row)
+    },
     //上传
     submitUpload() {
       this.$refs.upload.submit();
@@ -487,9 +838,6 @@ export default {
 		// 编辑
 		submitForm: function () {
 
-		  // this.submitUpload();
-      //
-		  // return;
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
@@ -513,6 +861,55 @@ export default {
         }
 			})
 		},
+    // 牌价编辑提交
+    submitPriceForm: function () {
+
+      this.$refs.priceForm.validate((valid) => {
+        if (valid) {
+          this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+            this.editPriceLoading = true
+            let params = Object.assign({}, this.priceForm)
+            this.$api.bizRoom.savePrice(params).then((res) => {
+              if(res.code == 200) {
+                this.$message({ message: this.$t('action.success'), type: 'success' })
+              } else {
+                this.$message({message: this.$t('action.fail') , type: 'error'})
+              }
+              this.editPriceLoading = false
+              this.$refs['priceForm'].resetFields()
+              this.editPriceDialogVisible = false
+              this.findPage(null)
+            })
+          })
+        } else {
+          this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+        }
+      })
+    },
+    //库存编辑提交
+    submitStockForm:function() {
+      this.$refs.stockForm.validate((valid) => {
+        if (valid) {
+          this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+            this.editStockLoading = true
+            let params = Object.assign({}, this.stockForm)
+            this.$api.bizRoom.saveStock(params).then((res) => {
+              if(res.code == 200) {
+                this.$message({ message: this.$t('action.success'), type: 'success' })
+              } else {
+                this.$message({message: this.$t('action.fail') , type: 'error'})
+              }
+              this.editPriceLoading = false
+              this.$refs['priceForm'].resetFields()
+              this.editPriceDialogVisible = false
+              this.findPage(null)
+            })
+          })
+        } else {
+          this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+        }
+      })
+    },
 		// 时间格式化
   dateFormat: function (row, column, cellValue, index){
     return format(row[column.property])
@@ -533,6 +930,13 @@ export default {
     },
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
+    },
+    changeValue:function (val) {//和checkbox双向绑定
+      this.dataForm.recommended=val;
+    },
+    changInputValue:function (val) {//和input组件双向绑定
+		  this.priceForm.tprice=val;
+
     }
 	},
 	mounted() {

@@ -32,12 +32,22 @@
       </el-table-column>
       <el-table-column prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
-      <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
+      <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
-          <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-          <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+          <el-row>
+            <el-col>
+              <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+            </el-col>
+            <el-col style="padding-top: 5px">
+              <kt-button icon="fa fa-edit" :label="$t('action.editPrice')" :perms="permsPriceEdit" :size="size" @click="handlePriceEdit(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-edit" :label="$t('action.editStock')" :perms="permsStockEdit" :size="size" @click="handleStockEdit(scope.$index, scope.row)" />
+            </el-col>
+          </el-row>
+
         </template>
       </el-table-column>
+
 
       <el-table-column prop="hotelCode" header-align="center" align="center" v-if="show">
       </el-table-column>
@@ -61,7 +71,6 @@
       </el-table-column>
       <el-table-column prop="recommended" header-align="center" align="center" v-if="show">
       </el-table-column>
-
       <el-table-column prop="iswify" header-align="center" align="center" v-if="show">
       </el-table-column>
       <el-table-column prop="isfront" header-align="center" align="center" v-if="show">
@@ -113,6 +122,11 @@
       <el-table-column prop="isrestau" header-align="center" align="center" v-if="show">
       </el-table-column>
 
+      <el-table-column prop="tprice" header-align="center" align="center" v-if="show">
+      </el-table-column>
+      <el-table-column prop="sprice" header-align="center" align="center" v-if="show">
+      </el-table-column>
+
 
     </el-table>
     <!--分页栏-->
@@ -138,6 +152,8 @@ export default {
     data: Object, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
+    permsPriceEdit:String, //编辑权限标识
+    permsStockEdit:String, //库存编辑权限标识
     size: { // 尺寸样式
       type: String,
       default: 'mini'
@@ -215,6 +231,14 @@ export default {
 		handleEdit: function (index, row) {
       this.$emit('handleEdit', {index:index, row:row})
 		},
+    // 编辑牌价
+    handlePriceEdit: function (index, row) {
+      this.$emit('handlePriceEdit', {index:index, row:row})
+    },
+    // 编辑牌价
+    handleStockEdit: function (index, row) {
+      this.$emit('handleStockEdit', {index:index, row:row})
+    },
     // 删除
 		handleDelete: function (index, row) {
       console.log("row",row);

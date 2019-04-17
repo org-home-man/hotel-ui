@@ -1,6 +1,6 @@
 <template>
 
-  <el-input v-model="model" :disabled="!hasPerms(perms)"></el-input>
+  <el-input v-model="parentValue"  :disabled="!hasPerms(perms)" @change="changInputValue"></el-input>
 
 </template>
 
@@ -13,19 +13,21 @@ export default {
       type: String,
       default: null
     },
-    model:{
-      type:String,
-      default:null
-    }
+    modelValue:Number
+
   },
   data() {
     return {
+      parentValue:this.modelValue
     }
   },
   methods: {
     hasPerms: function (perms) {
       // 根据权限标识和外部指示状态进行权限判断
       return hasPermission(perms) & !this.disabled
+    },
+    changInputValue:function (val) {
+      this.$emit("changInputValue", val);
     }
   },
   mounted() {

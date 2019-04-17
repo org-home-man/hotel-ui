@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-checkbox :true-label="trueLabel" :disabled="!hasPerms(perms)" :false-label="falseLabel" :label="label" v-model="model" border></el-checkbox>
+    <el-checkbox :false-label="falseLable" :true-label="trueLable"  :disabled="!hasPerms(perms)" :value="modelParent" @change="changeValue" :label="label" border></el-checkbox>
   </div>
 </template>
 
@@ -9,14 +9,6 @@ import { hasPermission } from '@/permission/index.js'
 export default {
   name: 'KtCheckbox',
   props: {
-    trueLabel: {  // 按钮显示文本
-      type: String,
-      default:'1'
-    },
-    falseLabel: {  // 按钮显示文本
-      type: String,
-      default:'2'
-    },
     label: {  // 按钮显示文本
       type: String
     },
@@ -28,10 +20,9 @@ export default {
       type: String,
       default: null
     },
-    model:{
-      type:String,
-      default:null
-    }
+    falseLable:String,
+    trueLable:String,
+    modelParent:String
   },
   data() {
     return {
@@ -41,6 +32,10 @@ export default {
     hasPerms: function (perms) {
       // 根据权限标识和外部指示状态进行权限判断
       return hasPermission(perms) & !this.disabled
+    },
+    changeValue:function (data) {
+      this.$emit('changeValue',data);
+
     }
   },
   mounted() {
