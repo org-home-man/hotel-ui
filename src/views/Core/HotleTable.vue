@@ -14,13 +14,22 @@
       </el-table-column>
       <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
       </el-table-column>
+      <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+      <!--</el-table-column>-->
       <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-table-column>
+        </template>
       </el-table-column>
+      <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
+      <!--</el-table-column>-->
       <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-table-column>
+        </template>
       </el-table-column>
       <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
         <template slot-scope="scope">
-          <!--<el-tag  closable > {{$t('hotel.'+scope.row.hotelType)}}</el-tag>-->
           <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
         </template>
       </el-table-column>
