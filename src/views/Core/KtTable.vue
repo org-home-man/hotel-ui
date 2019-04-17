@@ -6,7 +6,7 @@
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <el-table-column v-for="column in columns" header-align="center" align="center"
-        :prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"
+        :prop="column.prop" :label="$t('table.'+column.label)" :width="column.width" :min-width="column.minWidth"
         :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
         :sortable="column.sortable==null?true:column.sortable">
       </el-table-column>
@@ -117,6 +117,7 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
+
 			this.delete(row.id)
 		},
 		// 批量删除

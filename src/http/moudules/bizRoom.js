@@ -12,6 +12,23 @@ export const save = (data) => {
         data
     })
 }
+
+// 牌价保存
+export const savePrice = (data) => {
+  return axios({
+    url: '/bizPrise/save',
+    method: 'post',
+    data
+  })
+}
+// 库存保存
+export const saveStock = (data) => {
+  return axios({
+    url: '/bizInv/save',
+    method: 'post',
+    data
+  })
+}
 // 删除
 export const batchDelete = (data) => {
     return axios({
@@ -35,4 +52,15 @@ export const findPermissions = (params) => {
         method: 'get',
         params
     })
+}
+// 上传文件
+export const uploadFile = (data) => {
+  return axios({
+    url: '/bizRoom/uploadFile',
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data;boundary=---12321 '
+    },
+    data
+  })
 }
