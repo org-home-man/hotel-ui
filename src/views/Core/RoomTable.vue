@@ -14,9 +14,9 @@
       </el-table-column>
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-      <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode')">
+      <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">
       </el-table-column>
-      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode')">
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.countryCode')">
       </el-table-column>
       <el-table-column prop="roomTypeKey" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
