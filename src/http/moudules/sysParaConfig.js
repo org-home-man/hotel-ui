@@ -46,3 +46,12 @@ export const findKeyValue = (data) => {
   })
 }
 
+// 数据字典查询
+export const findKeyValueHotel = (data) => {
+  return axios({
+    url: '/sysParaConfig/findListDataHotel',
+    method: 'post',
+    data
+  })
+}
+
