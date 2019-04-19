@@ -33,6 +33,7 @@
     "pUsername": "请输入用户名",
     "batchDelete": "批量删除",
     "search": "查询",
+    "detileSearch" : "详细查询",
     "loading": "拼命加载中",
     "submit": "提交",
     "confirm": "确定",
@@ -90,6 +91,7 @@
     "guestPriceEdit": "客房牌价编辑",
     "stockMng":"客房库存维护",
     "orderMng":"订单管理",
+    "hotelRoomQry":"酒店/客房检索",
     "orderQry":"订单查询",
     "orderCrt":"订单生成",
     "orderFirm":"订单确认",
@@ -108,7 +110,8 @@
     "role": "角色",
     "mail": "邮箱",
     "phone": "手机",
-    "state": "状态"
+    "state": "状态",
+    "sSprice" : "房价"
 
   },
   "hotel": {
@@ -171,7 +174,6 @@
         "countryCode": "国家编码",
         "countryCodeValue" :"JNP"
     },
-    "provinceCode" : "都道府县",
     "roomarea": "客房面积",
     "introc": "中文介绍",
     "introe": "英文介绍",
@@ -218,7 +220,15 @@
     "lastUpdateBy": "更新人员",
     "lastUpdateTime": "更新时间",
     "hotelCname": "酒店中文名称",
-    "hotelEname": "酒店英文名称"
+    "hotelEname": "酒店英文名称",
+    "roomPrice": "房间价格区间",
+    "inDateStart": "入住时间",
+    "outDateEnd" : "退房时间",
+    "roomNum" : "房间数",
+    "adultNum": "成人数",
+    "childrenNum" : "儿童数",
+    "makeSure" : "确认",
+    "reservatRoom" : "预订房间"
   }
 
 }
