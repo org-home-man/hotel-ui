@@ -1,22 +1,32 @@
 <template xmlns:v-popover="">
   <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <span class="tool-bar">
+    <div class="tool-bar">
 
       <!-- 主题切换 -->
-      <theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>
+      <!--<theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>-->
       <!-- 语言切换 -->
-      <el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor" :active-text-color="themeColor" mode="horizontal" style="position: relative;">
-        <el-menu-item index="1" v-popover:popover-lang style="position: absolute;right:5px;">
-            <!-- 语言切换 -->
-            <li style="color:#fff;" class="fa fa-language fa-lg"></li>
-            <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">
-              <div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>
-              <div class="lang-item" @click="changeLanguage('en_us')">English</div>
-            </el-popover>
-          </el-menu-item>
-      </el-menu>
+      <!--<el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor" :active-text-color="themeColor" mode="horizontal" style="position: relative;">-->
+        <!--<el-menu-item index="1" v-popover:popover-lang style="position: absolute;right:5px;">-->
+            <!--&lt;!&ndash; 语言切换 &ndash;&gt;-->
+            <!--<li style="color:#fff;" class="fa fa-language fa-lg"></li>-->
+            <!--<el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">-->
+              <!--<div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>-->
+              <!--<div class="lang-item" @click="changeLanguage('en_us')">English</div>-->
+            <!--</el-popover>-->
+          <!--</el-menu-item>-->
+      <!--</el-menu>-->
+      <el-dropdown @command="changeLanguage" style="float:right">
+      <span class="el-dropdown-link">
+        <li style="color:#14889A;" class="fa fa-language fa-lg"></li><i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="zh_cn">简体中文</el-dropdown-item>
+        <el-dropdown-item command="en_us">English</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
       <!--<lang-selector class="lang-selector"></lang-selector>-->
-    </span>
+    </div>
+
     <h2 class="title" style="padding-left:22px;" >{{$t('common.title')}}</h2>
     <el-form-item prop="account">
       <el-input type="text" v-model="loginForm.account" auto-complete="off" :placeholder="$t('common.username')"></el-input>
@@ -121,7 +131,6 @@
       changeLanguage(lang) {
         lang === '' ? 'zh_cn' : lang
         this.$i18n.locale = lang
-        this.langVisible = false
       }
     },
     mounted() {
@@ -158,14 +167,14 @@
 
   }
   .lang-item {
-    font-size: 16px;
+    font-size: 12px;
     padding-left: 8px;
     padding-top: 8px;
     padding-bottom: 8px;
     cursor: pointer;
   }
   .lang-item:hover {
-    font-size: 18px;
+    font-size: 12px;
     background: #b0d6ce4d;
   }
 </style>

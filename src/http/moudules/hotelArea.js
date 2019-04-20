@@ -7,32 +7,15 @@ import axios from '../axios'
 // 保存
 export const save = (data) => {
     return axios({
-        url: '/bizRoom/save',
+        url: '/hotelArea/save',
         method: 'post',
         data
     })
 }
-
-// 牌价保存
-export const savePrice = (data) => {
-  return axios({
-    url: '/bizPrise/save',
-    method: 'post',
-    data
-  })
-}
-// 库存保存
-export const saveStock = (data) => {
-  return axios({
-    url: '/bizInv/save',
-    method: 'post',
-    data
-  })
-}
 // 删除
 export const batchDelete = (data) => {
     return axios({
-        url: '/bizRoom/delete',
+        url: '/hotelArea/delete',
         method: 'post',
         data
     })
@@ -40,7 +23,7 @@ export const batchDelete = (data) => {
 // 分页查询
 export const findPage = (data) => {
     return axios({
-        url: '/bizRoom/findPage',
+        url: '/hotelArea/findPage',
         method: 'post',
         data
     })
@@ -48,19 +31,26 @@ export const findPage = (data) => {
 // 查找用户的菜单权限标识集合
 export const findPermissions = (params) => {
     return axios({
-        url: '/bizRoom/findPermissions',
+        url: '/hotelArea/findPermissions',
         method: 'get',
         params
     })
 }
-// 上传文件
-export const uploadFile = (data) => {
+
+// 数据字典查询
+export const findKeyValue = (data) =>
+{
   return axios({
-    url: '/bizRoom/uploadFile',
+    url: '/hotelArea/findListData',
     method: 'post',
-    headers: {
-      'Content-Type': 'multipart/form-data;boundary=---12321 '
-    },
     data
   })
 }
+  export const findAreaPage = (data) => {
+    return axios({
+      url: '/hotelArea/findAreaPage',
+      method: 'post',
+      data
+    })
+}
+

@@ -5,10 +5,56 @@
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
-      <el-table-column v-for="column in columns" header-align="center" align="center"
-        :prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"
-        :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
-        :sortable="column.sortable==null?true:column.sortable">
+      <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
+        <!--:prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
+        <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
+        <!--:sortable="column.sortable==null?true:column.sortable">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      </el-table-column>
+      <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
+      </el-table-column>
+      <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-table-column>
+        </template>
+      </el-table-column>
+      <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-table-column>
+        </template>
+      </el-table-column>
+      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
+        </template>
+      </el-table-column>
+      <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.hotelLevelKey)}} </el-table-column>
+        </template>
+      </el-table-column>
+      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+      </el-table-column>
+      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')">
+      </el-table-column>
+      <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')">
+      </el-table-column>
+      <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')">
+      </el-table-column>
+      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')">
+      </el-table-column>
+      <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
+      </el-table-column>
+      <el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">
+      </el-table-column>
+      <el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">
+      </el-table-column>
+      <el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
@@ -31,7 +77,7 @@
 <script>
 import KtButton from "@/views/Core/KtButton"
 export default {
-  name: 'KtTable',
+  name: 'HotleTable',
   components:{
 			KtButton
 	},
@@ -85,12 +131,14 @@ export default {
         pageSize: 10
       },
       loading: false,  // 加载标识
-      selections: []  // 列表选中列
+      selections: [],  // 列表选中列
+      language:{}
     }
   },
   methods: {
     // 分页查询
     findPage: function () {
+      console.log("licy");
         this.loading = true
         let callback = res => {
           this.loading = false
@@ -117,11 +165,11 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
-			this.delete(row.id)
+			this.delete(row.hotelCode)
 		},
 		// 批量删除
 		handleBatchDelete: function () {
-			let ids = this.selections.map(item => item.id).toString()
+			let ids = this.selections.map(item => item.hotelCode).toString()
 			this.delete(ids)
 		},
 		// 删除操作
@@ -134,7 +182,7 @@ export default {
 				let params = []
 				let idArray = (ids+'').split(',')
 				for(var i=0; i<idArray.length; i++) {
-					params.push({'id':idArray[i]})
+					params.push({'hotelCode':idArray[i]})
         }
         this.loading = true
         let callback = res => {
@@ -149,10 +197,14 @@ export default {
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
 			})
-		}
+		},
+    localLanguageLoad:function () {
+      this.language={lge:this.$i18n.locale}
+    }
   },
   mounted() {
     this.refreshPageRequest(1)
+    this.localLanguageLoad()
   }
 }
 </script>

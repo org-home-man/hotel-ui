@@ -5,33 +5,39 @@
 		<el-form :inline="true" :model="filters" :size="size">
 
       <el-form-item>
-        <el-input v-model="filters.roomCode" :placeholder="$t('hotel.roomcode')"></el-input>
+        <el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelCode')"></el-input>
+      </el-form-item>
+
+
+      <el-form-item>
+        <el-select v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode.provinceCode')">
+          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item>
-        <el-input v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode')"></el-input>
+        <el-select v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')">
+          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
       </el-form-item>
 
-      <el-form-item>
-        <el-input v-model="filters.cityCode" :placeholder="$t('hotel.cityCode')"></el-input>
-      </el-form-item>
+      <!--<el-form-item>-->
+        <!--<el-input v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')"></el-input>-->
+      <!--</el-form-item>-->
 
       <el-form-item>
-        <el-input v-model="filters.hotelname" :placeholder="$t('hotel.hotelname')"></el-input>
+        <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
       </el-form-item>
 
       <el-form-item>
         <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
-          <el-option :label="$t('hotel.hotelType.hotelChis')" value="01"></el-option>
-          <el-option :label="$t('hotel.hotelType.hotelJpa')" value="02"></el-option>
-          <el-option :label="$t('hotel.hotelType.hotelAmra')" value="03"></el-option>
+          <el-option v-for="rt in paraConfig.hotelType" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
+
       <el-form-item>
         <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel3')" value="03"></el-option>
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel4')" value="04"></el-option>
-          <el-option :label="$t('hotel.hotelLevel.hotelLevel5')" value="05"></el-option>
+          <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
 
@@ -43,54 +49,84 @@
 			</el-form-item>
 		</el-form>
 	</div>
-	<!--表格内容栏
-	<kt-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
-		:data="pageResult" :columns="columns" 
+	<!--表格内容栏-->
+	<hotle-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
+		:data="pageResult"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-	</kt-table>
-    -->
-    <kt-table permsEdit="sys:user:edit" permsDelete="sys:user:delete"
-              :data="pageResult" :columns="columns"
-              @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-    </kt-table>
-	<!--新增编辑界面-->
-	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
-			<el-form-item label="酒店编号" prop="hotelCode" >
-				<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="国家编码" prop="countryCode" >
-				<el-input v-model="dataForm.countryCode" auto-complete="off"></el-input>
-			</el-form-item>
+	</hotle-table>
 
-			<el-form-item label="都道府县" prop="provinceCode" >
-				<el-input v-model="dataForm.provinceCode" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="区市町村" prop="cityCode" >
-				<el-input v-model="dataForm.cityCode" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="酒店类型" prop="hotelType"  >
-				<el-input v-model="dataForm.hotelType" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="酒店星级" prop="hotelLevel">
-				<el-input v-model="dataForm.hotelLevel" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="酒店中文名称" prop="hotelCname">
+	<!--新增编辑界面-->
+	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size":inline="true" label-position="left">
+			<!--<el-form-item label="酒店编号" prop="hotelCode"   v-if="dataForm.isPrimaryKey">-->
+				<!--<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>-->
+			<!--</el-form-item>-->
+      <el-form-item label="hotel.hotelCode" prop="hotelCode"  v-if="dataForm.isPrimaryKey">
+      <el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
+      </el-form-item>
+
+			<el-form-item :label="$t('hotel.countryCode.countryCode')" prop="countryCode" auto-complete="off" >
+        <el-select v-model="dataForm.countryCode">
+          <el-option :label="$t('hotel.countryCode.countryCodeValue')" value="JPN"></el-option>
+          <!--<el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>-->
+        </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off" >
+        <el-select v-model="dataForm.provinceCode" >
+          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
+        <el-select v-model="dataForm.cityCode" >
+          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('hotel.hotelType.hotelType')" prop="hotelType" auto-complete="off" >
+        <el-select v-model="dataForm.hotelType" >
+          <el-option v-for="rt in paraConfig.hotelType" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item :label="$t('hotel.hotelLevel.hotelLevel')" prop="hotelLevel" auto-complete="off" >
+        <el-select v-model="dataForm.hotelLevel" >
+          <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+        </el-select>
+      </el-form-item>
+
+			<el-form-item :label="$t('hotel.hotelCname')" prop="hotelCname">
 				<el-input v-model="dataForm.hotelCname" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="酒店英文名称" prop="hotelEname">
+			<el-form-item :label="$t('hotel.hotelEname')" prop="hotelEname">
 				<el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建人员" prop="creatCy">
+      <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr" >
+        <el-input v-model="dataForm.hotelAddr" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('hotel.hotelPhone')" prop="hotelPhone" >
+        <el-input v-model="dataForm.hotelPhone" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('hotel.hotelFax')" prop="hotelFax">
+        <el-input v-model="dataForm.hotelFax" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('hotel.hotelWeb')" prop="hotelWeb">
+        <el-input v-model="dataForm.hotelWeb" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('hotel.lastUpdateBy')" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
+        <el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
+      </el-form-item>
+			<el-form-item :label="$t('hotel.creatCy')" prop="creatCy" v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatCy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建时间" prop="creatTime">
+			<el-form-item :label="$t('hotel.creatTime')" prop="creatTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatTime" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新人员" prop="lastUpdateBy">
+			<el-form-item :label="$t('hotel.lastUpdateBy')" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新时间" prop="lastUpdateTime">
+			<el-form-item :label="$t('hotel.lastUpdateTime')" prop="lastUpdateTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateTime" auto-complete="off"></el-input>
 			</el-form-item>
 		</el-form>
@@ -103,33 +139,26 @@
 </template>
 
 <script>
-import KtTable from "@/views/Core/KtTable"
+import HotleTable from "@/views/Core/HotleTable"
 import KtButton from "@/views/Core/KtButton"
 import { format } from "@/utils/datetime"
 export default {
 	components:{
-			KtTable,
+      HotleTable,
 			KtButton
 	},
 	data() {
 		return {
 			size: 'small',
 			filters: {
-				label: ''
+        hotelCode: '',
+        provinceCode:'',
+        cityCode:'',
+        hotelName:'',
+        hotelType:'',
+        hotelLevel:''
 			},
 			columns: [
-				{prop:"hotelCode", label:"酒店编号", minWidth:100},
-				{prop:"countryCode", label:"国家编码", minWidth:100},
-				{prop:"provinceCode", label:"都道府县", minWidth:100},
-				{prop:"cityCode", label:"区市町村", minWidth:100},
-				{prop:"hotelType", label:"酒店类型", minWidth:100},
-				{prop:"hotelLevel", label:"酒店星级", minWidth:100},
-				{prop:"hotelCname", label:"酒店中文名称", minWidth:100},
-				{prop:"hotelEname", label:"酒店英文名称", minWidth:100},
-				{prop:"creatCy", label:"创建人员", minWidth:100},
-				{prop:"creatTime", label:"创建时间", minWidth:100},
-				{prop:"lastUpdateBy", label:"更新人员", minWidth:100},
-				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
 			],
 			pageRequest: { pageNum: 1, pageSize: 8 },
 			pageResult: {},
@@ -152,20 +181,41 @@ export default {
 				hotelLevel: null,
 				hotelCname: null,
 				hotelEname: null,
+        hotelAddr: null,
+        hotelPhone: null,
+        hotelFax: null,
+        hotelWeb: null,
 				creatCy: null,
 				creatTime: null,
 				lastUpdateBy: null,
 				lastUpdateTime: null,
-			}
+			},
+      hotelNames:[],
+      sysPara:{},
+      sysPara1:{},
+      bizHotl:[],
+      hotelArea:[],
+      paraConfig:[],
+      areaConfig:[],
+      language:{}
 		}
 	},
 	methods: {
 		// 获取分页数据
 		findPage: function (data) {
+      console.log("licy");
+      console.log(data);
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {label: {name:'label', value:this.filters.label}}
+			this.pageRequest.columnFilters = {
+        hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
+        provinceCode: {name:'provinceCode', value:this.filters.provinceCode},
+        cityCode: {name:'cityCode', value:this.filters.cityCode},
+        hotelCname: {name:'hotelCname', value:this.filters.hotelCname},
+        hotelType: {name:'hotelType', value:this.filters.hotelType},
+        hotelLevel: {name:'hotelLevel', value:this.filters.hotelLevel}
+			}
 			this.$api.bizHotl.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res.data
 			}).then(data!=null?data.callback:'')
@@ -187,30 +237,45 @@ export default {
 				hotelLevel: null,
 				hotelCname: null,
 				hotelEname: null,
+        hotelAddr: null,
+        hotelPhone: null,
+        hotelFax: null,
+        hotelWeb: null,
 				creatCy: null,
 				creatTime: null,
 				lastUpdateBy: null,
 				lastUpdateTime: null,
 			}
+      /* 获取操作员 */
+      this.dataForm.creatCy = sessionStorage.getItem('user');
+      /* 获取操作时间 */
+      var date = new Date();
+      this.dataForm.creatTime = date;
+      //console.log(date);
+      /* */
 		},
 		// 显示编辑界面
 		handleEdit: function (params) {
 			this.editDialogVisible = true
 			this.operation = false
+      this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
+      /* 获取操作时间 */
+      var date = new Date();
+      this.dataForm.lastUpdateTime = date;
 			this.dataForm = Object.assign({}, params.row)
 		},
 		// 编辑
 		submitForm: function () {
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
-					this.$confirm('确认提交吗？', '提示', {}).then(() => {
+          this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true
 						let params = Object.assign({}, this.dataForm)
 						this.$api.bizHotl.save(params).then((res) => {
 							if(res.code == 200) {
-								this.$message({ message: '操作成功', type: 'success' })
+								this.$message({ message: this.$t('action.success'), type: 'success' })
 							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+								this.$message({message: this.$t('action.fail')+ res.msg, type: 'error'})
 							}
 							this.editLoading = false
 							this.$refs['dataForm'].resetFields()
@@ -221,13 +286,32 @@ export default {
 				}
 			})
 		},
-		// 时间格式化
-      	dateFormat: function (row, column, cellValue, index){
-          	return format(row[column.property])
-      	}
-	},
+    findDataSelect : function () {
+      this.sysPara={}
+      let params = Object.assign({}, this.sysPara);
+      this.$api.sysParaConfig.findKeyValueHotel(params).then((res) => {
+        this.paraConfig = res.data
+        console.log(this.paraConfig);
+      })
+    },
+
+    findAreaPage : function () {
+    this.sysPara1={}
+    let params = Object.assign({}, this.sysPara1);
+    this.$api.hotelArea.findAreaPage(params).then((res) => {
+      this.AreaConfig = res.data
+      console.log(this.areaConfig);
+    })
+  },
+  // 时间格式化
+  dateFormat: function (row, column, cellValue, index){
+    return format(row[column.property])
+  }
+},
 	mounted() {
-	}
+    this.findDataSelect()
+     // this.findAreaPage()
+  }
 }
 </script>
 
