@@ -93,9 +93,9 @@
           <el-input v-model="dataForm.remark" type="textarea" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item :label="$t('user.role')" prop="role">
-          <el-select v-model="dataForm.role" :placeholder="$t('action.select')"
+          <el-select v-model="dataForm.userRole" multiple :placeholder="$t('action.select')"
                      style="width: 200px;">
-            <el-option v-for="item in roles" :key="item.id"
+            <el-option v-for="item in userRoles" :key="item.id"
                        :label="item.remark" :value="item.id">
             </el-option>
           </el-select>
@@ -169,7 +169,7 @@
           region:'',
           net:'',
           remark:'',
-          role:''
+          userRole:''
 
         },
         deptData: [],
@@ -177,7 +177,7 @@
           label: 'name',
           children: 'children'
         },
-        roles: [],
+        userRoles: [],
         fileList: [{name: '', url: ''}]
       }
     },
@@ -197,7 +197,7 @@
       findUserRoles: function () {
         this.$api.role.findAll().then((res) => {
           // 加载角色集合
-          this.roles = res.data
+          this.userRoles = res.data
         })
       },
       // 批量删除
@@ -211,7 +211,7 @@
         this.dataForm = {
           id: 0,
           name: '',
-          password: '123456',
+          password: '',
           deptId: 1,
           deptName: '',
           birthday:'',
@@ -224,7 +224,7 @@
           region:'',
           net:'',
           remark:'',
-          role:''
+          userRole:''
         }
       },
       // 显示编辑界面
@@ -236,7 +236,8 @@
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
           userRoles.push(params.row.userRoles[i].roleId)
         }
-        this.dataForm.userRoles = userRoles
+        this.dataForm.userRoles = userRoles;
+
       },
       // 编辑
       submitForm: function () {
@@ -246,7 +247,7 @@
               this.editLoading = true
               let params = Object.assign({}, this.dataForm)
               let userRoles = []
-              for (let i = 0, len = params.userRoles.length; i < len; i++) {
+              for (let i = 0, len = params.userRole.length; i < len; i++) {
                 let userRole = {
                   userId: params.id,
                   roleId: params.userRoles[i]
