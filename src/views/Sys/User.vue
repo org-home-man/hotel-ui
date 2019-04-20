@@ -93,7 +93,7 @@
           <el-input v-model="dataForm.remark" type="textarea" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item :label="$t('user.role')" prop="role">
-          <el-select v-model="dataForm.userRole" multiple :placeholder="$t('action.select')"
+          <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
                      style="width: 200px;">
             <el-option v-for="item in userRoles" :key="item.id"
                        :label="item.remark" :value="item.id">
@@ -169,7 +169,7 @@
           region:'',
           net:'',
           remark:'',
-          userRole:''
+          userRoles: []
 
         },
         deptData: [],
@@ -189,7 +189,7 @@
         }
         this.pageRequest.columnFilters = {name: {name: 'name', value: this.filters.name}}
         this.$api.user.findPage(this.pageRequest).then((res) => {
-          this.pageResult = res.data
+          this.pageResult = res.data;
           this.findUserRoles()
         }).then(data != null ? data.callback : '')
       },
@@ -224,15 +224,15 @@
           region:'',
           net:'',
           remark:'',
-          userRole:''
+          userRoles: []
         }
       },
       // 显示编辑界面
       handleEdit: function (params) {
         this.dialogVisible = true
         this.operation = false
-        this.dataForm = Object.assign({}, params.row)
-        let userRoles = []
+        this.dataForm = Object.assign({}, params.row);
+        let userRoles = [];
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
           userRoles.push(params.row.userRoles[i].roleId)
         }
@@ -254,12 +254,12 @@
                 }
                 userRoles.push(userRole)
               }
-              params.userRoles = userRoles
+              params.userRoles = userRoles;
               this.$api.user.save(params).then((res) => {
-                this.editLoading = false
+                this.editLoading = false;
                 if (res.code == 200) {
                   this.$message({message: this.$t('action.success'), type: 'success'})
-                  this.dialogVisible = false
+                  this.dialogVisible = false;
                   this.$refs['dataForm'].resetFields()
                 } else {
                   this.$message({message: this.$t('action.fail'), type: 'error'})
