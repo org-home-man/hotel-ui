@@ -275,8 +275,9 @@
 		</div>
   </el-dialog>
 
+
     <!--牌价修改弹出框-->
-    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editPriceDialogVisible" :close-on-click-modal="false">
+    <el-dialog @open="datePickerMethod" :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editPriceDialogVisible" :close-on-click-modal="false">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
         <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
@@ -304,12 +305,12 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item  :label="$t('hotel.provinceCode')" prop="provinceCode"  auto-complete="off" >
+            <el-form-item  :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode"  auto-complete="off" >
               <el-input v-model="priceForm.provinceCode" :disabled="priceBoolean"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="$t('hotel.cityCode')" prop="cityCode" auto-complete="off" >
+            <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
               <el-input v-model="priceForm.cityCode" :disabled="priceBoolean"></el-input>
             </el-form-item>
           </el-col>
@@ -367,22 +368,50 @@
         </el-row>
 
         <el-row>
+          <el-col :span="24">
+            <el-form-item prop="isMonday">
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isMonday" label="月" border></el-checkbox>
+            </el-form-item>
+            <el-form-item   prop="isTuesday">
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isTuesday" label="火" border></el-checkbox>
+            </el-form-item>
+            <el-form-item prop="isThursday" >
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isThursday" label="水" border></el-checkbox>
+            </el-form-item>
+            <el-form-item  prop="isFourday">
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFourday" label="木" border></el-checkbox>
+            </el-form-item>
+            <el-form-item  prop="isFriday" >
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFriday" label="金" border></el-checkbox>
+            </el-form-item>
+            <el-form-item   prop="isSaterday">
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSaterday" label="土" border></el-checkbox>
+            </el-form-item>
+            <el-form-item prop="isSunday" >
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSunday" label="日" border></el-checkbox>
+            </el-form-item>
+
+          </el-col>
+
+        </el-row>
+
+        <el-row>
           <el-col :span="12">
-            <el-form-item :label="$t('hotel.sPrice')" prop="sPrice" auto-complete="off" >
+            <el-form-item :label="$t('hotel.sPrice')" prop="sprice" auto-complete="off" >
               <el-input v-model="priceForm.sprice" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="$t('hotel.tPrice')" prop="tPrice" auto-complete="off" >
-              <kt-input :modelValue="Number(priceForm.tprice)" perms="sys:bizRoom:input" @changInputValue="changInputValue"></kt-input>
+            <el-form-item :label="$t('hotel.tPrice')" prop="tprice" auto-complete="off" >
+              <kt-input :modelValue="isNaN(String(priceForm.tprice))?'':String(priceForm.tprice)" perms="sys:bizRoom:input" @changInputValue="changInputValue"></kt-input>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col :span="12">
-            <el-form-item :label="$t('hotel.sRoomPrice')" prop="sPrice" auto-complete="off" >
-              <el-input v-model="priceForm.sRoomPrice" ></el-input>
+            <el-form-item :label="$t('hotel.sRoomPrice')" prop="sRoomPrice" auto-complete="off" >
+              <el-input v-model="priceForm.sRoomPrice" :disabled="priceBoolean" >{{sRoomPrice}}</el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -390,16 +419,23 @@
         <el-row>
           <el-col :span="24">
             <el-form-item  auto-complete="off" >
-              <el-button type="primary" round @click="">输入</el-button>
+              <el-button type="primary" round @click="producePriceData">输入</el-button>
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="24">
+            <date-picker :dateData="priceDateData" :roomId="priceForm.roomCode" ref="init">
 
+            </date-picker>
+          </el-col>
+
+        </el-row>
 
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button :size="size" @click.native="editPriceDialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button :size="size" @click.native="cancelPriceForm">{{$t('action.cancel')}}</el-button>
         <el-button :size="size" type="primary" @click.native="submitPriceForm" :loading="editPriceLoading">{{$t('action.submit')}}</el-button>
       </div>
     </el-dialog>
@@ -433,12 +469,12 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item  :label="$t('hotel.provinceCode')" prop="provinceCode"  auto-complete="off" >
+            <el-form-item  :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode"  auto-complete="off" >
               <el-input v-model="stockForm.provinceCode" :disabled="stockBoolean"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="$t('hotel.cityCode')" prop="cityCode" auto-complete="off" >
+            <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
               <el-input v-model="stockForm.cityCode" :disabled="stockBoolean"></el-input>
             </el-form-item>
           </el-col>
@@ -506,9 +542,18 @@
         <el-row>
           <el-col :span="24">
             <el-form-item  auto-complete="off" >
-              <el-button type="primary" round @click="">输入</el-button>
+              <el-button type="primary" round @click="producePriceData">输入</el-button>
             </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="24">
+            <!--<date-picker :dateData="stockDateData" :trType="stockState">-->
+
+            <!--</date-picker>-->
+          </el-col>
+
         </el-row>
 
 
@@ -525,6 +570,7 @@
 
 <script>
   import Cookies from "js-cookie";
+  import DatePicker from "@/views/Core/DatePicker"
   import RoomTable from "@/views/Core/RoomTable"
   import KtInput from "@/views/Core/KtInput"
   import KtCheckbox from "@/views/Core/KtCheckbox"
@@ -537,7 +583,8 @@ export default {
     RoomTable,
     KtButton,
     KtCheckbox,
-    KtInput
+    KtInput,
+    DatePicker
 	},
 	data() {
 		return {
@@ -558,7 +605,7 @@ export default {
 			columns: [
 
 			],
-			pageRequest: { pageNum: 1, pageSize: 10 },
+			pageRequest: { page: 1, rows:10  },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -644,13 +691,19 @@ export default {
         bedType:null,
         priceYear:null,
         priceDateInterval:null,
-        priceDateStart:null,
-        priceDateEnd:null,
         sprice:null,
         tprice:null,
         sRoomPrice:null,
         hotelCname: null,
         hotelEname: null,
+        isMonday:null,
+        isTuesday:null,
+        isThursday:null,
+        isFourday:null,
+        isFriday:null,
+        isSaterday:null,
+        isSunday:null,
+        priceDateData:[],
         creatBy: null,
         creatTime: null,
         lastUpdateBy: null,
@@ -669,13 +722,22 @@ export default {
         inventory:null,
         hotelCname: null,
         hotelEname: null,
+        isMonday:null,
+        isTuesday:null,
+        isThursday:null,
+        isFourday:null,
+        isFriday:null,
+        isSaterday:null,
+        isSunday:null,
         creatBy: null,
         creatTime: null,
         lastUpdateBy: null,
         lastUpdateTime: null
       },
       priceFormRules:{//牌价界面规则限制
-
+        sprice: [
+          { required: true, message: this.$t('action.pSprice'), trigger: 'blur' }
+        ]
       },
       stockFormRules:{ // 库存页面规则限制
 
@@ -686,7 +748,9 @@ export default {
       bizHotl:[],
       language:{},
       headersInfo:{},
-      fileList:[],
+      fileList:[{name:'timg.jpg',url:'http://localhost:8001/img/timg.jpg'}],
+      priceDateData:[],
+      stockDateData:[],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -802,10 +866,17 @@ export default {
 		},
     // 牌价编辑界面
     handlePriceEdit:function(params) {
+
       console.log("param",params);
+      params.row.isMonday=null;
+      params.row.isTuesday=null;
+      params.row.isThursday=null;
+      params.row.isFourday=null;
+      params.row.isFriday=null;
+      params.row.isSaterday=null;
+      params.row.isSunday=null;
       this.editPriceDialogVisible = true
       this.operation = false
-      this.priceForm.lastUpdateBy = sessionStorage.getItem("user")
       this.priceForm = Object.assign({}, params.row)
     },
     //库存编辑界面
@@ -865,9 +936,13 @@ export default {
     submitPriceForm: function () {
 
       this.$refs.priceForm.validate((valid) => {
+        console.log(valid)
         if (valid) {
           this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
-            this.editPriceLoading = true
+            this.editPriceLoading = true;
+            this.priceForm.priceDateData = this.priceDateData;
+            this.priceForm.lastUpdateBy = sessionStorage.getItem("user")
+
             let params = Object.assign({}, this.priceForm)
             this.$api.bizRoom.savePrice(params).then((res) => {
               if(res.code == 200) {
@@ -878,6 +953,7 @@ export default {
               this.editPriceLoading = false
               this.$refs['priceForm'].resetFields()
               this.editPriceDialogVisible = false
+              this.priceDateData = []
               this.findPage(null)
             })
           })
@@ -886,8 +962,17 @@ export default {
         }
       })
     },
+    //牌价点击取消，将所有输入的清空。
+    cancelPriceForm :function() {
+		  this.priceDateData=[];
+      this.editPriceDialogVisible= false;
+    },
     //库存编辑提交
     submitStockForm:function() {
+      if (!this.priceForm.priceDateInterval && !this.priceForm.priceYear) {
+        this.$message({message: this.$t('action.pAllDateNull') , type: 'error'})
+        return
+      }
       this.$refs.stockForm.validate((valid) => {
         if (valid) {
           this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
@@ -900,8 +985,9 @@ export default {
                 this.$message({message: this.$t('action.fail') , type: 'error'})
               }
               this.editPriceLoading = false
-              this.$refs['priceForm'].resetFields()
+              this.$refs['stockForm'].resetFields()
               this.editPriceDialogVisible = false
+              this.stockDateData = []
               this.findPage(null)
             })
           })
@@ -937,14 +1023,66 @@ export default {
     changInputValue:function (val) {//和input组件双向绑定
 		  this.priceForm.tprice=val;
 
-    }
+    },
+    producePriceData:function() {
+      this.$refs.priceForm.validate((valid) => {
+        if (valid) {
+          if (!this.priceForm.priceDateInterval && !this.priceForm.priceYear) {
+            this.$message({message: this.$t('action.pAllDateNull'), type: 'error'})
+            return
+          }
+          if (!this.priceForm.sprice) {
+            this.$message({message: this.$t('action.pSprice'), type: 'error'})
+          }
+
+          this.priceForm.priceDateData = this.priceDateData;
+          this.$api.bizRoom.priceDatePro(this.priceForm).then((res) => {
+            console.log(res);
+            if (res.data.code == "0000") {
+              this.priceDateData = res.data.list;
+            }
+          })
+
+        } else {
+          this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+        }
+      })
+    },
+    produceStockData:function () {
+      console.log(this.stockForm.priceDateInterval);
+
+    },
+    datePickerMethod:function () {
+      this.priceDateData=[];
+		}
 	},
 	mounted() {
     this.findDataSelect()
     this.findHotlnmSelect()
     this.localLanguageLoad()
     this.handleFileMethod()
-	}
+	},
+  computed: {
+	  sRoomPrice:function () {
+	    let total = 0;
+	    let me = this;
+      if (me.priceForm.roomType=="01") {
+        total =  me.priceForm.sprice * 1
+      }
+      if (me.priceForm.roomType=="02") {
+        total =  me.priceForm.sprice * 2
+      }
+      if (me.priceForm.roomType=="03") {
+        total = me.priceForm.sprice * 3
+      }
+      if (me.priceForm.roomType=="04") {
+        total =  me.priceForm.sprice * 4
+      }
+      me.priceForm.sRoomPrice = total;
+      return total;
+    }
+
+  }
 }
 </script>
 
