@@ -54,7 +54,9 @@
     "pBedType": "请选择床铺类型",
     "pBreakType": "请选择餐食条件",
     "pRoomStock": "请输入默认库存数",
-    "pPriceYear": "请选择年份"
+    "pPriceYear": "请选择年份",
+    "pAllDateNull": "年份和区间日期不能同时为空",
+    "pSprice": "请输入销售单人价"
   },
   "user": {
     "id": "编号",
@@ -169,7 +171,6 @@
       "provinceCode001": "东京",
       "provinceCode002": "大阪"
     },
-
     "countryCode": {
         "countryCode": "国家编码",
         "countryCodeValue" :"JNP"
