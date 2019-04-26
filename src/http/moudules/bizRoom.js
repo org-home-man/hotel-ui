@@ -38,14 +38,11 @@ export const batchDelete = (data) => {
     })
 }
 // 分页查询
-export const findPage = (data) => {
+export const findPage = (params) => {
     return axios({
         url: '/bizRoom/page',
         method: 'post',
-        headers:{
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        data
+        params
     })
 }
 // 查找用户的菜单权限标识集合

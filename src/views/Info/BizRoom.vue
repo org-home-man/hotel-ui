@@ -787,14 +787,14 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {
-			  hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
-        hotelName:{name:'hotelName',value:this.filters.hotelName},
-        roomType:{name:'roomType',value:this.filters.roomType},
-        bedType:{name:'bedType',value:this.filters.bedType},
-        breakType:{name:'breakType',value:this.filters.breakType},
-        inventory:{name:'inventory',value:this.filters.inventory},
-      }
+			// this.pageRequest.columnFilters = {
+			//   hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
+      //   hotelName:{name:'hotelName',value:this.filters.hotelName},
+      //   roomType:{name:'roomType',value:this.filters.roomType},
+      //   bedType:{name:'bedType',value:this.filters.bedType},
+      //   breakType:{name:'breakType',value:this.filters.breakType},
+      //   inventory:{name:'inventory',value:this.filters.inventory},
+      // }
 			this.$api.bizRoom.findPage(this.pageRequest).then((res) => {
 			  this.pageRequest={}
 				this.pageResult = res.data

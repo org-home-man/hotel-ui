@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--表格栏-->
-    <el-table :data="data.content" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
+    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
@@ -136,7 +136,7 @@
       <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
         :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
       <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
-        :current-page="pageRequest.pageNum" :page-size="pageRequest.pageSize" :total="data.totalSize" style="float:right;">
+        :current-page="data.pageNum" :page-size="data.pageSize" :total="data.total" style="float:right;">
       </el-pagination>
     </div>
   </div>
