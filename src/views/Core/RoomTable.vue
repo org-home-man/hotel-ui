@@ -128,6 +128,8 @@
       </el-table-column>
 
 
+
+
     </el-table>
     <!--分页栏-->
     <div class="toolbar" style="padding:10px;">
@@ -195,8 +197,8 @@ export default {
     return {
       // 分页信息
 			pageRequest: {
-				pageNum: 1,
-        pageSize: 10
+				page: 1,
+        rows: 10
       },
       loading: false,  // 加载标识
       selections: [],  // 列表选中列
@@ -224,7 +226,7 @@ export default {
     },
     // 换页刷新
 		refreshPageRequest: function (pageNum) {
-      this.pageRequest.pageNum = pageNum
+      this.pageRequest.page = pageNum
       this.findPage()
     },
     // 编辑
