@@ -38,11 +38,11 @@ export const batchDelete = (data) => {
     })
 }
 // 分页查询
-export const findPage = (data) => {
+export const findPage = (params) => {
     return axios({
-        url: '/bizRoom/findPage',
+        url: '/bizRoom/page',
         method: 'post',
-        data
+        params
     })
 }
 // 查找用户的菜单权限标识集合
@@ -58,9 +58,24 @@ export const uploadFile = (data) => {
   return axios({
     url: '/bizRoom/uploadFile',
     method: 'post',
-    headers: {
-      'Content-Type': 'multipart/form-data;boundary=---12321 '
-    },
+    data
+  })
+}
+
+//生成日期数据，并且根据用户生成数据是否有设置相应数据需要替换。
+export const producePriceCalendar = (data) => {
+  return axios({
+    url: '/bizRoom/producePriceCalendar',
+    method: 'post',
+    data
+  })
+}
+
+//用户输入生成数据组，组装数据组，为了客户可以重复输入
+export const priceDatePro = (data) => {
+  return axios({
+    url: '/bizRoom/priceDatePro',
+    method: 'post',
     data
   })
 }
