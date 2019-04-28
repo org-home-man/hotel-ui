@@ -56,7 +56,8 @@
     "pRoomStock": "请输入默认库存数",
     "pPriceYear": "请选择年份",
     "pAllDateNull": "年份和区间日期不能同时为空",
-    "pSprice": "请输入销售单人价"
+    "pSprice": "请输入销售单人价",
+    "pInventory": "请输入库存数量"
   },
   "user": {
     "id": "编号",

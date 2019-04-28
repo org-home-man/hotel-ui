@@ -121,6 +121,8 @@
       </el-table-column>
       <el-table-column prop="isrestau" header-align="center" align="center" v-if="show">
       </el-table-column>
+      <el-table-column prop="autoClose" header-align="center" align="center" v-if="show">
+      </el-table-column>
 
       <el-table-column prop="tprice" header-align="center" align="center" v-if="show">
       </el-table-column>
