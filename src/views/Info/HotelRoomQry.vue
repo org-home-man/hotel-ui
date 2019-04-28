@@ -13,7 +13,6 @@
           <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item>
         <el-input v-model="filters.inDateStart" :placeholder="$t('hotel.inDateStart')"></el-input>
       </el-form-item>
@@ -229,7 +228,8 @@
 	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
 		:data="pageResult"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete" >
-	</room-table>
+    <!--@findPage="page" @handleEdit="handleEdit" @handleDelete="handleDelete" >-->
+    </room-table>
 
   </div>
 </template>
@@ -313,7 +313,8 @@ export default {
 			columns: [
 
 			],
-			pageRequest: { pageNum: 1, pageSize: 10 },
+			// pageRequest: { pageNum: 1, pageSize: 10 },
+      pageRequest: { page: 1, rows:10  },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -574,13 +575,16 @@ export default {
         this.hotelNames = res.data
       })
     },
-    findDataSelect : function () {
-		  this.sysPara={paraSubCode1:'bizroom'}
+
+    findHotelRoomDataSelect : function () {
+      this.sysPara={}
       let params = Object.assign({}, this.sysPara);
-      this.$api.sysParaConfig.findKeyValue(params).then((res) => {
+      this.$api.sysParaConfig.findKeyValueHotelRoom(params).then((res) => {
         this.paraConfig = res.data
+        console.log(this.paraConfig);
       })
     },
+
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
     },
@@ -593,10 +597,11 @@ export default {
     }
 	},
 	mounted() {
-    this.findDataSelect()
+ //   this.findDataSelect()
     this.findHotlnmSelect()
     this.localLanguageLoad()
     this.handleFileMethod()
+    this.findHotelRoomDataSelect()
 	}
 }
 </script>
