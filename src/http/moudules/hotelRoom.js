@@ -23,11 +23,11 @@ export const batchDelete = (data) => {
   })
 }
 // 分页查询
-export const findPage = (data) => {
+export const findPage = (params) => {
   return axios({
-    url: '/hotelRoom/findPage',
+    url: '/hotelRoom/page',
     method: 'post',
-    data
+    params
   })
 }
 // 查找用户的菜单权限标识集合
