@@ -412,54 +412,54 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {
-        hotelName:{name:'hotelName',value:this.filters.hotelName},
-        inventory:{name:'inventory',value:this.filters.inventory},
-        roomCode:{name:'roomCode',value:this.filters.roomCode},
-        hotelCode:{name:'hotelCode',value:this.filters.hotelCode},
-        roomType:{name:'roomType',value:this.filters.roomType},
-        roomStyle:{name:'roomStyle',value:this.filters.roomStyle},
-        bedType:{name:'bedType',value:this.filters.bedType},
-        breakType:{name:'breakType',value:this.filters.breakType},
-        roomArea:{name:'roomArea',value:this.filters.roomArea},
-        introC:{name:'introC',value:this.filters.introC},
-        introE:{name:'introE',value:this.filters.introE},
-        photo:{name:'photo',value:this.filters.photo},
-        roomStock:{name:'roomStock',value:this.filters.roomStock},
-        recommended:{name:'recommended',value:this.filters.recommended},
-        iswify:{name:'iswify',value:this.filters.iswify},
-        isfront:{name:'isfront',value:this.filters.isfront},
-        isbarrifr:{name:'isbarrifr',value:this.filters.isbarrifr},
-        isbalcony:{name:'isbalcony',value:this.filters.isbalcony},
-        iskitchen:{name:'iskitchen',value:this.filters.iskitchen},
-        iswindow:{name:'iswindow',value:this.filters.iswindow},
-        isheat:{name:'isheat',value:this.filters.isheat},
-        isicebox:{name:'isicebox',value:this.filters.isicebox},
-        isiron:{name:'isiron',value:this.filters.isiron},
-        isnosmk:{name:'isnosmk',value:this.filters.isnosmk},
-        islandscape:{name:'islandscape',value:this.filters.islandscape},
-        ishighrise:{name:'ishighrise',value:this.filters.ishighrise},
-        ispark:{name:'ispark',value:this.filters.ispark},
-        isgym:{name:'isgym',value:this.filters.isgym},
-        isswmp:{name:'isswmp',value:this.filters.isswmp},
-        isbeach:{name:'isbeach',value:this.filters.isbeach},
-        ishotsp:{name:'ishotsp',value:this.filters.ishotsp},
-        ischildct:{name:'ischildct',value:this.filters.ischildct},
-        isroomserv:{name:'isroomserv',value:this.filters.isroomserv},
-        isknead:{name:'isknead',value:this.filters.isknead},
-        islounge:{name:'islounge',value:this.filters.islounge},
-        issuper:{name:'issuper',value:this.filters.issuper},
-        isbus:{name:'isbus',value:this.filters.isbus},
-        istrafic:{name:'istrafic',value:this.filters.istrafic},
-        isrestau:{name:'isrestau',value:this.filters.isrestau},
-        roomPrice:{name:'roomPrice',value:this.filters.roomPrice},
-        hotelname:{name:'hotelname',value:this.filters.hotelname},
-        inDateStart:{name:'inDateStart',value:this.filters.inDateStart},
-        outDateEnd:{name:'outDateEnd',value:this.filters.outDateEnd},
-        roomNum:{name:'roomNum',value:this.filters.roomNum},
-        adultNum:{name:'adultNum',value:this.filters.adultNum},
-        childrenNum:{name:'childrenNum',value:this.filters.childrenNum},
-      }
+
+      this.pageRequest.hotelName=this.filters.hotelName;
+      this.pageRequest.inventory=this.filters.inventory;
+      this.pageRequest.roomCode=this.filters.roomCode;
+      this.pageRequest.hotelCode=this.filters.hotelCode;
+      this.pageRequest.roomType=this.filters.roomType;
+      this.pageRequest.roomStyle=this.filters.roomStyle;
+      this.pageRequest.bedType=this.filters.bedType;
+      this.pageRequest.breakType=this.filters.breakType;
+      this.pageRequest.roomArea=this.filters.roomArea;
+      this.pageRequest.introC=this.filters.introC;
+      this.pageRequest.introE=this.filters.introE;
+      this.pageRequest.photo=this.filters.photo;
+      this.pageRequest.roomStock=this.filters.roomStock;
+      this.pageRequest.recommended=this.filters.recommended;
+      this.pageRequest.iswify=this.filters.iswify;
+      this.pageRequest.isfront=this.filters.isfront;
+      this.pageRequest.isbarrifr=this.filters.isbarrifr;
+      this.pageRequest.isbalcony=this.filters.isbalcony;
+      this.pageRequest.iskitchen=this.filters.iskitchen;
+      this.pageRequest.iswindow=this.filters.iswindow;
+      this.pageRequest.isheat=this.filters.isheat;
+      this.pageRequest.isicebox=this.filters.isicebox;
+      this.pageRequest.isiron=this.filters.isiron;
+      this.pageRequest.isnosmk=this.filters.isnosmk;
+      this.pageRequest.islandscape=this.filters.islandscape;
+      this.pageRequest.ishighrise=this.filters.ishighrise;
+      this.pageRequest.ispark=this.filters.ispark;
+      this.pageRequest.isgym=this.filters.isgym;
+      this.pageRequest.isswmp=this.filters.isswmp;
+      this.pageRequest.isbeach=this.filters.isbeach;
+      this.pageRequest.ishotsp=this.filters.ishotsp;
+      this.pageRequest.ischildct=this.filters.ischildct;
+      this.pageRequest.isroomserv=this.filters.isroomserv;
+      this.pageRequest.isknead=this.filters.isknead;
+      this.pageRequest.islounge=this.filters.islounge;
+      this.pageRequest.issuper=this.filters.issuper;
+      this.pageRequest.isbus=this.filters.isbus;
+      this.pageRequest.istrafic=this.filters.istrafic;
+      this.pageRequest.isrestau=this.filters.isrestau;
+      this.pageRequest.roomPrice=this.filters.roomPrice;
+      this.pageRequest.hotelname=this.filters.hotelname;
+      this.pageRequest.inDateStart=this.filters.inDateStart;
+      this.pageRequest.outDateEnd=this.filters.outDateEnd;
+      this.pageRequest.roomNum=this.filters.roomNum;
+      this.pageRequest.adultNum=this.filters.adultNum;
+      this.pageRequest.childrenNum =this.filters.childrenNum;
+
 			this.$api.hotelRoom.findPage(this.pageRequest).then((res) => {
 			  this.pageRequest={}
 				this.pageResult = res.data
