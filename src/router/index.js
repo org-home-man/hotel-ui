@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/views/Login'
 import NotFound from '@/views/Error/404'
 import Home from '@/views/Home'
-import Intro from '@/views/Intro/Intro'
+import HotelRoomQry from '@/views/Info/HotelRoomQry'
 import Generator from '@/views/Generator/Generator'
 import api from '@/http/api'
 import store from '@/store'
@@ -20,8 +20,8 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: 'serviceMng',
-          component: Intro,
+          name: 'orderQuery',
+          component: HotelRoomQry,
           meta: {
             icon: 'fa fa-home fa-lg',
             index: 0

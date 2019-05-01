@@ -133,7 +133,7 @@
             <!--<el-select v-model="dataForm.recommended" perms="sys:bizRoom:check" type="primary">-->
               <!--<el-option v-for="rm in paraConfig.recommended" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>-->
             <!--</el-select>-->
-            <kt-checkbox trueLable="1" falseLable="2" :label="$t('hotel.recommended')" @changeValue="changeValue" :modelParent="dataForm.recommended" perms="sys:bizRoom:check"></kt-checkbox>
+            <kt-checkbox trueLable="01" falseLable="02" :label="$t('hotel.recommended')" @changeValue="changeValue" :modelParent="dataForm.recommended" perms="sys:bizRoom:check"></kt-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -254,19 +254,40 @@
           <el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">
             <el-upload
               ref="upload"
-              :action="baseUrl+dataurl"
+              :http-request="uploadFile"
               list-type="picture-card"
-              :headers="headersInfo"
               :on-error="handlerror"
               :on-success="handlesuccess"
-              :file-list="fileList"
-              :auto-upload="false">
+              :auto-upload="false"
+              action="#"
+              :file-list="files"
+              multiple>
               <i class="el-icon-plus"></i>
             </el-upload>
 
           </el-form-item>
         </el-col>
       </el-row>
+
+      <!--<el-row>-->
+        <!--<el-col>-->
+          <!--<el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">-->
+            <!--<el-upload-->
+              <!--ref="upload"-->
+              <!--list-type="picture-card"-->
+              <!--:on-error="handlerror"-->
+              <!--:on-success="handlesuccess"-->
+              <!--:file-list="files"-->
+              <!--:auto-upload="false"-->
+              <!--:action="baseUrl+dataurl"-->
+              <!--name="files"-->
+              <!--multiple>-->
+              <!--<i class="el-icon-plus"></i>-->
+            <!--</el-upload>-->
+
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
 
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -572,10 +593,6 @@
           </el-col>
         </el-row>
 
-
-
-
-
         <el-row>
           <el-col :span="24">
             <el-form-item  auto-complete="off" >
@@ -634,7 +651,7 @@ export default {
       priceBoolean:true,
       stockBoolean:true,
       disableHotelName:false,
-      dataurl:'/bizRoom/uploadFile',
+      dataurl:'/document/upload',
 			size: 'small',
 			filters: {
         hotelCode: '',
@@ -700,6 +717,7 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
+        filesId:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -803,7 +821,9 @@ export default {
       bizHotl:[],
       language:{},
       headersInfo:{},
-      fileList:[{name:'timg.jpg',url:'http://localhost:8001/img/timg.jpg'}],
+      files:[],
+      formDate:"",
+      fileList:[],
       priceDateData:[],
       stockDateData:[],
       pickerOptions: {
@@ -873,6 +893,7 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
+        files:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -948,7 +969,12 @@ export default {
     },
     //上传
     submitUpload() {
-      this.$refs.upload.submit();
+
+    },
+    uploadFile(params) {
+		  console.log("uploadFile:"+params.file);
+      this.formDate.append("files",params.file);
+
     },
     //失败回调
     handlerror(err, file, fileList){
@@ -958,20 +984,27 @@ export default {
     handlesuccess(res, file, fileList){
       console.log("成功回调:"+res);
     },
-    //绑定token
-    handleFileMethod() {
-      let token = Cookies.get('token');
-      this.headersInfo = {
-        token: token
-      }
-    },
 		// 编辑
 		submitForm: function () {
 
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
+
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
-						this.editLoading = true
+						this.editLoading = true;
+
+						//图片上传代码
+            this.formDate = new FormData();
+            this.$refs.upload.submit();
+            this.$api.bizRoom.uploadFile(this.formDate).then((res) => {
+              if (res.length>0) {
+                this.dataForm.filesId = res;
+                console.log("filesId:"+this.dataForm.filesId);
+              } else {
+                return false
+              }
+            })
+            //保存信息图片信息
 						let params = Object.assign({}, this.dataForm)
 						this.$api.bizRoom.save(params).then((res) => {
 							if(res.code == 200) {
@@ -983,6 +1016,8 @@ export default {
 							this.$refs['dataForm'].resetFields()
 							this.editDialogVisible = false
               this.disableHotelName = false
+              this.formDate = "";
+							this.files=[];
 							this.findPage(null)
 						})
 					})
@@ -1152,7 +1187,6 @@ export default {
     this.findDataSelect()
     this.findHotlnmSelect()
     this.localLanguageLoad()
-    this.handleFileMethod()
 	},
   computed: {
 	  sRoomPrice:function () {
