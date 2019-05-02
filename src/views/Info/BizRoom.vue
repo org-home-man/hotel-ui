@@ -717,7 +717,6 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
-        filesId:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -935,8 +934,13 @@ export default {
 		  this.disableHotelName = true
 			this.editDialogVisible = true
 			this.operation = false
-      this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
 			this.dataForm = Object.assign({}, params.row)
+      this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
+      this.$api.bizRoom.queryByRelId({relationId:this.dataForm.photo}).then((res) => {
+        console.log("res:"+res);
+
+      })
+
 		},
     // 牌价编辑界面
     handlePriceEdit:function(params) {
@@ -967,8 +971,8 @@ export default {
       this.operation = false
       this.stockForm = Object.assign({}, params.row)
     },
-    //上传
-    submitUpload() {
+    //上传 //图片上传代码
+    async submitUpload() {
 
     },
     uploadFile(params) {
@@ -993,33 +997,36 @@ export default {
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true;
 
-						//图片上传代码
             this.formDate = new FormData();
             this.$refs.upload.submit();
+            //上传图片
             this.$api.bizRoom.uploadFile(this.formDate).then((res) => {
-              if (res.length>0) {
-                this.dataForm.filesId = res;
-                console.log("filesId:"+this.dataForm.filesId);
+              if (res.success) {
+                //保存信息图片信息 提交表单信息
+                if(res.data) {
+                  this.dataForm.photo = res.data;
+                }
+                let params = Object.assign({}, this.dataForm)
+                this.$api.bizRoom.save(params).then((res) => {
+
+                  if(res.code == 200) {
+                    this.$message({ message: this.$t('action.success'), type: 'success' })
+                  } else {
+                    this.$message({message: this.$t('action.fail') , type: 'error'})
+                  }
+                  this.editLoading = false
+                  this.$refs['dataForm'].resetFields()
+                  this.editDialogVisible = false
+                  this.disableHotelName = false
+                  this.formDate = "";
+                  this.files=[];
+                  this.findPage(null)
+                })
               } else {
-                return false
+                this.editLoading = false;
+                return false;
               }
             })
-            //保存信息图片信息
-						let params = Object.assign({}, this.dataForm)
-						this.$api.bizRoom.save(params).then((res) => {
-							if(res.code == 200) {
-								this.$message({ message: this.$t('action.success'), type: 'success' })
-							} else {
-								this.$message({message: this.$t('action.fail') , type: 'error'})
-							}
-							this.editLoading = false
-							this.$refs['dataForm'].resetFields()
-							this.editDialogVisible = false
-              this.disableHotelName = false
-              this.formDate = "";
-							this.files=[];
-							this.findPage(null)
-						})
 					})
 				} else {
           this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
