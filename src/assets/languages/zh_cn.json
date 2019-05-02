@@ -18,9 +18,9 @@
     "topTree": "顶级菜单",
     "title": "株式会社酒店/客房预订系统",
     "username": "账号",
-    "passwd" : "密码",
+    "passwd": "密码",
     "reset": "重置",
-    "validmsg" : "验证码，单击刷新"
+    "validmsg": "验证码，单击刷新"
   },
   "action": {
     "operation": "操作",
@@ -33,7 +33,7 @@
     "pUsername": "请输入用户名",
     "batchDelete": "批量删除",
     "search": "查询",
-    "detileSearch" : "详细查询",
+    "detileSearch": "详细查询",
     "loading": "拼命加载中",
     "submit": "提交",
     "confirm": "确定",
@@ -57,7 +57,9 @@
     "pPriceYear": "请选择年份",
     "pAllDateNull": "年份和区间日期不能同时为空",
     "pSprice": "请输入销售单人价",
-    "pInventory": "请输入库存数量"
+    "pInventory": "请输入库存数量",
+    "makeAppointment": "预约",
+    "returnHome": "返回主页"
   },
   "user": {
     "id": "编号",
@@ -86,24 +88,24 @@
     "logMng": "日志管理",
     "sysMonitor": "系统监控",
     "dictionariesMng": "字典管理",
-    "configMng":"配置管理",
+    "configMng": "配置管理",
     "infoMng": "信息维护",
-    "hotelMng":"酒店信息维护",
-    "guestMng":"客房信息/牌价维护",
+    "hotelMng": "酒店信息维护",
+    "guestMng": "客房信息/牌价维护",
     "guestEdit": "客房信息编辑",
     "guestPriceEdit": "客房牌价编辑",
-    "stockMng":"客房库存维护",
-    "orderMng":"订单管理",
-    "hotelRoomQry":"酒店/客房检索",
-    "orderQry":"订单查询",
-    "orderCrt":"订单生成",
-    "orderFirm":"订单确认",
-    "orderCancel":"订单撤销",
-    "orderServ":"订单维护",
-    "reportMng":"报表查询",
-    "orderDetailRep":"订单明细报表",
-    "houseStock":"未预定客房清单报表",
-    "monthRep":"订单汇总月报表"
+    "stockMng": "客房库存维护",
+    "orderMng": "订单管理",
+    "hotelRoomQry": "酒店/客房检索",
+    "orderQry": "订单查询",
+    "orderCrt": "订单生成",
+    "orderFirm": "订单确认",
+    "orderCancel": "订单撤销",
+    "orderServ": "订单维护",
+    "reportMng": "报表查询",
+    "orderDetailRep": "订单明细报表",
+    "houseStock": "未预定客房清单报表",
+    "monthRep": "订单汇总月报表"
   },
   "table": {
     "id": "编号",
@@ -114,8 +116,7 @@
     "mail": "邮箱",
     "phone": "手机",
     "state": "状态",
-    "sSprice" : "房价"
-
+    "sSprice": "房价"
   },
   "hotel": {
     "roomtype": {
@@ -160,21 +161,19 @@
     "hotelCode": "酒店编号",
     "roomcode": "客房编号",
     "hotelname": "酒店名称",
-    "cityCode" :
-    {
-       "cityCode":"区市町村",
+    "cityCode": {
+      "cityCode": "区市町村",
       "cityCode01": "石垣",
       "cityCode02": "宫古岛"
     },
-    "provinceCode" :
-    {
-      "provinceCode":"都道府县",
+    "provinceCode": {
+      "provinceCode": "都道府县",
       "provinceCode001": "东京",
       "provinceCode002": "大阪"
     },
     "countryCode": {
-        "countryCode": "国家编码",
-        "countryCodeValue" :"JNP"
+      "countryCode": "国家编码",
+      "countryCodeValue": "JNP"
     },
     "roomarea": "客房面积",
     "introc": "中文介绍",
@@ -182,7 +181,7 @@
     "roomstock": "默认库存数",
     "recommended": "是否本期推荐",
     "photo": "宣传图片",
-    "iswify" : "免费WIFI",
+    "iswify": "免费WIFI",
     "isfront": "24H Font",
     "isbarrifr": "无障碍通道",
     "isbalcony": "阳台/露台",
@@ -213,7 +212,7 @@
     "sPrice": "销售单人价",
     "tPrice": "结算单人价",
     "sRoomPrice": "销售房价",
-    "hotelAddr" : "酒店地址",
+    "hotelAddr": "酒店地址",
     "hotelPhone": "酒店电话",
     "hotelFax": "酒店传真",
     "hotelWeb": "酒店网址",
@@ -223,14 +222,26 @@
     "lastUpdateTime": "更新时间",
     "hotelCname": "酒店中文名称",
     "hotelEname": "酒店英文名称",
-    "roomPrice": "房间价格区间",
+    "roomPrice": "房间价格",
     "inDateStart": "入住时间",
-    "outDateEnd" : "退房时间",
-    "roomNum" : "房间数",
+    "outDateEnd": "退房时间",
+    "roomNum": "房间数",
     "adultNum": "成人数",
-    "childrenNum" : "儿童数",
-    "makeSure" : "确认",
-    "reservatRoom" : "预订房间"
+    "childrenNum": "儿童数",
+    "makeSure": "确认",
+    "reservatRoom": "预订房间",
+    "roomNight": "晚",
+    "lastCrtTime" : "最终确认时间",
+    "representName": "代表者姓名",
+    "passportNo": "护照号",
+    "birthday": "出生年月日",
+    "contactPhone": "联系电话",
+    "contactEmail": "联系人邮箱",
+    "adultNum1": "成人人数",
+    "children612": "6-12岁儿童数",
+    "children46": "4-6岁儿童数",
+    "children04": "4岁以下儿童数",
+    "totalPrice": "总价格",
+    "reMark" : "备注"
   }
-
 }
