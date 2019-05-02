@@ -133,7 +133,7 @@
             <!--<el-select v-model="dataForm.recommended" perms="sys:bizRoom:check" type="primary">-->
               <!--<el-option v-for="rm in paraConfig.recommended" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>-->
             <!--</el-select>-->
-            <kt-checkbox trueLable="1" falseLable="2" :label="$t('hotel.recommended')" @changeValue="changeValue" :modelParent="dataForm.recommended" perms="sys:bizRoom:check"></kt-checkbox>
+            <kt-checkbox trueLable="01" falseLable="02" :label="$t('hotel.recommended')" @changeValue="changeValue" :modelParent="dataForm.recommended" perms="sys:bizRoom:check"></kt-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -254,19 +254,40 @@
           <el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">
             <el-upload
               ref="upload"
-              :action="baseUrl+dataurl"
+              :http-request="uploadFile"
               list-type="picture-card"
-              :headers="headersInfo"
               :on-error="handlerror"
               :on-success="handlesuccess"
-              :file-list="fileList"
-              :auto-upload="false">
+              :auto-upload="false"
+              action="#"
+              :file-list="files"
+              multiple>
               <i class="el-icon-plus"></i>
             </el-upload>
 
           </el-form-item>
         </el-col>
       </el-row>
+
+      <!--<el-row>-->
+        <!--<el-col>-->
+          <!--<el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">-->
+            <!--<el-upload-->
+              <!--ref="upload"-->
+              <!--list-type="picture-card"-->
+              <!--:on-error="handlerror"-->
+              <!--:on-success="handlesuccess"-->
+              <!--:file-list="files"-->
+              <!--:auto-upload="false"-->
+              <!--:action="baseUrl+dataurl"-->
+              <!--name="files"-->
+              <!--multiple>-->
+              <!--<i class="el-icon-plus"></i>-->
+            <!--</el-upload>-->
+
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
 
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -441,7 +462,7 @@
     </el-dialog>
 
     <!--库存修改弹出框-->
-    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
+    <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.edit')" width="50%" :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
         <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
@@ -532,9 +553,42 @@
         </el-row>
 
         <el-row>
+          <el-col :span="24">
+            <el-form-item prop="isMonday">
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isMonday" label="月" border></el-checkbox>
+            </el-form-item>
+            <el-form-item   prop="isTuesday">
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isTuesday" label="火" border></el-checkbox>
+            </el-form-item>
+            <el-form-item prop="isThursday" >
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isThursday" label="水" border></el-checkbox>
+            </el-form-item>
+            <el-form-item  prop="isFourday">
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFourday" label="木" border></el-checkbox>
+            </el-form-item>
+            <el-form-item  prop="isFriday" >
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFriday" label="金" border></el-checkbox>
+            </el-form-item>
+            <el-form-item   prop="isSaterday">
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSaterday" label="土" border></el-checkbox>
+            </el-form-item>
+            <el-form-item prop="isSunday" >
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSunday" label="日" border></el-checkbox>
+            </el-form-item>
+
+          </el-col>
+
+        </el-row>
+
+        <el-row>
           <el-col :span="12">
             <el-form-item :label="$t('hotel.inventory')" prop="sPrice" auto-complete="off" >
               <el-input v-model="stockForm.inventory" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="autoClose" auto-complete="off" >
+              <el-checkbox true-label="Y" false-label="N" v-model="stockForm.autoClose" :label="$t('hotel.autoClose')" border></el-checkbox>
             </el-form-item>
           </el-col>
         </el-row>
@@ -542,7 +596,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item  auto-complete="off" >
-              <el-button type="primary" round @click="producePriceData">输入</el-button>
+              <el-button type="primary" round @click="produceStockData">输入</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -552,6 +606,9 @@
             <!--<date-picker :dateData="stockDateData" :trType="stockState">-->
 
             <!--</date-picker>-->
+            <stock-picker :dateData="stockDateData" :roomId="stockForm.roomCode" ref="init" >
+
+            </stock-picker>
           </el-col>
 
         </el-row>
@@ -560,7 +617,7 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button :size="size" @click.native="editStockDialogVisible = false">{{$t('action.cancel')}}</el-button>
+        <el-button :size="size" @click.native="cancelStockForm">{{$t('action.cancel')}}</el-button>
         <el-button :size="size" type="primary" @click.native="submitStockForm" :loading="editStockLoading">{{$t('action.submit')}}</el-button>
       </div>
     </el-dialog>
@@ -571,6 +628,7 @@
 <script>
   import Cookies from "js-cookie";
   import DatePicker from "@/views/Core/DatePicker"
+  import StockPicker from "@/views/Core/StockPicker"
   import RoomTable from "@/views/Core/RoomTable"
   import KtInput from "@/views/Core/KtInput"
   import KtCheckbox from "@/views/Core/KtCheckbox"
@@ -584,7 +642,8 @@ export default {
     KtButton,
     KtCheckbox,
     KtInput,
-    DatePicker
+    DatePicker,
+    StockPicker
 	},
 	data() {
 		return {
@@ -592,7 +651,7 @@ export default {
       priceBoolean:true,
       stockBoolean:true,
       disableHotelName:false,
-      dataurl:'/bizRoom/uploadFile',
+      dataurl:'/document/upload',
 			size: 'small',
 			filters: {
         hotelCode: '',
@@ -605,7 +664,16 @@ export default {
 			columns: [
 
 			],
-			pageRequest: { page: 1, rows:10  },
+			pageRequest: {
+		    page: 1,
+        rows:10 ,
+        hotelCode: null,
+        hotelName: null,
+        roomType:null,
+        bedType:null,
+        breakType:null,
+        inventory: null
+      },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -649,6 +717,7 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
+        filesId:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -718,10 +787,12 @@ export default {
         roomType:null,
         bedType:null,
         stockYear:null,
+        stockDateData:null,
         stockDateInterval:null,
         inventory:null,
         hotelCname: null,
         hotelEname: null,
+        autoClose:null,
         isMonday:null,
         isTuesday:null,
         isThursday:null,
@@ -740,7 +811,9 @@ export default {
         ]
       },
       stockFormRules:{ // 库存页面规则限制
-
+        inventory:[
+          {required: true, message: this.$t('action.pInventory'), trigger: 'blur'}
+        ]
       },
       hotelNames:[],
       paraConfig:[],
@@ -748,7 +821,9 @@ export default {
       bizHotl:[],
       language:{},
       headersInfo:{},
-      fileList:[{name:'timg.jpg',url:'http://localhost:8001/img/timg.jpg'}],
+      files:[],
+      formDate:"",
+      fileList:[],
       priceDateData:[],
       stockDateData:[],
       pickerOptions: {
@@ -787,14 +862,12 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			// this.pageRequest.columnFilters = {
-			//   hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
-      //   hotelName:{name:'hotelName',value:this.filters.hotelName},
-      //   roomType:{name:'roomType',value:this.filters.roomType},
-      //   bedType:{name:'bedType',value:this.filters.bedType},
-      //   breakType:{name:'breakType',value:this.filters.breakType},
-      //   inventory:{name:'inventory',value:this.filters.inventory},
-      // }
+			this.pageRequest.hotelCode = this.filters.hotelCode;
+      this.pageRequest.hotelName = this.filters.hotelName;
+      this.pageRequest.roomType = this.filters.roomType;
+      this.pageRequest.bedType = this.filters.bedType;
+      this.pageRequest.breakType = this.filters.breakType;
+      this.pageRequest.inventory = this.filters.inventory;
 			this.$api.bizRoom.findPage(this.pageRequest).then((res) => {
 			  this.pageRequest={}
 				this.pageResult = res.data
@@ -820,6 +893,7 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
+        files:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -882,14 +956,25 @@ export default {
     //库存编辑界面
     handleStockEdit:function(params) {
       console.log("param",params);
+      params.row.isMonday=null;
+      params.row.isTuesday=null;
+      params.row.isThursday=null;
+      params.row.isFourday=null;
+      params.row.isFriday=null;
+      params.row.isSaterday=null;
+      params.row.isSunday=null;
       this.editStockDialogVisible = true
       this.operation = false
-      this.stockForm.lastUpdateBy = sessionStorage.getItem("user")
       this.stockForm = Object.assign({}, params.row)
     },
     //上传
     submitUpload() {
-      this.$refs.upload.submit();
+
+    },
+    uploadFile(params) {
+		  console.log("uploadFile:"+params.file);
+      this.formDate.append("files",params.file);
+
     },
     //失败回调
     handlerror(err, file, fileList){
@@ -899,20 +984,27 @@ export default {
     handlesuccess(res, file, fileList){
       console.log("成功回调:"+res);
     },
-    //绑定token
-    handleFileMethod() {
-      let token = Cookies.get('token');
-      this.headersInfo = {
-        token: token
-      }
-    },
 		// 编辑
 		submitForm: function () {
 
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
+
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
-						this.editLoading = true
+						this.editLoading = true;
+
+						//图片上传代码
+            this.formDate = new FormData();
+            this.$refs.upload.submit();
+            this.$api.bizRoom.uploadFile(this.formDate).then((res) => {
+              if (res.length>0) {
+                this.dataForm.filesId = res;
+                console.log("filesId:"+this.dataForm.filesId);
+              } else {
+                return false
+              }
+            })
+            //保存信息图片信息
 						let params = Object.assign({}, this.dataForm)
 						this.$api.bizRoom.save(params).then((res) => {
 							if(res.code == 200) {
@@ -924,6 +1016,8 @@ export default {
 							this.$refs['dataForm'].resetFields()
 							this.editDialogVisible = false
               this.disableHotelName = false
+              this.formDate = "";
+							this.files=[];
 							this.findPage(null)
 						})
 					})
@@ -965,11 +1059,12 @@ export default {
     //牌价点击取消，将所有输入的清空。
     cancelPriceForm :function() {
 		  this.priceDateData=[];
+      this.editPriceLoading = false;
       this.editPriceDialogVisible= false;
     },
     //库存编辑提交
     submitStockForm:function() {
-      if (!this.priceForm.priceDateInterval && !this.priceForm.priceYear) {
+      if (!this.stockForm.stockDateInterval && !this.stockForm.stockYear) {
         this.$message({message: this.$t('action.pAllDateNull') , type: 'error'})
         return
       }
@@ -977,6 +1072,9 @@ export default {
         if (valid) {
           this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
             this.editStockLoading = true
+            this.stockForm.stockDateData = this.stockDateData;
+            this.stockForm.lastUpdateBy = sessionStorage.getItem("user")
+
             let params = Object.assign({}, this.stockForm)
             this.$api.bizRoom.saveStock(params).then((res) => {
               if(res.code == 200) {
@@ -984,9 +1082,9 @@ export default {
               } else {
                 this.$message({message: this.$t('action.fail') , type: 'error'})
               }
-              this.editPriceLoading = false
+              this.editStockLoading = false
               this.$refs['stockForm'].resetFields()
-              this.editPriceDialogVisible = false
+              this.editStockDialogVisible = false
               this.stockDateData = []
               this.findPage(null)
             })
@@ -995,6 +1093,11 @@ export default {
           this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
         }
       })
+    },
+    cancelStockForm:function() {
+      this.stockDateData=[];
+      this.editStockLoading = false
+      this.editStockDialogVisible= false;
     },
 		// 时间格式化
   dateFormat: function (row, column, cellValue, index){
@@ -1049,18 +1152,41 @@ export default {
       })
     },
     produceStockData:function () {
-      console.log(this.stockForm.priceDateInterval);
+      this.$refs.stockForm.validate((valid) => {
+        if (valid) {
+          if (!this.stockForm.stockDateInterval && !this.stockForm.stockYear) {
+            this.$message({message: this.$t('action.pAllDateNull'), type: 'error'})
+            return
+          }
+          if (!this.stockForm.inventory) {
+            this.$message({message: this.$t('action.pInventory'), type: 'error'})
+          }
+
+          this.stockForm.stockDateData = this.stockDateData;
+          this.$api.bizRoom.stockDatePro(this.stockForm).then((res) => {
+            console.log(res);
+            if (res.data.code == "0000") {
+              this.stockDateData = res.data.list;
+            }
+          })
+
+        } else {
+          this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+        }
+      })
 
     },
     datePickerMethod:function () {
       this.priceDateData=[];
-		}
+		},
+    datePickerStockMethod:function () {
+      this.stockDateData=[];
+    }
 	},
 	mounted() {
     this.findDataSelect()
     this.findHotlnmSelect()
     this.localLanguageLoad()
-    this.handleFileMethod()
 	},
   computed: {
 	  sRoomPrice:function () {

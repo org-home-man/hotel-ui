@@ -1,25 +1,33 @@
 <template>
   <div>
     <!--表格栏-->
-    <el-table :data="data.content" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
+    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
           :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
 
       <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
       </el-table-column>
-      <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">
+      <!--<el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
+      <!--</el-table-column>-->
+      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <template slot-scope="scope">
+          <el-tag>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-tag>
+        </template>
       </el-table-column>
       <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <template slot-scope="scope">
+          <el-tag>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-tag>
+        </template>
       </el-table-column>
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-      <!--<el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">-->
-        <!--<template slot-scope="scope">-->
-          <!--<el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
       <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
+        </template>
       </el-table-column>
 
       <el-table-column prop="roomTypeKey" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
@@ -34,15 +42,19 @@
       </el-table-column>
 
       <el-table-column prop="breakType" header-align="center" align="center" :label="$t('hotel.breaktype.breaktype')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.breakTypeKey)}}</el-table-column>
+        </template>
       </el-table-column>
-      <el-table-column prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
+
+      <el-table-column prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
 
       <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
           <el-row>
             <el-col>
-              <kt-button icon="fa fa-edit" :label="$t('hotel.reservatRoom')" :perms="permsEdit" :size="size" @click="" />
+              <kt-button icon="fa fa-edit" :label="$t('hotel.reservatRoom')" :perms="permsReservatRoom" :size="size" @click="handleReservatRoom(scope.$index, scope.row)" />
             </el-col>
           </el-row>
         </template>
@@ -147,7 +159,7 @@ export default {
   props: {
     columns: Array, // 表格列配置
     data: Object, // 表格分页数据
-    permsEdit: String,  // 编辑权限标识
+    permsReservatRoom: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
     permsPriceEdit:String, //编辑权限标识
     permsStockEdit:String, //库存编辑权限标识
@@ -191,9 +203,13 @@ export default {
   data() {
     return {
       // 分页信息
-			pageRequest: {
-				pageNum: 1,
-        pageSize: 10
+			// pageRequest: {
+			// 	pageNum: 1,
+      //   pageSize: 10
+      // },
+      pageRequest: {
+        page: 1,
+        rows: 10
       },
       loading: false,  // 加载标识
       selections: [],  // 列表选中列
@@ -221,20 +237,19 @@ export default {
     },
     // 换页刷新
 		refreshPageRequest: function (pageNum) {
-      this.pageRequest.pageNum = pageNum
+      // this.pageRequest.pageNum = pageNum
+       this.pageRequest.page = pageNum
+
       this.findPage()
     },
     // 编辑
 		handleEdit: function (index, row) {
       this.$emit('handleEdit', {index:index, row:row})
 		},
-    // 编辑牌价
-    handlePriceEdit: function (index, row) {
-      this.$emit('handlePriceEdit', {index:index, row:row})
-    },
-    // 编辑牌价
-    handleStockEdit: function (index, row) {
-      this.$emit('handleStockEdit', {index:index, row:row})
+
+    // 编辑
+    handleReservatRoom: function (index, row) {
+      this.$emit('handleReservatRoom', {index:index, row:row})
     },
 
 		// 删除操作

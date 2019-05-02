@@ -13,7 +13,6 @@
           <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
-
       <el-form-item>
         <el-input v-model="filters.inDateStart" :placeholder="$t('hotel.inDateStart')"></el-input>
       </el-form-item>
@@ -100,8 +99,10 @@
             </el-col>
 
             <el-col :span="3">
-              <el-form-item>
-                <el-input v-model="filters.hotelname"  :placeholder="$t('hotel.hotelname')"></el-input>
+              <el-form-item  :label="$t('hotel.hotelname')" prop="hotelCode"  auto-complete="off" >
+                <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
+                  <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -216,7 +217,6 @@
               </el-form-item>
             </el-col>
           </el-row>
-
 			<el-form-item>
 				<kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary" @click="findPage(null)"/>
 			</el-form-item>
@@ -226,10 +226,257 @@
 		</el-form>
 	</div>
 	<!--表格内容栏-->
-	<room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete"
+	<room-table permsReservatRoom="sys:bizRoom:reservatRoom"
 		:data="pageResult"
-		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete" >
-	</room-table>
+		@findPage="findPage" @handleReservatRoom="handleReservatRoom">
+    <!--@findPage="page" @handleEdit="handleEdit" @handleDelete="handleDelete" >-->
+    </room-table>
+
+    <!--新增订单界面-->
+    <el-dialog :title="$t('hotel.reservatRoom')" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+      <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size":inline="true" label-position="left">
+
+        <el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off" >
+          <el-select v-model="dataForm.provinceCode" :disabled="true">
+            <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+          </el-select>
+        </el-form-item>
+        <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+          <!--<template slot-scope="scope">-->
+            <!--<el-table-column>{{$t('hotel.'+scope.row.provinceCode)}} </el-table-column>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
+
+        <!--<el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off">-->
+          <!--<el-input v-model="{$t('hotel.'+scope.row.provinceCodeKey)}" :placeholder="" :disabled="true"></el-input>-->
+        <!--</el-form-item>-->
+
+        <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
+          <el-select v-model="dataForm.cityCode" :disabled="true" >
+            <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-input v-model="dataForm.inDateStart" :placeholder="$t('hotel.inDateStart')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="dataForm.outDateEnd" :placeholder="$t('hotel.outDateEnd')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="dataForm.roomNight" :placeholder="$t('hotel.roomNight')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-form-item>
+            <el-input v-model="dataForm.sPrice" :disabled="true" :placeholder="$t('hotel.sPrice')"></el-input>
+          </el-form-item>
+        </el-form-item>
+        <el-form-item  :label="$t('hotel.hotelname')" prop="hotelCode"  auto-complete="off" >
+          <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
+            <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-input v-model="dataForm.lastCrtTime":placeholder="$t('hotel.lastCrtTime')"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-select v-model="dataForm.roomType" :disabled="true" :placeholder="$t('hotel.roomtype.roomtype')">
+            <el-option v-for="rs in paraConfig.roomtype" :key="rs.paraCode" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-input v-model="dataForm.adultNum" :placeholder="$t('hotel.adultNum')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="dataForm.childrenNum" :placeholder="$t('hotel.childrenNum')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="dataForm.inventory" :disabled="true" :placeholder="$t('hotel.inventory')"></el-input>
+        </el-form-item>
+
+        <!--<el-form-item>-->
+          <!--<el-form-item>-->
+            <!--<el-input v-model="dataForm.sPrice" :disabled="true" :placeholder="$t('hotel.sPrice')"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-form-item>-->
+
+        <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr" >
+          <el-input v-model="dataForm.hotelAddr" :disabled="true" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.hotelPhone')" prop="hotelPhone" >
+          <el-input v-model="dataForm.hotelPhone" :disabled="true"  auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.hotelWeb')" prop="hotelWeb">
+          <el-input v-model="dataForm.hotelWeb" :disabled="true"  auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-row>
+          <el-col :span="24" >
+            <el-form-item :label="$t('hotel.introc')" prop="introC"  auto-complete="off">
+              <el-input v-model="dataForm.introC" :disabled="true"  type="textarea"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item :label="$t('hotel.introe')" prop="introE"  auto-complete="off">
+              <el-input v-model="dataForm.introE" :disabled="true"  type="textarea"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <h3 style="text-align: left">常用信息:</h3>
+        <el-row>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswify')" v-model="dataForm.iswify" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isfront')" v-model="dataForm.isfront" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbarrifr')" v-model="dataForm.isbarrifr" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" align="left">
+
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbalcony')" v-model="dataForm.isbalcony" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iskitchen')" v-model="dataForm.iskitchen" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswindow')" v-model="dataForm.iswindow" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isheat')" v-model="dataForm.isheat" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')" v-model="dataForm.isicebox" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')" v-model="dataForm.isiron" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')" v-model="dataForm.isnosmk" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')" v-model="dataForm.islandscape" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishighrise')" v-model="dataForm.ishighrise" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ispark')" v-model="dataForm.ispark" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isgym')" v-model="dataForm.isgym" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')" v-model="dataForm.isswmp" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')" v-model="dataForm.isbeach" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishotsp')" v-model="dataForm.ishotsp" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ischildct')" v-model="dataForm.ischildct" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isroomserv')" v-model="dataForm.isroomserv" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isknead')" v-model="dataForm.isknead" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islounge')" v-model="dataForm.islounge" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.issuper')" v-model="dataForm.issuper" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbus')" v-model="dataForm.isbus" border></el-checkbox>
+            </el-form-item>
+
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col align="left">
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.istrafic')" v-model="dataForm.istrafic" border></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isrestau')" v-model="dataForm.isrestau" border></el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item :label="$t('hotel.representName')" prop="representName" auto-complete="off">
+          <el-input v-model="dataForm.representName" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.passportNo')" prop="passportNo" auto-complete="off">
+          <el-input v-model="dataForm.passportNo" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.birthday')" prop="birthday" auto-complete="off">
+          <el-input v-model="dataForm.birthday" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.contactPhone')" prop="contactPhone" auto-complete="off">
+          <el-input v-model="dataForm.contactPhone" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.contactEmail')" prop="contactEmail" auto-complete="off">
+          <el-input v-model="dataForm.contactEmail" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.adultNum1')" prop="adultNum1" auto-complete="off">
+          <el-input v-model="dataForm.adultNum1" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.children612')" prop="children612" auto-complete="off">
+          <el-input v-model="dataForm.children612" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.children46')" prop="children46" auto-complete="off">
+          <el-input v-model="dataForm.children46" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.children04')" prop="children04" auto-complete="off">
+          <el-input v-model="dataForm.children04" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.roomNum')" prop="roomNum" auto-complete="off">
+          <el-input v-model="dataForm.roomNum" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.totalPrice')" prop="totalPrice" auto-complete="off">
+          <el-input v-model="dataForm.totalPrice" ></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.makeAppointment')}}</el-button>
+        <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.returnHome')}}</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -308,21 +555,22 @@ export default {
         outDateEnd:null,
         roomNum:null,
         adultNum:null,
-        childrenNum:null
+        childrenNum:null,
+        sPrice:null,
+        roomNight:null
 			},
 			columns: [
 
 			],
-			pageRequest: { pageNum: 1, pageSize: 10 },
+			// pageRequest: { pageNum: 1, pageSize: 10 },
+      pageRequest: { page: 1, rows:10  },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
 			editDialogVisible: false, // 新增编辑界面是否显示
       editPriceDialogVisible: false, // 编辑牌价界面是否显示
-      editStockDialogVisible: false, // 编辑库存界面是否显示
 			editLoading: false,
       editPriceLoading:false,
-      editStockLoading:false,
 			dataFormRules: {
         hotelCode: [
 					{ required: true, message: this.$t('action.pHotelName'), trigger: 'blur' }
@@ -394,7 +642,18 @@ export default {
         outDateEnd:null,
         roomNum:null,
         adultNum:null,
-        childrenNum:null
+        childrenNum:null,
+        lastCrtTime:null,
+        representName:null,
+        passportNo:null,
+        birthday:null,
+        contactPhone:null,
+        contactEmail:null,
+        adultNum1:null,
+        children612:null,
+        children46:null,
+        children04:null,
+        totalPrice:null
 			},
       hotelNames:[],
       paraConfig:[],
@@ -411,54 +670,53 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {
-        hotelName:{name:'hotelName',value:this.filters.hotelName},
-        inventory:{name:'inventory',value:this.filters.inventory},
-        roomCode:{name:'roomCode',value:this.filters.roomCode},
-        hotelCode:{name:'hotelCode',value:this.filters.hotelCode},
-        roomType:{name:'roomType',value:this.filters.roomType},
-        roomStyle:{name:'roomStyle',value:this.filters.roomStyle},
-        bedType:{name:'bedType',value:this.filters.bedType},
-        breakType:{name:'breakType',value:this.filters.breakType},
-        roomArea:{name:'roomArea',value:this.filters.roomArea},
-        introC:{name:'introC',value:this.filters.introC},
-        introE:{name:'introE',value:this.filters.introE},
-        photo:{name:'photo',value:this.filters.photo},
-        roomStock:{name:'roomStock',value:this.filters.roomStock},
-        recommended:{name:'recommended',value:this.filters.recommended},
-        iswify:{name:'iswify',value:this.filters.iswify},
-        isfront:{name:'isfront',value:this.filters.isfront},
-        isbarrifr:{name:'isbarrifr',value:this.filters.isbarrifr},
-        isbalcony:{name:'isbalcony',value:this.filters.isbalcony},
-        iskitchen:{name:'iskitchen',value:this.filters.iskitchen},
-        iswindow:{name:'iswindow',value:this.filters.iswindow},
-        isheat:{name:'isheat',value:this.filters.isheat},
-        isicebox:{name:'isicebox',value:this.filters.isicebox},
-        isiron:{name:'isiron',value:this.filters.isiron},
-        isnosmk:{name:'isnosmk',value:this.filters.isnosmk},
-        islandscape:{name:'islandscape',value:this.filters.islandscape},
-        ishighrise:{name:'ishighrise',value:this.filters.ishighrise},
-        ispark:{name:'ispark',value:this.filters.ispark},
-        isgym:{name:'isgym',value:this.filters.isgym},
-        isswmp:{name:'isswmp',value:this.filters.isswmp},
-        isbeach:{name:'isbeach',value:this.filters.isbeach},
-        ishotsp:{name:'ishotsp',value:this.filters.ishotsp},
-        ischildct:{name:'ischildct',value:this.filters.ischildct},
-        isroomserv:{name:'isroomserv',value:this.filters.isroomserv},
-        isknead:{name:'isknead',value:this.filters.isknead},
-        islounge:{name:'islounge',value:this.filters.islounge},
-        issuper:{name:'issuper',value:this.filters.issuper},
-        isbus:{name:'isbus',value:this.filters.isbus},
-        istrafic:{name:'istrafic',value:this.filters.istrafic},
-        isrestau:{name:'isrestau',value:this.filters.isrestau},
-        roomPrice:{name:'roomPrice',value:this.filters.roomPrice},
-        hotelname:{name:'hotelname',value:this.filters.hotelname},
-        inDateStart:{name:'inDateStart',value:this.filters.inDateStart},
-        outDateEnd:{name:'outDateEnd',value:this.filters.outDateEnd},
-        roomNum:{name:'roomNum',value:this.filters.roomNum},
-        adultNum:{name:'adultNum',value:this.filters.adultNum},
-        childrenNum:{name:'childrenNum',value:this.filters.childrenNum},
-      }
+      this.pageRequest.hotelName=this.filters.hotelName;
+      this.pageRequest.inventory=this.filters.inventory;
+      this.pageRequest.roomCode=this.filters.roomCode;
+      this.pageRequest.hotelCode=this.filters.hotelCode;
+      this.pageRequest.roomType=this.filters.roomType;
+      this.pageRequest.roomStyle=this.filters.roomStyle;
+      this.pageRequest.bedType=this.filters.bedType;
+      this.pageRequest.breakType=this.filters.breakType;
+      this.pageRequest.roomArea=this.filters.roomArea;
+      this.pageRequest.introC=this.filters.introC;
+      this.pageRequest.introE=this.filters.introE;
+      this.pageRequest.photo=this.filters.photo;
+      this.pageRequest.roomStock=this.filters.roomStock;
+      this.pageRequest.recommended=this.filters.recommended;
+      this.pageRequest.iswify=this.filters.iswify;
+      this.pageRequest.isfront=this.filters.isfront;
+      this.pageRequest.isbarrifr=this.filters.isbarrifr;
+      this.pageRequest.isbalcony=this.filters.isbalcony;
+      this.pageRequest.iskitchen=this.filters.iskitchen;
+      this.pageRequest.iswindow=this.filters.iswindow;
+      this.pageRequest.isheat=this.filters.isheat;
+      this.pageRequest.isicebox=this.filters.isicebox;
+      this.pageRequest.isiron=this.filters.isiron;
+      this.pageRequest.isnosmk=this.filters.isnosmk;
+      this.pageRequest.islandscape=this.filters.islandscape;
+      this.pageRequest.ishighrise=this.filters.ishighrise;
+      this.pageRequest.ispark=this.filters.ispark;
+      this.pageRequest.isgym=this.filters.isgym;
+      this.pageRequest.isswmp=this.filters.isswmp;
+      this.pageRequest.isbeach=this.filters.isbeach;
+      this.pageRequest.ishotsp=this.filters.ishotsp;
+      this.pageRequest.ischildct=this.filters.ischildct;
+      this.pageRequest.isroomserv=this.filters.isroomserv;
+      this.pageRequest.isknead=this.filters.isknead;
+      this.pageRequest.islounge=this.filters.islounge;
+      this.pageRequest.issuper=this.filters.issuper;
+      this.pageRequest.isbus=this.filters.isbus;
+      this.pageRequest.istrafic=this.filters.istrafic;
+      this.pageRequest.isrestau=this.filters.isrestau;
+      this.pageRequest.roomPrice=this.filters.roomPrice;
+      this.pageRequest.hotelname=this.filters.hotelname;
+      this.pageRequest.inDateStart=this.filters.inDateStart;
+      this.pageRequest.outDateEnd=this.filters.outDateEnd;
+      this.pageRequest.roomNum=this.filters.roomNum;
+      this.pageRequest.adultNum=this.filters.adultNum;
+      this.pageRequest.childrenNum =this.filters.childrenNum;
+
 			this.$api.hotelRoom.findPage(this.pageRequest).then((res) => {
 			  this.pageRequest={}
 				this.pageResult = res.data
@@ -468,58 +726,9 @@ export default {
 		handleDelete: function (data) {
 			this.$api.bizRoom.batchDelete(data.params).then(data!=null?data.callback:'')
 		},
-		// 显示新增界面
-    handleDetileSearch: function () {
-      this.disableHotelName = false
-			this.editDialogVisible = true
-			this.operation = true
-			this.dataForm = {
-				roomCode: null,
-				hotelCode: null,
-				roomType: null,
-				roomStyle: null,
-				bedType: null,
-				breakType: null,
-				roomArea: null,
-				introC: null,
-				introE: null,
-				photo: null,
-				roomStock: null,
-				recommended: null,
-        iswify:null,
-        isfront:null,
-        isbarrifr:null,
-        isbalcony:null,
-        iskitchen:null,
-        iswindow:null,
-        isheat:null,
-        isicebox:null,
-        isiron:null,
-        isnosmk:null,
-        islandscape:null,
-        ishighrise:null,
-        ispark:null,
-        isgym:null,
-        isswmp:null,
-        isbeach:null,
-        ishotsp:null,
-        ischildct:null,
-        isroomserv:null,
-        isknead:null,
-        islounge:null,
-        issuper:null,
-        isbus:null,
-        istrafic:null,
-        isrestau:null,
-        creatBy: null,
-        creatTime: null,
-        lastUpdateBy: null,
-        lastUpdateTime: null
-			}
-			this.dataForm.creatBy = sessionStorage.getItem("user")
-		},
-		// 显示编辑界面
-		handleEdit: function (params) {
+
+		// 显示预订界面
+    handleReservatRoom: function (params) {
 		  console.log("param",params);
 		  this.disableHotelName = true
 			this.editDialogVisible = true
@@ -544,7 +753,7 @@ export default {
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true
 						let params = Object.assign({}, this.dataForm)
-						this.$api.bizRoom.save(params).then((res) => {
+						this.$api.hotelRoom.save(params).then((res) => {
 							if(res.code == 200) {
 								this.$message({ message: this.$t('action.success'), type: 'success' })
 							} else {
@@ -574,13 +783,16 @@ export default {
         this.hotelNames = res.data
       })
     },
-    findDataSelect : function () {
-		  this.sysPara={paraSubCode1:'bizroom'}
+
+    findHotelRoomDataSelect : function () {
+      this.sysPara={}
       let params = Object.assign({}, this.sysPara);
-      this.$api.sysParaConfig.findKeyValue(params).then((res) => {
+      this.$api.sysParaConfig.findKeyValueHotelRoom(params).then((res) => {
         this.paraConfig = res.data
+        console.log(this.paraConfig);
       })
     },
+
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
     },
@@ -593,10 +805,11 @@ export default {
     }
 	},
 	mounted() {
-    this.findDataSelect()
+ //   this.findDataSelect()
     this.findHotlnmSelect()
     this.localLanguageLoad()
     this.handleFileMethod()
+    this.findHotelRoomDataSelect()
 	}
 }
 </script>

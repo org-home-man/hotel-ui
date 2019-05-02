@@ -62,7 +62,7 @@ export const uploadFile = (data) => {
   })
 }
 
-//生成日期数据，并且根据用户生成数据是否有设置相应数据需要替换。
+//生成日期数据，并且根据用户生成数据是否有设置相应数据需要替换，（牌价）。
 export const producePriceCalendar = (data) => {
   return axios({
     url: '/bizRoom/producePriceCalendar',
@@ -75,6 +75,24 @@ export const producePriceCalendar = (data) => {
 export const priceDatePro = (data) => {
   return axios({
     url: '/bizRoom/priceDatePro',
+    method: 'post',
+    data
+  })
+}
+
+//生成日期数据，并且根据用户生成数据是否有设置相应数据需要替换，（库存）。
+export const produceStockCalendar = (data) => {
+  return axios({
+    url: '/bizRoom/produceStockCalendar',
+    method: 'post',
+    data
+  })
+}
+
+//用户输入生成数据组，组装数据组，为了客户可以重复输入(库存)
+export const stockDatePro = (data) => {
+  return axios({
+    url: '/bizRoom/stockDatePro',
     method: 'post',
     data
   })
