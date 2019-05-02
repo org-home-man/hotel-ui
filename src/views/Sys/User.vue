@@ -4,8 +4,25 @@
     <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
       <el-form :inline="true" :model="filters" :size="size">
         <el-form-item>
-          <el-input v-model="filters.name" :placeholder="$t('user.username')"></el-input>
+          <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.id" :placeholder="$t('user.id')"></el-input>
+        </el-form-item>
+        <!-- <el-form-item>
+          <el-select v-model="filters.userRoles" multiple :placeholder="$t('user.role')" style="width: 100%;">
+            <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+       <el-form-item>
+          <el-input v-model="filters.region" :placeholder="$t('user.region')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.org" :placeholder="$t('user.org')"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.status" :placeholder="$t('user.status')"></el-input>
+        </el-form-item>-->
         <el-form-item>
           <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary"
                      @click="findPage(null)"/>
@@ -74,9 +91,6 @@
             :currentChangeHandle="deptTreeCurrentChangeHandle">
           </popup-tree-input>
         </el-form-item>
-        <el-form-item :label="$t('user.deptNumber')" prop="deptNumber">
-          <el-input v-model="dataForm.deptNumber" auto-complete="off"></el-input>
-        </el-form-item>
         <el-form-item :label="$t('user.phone')" prop="phone">
           <el-input v-model="dataForm.phone" auto-complete="off"></el-input>
         </el-form-item>
@@ -92,20 +106,20 @@
         <el-form-item :label="$t('user.remark')" prop="remark">
           <el-input v-model="dataForm.remark" type="textarea" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('user.role')" prop="role">
+        <el-form-item :label="$t('user.role')" prop="userRoles">
           <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
-                     style="width: 200px;">
-            <el-option v-for="item in userRoles" :key="item.id"
+                     style="width: 100%;">
+            <el-option v-for="item in roles" :key="item.id"
                        :label="item.remark" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('user.phto')" prop="phto">
-          <el-upload action="string" :limit="1" :on-exceed="onExceed" list-type="picture-card" :http-request="uploadSectionFile">
+          <el-upload action="string" :limit="1" :on-exceed="onExceed" :file-list="fileList" :on-change="beforeUpload" :auto-upload="false" list-type="picture-card">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog>
-            <img width="100%" :src="dataForm.playUrl">
+            <img width="100%" src="">
           </el-dialog>
         </el-form-item>
       </el-form>
@@ -125,6 +139,7 @@
   import KtButton from "@/views/Core/KtButton"
   import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog"
   import {format} from "@/utils/datetime"
+  import {baseUrl} from "@/utils/global"
 
   export default {
     components: {
@@ -135,13 +150,22 @@
     },
     data() {
       return {
+        baseUrl:baseUrl,
         size: 'small',
         filters: {
-          name: ''
+          id:"",
+          name: '',
+          userRoles:[],
+          region:'',
+          org:'',
+          status:''
         },
         columns: [],
         filterColumns: [],
-        pageRequest: {pageNum: 1, pageSize: 10},
+        pageRequest: {
+          page: 1,
+          rows: 10
+        },
         pageResult: {},
 
         operation: false, // true:新增, false:编辑
@@ -156,29 +180,30 @@
         dataForm: {
           id: 0,
           name: '',
-          password: '123456',
-          deptId: 1,
+          password: '',
+          deptId: '',
           deptName: '',
           birthday:'',
           email: '',
           mobile: '',
           status: 1,
-          playUrl:'',
+          path:null,
           phone:'',
           address:'',
           region:'',
           net:'',
           remark:'',
-          userRoles: []
-
+          userRoles: [],
+          playUrl:""
         },
         deptData: [],
         deptTreeProps: {
           label: 'name',
           children: 'children'
         },
-        userRoles: [],
-        fileList: [{name: '', url: ''}]
+        roles: [],
+        fileList: [],
+        files:null
       }
     },
     methods: {
@@ -187,7 +212,7 @@
         if (data !== null) {
           this.pageRequest = data.pageRequest
         }
-        this.pageRequest.columnFilters = {name: {name: 'name', value: this.filters.name}}
+        this.pageRequest = {...this.pageRequest,...this.filters};
         this.$api.user.findPage(this.pageRequest).then((res) => {
           this.pageResult = res.data;
           this.findUserRoles()
@@ -197,7 +222,7 @@
       findUserRoles: function () {
         this.$api.role.findAll().then((res) => {
           // 加载角色集合
-          this.userRoles = res.data
+          this.roles = res.data
         })
       },
       // 批量删除
@@ -212,13 +237,12 @@
           id: 0,
           name: '',
           password: '',
-          deptId: 1,
+          deptId: '',
           deptName: '',
           birthday:'',
           email: '',
           mobile: '',
           status: 1,
-          playUrl:'',
           phone:'',
           address:'',
           region:'',
@@ -229,8 +253,8 @@
       },
       // 显示编辑界面
       handleEdit: function (params) {
-        this.dialogVisible = true
-        this.operation = false
+        this.dialogVisible = true;
+        this.operation = false;
         this.dataForm = Object.assign({}, params.row);
         let userRoles = [];
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
@@ -238,38 +262,67 @@
         }
         this.dataForm.userRoles = userRoles;
 
+        this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
+          let arr = new Array();
+          arr.push({url:this.baseUrl+"/document/preview/"+res.data})
+          this.fileList = arr;
+        })
       },
       // 编辑
-      submitForm: function () {
+      submitForm:function () {
         this.$refs.dataForm.validate((valid) => {
           if (valid) {
+
             this.$confirm(this.$t('action.sureSubmit'), this.$t('action.Tips'), {}).then(() => {
-              this.editLoading = true
-              let params = Object.assign({}, this.dataForm)
-              let userRoles = []
-              for (let i = 0, len = params.userRole.length; i < len; i++) {
-                let userRole = {
-                  userId: params.id,
-                  roleId: params.userRoles[i]
-                }
-                userRoles.push(userRole)
+
+              console.log(this.files)
+              if (this.files != null) {
+                let formDate = new FormData();
+                formDate.append("files", this.files.raw);
+
+                this.$api.user.upload(formDate).then((res) => {
+                  this.editLoading = false;
+                  if (res == null) {
+                    this.$message({message: this.$t('action.fail'), type: 'error'});
+                  }
+
+                  this.dataForm.path = res.data;
+
+                  this.sumbit()
+                })
+              } else {
+                this.sumbit()
               }
-              params.userRoles = userRoles;
-              this.$api.user.save(params).then((res) => {
-                this.editLoading = false;
-                if (res.code == 200) {
-                  this.$message({message: this.$t('action.success'), type: 'success'})
-                  this.dialogVisible = false;
-                  this.$refs['dataForm'].resetFields()
-                } else {
-                  this.$message({message: this.$t('action.fail'), type: 'error'})
-                }
-                this.findPage(null)
-              })
             })
+
           }
         })
       },
+      sumbit:function () {
+        let params = Object.assign({}, this.dataForm)
+        this.editLoading = true
+        let userRoles = []
+        for (let i = 0, len = params.userRoles.length; i < len; i++) {
+          let userRole = {
+            userId: params.id,
+            roleId: params.userRoles[i]
+          }
+          userRoles.push(userRole)
+        }
+        params.userRoles = userRoles;
+        this.$api.user.save(params).then((res) => {
+          this.editLoading = false;
+          if (res.code == 200) {
+            this.$message({message: this.$t('action.success'), type: 'success'})
+            this.dialogVisible = false;
+            this.$refs['dataForm'].resetFields()
+          } else {
+            this.$message({message: this.$t('action.fail'), type: 'error'})
+          }
+          this.findPage(null)
+        })
+      }
+      ,
       //取消按钮
       cancel: function (formName) {
         this.dialogVisible = false;
@@ -282,7 +335,7 @@
         })
       },
       // 菜单树选中
-      deptTreeCurrentChangeHandle(data, node) {
+      deptTreeCurrentChangeHandle (data, node) {
         this.dataForm.deptId = data.id
         this.dataForm.deptName = data.name
       },
@@ -316,22 +369,9 @@
         ]
         this.filterColumns = JSON.parse(JSON.stringify(this.columns));
       },
-      uploadSectionFile: function (param) { //自定义文件上传
-        var fileObj = param.file;
-        var form = new FormData();
-
-        form.append("file", fileObj);
-         this.$api.user.upload(form).then((res) => {
-           this.editLoading = false
-           if (res.code == 200) {
-             this.dateFormat.playUrl = res.msg;
-             alert(res.msg)
-             this.$message({message: this.$t('action.success'), type: 'success'})
-           } else {
-             this.$message({message: this.$t('action.fail'), type: 'error'})
-           }
-           this.findPage(null)
-         })
+      beforeUpload:function (file) {
+        this.files = file;
+        return false;
       },
       onExceed(files, fileList) {
         this.$message({
@@ -339,7 +379,7 @@
           message: '最多只能上传一个图片',
           duration: 6000
         });
-      },
+      }
     },
     mounted() {
       this.findDeptTree()

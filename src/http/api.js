@@ -1,4 +1,4 @@
-/* 
+/*
  * 接口统一集成模块
  */
 import * as login from './moudules/login'
@@ -13,6 +13,7 @@ import * as bizHotl from './moudules/bizHotl'
 import * as hotelArea from './moudules/hotelArea'
 import * as sysParaConfig from './moudules/sysParaConfig'
 import * as hotelRoom from './moudules/hotelRoom'
+import * as bizPuchs from './moudules/bizPuchs'
 
 
 
@@ -29,5 +30,6 @@ export default {
     bizHotl,
     sysParaConfig,
     hotelArea,
-    hotelRoom
+    hotelRoom,
+    bizPuchs
 }
