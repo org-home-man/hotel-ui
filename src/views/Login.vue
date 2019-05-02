@@ -97,10 +97,7 @@
       login() {
         this.loading = true
         let userInfo = {account:this.loginForm.account, password:this.loginForm.password, captcha:this.loginForm.captcha}
-        console.log(this.$api);
-        console.log(this.$api.login);
         this.$api.login.login(userInfo).then((res) => {
-          console.log("res:"+res.toString());
           if(res.msg != null) {
             this.$message({
               message: res.msg,
@@ -114,7 +111,6 @@
           }
           this.loading = false
         }).catch((res) => {
-          console.log("错误："+ res.message );
           this.$message({
             message: res.message,
             type: 'error'
