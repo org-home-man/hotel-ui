@@ -36,7 +36,6 @@
         <template slot-scope="scope">
           <el-row>
             <el-col>
-              <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsReservatRoom" :size="size" @click="handleReservatRoom(scope.$index, scope.row)" />
               <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
               <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
             </el-col>
@@ -231,10 +230,6 @@ export default {
 		refreshPageRequest: function (pageNum) {
       this.pageRequest.page = pageNum
       this.findPage()
-    },
-    // 编辑
-    handleEdit: function (index, row) {
-      this.$emit('handleReservatRoom', {index:index, row:row})
     },
     // 编辑
 		handleEdit: function (index, row) {
