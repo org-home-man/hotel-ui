@@ -258,6 +258,8 @@
               list-type="picture-card"
               :on-error="handlerror"
               :on-success="handlesuccess"
+              :on-change="handlePictureChange"
+              :on-remove="handlePictureChange"
               :auto-upload="false"
               action="#"
               :file-list="files"
@@ -291,7 +293,7 @@
 
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
+			<el-button :size="size" @click.native="cancelForm">{{$t('action.cancel')}}</el-button>
 			<el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
 		</div>
   </el-dialog>
@@ -820,9 +822,8 @@ export default {
       bizHotl:[],
       language:{},
       headersInfo:{},
-      files:[],
       formDate:"",
-      fileList:[],
+      files:[],
       priceDateData:[],
       stockDateData:[],
       pickerOptions: {
@@ -892,7 +893,6 @@ export default {
 				introC: null,
 				introE: null,
 				photo: null,
-        files:[],
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -937,14 +937,23 @@ export default {
 			this.dataForm = Object.assign({}, params.row)
       this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
       this.$api.bizRoom.queryByRelId({relationId:this.dataForm.photo}).then((res) => {
-        console.log("res:"+res);
-
+        if (res.success) {
+          if (res.data) {
+            for (var i = 0 ;i<res.data.length;i++ ) {
+              this.files.push({url:baseUrl+'/document/preview/'+res.data[i]})
+            }
+          }
+        }
       })
 
 		},
+    cancelForm:function() {
+      this.editDialogVisible = false;
+      this.editLoading = false;
+      this.files = [];
+    },
     // 牌价编辑界面
     handlePriceEdit:function(params) {
-
       console.log("param",params);
       params.row.isMonday=null;
       params.row.isTuesday=null;
@@ -987,6 +996,9 @@ export default {
     //上传成功回调
     handlesuccess(res, file, fileList){
       console.log("成功回调:"+res);
+    },
+    handlePictureChange(file,fileList) {
+
     },
 		// 编辑
 		submitForm: function () {
