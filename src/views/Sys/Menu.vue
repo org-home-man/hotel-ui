@@ -18,36 +18,36 @@
     <el-table :data="tableTreeDdata" stripe size="mini" style="width: 100%;"
       v-loading="loading" element-loading-text="$t('action.loading')">
       <el-table-column
-        prop="id" header-align="center" align="center" width="80" label="ID">
+        prop="id" header-align="center" align="center" width="80" :label="$t('table.id')">
       </el-table-column>
       <table-tree-column
-        prop="name" header-align="center" treeKey="id" width="150" label="名称">
+        prop="name" header-align="center" treeKey="id" width="150" :label="$t('table.name')">
       </table-tree-column>
-      <el-table-column header-align="center" align="center" label="图标">
+      <el-table-column header-align="center" align="center" :label="$t('table.icon')">
         <template slot-scope="scope">
           <i :class="scope.row.icon || ''"></i>
         </template>
       </el-table-column>
-      <el-table-column prop="type" header-align="center" align="center" label="类型">
+      <el-table-column prop="type" header-align="center" align="center" :label="$t('table.type')">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.type === 0" size="small">目录</el-tag>
-          <el-tag v-else-if="scope.row.type === 1" size="small" type="success">菜单</el-tag>
-          <el-tag v-else-if="scope.row.type === 2" size="small" type="info">按钮</el-tag>
+          <el-tag v-if="scope.row.type === 0" size="small">{{$t('action.content')}}</el-tag>
+          <el-tag v-else-if="scope.row.type === 1" size="small" type="success">{{$t('action.tree')}}</el-tag>
+          <el-tag v-else-if="scope.row.type === 2" size="small" type="info">{{$t('action.button')}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-        prop="parentName" header-align="center" align="center" width="120" label="上级菜单">
+        prop="parentName" header-align="center" align="center" width="120" :label="$t('table.preTree')">
       </el-table-column>
       <el-table-column
         prop="url" header-align="center" align="center" width="150"
-        :show-overflow-tooltip="true" label="菜单URL">
+        :show-overflow-tooltip="true" :label="$t('table.treeURL')">
       </el-table-column>
       <el-table-column
         prop="perms" header-align="center" align="center" width="150"
-        :show-overflow-tooltip="true" label="授权标识">
+        :show-overflow-tooltip="true" :label="$t('table.authIdentify')">
       </el-table-column>
       <el-table-column
-        prop="orderNum" header-align="center" align="center" label="排序">
+        prop="orderNum" header-align="center" align="center" :label="$t('table.orderBy')">
       </el-table-column>
       <el-table-column
         fixed="right" header-align="center" align="center" width="185" :label="$t('action.operation')">
@@ -58,10 +58,10 @@
       </el-table-column>
     </el-table>
     <!-- 新增修改界面 -->
-    <el-dialog :title="!dataForm.id ? '新增' : '修改'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="submitForm()"
         label-width="80px" :size="size" style="text-align:left;">
-        <el-form-item label="菜单类型" prop="type">
+        <el-form-item :label="$t('action.tree')" prop="type">
           <el-radio-group v-model="dataForm.type">
             <el-radio v-for="(type, index) in menuTypeList" :label="index" :key="index">{{ type }}</el-radio>
           </el-radio-group>
@@ -69,13 +69,13 @@
         <el-form-item :label="menuTypeList[dataForm.type] + '名称'" prop="name">
           <el-input v-model="dataForm.name" :placeholder="menuTypeList[dataForm.type] + '名称'"></el-input>
         </el-form-item>
-        <el-form-item label="上级菜单" prop="parentName">
+        <el-form-item :label="$t('table.preTree')" prop="parentName">
             <popup-tree-input
-              :data="popupTreeData" :props="popupTreeProps" :prop="dataForm.parentName==null||dataForm.parentName==''?'顶级菜单':dataForm.parentName"
+              :data="popupTreeData" :props="popupTreeProps" :prop="dataForm.parentName==null||dataForm.parentName==''?this.$t('table.topTree'):dataForm.parentName"
               :nodeKey="''+dataForm.parentId" :currentChangeHandle="handleTreeSelectChange">
             </popup-tree-input>
         </el-form-item>
-        <el-form-item v-if="dataForm.type !== 0" label="授权标识" prop="perms">
+        <el-form-item v-if="dataForm.type !== 0" :label="$t('table.authIdentify')" prop="perms">
           <el-input v-model="dataForm.perms" placeholder="如: sys:user:add, sys:user:edit, sys:user:delete"></el-input>
         </el-form-item>
         <el-form-item v-if="dataForm.type === 1" label="菜单路由" prop="url">
