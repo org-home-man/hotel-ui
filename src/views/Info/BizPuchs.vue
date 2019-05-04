@@ -4,7 +4,9 @@
 	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="filters" :size="size">
 			<el-form-item>
-				<el-input v-model="filters.label" placeholder="名称"></el-input>
+        <el-input v-model="filters.orderCode" placeholder="订单号"></el-input>
+        <el-input v-model="filters.roomCode" placeholder="客房编号"></el-input>
+        <el-input v-model="filters.pName" placeholder="代表者姓名"></el-input>
 			</el-form-item>
 			<el-form-item>
 				<kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary" @click="findPage(null)"/>
@@ -16,7 +18,7 @@
 	</div>
 	<!--表格内容栏-->
 	<kt-table permsEdit="sys:bizPuchs:edit" permsDelete="sys:bizPuchs:delete"
-		:data="pageResult" :columns="columns" 
+		:data="pageResult" :columns="columns"
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
 	</kt-table>
 	<!--新增编辑界面-->
@@ -107,7 +109,9 @@ export default {
 		return {
 			size: 'small',
 			filters: {
-				label: ''
+        orderCode:'',
+        roomCode:'',
+        pName:''
 			},
 			columns: [
 				{prop:"orderCode", label:"订单号", minWidth:100},
@@ -132,7 +136,7 @@ export default {
 				{prop:"lastUpdateBy", label:"更新时间", minWidth:100},
 				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
 			],
-			pageRequest: { pageNum: 1, pageSize: 8 },
+			pageRequest: { page: 1, rows: 8 },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -175,9 +179,9 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {label: {name:'label', value:this.filters.label}}
+      this.pageRequest = {...this.pageRequest,...this.filters};
 			this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
-				this.pageResult = res.data
+				this.pageResult = res
 			}).then(data!=null?data.callback:'')
 		},
 		// 批量删除

@@ -1,5 +1,5 @@
-<template> 
-  <div class="headbar" :style="{'background':themeColor}" 
+<template>
+  <div class="headbar" :style="{'background':themeColor}"
     :class="$store.state.app.collapse?'position-collapse-left':'position-left'">
     <!-- 导航收缩 -->
     <span class="hamburg">
@@ -52,7 +52,7 @@
         <!--</el-menu-item>-->
         <el-menu-item index="5" v-popover:popover-personal>
           <!-- 用户信息 -->
-          <span class="user-info"><img :src="user.avatar" />{{user.name}}</span>
+          <span class="user-info"><img :src="user.path" />{{user.name}}</span>
           <el-popover ref="popover-personal" placement="bottom-end" trigger="click" :visible-arrow="false">
             <personal-panel :user="user"></personal-panel>
           </el-popover>
@@ -85,10 +85,10 @@ export default {
   data() {
     return {
       user: {
-        name: "Louis",
-        avatar: "",
-        role: "超级管理员",
-        registeInfo: "注册时间：2018-12-20 "
+        name: "",
+        path: "",
+        role: "",
+        createTime: "注册时间：2018-12-20 "
       },
       activeIndex: '1',
       langVisible: false
@@ -114,15 +114,19 @@ export default {
       lang === '' ? 'zh_cn' : lang
       this.$i18n.locale = lang
       this.langVisible = false
-    }
+    },
+    // 加载用户角色信息
+    findUserRoles: function () {
+      var user = sessionStorage.getItem("user");
+      this.$api.user.findByName({name:user}).then((res) => {
+        // 加载角色集合
+        this.user = res.data
+      })
+    },
   },
   mounted() {
     this.sysName = "Hotel"
-    var user = sessionStorage.getItem("user")
-    if (user) {
-      this.user.name = user
-      this.user.avatar = require("@/assets/user.png")
-    }
+    this.findUserRoles();
   },
   computed:{
     ...mapState({
