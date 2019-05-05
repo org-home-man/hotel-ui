@@ -36,6 +36,7 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "reset": "Reset",
+    "roleMenu": "Role Menu ",
     "do": "Are you sure to delete the selection record?",
     "tips": "Tips",
     "success": "Success",
@@ -96,7 +97,8 @@
     "role": "Role",
     "mail": "Mail",
     "phone": "Phone",
-    "state": "State"
+    "state": "State",
+    "remark": "remark"
 
 
   },
