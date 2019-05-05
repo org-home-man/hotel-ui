@@ -24,6 +24,9 @@
   },
   "action": {
     "operation": "操作",
+    "content": "目录",
+    "tree": "菜单",
+    "button": "按钮",
     "add": "新增",
     "edit": "编辑",
     "editPrice": "牌价编辑",
@@ -47,6 +50,7 @@
     "delFail": "删除失败",
     "sureSubmit": "确认提交吗?",
     "noNull": "不能为空",
+    "roleMenu": "角色菜单授权",
     "incompleteInfo": "填入信息不全",
     "pHotelName": "请选择酒店名",
     "pRoomType": "请选择房间类型",
@@ -57,6 +61,8 @@
     "pPriceYear": "请选择年份",
     "pAllDateNull": "年份和区间日期不能同时为空",
     "pSprice": "请输入销售单人价",
+    "pRoleName": "请输入角色名",
+    "pModifyMenu":"超级管理员拥有所有菜单权限，不允许修改！"
     "pInventory": "请输入库存数量",
     "makeAppointment": "预约",
     "returnHome": "返回主页"
@@ -120,14 +126,26 @@
   },
   "table": {
     "id": "编号",
+    "icon": "图标",
+    "type": "类型",
+    "preTree": "上级菜单",
+    "treeURL": "菜单URL",
+    "authIdentify": "授权标识",
+    "orderBy": "排序",
     "username": "用户名",
+    "name": "角色名",
     "password": "密码",
+    "remark": "备注",
     "org": "机构",
     "role": "角色",
     "mail": "邮箱",
     "phone": "手机",
     "state": "状态",
     "sSprice": "房价"
+    "sSprice" : "房价",
+    "createBy": "创建人",
+    "createTime":"创建时间"
+
   },
   "hotel": {
     "roomtype": {
@@ -255,4 +273,5 @@
     "totalPrice": "总价格",
     "reMark" : "备注"
   }
+
 }
