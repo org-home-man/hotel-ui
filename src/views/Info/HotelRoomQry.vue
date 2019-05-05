@@ -257,12 +257,24 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item>
-          <el-input v-model="dataForm.inDateStart" :placeholder="$t('hotel.inDateStart')"></el-input>
+        <el-form-item :label="$t('hotel.inDateStart')">
+          <el-date-picker
+            v-model="dataForm.inDate"
+            align="right"
+            type="date"
+            :placeholder="$t('hotel.inDateStart')">
+          </el-date-picker>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="dataForm.outDateEnd" :placeholder="$t('hotel.outDateEnd')"></el-input>
+
+        <el-form-item :label="$t('hotel.outDateEnd')">
+          <el-date-picker
+            v-model="dataForm.outDate"
+            align="right"
+            type="date"
+            :placeholder="$t('hotel.outDateEnd')">
+          </el-date-picker>
         </el-form-item>
+
         <el-form-item>
           <el-input v-model="dataForm.roomNight" :placeholder="$t('hotel.roomNight')"></el-input>
         </el-form-item>
@@ -277,8 +289,13 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item>
-          <el-input v-model="dataForm.lastCrtTime":placeholder="$t('hotel.lastCrtTime')"></el-input>
+        <el-form-item :label="$t('hotel.lastCrtTime')">
+          <el-date-picker
+            v-model="dataForm.lastCrtTime"
+            align="right"
+            type="date"
+            :placeholder="$t('hotel.lastCrtTime')">
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -438,28 +455,28 @@
         </el-row>
 
         <el-form-item :label="$t('hotel.representName')" prop="representName" auto-complete="off">
-          <el-input v-model="dataForm.representName" ></el-input>
+          <el-input v-model="dataForm.pname" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.passportNo')" prop="passportNo" auto-complete="off">
-          <el-input v-model="dataForm.passportNo" ></el-input>
+          <el-input v-model="dataForm.passport" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.birthday')" prop="birthday" auto-complete="off">
-          <el-input v-model="dataForm.birthday" ></el-input>
+          <el-input v-model="dataForm.birth" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.contactPhone')" prop="contactPhone" auto-complete="off">
-          <el-input v-model="dataForm.contactPhone" ></el-input>
+          <el-input v-model="dataForm.phone" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.contactEmail')" prop="contactEmail" auto-complete="off">
-          <el-input v-model="dataForm.contactEmail" ></el-input>
+          <el-input v-model="dataForm.emailAddress" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.adultNum1')" prop="adultNum1" auto-complete="off">
-          <el-input v-model="dataForm.adultNum1" ></el-input>
+          <el-input v-model="dataForm.anum" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.children612')" prop="children612" auto-complete="off">
-          <el-input v-model="dataForm.children612" ></el-input>
+          <el-input v-model="dataForm.bnum" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.children46')" prop="children46" auto-complete="off">
-          <el-input v-model="dataForm.children46" ></el-input>
+          <el-input v-model="dataForm.cnum" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.children04')" prop="children04" auto-complete="off">
           <el-input v-model="dataForm.children04" ></el-input>
@@ -468,7 +485,10 @@
           <el-input v-model="dataForm.roomNum" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hotel.totalPrice')" prop="totalPrice" auto-complete="off">
-          <el-input v-model="dataForm.totalPrice" ></el-input>
+          <el-input v-model="dataForm.totalSAmount" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hotel.reMark')" prop="reMark" auto-complete="off">
+          <el-input v-model="dataForm.remark" ></el-input>
         </el-form-item>
 
       </el-form>
@@ -644,16 +664,17 @@ export default {
         adultNum:null,
         childrenNum:null,
         lastCrtTime:null,
-        representName:null,
-        passportNo:null,
-        birthday:null,
+        pname:null,
+        passport:null,
+        birth:null,
         contactPhone:null,
-        contactEmail:null,
-        adultNum1:null,
-        children612:null,
-        children46:null,
+        emailAddress:null,
+        anum:null,
+        bnum:null,
+        cnum:null,
         children04:null,
-        totalPrice:null
+        totalSAmount:null,
+        remark:null
 			},
       hotelNames:[],
       paraConfig:[],
@@ -733,8 +754,13 @@ export default {
 		  this.disableHotelName = true
 			this.editDialogVisible = true
 			this.operation = false
-      this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
+
 			this.dataForm = Object.assign({}, params.row)
+      /* 获取操作员 */
+      this.dataForm.creatBy = sessionStorage.getItem('user');
+      /* 获取操作时间 */
+      var date = new Date();
+      this.dataForm.creatTime = date;
 		},
 
 
