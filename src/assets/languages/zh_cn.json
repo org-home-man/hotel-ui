@@ -62,7 +62,7 @@
     "pAllDateNull": "年份和区间日期不能同时为空",
     "pSprice": "请输入销售单人价",
     "pRoleName": "请输入角色名",
-    "pModifyMenu":"超级管理员拥有所有菜单权限，不允许修改！"
+    "pModifyMenu":"超级管理员拥有所有菜单权限，不允许修改！",
     "pInventory": "请输入库存数量",
     "makeAppointment": "预约",
     "returnHome": "返回主页"
@@ -141,7 +141,6 @@
     "mail": "邮箱",
     "phone": "手机",
     "state": "状态",
-    "sSprice": "房价"
     "sSprice" : "房价",
     "createBy": "创建人",
     "createTime":"创建时间"
