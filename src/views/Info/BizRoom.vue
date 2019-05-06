@@ -291,7 +291,7 @@
 
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
+			<el-button :size="size" @click.native="cancelForm">{{$t('action.cancel')}}</el-button>
 			<el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
 		</div>
   </el-dialog>
@@ -937,17 +937,20 @@ export default {
 			this.dataForm = Object.assign({}, params.row)
       this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
       this.$api.bizRoom.queryByRelId({relationId:this.dataForm.photo}).then((res) => {
-        if (res.success) {
-          if (res.data) {
-            for (var i = 0 ;i<res.data.length;i++ ) {
-              this.files.push({url:baseUrl+'/document/preview/'+res.data[i]})
-            }
-          }
-        }
+        console.log("data:"+res);
 
+        for (var i = 0 ;i<res.length;i++ ) {
+          this.files.push({url:baseUrl+'/document/preview/'+res[i]})
+        }
+        console.log("files:"+this.files);
       })
 
 		},
+    cancelForm:function() {
+      this.editDialogVisible = false;
+      this.editLoading = false;
+      this.files = [];
+    },
     // 牌价编辑界面
     handlePriceEdit:function(params) {
 
