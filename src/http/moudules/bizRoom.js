@@ -31,7 +31,12 @@ export const findPermissions = (data) => {
 }
 // 上传文件
 export const uploadFile = (data) => {
-  return request.post('/bizRoom/uploadFile',data);
+  return request.post('/document/upload',data);
+}
+
+// 上传文件
+export const queryByRelId = (data) => {
+  return request.post('/document/queryByRelId',data);
 }
 
 //生成日期数据，并且根据用户生成数据是否有设置相应数据需要替换，（牌价）。
