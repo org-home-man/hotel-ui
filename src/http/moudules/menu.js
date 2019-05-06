@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 菜单管理模块
@@ -6,32 +6,17 @@ import axios from '../axios'
 
  // 保存
 export const save = (data) => {
-    return axios({
-        url: '/menu/save',
-        method: 'post',
-        data
-    })
+    return request.post('/menu/save',data);
 }
 // 删除
-export const batchDelete = (data) => {
-    return axios({
-        url: '/menu/delete',
-        method: 'post',
-        data
-    })
+export const batchDelete = (data,header) => {
+    return request.post('/menu/delete',data,header);
 }
 // 查找导航菜单树
-export const findNavTree = (params) => {
-    return axios({
-        url: '/menu/findNavTree',
-        method: 'get',
-        params
-    })
+export const findNavTree = (data) => {
+    return request.get('/menu/findNavTree',data);
 }
 // 查找导航菜单树
 export const findMenuTree = () => {
-    return axios({
-        url: '/menu/findMenuTree',
-        method: 'get'
-    })
+    return request.get('/menu/findMenuTree');
 }

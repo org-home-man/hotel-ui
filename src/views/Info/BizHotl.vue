@@ -160,7 +160,7 @@ export default {
 			},
 			columns: [
 			],
-			pageRequest: { pageNum: 1, pageSize: 8 },
+			pageRequest: { page: 1, rows: 10 },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -208,21 +208,21 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {
-        hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
-        provinceCode: {name:'provinceCode', value:this.filters.provinceCode},
-        cityCode: {name:'cityCode', value:this.filters.cityCode},
-        hotelCname: {name:'hotelCname', value:this.filters.hotelCname},
-        hotelType: {name:'hotelType', value:this.filters.hotelType},
-        hotelLevel: {name:'hotelLevel', value:this.filters.hotelLevel}
-			}
-			this.$api.bizHotl.findPage(this.pageRequest).then((res) => {
-				this.pageResult = res.data
+			// this.pageRequest.columnFilters = {
+      //   hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
+      //   provinceCode: {name:'provinceCode', value:this.filters.provinceCode},
+      //   cityCode: {name:'cityCode', value:this.filters.cityCode},
+      //   hotelCname: {name:'hotelCname', value:this.filters.hotelCname},
+      //   hotelType: {name:'hotelType', value:this.filters.hotelType},
+      //   hotelLevel: {name:'hotelLevel', value:this.filters.hotelLevel}
+			// }
+			this.$api.bizHotl.findPage({...this.pageRequest,...this.filters}).then((res) => {
+				this.pageResult = res
 			}).then(data!=null?data.callback:'')
 		},
 		// 批量删除
 		handleDelete: function (data) {
-			this.$api.bizHotl.batchDelete(data.params).then(data!=null?data.callback:'')
+			this.$api.bizHotl.batchDelete(data.params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(data!=null?data.callback:'')
 		},
 		// 显示新增界面
 		handleAdd: function () {
@@ -290,7 +290,7 @@ export default {
       this.sysPara={}
       let params = Object.assign({}, this.sysPara);
       this.$api.sysParaConfig.findKeyValueHotel(params).then((res) => {
-        this.paraConfig = res.data
+        this.paraConfig = res
         console.log(this.paraConfig);
       })
     },
@@ -299,7 +299,7 @@ export default {
     this.sysPara1={}
     let params = Object.assign({}, this.sysPara1);
     this.$api.hotelArea.findAreaPage(params).then((res) => {
-      this.AreaConfig = res.data
+      this.AreaConfig = res
       console.log(this.areaConfig);
     })
   },

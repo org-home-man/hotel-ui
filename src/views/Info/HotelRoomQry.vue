@@ -227,7 +227,7 @@
 	</div>
 	<!--表格内容栏-->
 	<room-table permsReservatRoom="sys:bizRoom:reservatRoom"
-		:data="pageResult"
+		:data="this.pageResult"
 		@findPage="findPage" @handleReservatRoom="handleReservatRoom">
     <!--@findPage="page" @handleEdit="handleEdit" @handleDelete="handleDelete" >-->
     </room-table>
@@ -526,6 +526,7 @@ export default {
       dataurl:'/bizRoom/uploadFile',
 			size: 'small',
 			filters: {
+        provinceCode:'',
         hotelName:'',
         inventory:'',
         roomCode: null,
@@ -740,7 +741,7 @@ export default {
 
 			this.$api.hotelRoom.findPage(this.pageRequest).then((res) => {
 			  this.pageRequest={}
-				this.pageResult = res.data
+				this.pageResult = res
 			}).then(data!=null?data.callback:'')
 		},
 		// 批量删除
@@ -806,7 +807,7 @@ export default {
 		  this.bizHotl={};
 		  let params = Object.assign({}, this.bizHotl);
       this.$api.bizHotl.findAllData(params).then((res) => {
-        this.hotelNames = res.data
+        this.hotelNames = res
       })
     },
 
@@ -814,7 +815,7 @@ export default {
       this.sysPara={}
       let params = Object.assign({}, this.sysPara);
       this.$api.sysParaConfig.findKeyValueHotelRoom(params).then((res) => {
-        this.paraConfig = res.data
+        this.paraConfig = res
         console.log(this.paraConfig);
       })
     },

@@ -214,7 +214,7 @@
         }
         this.pageRequest = {...this.pageRequest,...this.filters};
         this.$api.user.findPage(this.pageRequest).then((res) => {
-          this.pageResult = res.data;
+          this.pageResult = res;
           this.findUserRoles()
         }).then(data != null ? data.callback : '')
       },
@@ -222,7 +222,7 @@
       findUserRoles: function () {
         this.$api.role.findAll().then((res) => {
           // 加载角色集合
-          this.roles = res.data
+          this.roles = res
         })
       },
       // 批量删除
@@ -264,7 +264,7 @@
 
         this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
           let arr = new Array();
-          arr.push({url:this.baseUrl+"/document/preview/"+res.data})
+          arr.push({url:this.baseUrl+"/document/preview/"+res})
           this.fileList = arr;
         })
       },
@@ -286,7 +286,7 @@
                     this.$message({message: this.$t('action.fail'), type: 'error'});
                   }
 
-                  this.dataForm.path = res.data;
+                  this.dataForm.path = res;
 
                   this.sumbit()
                 })
@@ -331,7 +331,7 @@
       // 获取部门列表
       findDeptTree: function () {
         this.$api.dept.findDeptTree().then((res) => {
-          this.deptData = res.data
+          this.deptData = res
         })
       },
       // 菜单树选中

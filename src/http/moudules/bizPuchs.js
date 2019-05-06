@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /*
  * 订单查询管理模块
@@ -6,26 +6,14 @@ import axios from '../axios'
 
 // 保存
 export const save = (data) => {
-    return axios({
-        url: '/bizPuchs/save',
-        method: 'post',
-        data
-    })
+    return request.post('/bizPuchs/save',data);
 }
 // 删除
 export const batchDelete = (data) => {
-    return axios({
-        url: '/bizPuchs/delete',
-        method: 'post',
-        data
-    })
+    return request.post('/bizPuchs/delete',data);
 }
 // 分页查询
-export const findPage = (params) => {
-    return axios({
-        url: '/bizPuchs/findPage',
-        method: 'post',
-        params
-    })
+export const findPage = (data) => {
+    return request.post('/bizPuchs/findPage',data);
 }
 

@@ -73,25 +73,25 @@ function addDynamicMenuAndRoutes(userName, to, from) {
   // 处理IFrame嵌套页面
   handleIFrameUrl(to.path)
   console.log("menuRoute", store.state.app.menuRouteLoaded);
-  // if(store.state.app.menuRouteLoaded) {
-  //   console.log('动态菜单和路由已经存在.')
-  //   return
-  // }
+  if(store.state.app.menuRouteLoaded) {
+    console.log('动态菜单和路由已经存在.')
+    return
+  }
   api.menu.findNavTree({'userName': userName})
     .then(res => {
       // 添加动态路由
-      let dynamicRoutes = addDynamicRoutes(res.data)
+      let dynamicRoutes = addDynamicRoutes(res)
       // 处理静态组件绑定路由
       handleStaticComponent(router, dynamicRoutes)
       router.addRoutes(router.options.routes)
       // 保存加载状态
       store.commit('menuRouteLoaded', true)
       // 保存菜单树
-      store.commit('setNavTree', res.data)
+      store.commit('setNavTree', res)
     }).then(res => {
     api.user.findPermissions({'name': userName}).then(res => {
       // 保存用户权限标识集合
-      store.commit('setPerms', res.data)
+      store.commit('setPerms', res)
     })
   })
     .catch(function (res) {

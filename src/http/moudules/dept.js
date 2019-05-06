@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 机构管理模块
@@ -6,24 +6,13 @@ import axios from '../axios'
 
 // 保存
 export const save = (data) => {
-    return axios({
-        url: '/dept/save',
-        method: 'post',
-        data
-    })
+    return request.post('/dept/save',data);
 }
 // 删除
 export const batchDelete = (data) => {
-    return axios({
-        url: '/dept/delete',
-        method: 'post',
-        data
-    })
+    return request.post('/dept/delete',data);
 }
 // 查询机构树
 export const findDeptTree = () => {
-    return axios({
-        url: '/dept/findTree',
-        method: 'get'
-    })
+    return request.get('/dept/findTree');
 }

@@ -117,8 +117,8 @@ export default {
     findTreeData: function () {
       this.loading = true
 			this.$api.dept.findDeptTree().then((res) => {
-        this.tableTreeDdata = res.data
-        this.popupTreeData = this.getParentMenuTree(res.data)
+        this.tableTreeDdata = res
+        this.popupTreeData = this.getParentMenuTree(res)
         this.loading = false
 			})
     },

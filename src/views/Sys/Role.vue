@@ -2,9 +2,9 @@
   <div class="page-container">
 	<!--工具栏-->
 	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
-		<el-form :inline="true" :model="filters" :size="size">
+		<el-form :inline="true" :model="params" :size="size">
 			<el-form-item>
-				<el-input v-model="filters.name" placeholder="角色名"></el-input>
+				<el-input v-model="params.name" placeholder="角色名"></el-input>
 			</el-form-item>
 			<el-form-item>
 				<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="findPage(null)"/>
@@ -75,19 +75,20 @@ export default {
 	data() {
 		return {
 			size: 'small',
-			filters: {
-				name: ''
-			},
 			columns: [
 				{prop:"id", label:"ID", minWidth:50},
 				{prop:"name", label:"角色名", minWidth:120},
 				{prop:"remark", label:"备注", minWidth:120},
-				{prop:"createBy", label:"创建人", minWidth:120},
+				{prop:"createName", label:"创建人", minWidth:120},
 				{prop:"createTime", label:"创建时间", minWidth:120, formatter:this.dateFormat}
 				// {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			],
-			pageRequest: { pageNum: 1, pageSize: 10 },
+			params: {
+			  page: 1,
+        rows: 10,
+        name: ''
+      },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -123,9 +124,8 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {name: {name:'name', value:this.filters.name}}
 			this.$api.role.findPage(this.pageRequest).then((res) => {
-				this.pageResult = res.data
+				this.pageResult = res
 				this.findTreeData()
 			}).then(data!=null?data.callback:'')
 		},
@@ -175,7 +175,7 @@ export default {
 		findTreeData: function () {
 			this.menuLoading = true
 			this.$api.menu.findMenuTree().then((res) => {
-				this.menuData = res.data
+				this.menuData = res
 				this.menuLoading = false
 			})
 		},
@@ -185,9 +185,9 @@ export default {
 				return
 			}
 			this.selectRole = val.val
-			this.$api.role.findRoleMenus({'roleId':val.val.id}).then((res) => {
-				this.currentRoleMenus = res.data
-				this.$refs.menuTree.setCheckedNodes(res.data)
+			this.$api.role.findRoleMenus({roleId:val.val.id}).then((res) => {
+				this.currentRoleMenus = res
+				this.$refs.menuTree.setCheckedNodes(res)
 			})
 		},
 		// 树节点选择监听
@@ -238,19 +238,19 @@ export default {
 			}
 			this.authLoading = true
 			let checkedNodes = this.$refs.menuTree.getCheckedNodes(false, true)
-			let roleMenus = []
+			let roleMenus = new Array();
 			for(let i=0, len=checkedNodes.length; i<len; i++) {
 				let roleMenu = { roleId:roleId, menuId:checkedNodes[i].id }
 				roleMenus.push(roleMenu)
 			}
-			this.$api.role.saveRoleMenus(roleMenus).then((res) => {
+			this.$api.role.saveRoleMenus(roleMenus,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
 				if(res.code == 200) {
 					this.$message({ message: '操作成功', type: 'success' })
 				} else {
 					this.$message({message: '操作失败, ' + res.msg, type: 'error'})
 				}
-				this.authLoading = false
-			})
+
+			}).finally(() => {this.authLoading = false})
 		},
 		renderContent(h, { node, data, store }) {
 			return (

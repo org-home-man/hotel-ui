@@ -92,7 +92,7 @@ export default {
     // 分页查询
     findPage: function () {
         this.loading = true
-        let callback = res => {
+        let callback = () => {
           this.loading = false
         }
       this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})

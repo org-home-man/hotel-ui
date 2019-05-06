@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 日志管理模块
@@ -6,9 +6,5 @@ import axios from '../axios'
 
 // 分页查询
 export const findPage = (data) => {
-    return axios({
-        url: '/log/findPage',
-        method: 'post',
-        data
-    })
+    return request.post('/log/findPage',data);
 }

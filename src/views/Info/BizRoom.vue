@@ -861,15 +861,15 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.hotelCode = this.filters.hotelCode;
-      this.pageRequest.hotelName = this.filters.hotelName;
-      this.pageRequest.roomType = this.filters.roomType;
-      this.pageRequest.bedType = this.filters.bedType;
-      this.pageRequest.breakType = this.filters.breakType;
-      this.pageRequest.inventory = this.filters.inventory;
-			this.$api.bizRoom.findPage(this.pageRequest).then((res) => {
+			// this.pageRequest.hotelCode = this.filters.hotelCode;
+      // this.pageRequest.hotelName = this.filters.hotelName;
+      // this.pageRequest.roomType = this.filters.roomType;
+      // this.pageRequest.bedType = this.filters.bedType;
+      // this.pageRequest.breakType = this.filters.breakType;
+      // this.pageRequest.inventory = this.filters.inventory;
+			this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
 			  this.pageRequest={}
-				this.pageResult = res.data
+				this.pageResult = res
 			}).then(data!=null?data.callback:'')
 		},
 		// 批量删除
@@ -1003,8 +1003,8 @@ export default {
             this.$api.bizRoom.uploadFile(this.formDate).then((res) => {
               if (res.success) {
                 //保存信息图片信息 提交表单信息
-                if(res.data) {
-                  this.dataForm.photo = res.data;
+                if(res) {
+                  this.dataForm.photo = res;
                 }
                 let params = Object.assign({}, this.dataForm)
                 this.$api.bizRoom.save(params).then((res) => {
@@ -1114,14 +1114,14 @@ export default {
 		  this.bizHotl={};
 		  let params = Object.assign({}, this.bizHotl);
       this.$api.bizHotl.findAllData(params).then((res) => {
-        this.hotelNames = res.data
+        this.hotelNames = res
       })
     },
     findDataSelect : function () {
 		  this.sysPara={paraSubCode1:'bizroom'}
       let params = Object.assign({}, this.sysPara);
       this.$api.sysParaConfig.findKeyValue(params).then((res) => {
-        this.paraConfig = res.data
+        this.paraConfig = res
       })
     },
     localLanguageLoad:function () {
@@ -1148,8 +1148,8 @@ export default {
           this.priceForm.priceDateData = this.priceDateData;
           this.$api.bizRoom.priceDatePro(this.priceForm).then((res) => {
             console.log(res);
-            if (res.data.code == "0000") {
-              this.priceDateData = res.data.list;
+            if (res.code == "0000") {
+              this.priceDateData = res.list;
             }
           })
 
@@ -1172,8 +1172,8 @@ export default {
           this.stockForm.stockDateData = this.stockDateData;
           this.$api.bizRoom.stockDatePro(this.stockForm).then((res) => {
             console.log(res);
-            if (res.data.code == "0000") {
-              this.stockDateData = res.data.list;
+            if (res.code == "0000") {
+              this.stockDateData = res.list;
             }
           })
 

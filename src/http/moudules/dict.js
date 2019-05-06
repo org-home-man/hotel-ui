@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 字典管理模块
@@ -6,25 +6,13 @@ import axios from '../axios'
 
 // 保存
 export const save = (data) => {
-    return axios({
-        url: '/dict/save',
-        method: 'post',
-        data
-    })
+    return request.post('/dict/save',data);
 }
 // 删除
 export const batchDelete = (data) => {
-    return axios({
-        url: '/dict/delete',
-        method: 'post',
-        data
-    })
+    return request.post('/dict/delete',data);
 }
 // 分页查询
 export const findPage = (data) => {
-    return axios({
-        url: '/dict/findPage',
-        method: 'post',
-        data
-    })
+    return request.post('/dict/findPage',data);
 }

@@ -90,6 +90,9 @@ export default {
         role: "",
         createTime: "注册时间：2018-12-20 "
       },
+      params:{
+        name:''
+      },
       activeIndex: '1',
       langVisible: false
     }
@@ -117,10 +120,11 @@ export default {
     },
     // 加载用户角色信息
     findUserRoles: function () {
-      var user = sessionStorage.getItem("user");
-      this.$api.user.findByName({name:user}).then((res) => {
+      let user = sessionStorage.getItem("user");
+      this.params.name = user;
+      this.$api.user.findByName(this.params).then((res) => {
         // 加载角色集合
-        this.user = res.data
+        this.user = res
       })
     },
   },

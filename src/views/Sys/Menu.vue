@@ -181,8 +181,8 @@ export default {
     findTreeData: function() {
       this.loading = true;
       this.$api.menu.findMenuTree().then(res => {
-        this.tableTreeDdata = res.data;
-        this.popupTreeData = this.getParentMenuTree(res.data);
+        this.tableTreeDdata = res;
+        this.popupTreeData = this.getParentMenuTree(res);
         this.loading = false;
       });
     },
@@ -223,7 +223,7 @@ export default {
         type: "warning"
       }).then(() => {
         let params = this.getDeleteIds([], row);
-        this.$api.menu.batchDelete(params).then(res => {
+        this.$api.menu.batchDelete(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(res => {
           this.findTreeData();
           this.$message({ message: "删除成功", type: "success" });
         });

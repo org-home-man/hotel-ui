@@ -1,4 +1,4 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 用户管理模块
@@ -6,41 +6,21 @@ import axios from '../axios'
 
 // 保存
 export const save = (data) => {
-    return axios({
-        url: '/bizHotl/save',
-        method: 'post',
-        data
-    })
+    return request.post('/bizHotl/save',data);
 }
 // 删除
-export const batchDelete = (data) => {
-    return axios({
-        url: '/bizHotl/delete',
-        method: 'post',
-        data
-    })
+export const batchDelete = (data,header) => {
+    return request.post('/bizHotl/delete',data,header);
 }
 // 分页查询
 export const findPage = (data) => {
-    return axios({
-        url: '/bizHotl/findPage',
-        method: 'post',
-        data
-    })
+    return request.post('/bizHotl/findPage',data);
 }
 // 查找用户的菜单权限标识集合
-export const findPermissions = (params) => {
-    return axios({
-        url: '/bizHotl/findPermissions',
-        method: 'get',
-        params
-    })
+export const findPermissions = (data) => {
+    return request.get('/bizHotl/findPermissions',data);
 }
 // 所有数据
 export const findAllData = (data) => {
-  return axios({
-    url: '/bizHotl/findAllData',
-    method: 'post',
-    data
-  })
+  return request.post('/bizHotl/findAllData',data);
 }

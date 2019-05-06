@@ -1,22 +1,14 @@
-import axios from '../axios'
+import request from '../axios'
 
 /* 
  * 系统登录模块
  */
 
-// 登录
 export const login = data => {
-    return axios({
-        url: 'login',
-        method: 'post',
-        data
-    })
+    return request.post('/login',data);
 }
 
-// 登出
+// // 登出
 export const logout = () => {
-    return axios({
-        url: 'logout',
-        method: 'get'
-    })
+    return request.get('/logout')
 }

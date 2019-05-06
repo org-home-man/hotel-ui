@@ -46,7 +46,7 @@ export default {
 				// {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			],
-			pageRequest: { pageNum: 1, pageSize: 10 },
+			pageRequest: { page: 1, rows: 10 },
       pageResult: {},
       showOperation:false
 		}
@@ -59,7 +59,7 @@ export default {
 			}
 			this.pageRequest.columnFilters = {userName: {name:'userName', value:this.filters.name}}
 			this.$api.log.findPage(this.pageRequest).then((res) => {
-				this.pageResult = res.data
+				this.pageResult = res
 			}).then(data!=null?data.callback:'')
 		},
 		// 时间格式化
