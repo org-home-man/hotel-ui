@@ -15,8 +15,6 @@ import * as sysParaConfig from './moudules/sysParaConfig'
 import * as hotelRoom from './moudules/hotelRoom'
 import * as bizPuchs from './moudules/bizPuchs'
 
-
-
 // 默认全部导出
 export default {
     login,
