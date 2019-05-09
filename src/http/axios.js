@@ -16,12 +16,12 @@ instance.defaults.baseURL = config.baseUrl;
 instance.defaults.timeout = TIMEOUT;
 instance.defaults.responseType = 'json';
 instance.defaults.responseEncoding = 'utf8';
-instance.defaults.transformRequest = [function (data) {
-  if (data instanceof Array) {
-      data = JSON.stringify(data) // 这里必须使用内置JSON对象转换
-  }else{
-      data = Qs.stringify(data) // 这里必须使用qs库进行转换
-  }
+instance.defaults.transformRequest = [function (data,header) {
+    if(header.hasOwnProperty('Content-Type') && header["Content-Type"].indexOf('application/json')!=-1){
+        data = JSON.stringify(data);// 这里必须使用内置JSON对象转换
+    }else{
+        data = Qs.stringify(data);// 这里必须使用qs库进行转换
+    }
   return data
 }];
 
