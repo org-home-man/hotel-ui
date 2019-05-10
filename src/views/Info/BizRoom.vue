@@ -429,9 +429,9 @@
                 type="daterange"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                range-separator="-"
+                :start-placeholder="$t('hotel.priceDateStart')"
+                :end-placeholder="$t('hotel.priceDateEnd')"
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-form-item>
@@ -442,25 +442,25 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="isMonday">
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isMonday" label="月" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isMonday" :label="$t('hotel.isMonday')" border></el-checkbox>
             </el-form-item>
             <el-form-item   prop="isTuesday">
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isTuesday" label="火" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isTuesday" :label="$t('hotel.isTuesday')" border></el-checkbox>
             </el-form-item>
             <el-form-item prop="isThursday" >
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isThursday" label="水" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isThursday" :label="$t('hotel.isThursday')" border></el-checkbox>
             </el-form-item>
             <el-form-item  prop="isFourday">
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFourday" label="木" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFourday" :label="$t('hotel.isFourday')" border></el-checkbox>
             </el-form-item>
             <el-form-item  prop="isFriday" >
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFriday" label="金" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isFriday" :label="$t('hotel.isFriday')" border></el-checkbox>
             </el-form-item>
             <el-form-item   prop="isSaterday">
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSaterday" label="土" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSaterday" :label="$t('hotel.isSaterday')" border></el-checkbox>
             </el-form-item>
             <el-form-item prop="isSunday" >
-              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSunday" label="日" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="priceForm.isSunday" :label="$t('hotel.isSunday')" border></el-checkbox>
             </el-form-item>
 
           </el-col>
@@ -593,9 +593,9 @@
                 type="daterange"
                 align="right"
                 unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                range-separator="-"
+                :start-placeholder="$t('hotel.priceDateStart')"
+                :end-placeholder="$t('hotel.priceDateEnd')"
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-form-item>
@@ -606,25 +606,25 @@
         <el-row>
           <el-col :span="24">
             <el-form-item prop="isMonday">
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isMonday" label="月" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isMonday" :label="$t('hotel.isMonday')" border></el-checkbox>
             </el-form-item>
             <el-form-item   prop="isTuesday">
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isTuesday" label="火" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isTuesday" :label="$t('hotel.isTuesday')" border></el-checkbox>
             </el-form-item>
             <el-form-item prop="isThursday" >
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isThursday" label="水" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isThursday" :label="$t('hotel.isThursday')" border></el-checkbox>
             </el-form-item>
             <el-form-item  prop="isFourday">
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFourday" label="木" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFourday" :label="$t('hotel.isFourday')" border></el-checkbox>
             </el-form-item>
             <el-form-item  prop="isFriday" >
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFriday" label="金" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFriday" :label="$t('hotel.isFriday')" border></el-checkbox>
             </el-form-item>
             <el-form-item   prop="isSaterday">
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSaterday" label="土" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSaterday" :label="$t('hotel.isSaterday')" border></el-checkbox>
             </el-form-item>
             <el-form-item prop="isSunday" >
-              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSunday" label="日" border></el-checkbox>
+              <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSunday" :label="$t('hotel.isSunday')" border></el-checkbox>
             </el-form-item>
 
           </el-col>
