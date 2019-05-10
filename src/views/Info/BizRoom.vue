@@ -3,17 +3,50 @@
 	<!--工具栏-->
 	<div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
 		<el-form :inline="true" :model="filters" :size="size">
-			<el-form-item>
-				<el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelCode')"></el-input>
-			</el-form-item>
-      <el-form-item>
-        <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
-          <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-        </el-select>
-      </el-form-item>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelCode')"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
+              <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="8">
+          <el-form-item>
+            <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
+              <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="8">
+          <el-form-item>
+            <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
+              <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="8">
+          <el-form-item>
+            <el-input v-model="filters.inventory" :placeholder="$t('hotel.inventory')"></el-input>
+          </el-form-item>
+        </el-col>
+
+      </el-row>
       <!--<el-form-item>-->
         <!--<el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">-->
           <!--<el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>-->
@@ -21,24 +54,14 @@
         <!--</el-select>-->
       <!--</el-form-item>-->
       <el-form-item>
-        <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
-          <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode" :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
-        </el-select>
+        <kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary" @click="findPage(null)"/>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
-          <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode" :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
-        </el-select>
+        <kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd" />
       </el-form-item>
-      <el-form-item>
-        <el-input v-model="filters.inventory" :placeholder="$t('hotel.inventory')"></el-input>
-      </el-form-item>
-			<el-form-item>
-				<kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary" @click="findPage(null)"/>
-			</el-form-item>
-			<el-form-item>
-				<kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd" />
-			</el-form-item>
+
+
+
 		</el-form>
 	</div>
 	<!--表格内容栏-->
@@ -118,6 +141,32 @@
         <el-col :span="24">
           <el-form-item :label="$t('hotel.introe')" prop="introE"  auto-complete="off">
             <el-input v-model="dataForm.introE" type="textarea"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12" >
+          <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays"  auto-complete="off">
+            <el-input v-model="dataForm.scheduledays" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice"  auto-complete="off">
+            <el-input v-model="dataForm.favorableprice" ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="12" >
+          <el-form-item :label="$t('hotel.evenlive')" prop="evenlive"  auto-complete="off">
+            <el-input v-model="dataForm.evenlive" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="$t('hotel.present')" prop="present"  auto-complete="off">
+            <el-input v-model="dataForm.present" ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -258,6 +307,8 @@
               list-type="picture-card"
               :on-error="handlerror"
               :on-success="handlesuccess"
+              :on-change="handlePictureChange"
+              :on-remove="handlePictureChange"
               :auto-upload="false"
               action="#"
               :file-list="files"
@@ -719,6 +770,10 @@ export default {
 				photo: null,
 				roomStock: null,
 				recommended: null,
+        scheduledays:null,
+        favorableprice:null,
+        evenlive:null,
+        present:null,
         iswify:null,
         isfront:null,
         isbarrifr:null,
@@ -744,10 +799,10 @@ export default {
         isbus:null,
         istrafic:null,
         isrestau:null,
-        creatBy: null,
-        creatTime: null,
-        lastUpdateBy: null,
-        lastUpdateTime: null
+        createName: null,
+        createTime: null,
+        updateName: null,
+        updateTime: null
 			},
       //牌价界面新增数据
       priceForm:{
@@ -772,10 +827,10 @@ export default {
         isSaterday:null,
         isSunday:null,
         priceDateData:[],
-        creatBy: null,
-        creatTime: null,
-        lastUpdateBy: null,
-        lastUpdateTime: null
+        createName: null,
+        createTime: null,
+        updateName: null,
+        updateTime: null
       },
       //库存界面新增数据
       stockForm:{
@@ -799,10 +854,10 @@ export default {
         isFriday:null,
         isSaterday:null,
         isSunday:null,
-        creatBy: null,
-        creatTime: null,
-        lastUpdateBy: null,
-        lastUpdateTime: null
+        createName: null,
+        createTime: null,
+        updateName: null,
+        updateTime: null
       },
       priceFormRules:{//牌价界面规则限制
         sprice: [
@@ -820,7 +875,7 @@ export default {
       bizHotl:[],
       language:{},
       headersInfo:{},
-      formDate:"",
+      formDate:new FormData(),
       files:[],
       isUpload:false,
       priceDateData:[],
@@ -893,6 +948,10 @@ export default {
 				introE: null,
 				photo: null,
         files:[],
+        scheduledays:null,
+        favorableprice:null,
+        evenlive:null,
+        present:null,
 				roomStock: null,
 				recommended: null,
         iswify:null,
@@ -920,12 +979,11 @@ export default {
         isbus:null,
         istrafic:null,
         isrestau:null,
-        creatBy: null,
-        creatTime: null,
-        lastUpdateBy: null,
-        lastUpdateTime: null
+        createName: null,
+        createTime: null,
+        updateName: null,
+        updateTime: null
 			}
-			this.dataForm.creatBy = sessionStorage.getItem("user")
 		},
 		// 显示编辑界面
 		handleEdit: function (params) {
@@ -935,7 +993,6 @@ export default {
 			this.editDialogVisible = true
 			this.operation = false
 			this.dataForm = Object.assign({}, params.row)
-      this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
       this.$api.bizRoom.queryByRelId({relationId:this.dataForm.photo}).then((res) => {
         console.log("data:"+res);
 
@@ -986,7 +1043,9 @@ export default {
     },
     uploadFile(params) {
 		  console.log("uploadFile:"+params.file);
-      this.formDate.append("files",params.file);
+		  console.log(params.file);
+      this.formDate.append('files',params.file);
+      console.log(this.formDate.get('files'));
 
     },
     //失败回调
@@ -997,6 +1056,9 @@ export default {
     handlesuccess(res, file, fileList){
       console.log("成功回调:"+res);
     },
+    handlePictureChange(file,fileList) {
+      this.isUpload = true;
+    },
 		// 编辑
 		submitForm: function () {
 
@@ -1005,14 +1067,13 @@ export default {
 
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true;
-
-            this.formDate = new FormData();
             this.$refs.upload.submit();
             //上传图片
 
             if (this.isUpload) {
+              console.log(this.formDate);
               //上传图片
-              this.$api.bizRoom.uploadFile(this.formDate).then((res) => {
+              this.$api.bizRoom.uploadFile(this.formDate,{headers:{'Content-Type': 'multipart/form-data;charset=UTF-8;boundary="------123456321"'}}).then((res) => {
                 if (res.success) {
                   //保存信息图片信息 提交表单信息
                   if(res.data) {
@@ -1073,10 +1134,9 @@ export default {
           this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
             this.editPriceLoading = true;
             this.priceForm.priceDateData = this.priceDateData;
-            this.priceForm.lastUpdateBy = sessionStorage.getItem("user")
 
             let params = Object.assign({}, this.priceForm)
-            this.$api.bizRoom.savePrice(params).then((res) => {
+            this.$api.bizRoom.savePrice(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
               if(res.code == 200) {
                 this.$message({ message: this.$t('action.success'), type: 'success' })
               } else {
@@ -1111,10 +1171,9 @@ export default {
           this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
             this.editStockLoading = true
             this.stockForm.stockDateData = this.stockDateData;
-            this.stockForm.lastUpdateBy = sessionStorage.getItem("user")
 
             let params = Object.assign({}, this.stockForm)
-            this.$api.bizRoom.saveStock(params).then((res) => {
+            this.$api.bizRoom.saveStock(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
               if(res.code == 200) {
                 this.$message({ message: this.$t('action.success'), type: 'success' })
               } else {
@@ -1177,7 +1236,7 @@ export default {
           }
 
           this.priceForm.priceDateData = this.priceDateData;
-          this.$api.bizRoom.priceDatePro(this.priceForm).then((res) => {
+          this.$api.bizRoom.priceDatePro(this.priceForm,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
             console.log(res);
             if (res.code == "0000") {
               this.priceDateData = res.list;
@@ -1201,7 +1260,7 @@ export default {
           }
 
           this.stockForm.stockDateData = this.stockDateData;
-          this.$api.bizRoom.stockDatePro(this.stockForm).then((res) => {
+          this.$api.bizRoom.stockDatePro(this.stockForm,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
             console.log(res);
             if (res.code == "0000") {
               this.stockDateData = res.list;
@@ -1242,6 +1301,10 @@ export default {
       if (me.priceForm.roomType=="04") {
         total =  me.priceForm.sprice * 4
       }
+      if (isNaN(total)) {
+        total = '';
+      }
+      console.log("total:"+total);
       me.priceForm.sRoomPrice = total;
       return total;
     }

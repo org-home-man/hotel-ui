@@ -112,13 +112,13 @@
           this.dataRequest.date = str;
           this.dataRequest.dateArray= this.dateData;
           this.dataRequest.roomCode = this.roomId;
-          this.$api.bizRoom.produceStockCalendar(this.dataRequest).then((res) => {
+          this.$api.bizRoom.produceStockCalendar(this.dataRequest,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
             this.days.length=0;
             this.dataRequest={}
-            if(res.data.code=="0000") {
+            if(res.code=="0000") {
               // console.log(res.data );
-              for (var i = 0;i<res.data.list.length;i++) {
-                this.days.push(res.data.list[i]);
+              for (var i = 0;i<res.list.length;i++) {
+                this.days.push(res.list[i]);
               }
               console.log(this.days);
             }
