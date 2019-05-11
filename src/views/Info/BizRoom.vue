@@ -166,7 +166,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="$t('hotel.present')" prop="present"  auto-complete="off">
-            <el-input v-model="dataForm.present" ></el-input>
+            <el-input v-model="dataForm.present" type="textarea"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -929,7 +929,7 @@ export default {
 		},
 		// 批量删除
 		handleDelete: function (data) {
-			this.$api.bizRoom.batchDelete(data.params).then(data!=null?data.callback:'')
+			this.$api.bizRoom.batchDelete(data.params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(data!=null?data.callback:'')
 		},
 		// 显示新增界面
 		handleAdd: function () {
@@ -1073,11 +1073,10 @@ export default {
             if (this.isUpload) {
               console.log(this.formDate);
               //上传图片
-              this.$api.bizRoom.uploadFile(this.formDate,{headers:{'Content-Type': 'multipart/form-data;charset=UTF-8;boundary="------123456321"'}}).then((res) => {
-                if (res.success) {
+              this.$api.bizRoom.uploadFile(this.formDate,{headers:{'Content-Type': 'multipart/form-data;charset=UTF-8'}}).then((res) => {
                   //保存信息图片信息 提交表单信息
-                  if(res.data) {
-                    this.dataForm.photo = res.data;
+                  if(res) {
+                    this.dataForm.photo = res;
                   }
                   let params = Object.assign({}, this.dataForm)
                   this.$api.bizRoom.save(params).then((res) => {
@@ -1095,10 +1094,6 @@ export default {
                     this.files=[];
                     this.findPage(null)
                   })
-                } else {
-                  this.editLoading = false;
-                  return false;
-                }
               })
             } else {
               //只保存数据
