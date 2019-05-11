@@ -185,6 +185,7 @@
       "hotelLevel4": "4星级",
       "hotelLevel5": "5星级"
     },
+    "autoClose": "是否自动关闭",
     "inventory": "库存数",
     "hotelCode": "酒店编号",
     "roomcode": "客房编号",
@@ -206,6 +207,10 @@
     "roomarea": "客房面积",
     "introc": "中文介绍",
     "introe": "英文介绍",
+    "scheduledays": "提前预定天数",
+    "favorableprice": "提前预定优惠售价",
+    "evenlive": "连住天数",
+    "present": "连住馈赠",
     "roomstock": "默认库存数",
     "recommended": "是否本期推荐",
     "photo": "宣传图片",
@@ -270,7 +275,14 @@
     "children46": "4-6岁儿童数",
     "children04": "4岁以下儿童数",
     "totalPrice": "总价格",
-    "reMark" : "备注"
+    "reMark" : "备注",
+    "isMonday": "一",
+    "isTuesday" :"二",
+    "isThursday":"三",
+    "isFourday" :"四",
+    "isFriday"  :"五",
+    "isSaterday":"六",
+    "isSunday"  :"日"
   }
 
 }

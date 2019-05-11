@@ -115,14 +115,14 @@
           this.dataRequest.date = str;
           this.dataRequest.dateArray= this.dateData;
           this.dataRequest.roomCode = this.roomId;
-          this.$api.bizRoom.producePriceCalendar(this.dataRequest).then((res) => {
+          this.$api.bizRoom.producePriceCalendar(this.dataRequest,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
             this.days.length=0;
             this.dataRequest={}
-            if(res.data.code=="0000") {
-              console.log( res.data.list[0].priceDate );
-              for (var i = 0;i<res.data.list.length;i++) {
+            if(res.code=="0000") {
+              console.log( res.list[0].priceDate );
+              for (var i = 0;i<res.list.length;i++) {
 
-                this.days.push(res.data.list[i]);
+                this.days.push(res.list[i]);
               }
             }
           })
