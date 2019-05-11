@@ -264,7 +264,7 @@
 
         this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
           let arr = new Array();
-          arr.push({url:this.baseUrl+"/document/preview/"+res})
+          arr.push({url:this.baseUrl+"/document/preview/"+res});
           this.fileList = arr;
         })
       },
