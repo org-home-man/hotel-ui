@@ -44,6 +44,7 @@ instance.interceptors.request.use(function (config) {
 //响应拦截器
 instance.interceptors.response.use(function (response) {
     const data = response.data;
+    // console.log("data",data)
     if (data.success === true) {
         return data.data || data;
     } else if (data.code == '500') {
@@ -51,6 +52,7 @@ instance.interceptors.response.use(function (response) {
             title: '系统错误',
             message: data.msg
         });
+        console.log("500data",data)
         return data;
     } else {
         if (data.rows) {
