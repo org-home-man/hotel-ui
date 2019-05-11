@@ -5,8 +5,8 @@ import request from '../axios'
  */
 
 // 保存
-export const save = (data) => {
-    return request.post('/user/save',data);
+export const save = (data,header) => {
+    return request.post('/user/save',data,header);
 }
 // 删除
 export const batchDelete = (data) => {
@@ -27,8 +27,8 @@ export const findByName = (data) =>{
 }
 
 // 图片上传
-export const upload = (data) => {
-  return request.post('/document/upload',data);
+export const upload = (data,header) => {
+  return request.post('/document/upload',data,header);
 }
 
 export const showFile = (data) => {

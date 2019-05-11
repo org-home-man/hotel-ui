@@ -280,7 +280,7 @@
                 let formDate = new FormData();
                 formDate.append("files", this.files.raw);
 
-                this.$api.user.upload(formDate).then((res) => {
+                this.$api.user.upload(formDate,{headers:{'Content-Type': 'multipart/form-data'}}).then((res) => {
                   this.editLoading = false;
                   if (res == null) {
                     this.$message({message: this.$t('action.fail'), type: 'error'});
@@ -310,7 +310,7 @@
           userRoles.push(userRole)
         }
         params.userRoles = userRoles;
-        this.$api.user.save(params).then((res) => {
+        this.$api.user.save(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
           this.editLoading = false;
           if (res.code == 200) {
             this.$message({message: this.$t('action.success'), type: 'success'})

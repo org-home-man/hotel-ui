@@ -3,12 +3,12 @@ import config from './config';
 import Qs from 'qs';
 import Cookies from "js-cookie";
 import router from '@/router';
-import { Notification } from 'element-ui';
+import {Notification} from 'element-ui';
 
 // 使用vuex做全局loading时使用
 // import store from '@/store'
 
-const TIMEOUT = 30000,instance = axios.create(), errors = {
+const TIMEOUT = 30000, instance = axios.create(), errors = {
     'Network Error': '网络错误',
     'Timeout': '连接超时'
 };
@@ -16,85 +16,87 @@ instance.defaults.baseURL = config.baseUrl;
 instance.defaults.timeout = TIMEOUT;
 instance.defaults.responseType = 'json';
 instance.defaults.responseEncoding = 'utf8';
-instance.defaults.transformRequest = [function (data,header) {
-    if(header.hasOwnProperty('Content-Type') && header["Content-Type"].indexOf('application/json')!=-1){
+instance.defaults.transformRequest = [function (data, header) {
+    if (header.hasOwnProperty('Content-Type') && header["Content-Type"].indexOf('application/json') != -1) {
         data = JSON.stringify(data);// 这里必须使用内置JSON对象转换
-    }else{
+    } else if(header.hasOwnProperty('Content-Type') && header["Content-Type"].indexOf('multipart/form-data') != -1){
+        data = data;
+    } else {
         data = Qs.stringify(data);// 这里必须使用qs库进行转换
     }
-  return data
+    return data
 }];
 
 //请求拦截器
 instance.interceptors.request.use(function (config) {
-  // 认证消息头
-  const token = Cookies.get('token');
+    // 认证消息头
+    const token = Cookies.get('token');
 
-  if (token) {
-      config.headers.token = token
-  }
+    if (token) {
+        config.headers.token = token
+    }
 
-  return config;
+    return config;
 }, function (error) {
-  return Promise.reject(error);
+    return Promise.reject(error);
 });
 
 //响应拦截器
 instance.interceptors.response.use(function (response) {
-  const data = response.data;
-  if (data.success === true) {
-    return data.data || data;
-  } else if(data.code=='500'){
-    Notification.error({
-      title: '系统错误',
-      message: data.msg
-    });
-    return data;
-  } else {
-    if (data.rows) {
-      return data;
-    } else if (Array.isArray(data)) {
-      return data;
-    } else if (data && Array.isArray(data.data)) {
-      return data.data;
+    const data = response.data;
+    if (data.success === true) {
+        return data.data || data;
+    } else if (data.code == '500') {
+        Notification.error({
+            title: '系统错误',
+            message: data.msg
+        });
+        return data;
+    } else {
+        if (data.rows) {
+            return data;
+        } else if (Array.isArray(data)) {
+            return data;
+        } else if (data && Array.isArray(data.data)) {
+            return data.data;
+        }
+
+        if (+data.code === 401) {
+            // 无效的token
+            // 重定向到登录页面
+            router.push('/login')
+        }
+        Notification.error({
+            title: '系统错误',
+            message: data.msg
+        });
+
+
+        return Promise.reject({
+            message: data.msg
+        });
     }
-
-    if (+data.code === 401) {
-      // 无效的token
-      // 重定向到登录页面
-      router.push('/login')
-    }
-    Notification.error({
-      title: '系统错误',
-      message: data.msg
-    });
-
-
-    return Promise.reject({
-      message: data.msg
-    });
-  }
 }, function (error) {
-  // if (error.response) {
-  //     // 处理错误
-  // } else if (error.request) {
-  //     // 未响应
-  // } else {
-  //
-  // }
+    // if (error.response) {
+    //     // 处理错误
+    // } else if (error.request) {
+    //     // 未响应
+    // } else {
+    //
+    // }
 
-  // 错误日志
+    // 错误日志
 
-  if (/^timeout/.test(error.message)) {
-    error.message = 'Timeout';
-  }
+    if (/^timeout/.test(error.message)) {
+        error.message = 'Timeout';
+    }
 
-  Notification.error({
-    title: '请求异常',
-    message: errors[error.message] || error.message
-  });
+    Notification.error({
+        title: '请求异常',
+        message: errors[error.message] || error.message
+    });
 
-  return Promise.reject(error);
+    return Promise.reject(error);
 });
 
 //instance.get(url[, config]);
