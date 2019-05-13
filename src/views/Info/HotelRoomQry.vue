@@ -1,84 +1,79 @@
 <template>
     <div class="container" style="width:99%;margin-top:-25px;">
         <!--工具栏-->
-        <div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
-            <el-form :inline="true" :model="filters" :size="size">
-                <el-form-item>
-                    <el-select v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode.provinceCode')">
-                        <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode"
-                                   :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-select v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')">
-                        <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode"
-                                   :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <!--        <el-input v-model="filters.inDateStart" :placeholder="$t('hotel.inDateStart')"></el-input>-->
-                    <!--        <el-input v-model="filters.outDateEnd" :placeholder="$t('hotel.outDateEnd')"></el-input>-->
-                    <el-date-picker
-                        v-model="commonDate"
-                        type="daterange"
-                        range-separator="至"
-                        value-format="yyyyMMdd"
-                        :start-placeholder="$t('hotel.inDateStart')"
-                        :end-placeholder="$t('hotel.outDateEnd')"
-                        :picker-options="pickerOptions">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="filters.roomNum" :placeholder="$t('hotel.roomNum')"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="filters.adultNum" :placeholder="$t('hotel.adultNum')"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="filters.childrenNum" :placeholder="$t('hotel.childrenNum')"></el-input>
-                </el-form-item>
-
-                <el-form-item>
-                    <el-input v-model="filters.inventory" :placeholder="$t('hotel.inventory')"></el-input>
-                </el-form-item>
-
+        <div class="header" style="padding-top:30px;padding-left:20px;">
+            <el-form :inline="true" ref="filters" :model="filters" :size="size">
                 <el-row>
-                    <el-col :span="4">
-                        <el-form-item>
-                            <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
-                                <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode"
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="provinceCode">
+                            <el-select v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode.provinceCode')">
+                                <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode"
                                            :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item prop="cityCode">
+                            <el-select v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')">
+                                <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode"
+                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item prop="commonDate">
+                            <el-date-picker
+                                v-model="filters.commonDate"
+                                type="daterange"
+                                :range-separator="$t('hotel.dateSep')"
+                                value-format="yyyyMMdd"
+                                :start-placeholder="$t('hotel.inDateStart')"
+                                :end-placeholder="$t('hotel.outDateEnd')"
+                                :picker-options="pickerOptions">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
 
-                        <el-form-item>
+                <el-row>
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="roomNum">
+                            <el-input v-model="filters.roomNum" :placeholder="$t('hotel.roomNum')"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="adultNum">
+                            <el-input v-model="filters.adultNum" :placeholder="$t('hotel.adultNum')"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="childrenNum">
+                            <el-input v-model="filters.childrenNum" :placeholder="$t('hotel.childrenNum')"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <el-row>
+                    <el-col :span="12" align="left">
+                        <el-form-item prop="hotelType">
                             <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
                                 <el-option v-for="rt in paraConfig.hotelType" :key="rt.paraCode"
                                            :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item>
+
+                        <el-form-item prop="roomType">
                             <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
                                 <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
                                            :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="3">
-                        <el-form-item>
+                    <el-col :span="12" align="left">
+                        <el-form-item prop="roomStyle">
                             <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
                                 <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode"
                                            :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-form-item>
+                        <el-form-item prop="bedType">
                             <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
                                 <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode"
                                            :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
@@ -86,72 +81,67 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
-                    <el-col :span="3">
-                        <el-form-item>
+                    <el-col :span="12" align="left">
+                        <el-form-item prop="breakType">
                             <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
                                 <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode"
                                            :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
 
-                    <el-col :span="3">
-                        <el-form-item>
+                        <el-form-item prop="roomArea">
                             <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'"></el-input>
                         </el-form-item>
                     </el-col>
+
                 </el-row>
-
                 <el-row>
-                    <el-col :span="3">
-                        <el-form-item>
-                            <el-form-item>
-                                <el-input v-model="filters.roomPrice" :placeholder="$t('hotel.roomPrice')"></el-input>
-                            </el-form-item>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="3">
-                        <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
-                            <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
-                                <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
-                                           :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"
-                                           :value="hotelName.hotelCode"></el-option>
+                    <el-col :span="24" align="left">
+                        <el-form-item prop="hotelLevel">
+                            <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
+                                <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode"
+                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item prop="hotelCode" auto-complete="off">
+                            <el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelname')"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="lowRoomPrice">
+                            <el-input v-model="filters.lowRoomPrice" :placeholder="$t('hotel.lowRoomPrice')" @keyup.native="proving"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="highRoomPrice">
+                            <el-input v-model="filters.highRoomPrice" :placeholder="$t('hotel.highRoomPrice')"></el-input>
+                        </el-form-item>
                     </el-col>
+
                 </el-row>
 
                 <!--<br>-->
                 <h3 style="text-align: left">常用信息:</h3>
                 <el-row>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                    <el-col :span="60" align="left">
+                        <el-form-item prop="iswify">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswify')"
                                          v-model="filters.iswify" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isfront">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isfront')"
                                          v-model="filters.isfront" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isbarrifr">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbarrifr')"
                                          v-model="filters.isbarrifr" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="left">
-
-                        <el-form-item>
+                        <el-form-item prop="isbalcony">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbalcony')"
                                          v-model="filters.isbalcony" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="iskitchen">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iskitchen')"
                                          v-model="filters.iskitchen" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="iswindow">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswindow')"
                                          v-model="filters.iswindow" border></el-checkbox>
                         </el-form-item>
@@ -159,61 +149,56 @@
                 </el-row>
 
                 <el-row>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="isheat">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isheat')"
                                          v-model="filters.isheat" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isicebox">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')"
                                          v-model="filters.isicebox" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isiron">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')"
                                          v-model="filters.isiron" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                        <el-form-item prop="isnosmk">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                          v-model="filters.isnosmk" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="islandscape">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
                                          v-model="filters.islandscape" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="ishighrise">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
                                          v-model="filters.ishighrise" border></el-checkbox>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="ispark">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ispark')"
                                          v-model="filters.ispark" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isgym">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isgym')"
                                          v-model="filters.isgym" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isswmp">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
                                          v-model="filters.isswmp" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                        <el-form-item prop="isbeach">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
                                          v-model="filters.isbeach" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="ishotsp">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
                                          v-model="filters.ishotsp" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="ischildct">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ischildct')"
                                          v-model="filters.ischildct" border></el-checkbox>
                         </el-form-item>
@@ -221,51 +206,50 @@
                 </el-row>
 
                 <el-row>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
+                    <el-col :span="50" align="left">
+                        <el-form-item prop="isroomserv">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isroomserv')"
                                          v-model="filters.isroomserv" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="isknead">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isknead')"
                                          v-model="filters.isknead" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="islounge">
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islounge')"
                                          v-model="filters.islounge" border></el-checkbox>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6" align="left">
-                        <el-form-item>
-                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.issuper')"
+                </el-row>
+                <el-row>
+                    <el-col align="left">
+                        <el-form-item prop="issuper">
+                            <el-checkbox style="width: 400px" true-label="1" false-label="2" :label="$t('hotel.issuper')"
                                          v-model="filters.issuper" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
-                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbus')"
+                        <el-form-item prop="isbus">
+                            <el-checkbox style="width: 400px" true-label="1" false-label="2" :label="$t('hotel.isbus')"
                                          v-model="filters.isbus" border></el-checkbox>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
                     <el-col align="left">
-                        <el-form-item>
-                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.istrafic')"
+                        <el-form-item prop="istrafic">
+                            <el-checkbox style="width: 400px" true-label="1" false-label="2" :label="$t('hotel.istrafic')"
                                          v-model="filters.istrafic" border></el-checkbox>
                         </el-form-item>
-                        <el-form-item>
-                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isrestau')"
+                        <el-form-item prop="isrestau">
+                            <el-checkbox style="width: 400px" true-label="1" false-label="2" :label="$t('hotel.isrestau')"
                                          v-model="filters.isrestau" border></el-checkbox>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-form-item>
-                    <kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary"
+                    <kt-button :label="$t('action.search')" style="width: 200px" perms="sys:bizRoom:view" type="primary"
                                @click="findPage(null)"/>
+                    <el-button style="width: 200px" type="info" @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
                 </el-form-item>
-                <!--<el-form-item>-->
-                <!--<kt-button :label="$t('action.detileSearch')" perms="sys:bizRoom:add" type="primary" @click="handleDetileSearch" />-->
-                <!--</el-form-item>-->
             </el-form>
         </div>
         <!--表格内容栏-->
@@ -584,7 +568,7 @@
 
 <script>
     import Cookies from "js-cookie";
-    import RoomTable from "@/views/Core/hotelRoomTable"
+    import RoomTable from "@/views/Core/HotelRoomTable"
     import KtInput from "@/views/Core/KtInput"
     import KtCheckbox from "@/views/Core/KtCheckbox"
     import KtButton from "@/views/Core/KtButton"
@@ -605,7 +589,7 @@
                         return time.getTime() < Date.now() - 8.64e7
                     }
                 },
-                commonDate:[],
+
                 baseUrl: baseUrl,
                 priceBoolean: true,
                 stockBoolean: true,
@@ -653,10 +637,12 @@
                     isbus: null,
                     istrafic: null,
                     isrestau: null,
-                    roomPrice: null,
+                    lowRoomPrice: null,
+                    highRoomPrice: null,
                     hotelname: null,
                     inDateStart: null,
                     outDateEnd: null,
+                    commonDate:[],
                     roomNum: null,
                     adultNum: null,
                     childrenNum: null,
@@ -772,9 +758,9 @@
                 if (data !== null) {
                     this.pageRequest = data.pageRequest
                 }
-                if(this.commonDate.length>0){
-                    this.filters.inDateStart = this.commonDate[0];
-                    this.filters.outDateEnd = this.commonDate[1];
+                if(this.filters.commonDate.length>0){
+                    this.filters.inDateStart = this.filters.commonDate[0];
+                    this.filters.outDateEnd = this.filters.commonDate[1];
                 }
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     this.pageResult = res
@@ -800,14 +786,6 @@
                 this.dataForm.creatTime = date;
             },
 
-
-            //绑定token
-            handleFileMethod() {
-                let token = Cookies.get('token');
-                this.headersInfo = {
-                    token: token
-                }
-            },
             // 编辑
             submitForm: function () {
 
@@ -865,18 +843,27 @@
             changInputValue: function (val) {//和input组件双向绑定
                 this.priceForm.tprice = val;
 
+            },
+            clearAll: function (formName) {
+                this.$refs[formName].resetFields();
+            },
+            proving: function () {
+                this.filters.lowRoomPrice=this.filters.lowRoomPrice.replace(/[^\.\d]/g,'');
+                this.filters.lowRoomPrice=this.filters.lowRoomPrice.replace('.','');
             }
         },
         mounted() {
             //   this.findDataSelect()
             this.findHotlnmSelect()
             this.localLanguageLoad()
-            this.handleFileMethod()
+            // this.handleFileMethod()
             this.findHotelRoomDataSelect()
         }
     }
 </script>
 
 <style scoped>
-
+.el-checkbox {
+    width: 190px;
+}
 </style>
