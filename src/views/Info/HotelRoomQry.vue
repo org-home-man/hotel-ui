@@ -1,5 +1,5 @@
 <template>
-    <div class="container" style="width:99%;margin-top:-25px;">
+    <div class="container" style="width:99%;margin-top:-25px;margin-bottom: 50px;">
         <!--工具栏-->
         <div class="header" style="padding-top:30px;padding-left:20px;">
             <el-form :inline="true" ref="filters" :model="filters" :size="size">
@@ -253,14 +253,84 @@
             </el-form>
         </div>
         <!--表格内容栏-->
-        <room-table permsReservatRoom="sys:bizRoom:reservatRoom"
-                    :data="this.pageResult"
-                    @findPage="findPage" @handleReservatRoom="handleReservatRoom">
-            <!--@findPage="page" @handleEdit="handleEdit" @handleDelete="handleDelete" >-->
-        </room-table>
+<!--        <room-table permsReservatRoom="sys:bizRoom:reservatRoom"-->
+<!--                    :data="this.pageResult"-->
+<!--                    @findPage="findPage" @handleBookRoom="handleBookRoom">-->
+<!--        </room-table>-->
+        <template>
+            <div style="height: auto">
+                <!--表格栏-->
+                <el-table :data="this.pageResult.rows" ref="table" :highlight-current-row="highlightCurrentRow" @row-click="selectRow"
+                           v-loading="loading" :element-loading-text="$t('action.loading')"
+                          :border="border" :stripe="stripe"
+                          :show-overflow-tooltip="showOverflowTooltip" size="mini" :align="align"
+                          style="width:100%;">
+                    <el-table-column :label="$t('action.operation')" width="55">
+                        <template slot-scope="scope">
+                            <el-radio class="radio" v-model="radio" :label="scope.$index" @change.native="getCurrentRow(scope.row)">&nbsp;</el-radio>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="100" prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+                    </el-table-column>
+                    <el-table-column width="120" prop="provinceCode" header-align="center" align="center"
+                                     :label="$t('hotel.provinceCode.provinceCode')">
+                        <template slot-scope="scope">
+                            <el-tag>{{$t('hotel.'+scope.row.provinceCodeKey)}}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="120" prop="cityCode" header-align="center" align="center"
+                                     :label="$t('hotel.cityCode.cityCode')">
+                        <template slot-scope="scope">
+                            <el-tag>{{$t('hotel.'+scope.row.cityCodeKey)}}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="200" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center"
+                                     align="center" :label="$t('hotel.hotelname')">
+                    </el-table-column>
+                    <el-table-column width="120" prop="hotelType" header-align="center" align="center"
+                                     :label="$t('hotel.hotelType.hotelType')">
+                        <template slot-scope="scope">
+                            <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}}</el-table-column>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column width="100" prop="roomTypeKey" header-align="center" align="center"
+                                     :label="$t('hotel.roomtype.roomtype')">
+                        <template slot-scope="scope">
+                            <el-tag>{{$t('hotel.'+scope.row.roomTypeKey)}}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="100" prop="bedTypeKey" header-align="center" align="center"
+                                     :label="$t('hotel.bedtype.bedtype')">
+                        <template slot-scope="scope">
+                            <el-tag>{{$t('hotel.'+scope.row.bedTypeKey)}}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column min-width="100" prop="breakType" header-align="center" align="center"
+                                     :label="$t('hotel.breaktype.breaktype')">
+                        <template slot-scope="scope">
+                            <el-tag>{{$t('hotel.'+scope.row.breakTypeKey)}}</el-tag>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column width="80" prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')"/>
+
+                </el-table>
+                <!--分页栏-->
+                <div class="toolbar" style="padding:10px;">
+                    <kt-button icon="fa fa-edit" type="danger" :label="$t('hotel.reservatRoom')" style="float:left;padding: 10px 20px" perms="sys:bizRoom:reservatRoom" size="mini"
+                               :disabled="this.radio===''" @click="handleBookRoom(currentRow)" />
+                    <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
+                                   :current-page="pageRequest.pageNum" :page-size="pageRequest.pageSize" :total="this.pageResult.total"
+                                   style="float:right;">
+                    </el-pagination>
+                </div>
+            </div>
+        </template>
 
         <!--新增订单界面-->
-        <el-dialog :title="$t('hotel.reservatRoom')" width="50%" :visible.sync="editDialogVisible"
+        <el-dialog :title="$t('hotel.reservatRoom')" width="90%" style="margin-top: -70px" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
             <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true" label-position="left">
@@ -271,15 +341,6 @@
                                    :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                     </el-select>
                 </el-form-item>
-                <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
-                <!--<template slot-scope="scope">-->
-                <!--<el-table-column>{{$t('hotel.'+scope.row.provinceCode)}} </el-table-column>-->
-                <!--</template>-->
-                <!--</el-table-column>-->
-
-                <!--<el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off">-->
-                <!--<el-input v-model="{$t('hotel.'+scope.row.provinceCodeKey)}" :placeholder="" :disabled="true"></el-input>-->
-                <!--</el-form-item>-->
 
                 <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off">
                     <el-select v-model="dataForm.cityCode" :disabled="true">
@@ -288,21 +349,15 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item :label="$t('hotel.inDateStart')">
+                <el-form-item prop="commonDate">
                     <el-date-picker
-                        v-model="dataForm.inDate"
-                        align="right"
-                        type="date"
-                        :placeholder="$t('hotel.inDateStart')">
-                    </el-date-picker>
-                </el-form-item>
-
-                <el-form-item :label="$t('hotel.outDateEnd')">
-                    <el-date-picker
-                        v-model="dataForm.outDate"
-                        align="right"
-                        type="date"
-                        :placeholder="$t('hotel.outDateEnd')">
+                        v-model="filters.commonDate"
+                        type="daterange"
+                        :range-separator="$t('hotel.dateSep')"
+                        value-format="yyyyMMdd"
+                        :start-placeholder="$t('hotel.inDateStart')"
+                        :end-placeholder="$t('hotel.outDateEnd')"
+                        :picker-options="pickerOptions">
                     </el-date-picker>
                 </el-form-item>
 
@@ -351,11 +406,6 @@
                               :placeholder="$t('hotel.inventory')"></el-input>
                 </el-form-item>
 
-                <!--<el-form-item>-->
-                <!--<el-form-item>-->
-                <!--<el-input v-model="dataForm.sPrice" :disabled="true" :placeholder="$t('hotel.sPrice')"></el-input>-->
-                <!--</el-form-item>-->
-                <!--</el-form-item>-->
 
                 <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr">
                     <el-input v-model="dataForm.hotelAddr" :disabled="true" auto-complete="off"></el-input>
@@ -567,7 +617,6 @@
 </template>
 
 <script>
-    import Cookies from "js-cookie";
     import RoomTable from "@/views/Core/HotelRoomTable"
     import KtInput from "@/views/Core/KtInput"
     import KtCheckbox from "@/views/Core/KtCheckbox"
@@ -582,6 +631,46 @@
             KtCheckbox,
             KtInput
         },
+        props: {
+            columns: Array, // 表格列配置
+            data: Object, // 表格分页数据
+            permsReservatRoom: String,  // 编辑权限标识
+            permsDelete: String,  // 删除权限标识
+            permsPriceEdit: String, //编辑权限标识
+            permsStockEdit: String, //库存编辑权限标识
+            align: {  // 文本对齐方式
+                type: String,
+                default: 'center'
+            },
+            maxHeight: {  // 表格最大高度
+                type: Number,
+                default: 820
+            },
+            showOperation: {  // 是否显示操作组件
+                type: Boolean,
+                default: true
+            },
+            border: {  // 是否显示边框
+                type: Boolean,
+                default: false
+            },
+            stripe: {  // 是否显示斑马线
+                type: Boolean,
+                default: true
+            },
+            highlightCurrentRow: {  // // 是否高亮当前行
+                type: Boolean,
+                default: true
+            },
+            showOverflowTooltip: {  // 是否单行显示
+                type: Boolean,
+                default: true
+            },
+            showBatchDelete: {  // 是否显示操作组件
+                type: Boolean,
+                default: true
+            }
+        },
         data() {
             return {
                 pickerOptions:{
@@ -589,10 +678,11 @@
                         return time.getTime() < Date.now() - 8.64e7
                     }
                 },
-
+                loading: false,  // tab加载标识
                 baseUrl: baseUrl,
                 priceBoolean: true,
                 stockBoolean: true,
+                radio:'',
                 disableHotelName: false,
                 dataurl: '/bizRoom/uploadFile',
                 size: 'small',
@@ -649,7 +739,6 @@
                     sPrice: null,
                     roomNight: null
                 },
-                columns: [],
                 // pageRequest: { pageNum: 1, pageSize: 10 },
                 pageRequest: {page: 1, rows: 10},
                 pageResult: {},
@@ -754,63 +843,34 @@
         },
         methods: {
             // 获取分页数据
-            findPage: function (data) {
-                if (data !== null) {
-                    this.pageRequest = data.pageRequest
-                }
+            findPage: function () {
+                this.loading = true;
                 if(this.filters.commonDate.length>0){
                     this.filters.inDateStart = this.filters.commonDate[0];
                     this.filters.outDateEnd = this.filters.commonDate[1];
                 }
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
-                    this.pageResult = res
-                }).then(data != null ? data.callback : '')
+                    this.pageResult = res;
+                    this.loading = false;
+                    this.radio = '';
+                })
             },
-            // 批量删除
-            handleDelete: function (data) {
-                this.$api.bizRoom.batchDelete(data.params).then(data != null ? data.callback : '')
+            selectRow: function(row){
+                this.currentRow = row;
+                this.radio = this.pageResult.rows.indexOf(row);
             },
-
+            getCurrentRow: function(row){
+                this.currentRow = row;
+                // this.$emit('handleBookRoom', row)
+            },
             // 显示预订界面
-            handleReservatRoom: function (params) {
-                console.log("param", params);
+            handleBookRoom: function (row) {
+                // console.log("param", params);
                 this.disableHotelName = true
                 this.editDialogVisible = true
                 this.operation = false
 
-                this.dataForm = Object.assign({}, params.row)
-                /* 获取操作员 */
-                this.dataForm.creatBy = sessionStorage.getItem('user');
-                /* 获取操作时间 */
-                var date = new Date();
-                this.dataForm.creatTime = date;
-            },
-
-            // 编辑
-            submitForm: function () {
-
-                this.$refs.dataForm.validate((valid) => {
-                    if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
-                            this.editLoading = true
-                            let params = Object.assign({}, this.dataForm)
-                            this.$api.hotelRoom.save(params).then((res) => {
-                                if (res.code == 200) {
-                                    this.$message({message: this.$t('action.success'), type: 'success'})
-                                } else {
-                                    this.$message({message: this.$t('action.fail'), type: 'error'})
-                                }
-                                this.editLoading = false
-                                this.$refs['dataForm'].resetFields()
-                                this.editDialogVisible = false
-                                this.disableHotelName = false
-                                this.findPage(null)
-                            })
-                        })
-                    } else {
-                        this.$message({message: this.$t('action.incompleteInfo'), type: 'error'})
-                    }
-                })
+                this.dataForm = Object.assign({}, row)
             },
 
             // 时间格式化
@@ -850,6 +910,13 @@
             proving: function () {
                 this.filters.lowRoomPrice=this.filters.lowRoomPrice.replace(/[^\.\d]/g,'');
                 this.filters.lowRoomPrice=this.filters.lowRoomPrice.replace('.','');
+            },
+            // 换页刷新
+            refreshPageRequest: function (pageNum) {
+                // this.pageRequest.pageNum = pageNum
+                this.pageRequest.page = pageNum
+
+                this.findPage()
             }
         },
         mounted() {
@@ -858,6 +925,7 @@
             this.localLanguageLoad()
             // this.handleFileMethod()
             this.findHotelRoomDataSelect()
+            this.findPage();
         }
     }
 </script>
@@ -865,5 +933,8 @@
 <style scoped>
 .el-checkbox {
     width: 190px;
+}
+thead .el-table-column--selection .cell {
+    display: none;
 }
 </style>

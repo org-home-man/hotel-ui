@@ -20,7 +20,7 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: 'orderQuery',
+          name: 'HotelRoomQry',
           component: HotelRoomQry,
           meta: {
             icon: 'fa fa-home fa-lg',
