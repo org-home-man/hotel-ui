@@ -47,7 +47,7 @@ export default {
     handleClick: function () {
       // 按钮操作处理函数
       this.$emit('click', {})
-    }, 
+    },
     hasPerms: function (perms) {
       // 根据权限标识和外部指示状态进行权限判断
       return hasPermission(perms) & !this.disabled

@@ -44,7 +44,6 @@ instance.interceptors.request.use(function (config) {
 //响应拦截器
 instance.interceptors.response.use(function (response) {
     const data = response.data;
-    // console.log("data",data)
     if (data.success === true) {
         return data.data || data;
     } else if (data.code == '500') {
@@ -52,7 +51,6 @@ instance.interceptors.response.use(function (response) {
             title: '系统错误',
             message: data.msg
         });
-        console.log("500data",data)
         return data;
     } else {
         if (data.rows) {
@@ -61,12 +59,6 @@ instance.interceptors.response.use(function (response) {
             return data;
         } else if (data && Array.isArray(data.data)) {
             return data.data;
-        }
-
-        if (+data.code === 401) {
-            // 无效的token
-            // 重定向到登录页面
-            router.push('/login')
         }
         Notification.error({
             title: '系统错误',
@@ -89,6 +81,12 @@ instance.interceptors.response.use(function (response) {
 
     // 错误日志
 
+    if (+error.response.status === 403) {
+        // 无效的token
+        // 重定向到登录页面
+        sessionStorage.removeItem("user")
+        router.push('/login')
+    }
     if (/^timeout/.test(error.message)) {
         error.message = 'Timeout';
     }

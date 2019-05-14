@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
