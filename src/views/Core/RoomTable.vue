@@ -14,9 +14,15 @@
       </el-table-column>
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-      <el-table-column prop="provinceCode" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">
+      <el-table-column prop="provinceCodeKey" header-align="center"align="center" :label="$t('hotel.provinceCode.provinceCode')">
+          <template slot-scope="scope">
+              <el-tag>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-tag>
+          </template>
       </el-table-column>
-      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+      <el-table-column prop="cityCodeKey" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+          <template slot-scope="scope">
+              <el-tag>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-tag>
+          </template>
       </el-table-column>
       <el-table-column prop="roomTypeKey" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
@@ -51,6 +57,10 @@
 
       <el-table-column prop="hotelCode" header-align="center" align="center" v-if="show">
       </el-table-column>
+        <el-table-column prop="provinceCode" header-align="center" align="center" v-if="show">
+        </el-table-column>
+        <el-table-column prop="cityCode" header-align="center" align="center" v-if="show">
+        </el-table-column>
       <el-table-column prop="roomType" header-align="center" align="center" v-if="show">
       </el-table-column>
       <el-table-column prop="bedType" header-align="center" align="center" v-if="show">
