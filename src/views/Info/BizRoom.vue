@@ -474,6 +474,19 @@
                 </el-row>
 
                 <el-row>
+                    <el-col :span="12">
+                        <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
+                            <el-input v-model="priceForm.scheduledays" :disabled="priceBoolean"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
+                            <el-input v-model="priceForm.favorableprice" :disabled="priceBoolean"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
                     <el-col :span="24">
                         <el-form-item :label="$t('hotel.priceDateInterval')" prop="priceDateInterval"
                                       auto-complete="off">
