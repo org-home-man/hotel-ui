@@ -11,16 +11,16 @@
 
       <el-form-item>
         <el-select v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode.provinceCode')">
-          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
+          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item>
         <el-select v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')">
-          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
+          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
-      <!--:label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"-->
+
       <!--<el-form-item>-->
         <!--<el-input v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')"></el-input>-->
       <!--</el-form-item>-->
@@ -74,15 +74,13 @@
 
       <el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off" >
         <el-select v-model="dataForm.provinceCode" >
-          <!--<el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>-->
-          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
+          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
         <el-select v-model="dataForm.cityCode" >
-          <!--<el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>-->
-          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
+          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
         </el-select>
       </el-form-item>
 
@@ -289,18 +287,14 @@ export default {
 			})
 		},
     findDataSelect : function () {
-      //this.sysPara={}
-      console.log("lganguage " + this.$i18n.locale);
-      this.sysPara={language: this.$i18n.locale}
+      this.sysPara={}
       let params = Object.assign({}, this.sysPara);
       this.$api.sysParaConfig.findKeyValueHotel(params).then((res) => {
         this.paraConfig = res
         console.log(this.paraConfig);
       })
     },
-    localLanguageLoad:function () {
-      this.language={lge:this.$i18n.locale}
-    },
+
     findAreaPage : function () {
     this.sysPara1={}
     let params = Object.assign({}, this.sysPara1);
@@ -316,7 +310,6 @@ export default {
 },
 	mounted() {
     this.findDataSelect()
-    this.localLanguageLoad()
      // this.findAreaPage()
   }
 }

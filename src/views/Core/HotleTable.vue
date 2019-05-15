@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
@@ -16,15 +16,18 @@
       </el-table-column>
       <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
       <!--</el-table-column>-->
-      <el-table-column :prop="language.lge=='zh_cn'?'provinceCname':'provinceEname'" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-table-column>
+        </template>
       </el-table-column>
       <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
       <!--</el-table-column>-->
-
-
-      <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <template slot-scope="scope">
+          <el-table-column>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-table-column>
+        </template>
       </el-table-column>
-
       <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
         <template slot-scope="scope">
           <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
@@ -162,11 +165,11 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
-			this.delete(row.hotelCode)
+			this.delete(row.id)
 		},
 		// 批量删除
 		handleBatchDelete: function () {
-			let ids = this.selections.map(item => item.hotelCode).toString()
+			let ids = this.selections.map(item => item.id).toString()
 			this.delete(ids)
 		},
 		// 删除操作
@@ -179,7 +182,7 @@ export default {
 				let params = []
 				let idArray = (ids+'').split(',')
 				for(var i=0; i<idArray.length; i++) {
-					params.push({'hotelCode':idArray[i]})
+					params.push({'id':idArray[i]})
         }
         this.loading = true
         let callback = res => {
