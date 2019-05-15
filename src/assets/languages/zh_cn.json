@@ -58,6 +58,11 @@
         "pBedType": "请选择床铺类型",
         "pBreakType": "请选择餐食条件",
         "pRoomStock": "请输入默认库存数",
+        "pStockNum": "库存数只能为数字",
+        "pNum": "请输入数字",
+        "pDoubleNum": "请输入不能多余两位小数的数字",
+        "pLengthValue1": "输入的内容不能大于2000字",
+        "pLengthValue2": "输入的内容不能大于200字",
         "pPriceYear": "请选择年份",
         "pAllDateNull": "年份和区间日期不能同时为空",
         "pSprice": "请输入销售单人价",
@@ -289,6 +294,9 @@
         "isFourday": "四",
         "isFriday": "五",
         "isSaterday": "六",
-        "isSunday": "日"
+        "isSunday": "日",
+        "laterOneWeek": "最近一周",
+        "laterOneMonth": "最近一月",
+        "laterThreeMonth": "最近三月"
     }
 }
