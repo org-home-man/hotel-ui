@@ -1,5 +1,5 @@
 <template>
-  <div style="height: auto">
+  <div>
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
@@ -16,18 +16,15 @@
       </el-table-column>
       <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
       <!--</el-table-column>-->
-      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-table-column>
-        </template>
+      <el-table-column :prop="language.lge=='zh_cn'?'provinceCname':'provinceEname'" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
       </el-table-column>
       <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
       <!--</el-table-column>-->
-      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-table-column>
-        </template>
+
+
+      <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
       </el-table-column>
+
       <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
         <template slot-scope="scope">
           <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
