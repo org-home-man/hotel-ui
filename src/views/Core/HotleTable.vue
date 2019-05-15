@@ -162,11 +162,11 @@ export default {
 		},
     // 删除
 		handleDelete: function (index, row) {
-			this.delete(row.hotelCode)
+			this.delete(row.id)
 		},
 		// 批量删除
 		handleBatchDelete: function () {
-			let ids = this.selections.map(item => item.hotelCode).toString()
+			let ids = this.selections.map(item => item.id).toString()
 			this.delete(ids)
 		},
 		// 删除操作
@@ -179,7 +179,7 @@ export default {
 				let params = []
 				let idArray = (ids+'').split(',')
 				for(var i=0; i<idArray.length; i++) {
-					params.push({'hotelCode':idArray[i]})
+					params.push({'id':idArray[i]})
         }
         this.loading = true
         let callback = res => {
