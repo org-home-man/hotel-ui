@@ -9,8 +9,10 @@ import {Notification} from 'element-ui';
 // import store from '@/store'
 
 const TIMEOUT = 30000, instance = axios.create(), errors = {
-    'Network Error': '网络错误',
-    'Timeout': '连接超时'
+    // 'Network Error': '网络错误',
+    // 'Timeout': '连接超时'
+    'Network Error':this.$t('action.networkErr'),
+    'Timeout':this.$t('action.timeOut')
 };
 instance.defaults.baseURL = config.baseUrl;
 instance.defaults.timeout = TIMEOUT;
@@ -48,7 +50,7 @@ instance.interceptors.response.use(function (response) {
         return data.data || data;
     } else if (data.code == '500') {
         Notification.error({
-            title: '系统错误',
+            title: this.$t('action.sysErr'),
             message: data.msg
         });
         return data;
@@ -61,7 +63,7 @@ instance.interceptors.response.use(function (response) {
             return data.data;
         }
         Notification.error({
-            title: '系统错误',
+            title: this.$t('action.sysErr'),
             message: data.msg
         });
 
@@ -92,7 +94,7 @@ instance.interceptors.response.use(function (response) {
     }
 
     Notification.error({
-        title: '请求异常',
+        title: this.$t('action.requestErr'),
         message: errors[error.message] || error.message
     });
 
