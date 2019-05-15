@@ -60,76 +60,104 @@
               @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
     </kt-table>
     <!--新增编辑界面-->
-    <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="60%" :visible.sync="dialogVisible"
-               :close-on-click-modal="false">
-      <el-form :inline="true" :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
-               label-position="right">
-        <el-form-item label="ID" prop="id" v-if="false">
-          <el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.name')" prop="name">
-          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.password')" prop="password">
-          <el-input v-model="dataForm.password" type="password" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.email')" prop="email">
-          <el-input v-model="dataForm.email" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.birthday')" prop="birthday">
-          <el-date-picker type="date" placeholder="选择出生日期" v-model="dataForm.birthday" auto-complete="off" style="width: 200px;"></el-date-picker>
-        </el-form-item>
-        <el-form-item :label="$t('user.mobile')" prop="mobile">
-          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.org')" prop="deptName">
-          <popup-tree-input
-            :data="deptData"
-            :props="deptTreeProps"
-            :prop="dataForm.deptName"
-            :nodeKey="''+dataForm.deptId"
-            :currentChangeHandle="deptTreeCurrentChangeHandle">
-          </popup-tree-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.phone')" prop="phone">
-          <el-input v-model="dataForm.phone" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.address')" prop="address">
-          <el-input v-model="dataForm.address" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.region')" prop="region">
-          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.net')" prop="net">
-          <el-input v-model="dataForm.net" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.remark')" prop="remark">
-          <el-input v-model="dataForm.remark" type="textarea" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('user.role')" prop="userRoles">
-          <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
-                     style="width: 100%;">
-            <el-option v-for="item in roles" :key="item.id"
-                       :label="item.remark" :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('user.phto')" prop="phto">
-          <el-upload action="string" :limit="1" :on-exceed="onExceed" :file-list="fileList" :on-change="beforeUpload" :auto-upload="false" list-type="picture-card">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog>
-            <img width="100%" src="">
-          </el-dialog>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button :size="size" @click.native="cancel('dataForm')">{{$t('action.cancel')}}</el-button>
-        <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">
-          {{$t('action.submit')}}
-        </el-button>
-      </div>
-    </el-dialog>
+      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="840px" :visible.sync="dialogVisible"
+                 :close-on-click-modal="false">
+          <el-form :inline="true" :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"
+                   :size="size"
+                   label-position="right">
+              <div style="width: 100%;display: flex">
+                  <div style="width: 50%;">
+                      <el-form-item :label="$t('user.name')" prop="name" style="width: 100%;display: block;">
+                          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.password')" prop="password" style="width: 100%;display: block;">
+                          <el-input v-model="dataForm.password" type="password" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
+                          <el-input v-model="dataForm.realName" auto-complete="off"></el-input>
+                      </el-form-item>
+                  </div>
+                  <div style="width: 50%;">
+                      <el-form-item  prop="phto" style="width: 100%">
+                          <el-upload action="string" :limit="1" :on-exceed="onExceed" :file-list="fileList"
+                                     :on-change="beforeUpload" :auto-upload="false" list-type="picture-card">
+                              <i class="el-icon-plus"></i>
+                          </el-upload>
+                          <el-dialog>
+                              <img width="100%" src="">
+                          </el-dialog>
+                      </el-form-item>
+                  </div>
+              </div>
+              <div style="width: 100%;display: flex">
+                  <div style="width: 50%;">
+                      <el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">
+                          <el-select v-model="dataForm.sex" :placeholder="$t('action.select')"
+                                     style="width: 200px;">
+                              <el-option v-for="item in sexs" :key="item.id"
+                                         :label="$t(item.paraCode)" :value="item.paraValue1">
+                              </el-option>
+                          </el-select>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.birthday')" prop="birthday" style="width: 100%">
+                          <el-date-picker type="date" placeholder="选择出生日期" v-model="dataForm.birthday" auto-complete="off"
+                                          style="width: 200px;"></el-date-picker>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.org')" prop="deptName" style="width: 100%">
+                          <el-select v-model="dataForm.deptId" :placeholder="$t('action.select')"
+                                     style="width: 200px;">
+                              <el-option v-for="item in deptData" :key="item.id"
+                                         :label="item.name" :value="item.id">
+                              </el-option>
+                          </el-select>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
+                          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.role')" prop="userRoles" style="width: 100%">
+                          <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
+                                     style="width: 200px;">
+                              <el-option v-for="item in roles" :key="item.id"
+                                         :label="item.remark" :value="item.id">
+                              </el-option>
+                          </el-select>
+                      </el-form-item>
+                  </div>
+                  <div style="width: 50%;">
+                      <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
+                          <el-input v-model="dataForm.email" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">
+                          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.phone')" prop="phone" style="width: 100%">
+                          <el-input v-model="dataForm.phone" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.address')" prop="address" style="width: 100%">
+                          <el-input v-model="dataForm.address" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.net')" prop="net" style="width: 100%">
+                          <el-input v-model="dataForm.net" auto-complete="off"></el-input>
+                      </el-form-item>
+                  </div>
+              </div>
+              <div style="width: 100%;">
+                  <el-form-item :label="$t('user.remark')" prop="remark" style="width: 100%">
+                      <el-input v-model="dataForm.remark" type="textarea" resize="unset" auto-complete="off" :rows="5" style="width: 600px;"></el-input>
+                  </el-form-item>
+              </div>
+
+              <el-form-item label="ID" prop="id" v-if="false" style="width: 40%">
+                  <el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>
+              </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+              <el-button :size="size" @click.native="cancel('dataForm')">{{$t('action.cancel')}}</el-button>
+              <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">
+                  {{$t('action.submit')}}
+              </el-button>
+          </div>
+      </el-dialog>
   </div>
 </template>
 
@@ -172,38 +200,83 @@
         dialogVisible: false, // 新增编辑界面是否显示
         editLoading: false,
         dataFormRules: {
-          username: [
-            {required: true, message: this.$t('action.pUsername'), trigger: 'blur'}
-          ]
+            name: [
+                {required: true, message: this.$t('action.pName'), trigger: 'blur'},
+                /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
+            ],
+            realName: [
+                {required: true, message: this.$t('action.pRealName'), trigger: 'blur'},
+                /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
+            ],
+            sex: [
+                {required: true, message: this.$t('action.pSex'), trigger: 'blur'},
+                /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
+            ],
+            password:[
+                {required: true, message: this.$t('action.pPassword'), trigger: 'blur'},
+                { type: 'string', min: 6, message: this.$t('action.pPasswordLength'), trigger: 'blur' },
+
+            ],
+            email:[
+                {required: true, message: this.$t('action.pEmail'), trigger: 'blur'}
+            ],
+            birthday:[
+                {required: true, message: this.$t('action.pBirthday'), trigger: 'blur'}
+            ],
+            mobile:[
+                {required: true, message: this.$t('action.pMobile'), trigger: 'blur'}
+            ],
+            deptId:[
+                {required: true, message: this.$t('action.pDeptId'), trigger: 'blur'}
+            ],
+            phone:[
+                {required: true, message: this.$t('action.pPhone'), trigger: 'blur'}
+            ],
+            region:[
+                {required: true, message: this.$t('action.pRegion'), trigger: 'blur'}
+            ],
+            address:[
+                {required: true, message: this.$t('action.pAddress'), trigger: 'blur'}
+            ],
+            net:[
+                {required: true, message: this.$t('action.pNet'), trigger: 'blur'}
+            ],
+            remark:[
+                {required: true, message: this.$t('action.pRemark'), trigger: 'blur'}
+            ],
+            userRoles:[
+                {required: true, message: this.$t('action.pUserRoles'), trigger: 'blur'}
+            ]
         },
         // 新增编辑界面数据
-        dataForm: {
-          id: 0,
-          name: '',
-          password: '',
-          deptId: '',
-          deptName: '',
-          birthday:'',
-          email: '',
-          mobile: '',
-          status: 1,
-          path:null,
-          phone:'',
-          address:'',
-          region:'',
-          net:'',
-          remark:'',
-          userRoles: [],
-          playUrl:""
-        },
-        deptData: [],
-        deptTreeProps: {
-          label: 'name',
-          children: 'children'
-        },
-        roles: [],
-        fileList: [],
-        files:null
+          dataForm: {
+              id: 0,
+              name: '',
+              realName: '',
+              sex: '',
+              password: '',
+              deptId: '',
+              birthday: '',
+              email: '',
+              mobile: '',
+              status: 1,
+              path: null,
+              phone: '',
+              address: '',
+              region: '',
+              net: '',
+              remark: '',
+              userRoles: []
+          },
+          deptData: [],
+          deptTreeProps: {
+              label: 'name',
+              children: 'children'
+          },
+          roles: [],
+          sexs:[],
+          fileList: [],
+          files: null
       }
     },
     methods: {
@@ -215,7 +288,8 @@
         this.pageRequest = {...this.pageRequest,...this.filters};
         this.$api.user.findPage(this.pageRequest).then((res) => {
           this.pageResult = res;
-          this.findUserRoles()
+          this.findUserRoles();
+          this.findUserSex();
         }).then(data != null ? data.callback : '')
       },
       // 加载用户角色信息
@@ -225,6 +299,13 @@
           this.roles = res
         })
       },
+      //加载性别角色字典
+      findUserSex:function(){
+          this.$api.sysParaConfig.findByCode({"paraSubCode2":"sex"}).then((res) => {
+              console.log(res)
+              this.sexs = res;
+          })
+      },
       // 批量删除
       handleDelete: function (data) {
         this.$api.user.batchDelete(data.params).then(data != null ? data.callback : '')
@@ -233,23 +314,25 @@
       handleAdd: function () {
         this.dialogVisible = true
         this.operation = true
-        this.dataForm = {
-          id: 0,
-          name: '',
-          password: '',
-          deptId: '',
-          deptName: '',
-          birthday:'',
-          email: '',
-          mobile: '',
-          status: 1,
-          phone:'',
-          address:'',
-          region:'',
-          net:'',
-          remark:'',
-          userRoles: []
-        }
+          this.dataForm = {
+              id: 0,
+              name: '',
+              realName: '',
+              sex:'',
+              password: '',
+              deptId: '',
+              birthday: '',
+              email: '',
+              mobile: '',
+              status: 1,
+              phone: '',
+              address: '',
+              region: '',
+              net: '',
+              remark: '',
+              userRoles: []
+          };
+          this.fileList = [];
       },
       // 显示编辑界面
       handleEdit: function (params) {
@@ -275,7 +358,6 @@
 
             this.$confirm(this.$t('action.sureSubmit'), this.$t('action.Tips'), {}).then(() => {
 
-              console.log(this.files)
               if (this.files != null) {
                 let formDate = new FormData();
                 formDate.append("files", this.files.raw);
@@ -334,11 +416,6 @@
           this.deptData = res
         })
       },
-      // 菜单树选中
-      deptTreeCurrentChangeHandle (data, node) {
-        this.dataForm.deptId = data.id
-        this.dataForm.deptName = data.name
-      },
       // 时间格式化
       dateFormat: function (row, column, cellValue, index) {
         return format(row[column.property])
@@ -362,10 +439,6 @@
           {prop: "email", label: 'mail', minWidth: 120},
           {prop: "mobile", label: 'phone', minWidth: 100},
           {prop: "status", label: 'state', minWidth: 70},
-          // {prop:"createBy", label:"创建人", minWidth:120},
-          // {prop:"createTime", label:"创建时间", minWidth:120, formatter:this.dateFormat}
-          // {prop:"lastUpdateBy", label:"更新人", minWidth:100},
-          // {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
         ]
         this.filterColumns = JSON.parse(JSON.stringify(this.columns));
       },
