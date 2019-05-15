@@ -5,17 +5,17 @@
             <el-form :inline="true" :model="filters" :size="size" ref="filters">
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="hotelCode">
                             <el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelCode')"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="hotelName">
                             <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="roomType">
                             <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
                                 <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
                                            :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
@@ -26,7 +26,7 @@
 
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="bedType">
                             <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
                                 <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode"
                                            :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
@@ -35,7 +35,7 @@
                     </el-col>
 
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="breakType">
                             <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
                                 <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode"
                                            :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
@@ -44,7 +44,7 @@
                     </el-col>
 
                     <el-col :span="8">
-                        <el-form-item>
+                        <el-form-item prop="inventory">
                             <el-input v-model="filters.inventory" :placeholder="$t('hotel.inventory')"></el-input>
                         </el-form-item>
                     </el-col>
