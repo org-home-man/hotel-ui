@@ -164,7 +164,7 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
-                            <el-input v-model="dataForm.scheduledays"></el-input>
+                            <el-input v-model.number="dataForm.scheduledays"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -177,7 +177,7 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
-                            <el-input v-model="dataForm.evenlive"></el-input>
+                            <el-input v-model.number="dataForm.evenlive"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -190,7 +190,7 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                            <el-input v-model="dataForm.roomStock"></el-input>
+                            <el-input v-model.number="dataForm.roomStock"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -811,6 +811,43 @@
             StockPicker
         },
         data() {
+            var checkNumber = (rule,value,callback)=>{
+                if (!value) {
+                    callback();
+                } else {
+                    if (!Number.isInteger(value)) {
+                        callback(new Error(this.$t('action.pNum')));
+                    }
+                }
+            };
+            var checkDoubleNumber = (rule,value,callback)=>{
+                var regNumber = /(^[1-9](\d+)?(\.\d{1,2})?$)|(^0$)|(^\d\.\d{1,2}$)/;
+                if (!value) {
+                    callback();
+                } else {
+                    if (!regNumber.test(value) ) {
+                        callback(new Error(this.$t('action.pDoubleNum')));
+                    }
+                }
+            };
+            var checkLength1 = (rule,value,callback)=> {
+                if (!value) {
+                    callback();
+                } else {
+                    if (value.length > 2000) {
+                        callback(new Error(this.$t('action.pLengthValue1')));
+                    }
+                }
+            };
+            var checkLength2 = (rule,value,callback)=> {
+                if (!value) {
+                    callback();
+                } else {
+                    if (value.length > 200) {
+                        callback(new Error(this.$t('action.pLengthValue2')));
+                    }
+                }
+            };
             return {
                 baseUrl: baseUrl,
                 priceBoolean: true,
@@ -863,9 +900,30 @@
                         {required: true, message: this.$t('action.pBreakType'), trigger: 'blur'}
                     ],
                     roomStock: [
-                        {required: true, message: this.$t('action.pRoomStock'), trigger: 'blur'}
+                        {required: true, message: this.$t('action.pRoomStock'), trigger: 'blur'},
+                        {validator:checkNumber,trigger:'blur'}
+                    ],
+                    roomArea:[
+                        {validator:checkDoubleNumber}
+                    ],
+                    scheduledays:[
+                        {validator:checkNumber}
+                    ],
+                    evenlive:[
+                        {validator:checkNumber}
+                    ],
+                    favorableprice:[
+                        {validator:checkDoubleNumber}
+                    ],
+                    introC:[
+                        {validator:checkLength1}
+                    ],
+                    introE:[
+                        {validator:checkLength1}
+                    ],
+                    present:[
+                        {validator:checkLength2}
                     ]
-
                 },
 
                 // 新增编辑界面数据
@@ -997,7 +1055,7 @@
                 stockDateData: [],
                 pickerOptions: {
                     shortcuts: [{
-                        text: '最近一周',
+                        text: this.$t('hotel.laterOneWeek'),
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
@@ -1005,7 +1063,7 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
-                        text: '最近一个月',
+                        text: this.$t('hotel.laterOneMonth'),
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
@@ -1013,7 +1071,7 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }, {
-                        text: '最近三个月',
+                        text: this.$t('hotel.laterThreeMonth'),
                         onClick(picker) {
                             const end = new Date();
                             const start = new Date();
@@ -1410,7 +1468,6 @@
 
                         this.stockForm.stockDateData = this.stockDateData;
                         this.$api.bizRoom.stockDatePro(this.stockForm, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
-                            console.log(res);
                             if (res.code == "0000") {
                                 this.stockDateData = res.list;
                             }
