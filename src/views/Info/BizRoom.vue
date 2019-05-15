@@ -2,7 +2,7 @@
     <div class="container" style="width:99%;margin-top:-25px;">
         <!--工具栏-->
         <div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
-            <el-form :inline="true" :model="filters" :size="size">
+            <el-form :inline="true" :model="filters" :size="size" ref="filters">
                 <el-row>
                     <el-col :span="8">
                         <el-form-item>
@@ -62,6 +62,10 @@
                 </el-form-item>
                 <el-form-item>
                     <kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd"/>
+                </el-form-item>
+
+                <el-form-item>
+                    <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
                 </el-form-item>
 
 
@@ -1096,6 +1100,9 @@
                     this.pageRequest = {}
                     this.pageResult = res
                 }).then(data != null ? data.callback : '')
+            },
+            clearAll: function (formName) {
+                this.$refs[formName].resetFields();
             },
             // 批量删除
             handleDelete: function (data) {
