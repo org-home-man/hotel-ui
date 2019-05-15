@@ -86,15 +86,17 @@ instance.interceptors.response.use(function (response) {
         // 重定向到登录页面
         sessionStorage.removeItem("user")
         router.push('/login')
-    }
-    if (/^timeout/.test(error.message)) {
-        error.message = 'Timeout';
+    }else{
+
+        if (/^timeout/.test(error.message)) {
+            error.message = 'Timeout';
+        }
+        Notification.error({
+            title: '请求异常',
+            message: errors[error.message] || error.message
+        });
     }
 
-    Notification.error({
-        title: '请求出错',
-        message: errors[error.message] || error.message
-    });
 
     return Promise.reject(error);
 });
