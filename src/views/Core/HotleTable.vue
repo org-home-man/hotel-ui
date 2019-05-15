@@ -1,212 +1,209 @@
 <template>
-  <div style="height: auto">
-    <!--表格栏-->
-    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
-      <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
-      <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
-        <!--:prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
-        <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
-        <!--:sortable="column.sortable==null?true:column.sortable">-->
-      <!--</el-table-column>-->
-      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
-      </el-table-column>
-      <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
-      </el-table-column>
-      <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
-      <!--</el-table-column>-->
-      <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.provinceCodeKey)}} </el-table-column>
-        </template>
-      </el-table-column>
-      <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
-      <!--</el-table-column>-->
-      <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.cityCodeKey)}} </el-table-column>
-        </template>
-      </el-table-column>
-      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
-        </template>
-      </el-table-column>
-      <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.hotelLevelKey)}} </el-table-column>
-        </template>
-      </el-table-column>
-      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
-      </el-table-column>
-      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')">
-      </el-table-column>
-      <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')">
-      </el-table-column>
-      <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')">
-      </el-table-column>
-      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')">
-      </el-table-column>
-      <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
-      </el-table-column>
-      <el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">
-      </el-table-column>
-      <el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">
-      </el-table-column>
-      <el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">
-      </el-table-column>
-      <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
-        <template slot-scope="scope">
-          <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-          <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
-        </template>
-      </el-table-column>
-    </el-table>
-    <!--分页栏-->
-    <div class="toolbar" style="padding:10px;">
-      <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
-        :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
-      <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
-        :current-page="pageRequest.pageNum" :page-size="pageRequest.pageSize" :total="data.total" style="float:right;">
-      </el-pagination>
+    <div>
+        <!--表格栏-->
+        <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
+                  @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
+                  :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
+            <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
+            <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
+            <!--:prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
+            <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
+            <!--:sortable="column.sortable==null?true:column.sortable">-->
+            <!--</el-table-column>-->
+            <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+            </el-table-column>
+            <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
+            </el-table-column>
+            <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+            <!--</el-table-column>-->
+            <el-table-column :prop="language.lge=='zh_cn'?'provinceCname':'provinceEname'" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+            </el-table-column>
+            <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
+            <!--</el-table-column>-->
+
+
+            <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+            </el-table-column>
+
+            <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
+                <template slot-scope="scope">
+                    <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
+                </template>
+            </el-table-column>
+            <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
+                <template slot-scope="scope">
+                    <el-table-column>{{$t('hotel.'+scope.row.hotelLevelKey)}} </el-table-column>
+                </template>
+            </el-table-column>
+            <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+            </el-table-column>
+            <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')">
+            </el-table-column>
+            <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')">
+            </el-table-column>
+            <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')">
+            </el-table-column>
+            <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')">
+            </el-table-column>
+            <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
+            </el-table-column>
+            <el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">
+            </el-table-column>
+            <el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">
+            </el-table-column>
+            <el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">
+            </el-table-column>
+            <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
+                <template slot-scope="scope">
+                    <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+                    <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+                </template>
+            </el-table-column>
+        </el-table>
+        <!--分页栏-->
+        <div class="toolbar" style="padding:10px;">
+            <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
+                       :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
+            <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
+                           :current-page="pageRequest.pageNum" :page-size="pageRequest.pageSize" :total="data.total" style="float:right;">
+            </el-pagination>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import KtButton from "@/views/Core/KtButton"
-export default {
-  name: 'HotleTable',
-  components:{
-			KtButton
-	},
-  props: {
-    columns: Array, // 表格列配置
-    data: Object, // 表格分页数据
-    permsEdit: String,  // 编辑权限标识
-    permsDelete: String,  // 删除权限标识
-    size: { // 尺寸样式
-      type: String,
-      default: 'mini'
-    },
-    align: {  // 文本对齐方式
-      type: String,
-      default: 'left'
-    },
-    maxHeight: {  // 表格最大高度
-      type: Number,
-      default: 420
-    },
-    showOperation: {  // 是否显示操作组件
-      type: Boolean,
-      default: true
-    },
-    border: {  // 是否显示边框
-      type: Boolean,
-      default: false
-    },
-    stripe: {  // 是否显示斑马线
-      type: Boolean,
-      default: true
-    },
-    highlightCurrentRow: {  // // 是否高亮当前行
-      type: Boolean,
-      default: true
-    },
-    showOverflowTooltip: {  // 是否单行显示
-      type: Boolean,
-      default: true
-    },
-    showBatchDelete: {  // 是否显示操作组件
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      // 分页信息
-			pageRequest: {
-				page: 1,
-        rows: 10
-      },
-      loading: false,  // 加载标识
-      selections: [],  // 列表选中列
-      language:{}
-    }
-  },
-  methods: {
-    // 分页查询
-    findPage: function () {
-      console.log("licy");
-        this.loading = true
-        let callback = res => {
-          this.loading = false
+    import KtButton from "@/views/Core/KtButton"
+    export default {
+        name: 'HotleTable',
+        components:{
+            KtButton
+        },
+        props: {
+            columns: Array, // 表格列配置
+            data: Object, // 表格分页数据
+            permsEdit: String,  // 编辑权限标识
+            permsDelete: String,  // 删除权限标识
+            size: { // 尺寸样式
+                type: String,
+                default: 'mini'
+            },
+            align: {  // 文本对齐方式
+                type: String,
+                default: 'left'
+            },
+            maxHeight: {  // 表格最大高度
+                type: Number,
+                default: 420
+            },
+            showOperation: {  // 是否显示操作组件
+                type: Boolean,
+                default: true
+            },
+            border: {  // 是否显示边框
+                type: Boolean,
+                default: false
+            },
+            stripe: {  // 是否显示斑马线
+                type: Boolean,
+                default: true
+            },
+            highlightCurrentRow: {  // // 是否高亮当前行
+                type: Boolean,
+                default: true
+            },
+            showOverflowTooltip: {  // 是否单行显示
+                type: Boolean,
+                default: true
+            },
+            showBatchDelete: {  // 是否显示操作组件
+                type: Boolean,
+                default: true
+            }
+        },
+        data() {
+            return {
+                // 分页信息
+                pageRequest: {
+                    page: 1,
+                    rows: 10
+                },
+                loading: false,  // 加载标识
+                selections: [],  // 列表选中列
+                language:{}
+            }
+        },
+        methods: {
+            // 分页查询
+            findPage: function () {
+                console.log("licy");
+                this.loading = true
+                let callback = res => {
+                    this.loading = false
+                }
+                this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
+            },
+            // 选择切换
+            selectionChange: function (selections) {
+                this.selections = selections
+                this.$emit('selectionChange', {selections:selections})
+            },
+            // 选择切换
+            handleCurrentChange: function (val) {
+                this.$emit('handleCurrentChange', {val:val})
+            },
+            // 换页刷新
+            refreshPageRequest: function (pageNum) {
+                this.pageRequest.pageNum = pageNum
+                this.findPage()
+            },
+            // 编辑
+            handleEdit: function (index, row) {
+                this.$emit('handleEdit', {index:index, row:row})
+            },
+            // 删除
+            handleDelete: function (index, row) {
+                this.delete(row.hotelCode)
+            },
+            // 批量删除
+            handleBatchDelete: function () {
+                let ids = this.selections.map(item => item.hotelCode).toString()
+                this.delete(ids)
+            },
+            // 删除操作
+            delete: function (ids) {
+                this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
+                    type: 'warning',
+                    cancelButtonText: this.$t('action.cancel'),
+                    confirmButtonText: this.$t('action.confirm')
+                }).then(() => {
+                    let params = []
+                    let idArray = (ids+'').split(',')
+                    for(var i=0; i<idArray.length; i++) {
+                        params.push({'hotelCode':idArray[i]})
+                    }
+                    this.loading = true
+                    let callback = res => {
+                        if(res.code == 200) {
+                            this.$message({message: this.$t('action.success'), type: 'success'})
+                            this.findPage()
+                        } else {
+                            this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
+                        }
+                        this.loading = false
+                    }
+                    this.$emit('handleDelete', {params:params, callback:callback})
+                }).catch(() => {
+                })
+            },
+            localLanguageLoad:function () {
+                this.language={lge:this.$i18n.locale}
+            }
+        },
+        mounted() {
+            this.refreshPageRequest(1)
+            this.localLanguageLoad()
         }
-      this.$emit('findPage', {pageRequest:this.pageRequest, callback:callback})
-    },
-    // 选择切换
-    selectionChange: function (selections) {
-      this.selections = selections
-      this.$emit('selectionChange', {selections:selections})
-    },
-    // 选择切换
-    handleCurrentChange: function (val) {
-      this.$emit('handleCurrentChange', {val:val})
-    },
-    // 换页刷新
-		refreshPageRequest: function (pageNum) {
-      this.pageRequest.pageNum = pageNum
-      this.findPage()
-    },
-    // 编辑
-		handleEdit: function (index, row) {
-      this.$emit('handleEdit', {index:index, row:row})
-		},
-    // 删除
-		handleDelete: function (index, row) {
-			this.delete(row.hotelCode)
-		},
-		// 批量删除
-		handleBatchDelete: function () {
-			let ids = this.selections.map(item => item.hotelCode).toString()
-			this.delete(ids)
-		},
-		// 删除操作
-		delete: function (ids) {
-			this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
-				type: 'warning',
-        cancelButtonText: this.$t('action.cancel'),
-        confirmButtonText: this.$t('action.confirm')
-			}).then(() => {
-				let params = []
-				let idArray = (ids+'').split(',')
-				for(var i=0; i<idArray.length; i++) {
-					params.push({'hotelCode':idArray[i]})
-        }
-        this.loading = true
-        let callback = res => {
-          if(res.code == 200) {
-            this.$message({message: this.$t('action.success'), type: 'success'})
-            this.findPage()
-          } else {
-            this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
-          }
-          this.loading = false
-        }
-        this.$emit('handleDelete', {params:params, callback:callback})
-			}).catch(() => {
-			})
-		},
-    localLanguageLoad:function () {
-      this.language={lge:this.$i18n.locale}
     }
-  },
-  mounted() {
-    this.refreshPageRequest(1)
-    this.localLanguageLoad()
-  }
-}
 </script>
 
 <style scoped>
