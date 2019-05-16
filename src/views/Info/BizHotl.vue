@@ -183,10 +183,10 @@ export default {
 				hotelLevel: null,
 				hotelCname: null,
 				hotelEname: null,
-        hotelAddr: null,
-        hotelPhone: null,
-        hotelFax: null,
-        hotelWeb: null,
+                hotelAddr: null,
+                hotelPhone: null,
+                hotelFax: null,
+                hotelWeb: null,
 				creatCy: null,
 				creatTime: null,
 				lastUpdateBy: null,
@@ -261,7 +261,8 @@ export default {
 			this.editDialogVisible = true
 			this.operation = false
       this.dataForm.lastUpdateBy = sessionStorage.getItem("user")
-      /* 获取操作时间 */
+
+            /* 获取操作时间 */
       var date = new Date();
       this.dataForm.lastUpdateTime = date;
 			this.dataForm = Object.assign({}, params.row)
