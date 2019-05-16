@@ -3,7 +3,7 @@
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" :max-height="maxHeight" :size="size" :align="align" style="width:100%;" >
+          :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
         <!--:prop="column.prop" :label="$t('table.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
