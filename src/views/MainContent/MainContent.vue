@@ -61,9 +61,6 @@
             generateTitle,
             // tabs, 选中tab
             selectedTabHandle(tab) {
-                if(this.mainTabsActiveName === tab.name){
-                    return;
-                }
                 tab = this.mainTabs.filter(item => item.name === tab.name)
                 if (tab.length >= 1) {
                     this.$router.push({name: tab[0].name})
