@@ -378,7 +378,7 @@
                                 <i class="el-icon-plus"></i>
                             </el-upload>
 
-                            <el-dialog :visible.sync="dialogVisible" size="tiny" append-to-body>
+                            <el-dialog :visible.sync="dialogVisible" width="65%" append-to-body>
                                 <img width="100%" :src="dialogImageUrl" alt="">
                             </el-dialog>
                         </el-form-item>
@@ -408,7 +408,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button :size="size" @click.native="cancelForm">{{$t('action.cancel')}}</el-button>
-                <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">
+                <el-button :size="size" @click.native="submitInfoForm" :loading="editLoading">
                     {{$t('action.submit')}}
                 </el-button>
             </div>
@@ -819,6 +819,7 @@
                     if (!Number.isInteger(value)) {
                         callback(new Error(this.$t('action.pNum')));
                     }
+                    callback();
                 }
             };
             var checkDoubleNumber = (rule,value,callback)=>{
@@ -829,6 +830,7 @@
                     if (!regNumber.test(value) ) {
                         callback(new Error(this.$t('action.pDoubleNum')));
                     }
+                    callback();
                 }
             };
             var checkLength1 = (rule,value,callback)=> {
@@ -838,6 +840,7 @@
                     if (value.length > 2000) {
                         callback(new Error(this.$t('action.pLengthValue1')));
                     }
+                    callback();
                 }
             };
             var checkLength2 = (rule,value,callback)=> {
@@ -847,6 +850,7 @@
                     if (value.length > 200) {
                         callback(new Error(this.$t('action.pLengthValue2')));
                     }
+                    callback();
                 }
             };
             return {
@@ -1248,10 +1252,12 @@
                 this.dialogVisible = true;
             },
             // 编辑
-            submitForm: function () {
+            submitInfoForm: function () {
 
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
+                        console.log(valid);
+                        console.log("+++++")
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editLoading = true;
                             this.formDate = new FormData();
