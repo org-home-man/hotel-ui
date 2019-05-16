@@ -1306,7 +1306,9 @@
                                         this.isUpload = false;
                                         this.findPage(null)
                                     })
-                                })
+                                }).finally(
+                                    this.editLoading = false
+                                )
                             } else {
                                 //只保存数据
                                 let params = Object.assign({}, this.dataForm)
@@ -1325,7 +1327,9 @@
                                     this.files = [];
                                     this.delFile=[];
                                     this.findPage(null)
-                                })
+                                }).finally(
+                                    this.editLoading = false
+                                )
                             }
                         })
                     } else {

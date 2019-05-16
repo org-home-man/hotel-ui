@@ -14,52 +14,57 @@
           </span>
         </div>  
     </div>
-    <div class="personal-relation">
-        <span class="relation-item">followers</span>  
-        <span class="relation-item">watches</span>  
-        <span class="relation-item">friends</span>
-    </div>
+    <!--<div class="personal-relation">-->
+        <!--<span class="relation-item">followers</span>  -->
+        <!--<span class="relation-item">watches</span>  -->
+        <!--<span class="relation-item">friends</span>-->
+    <!--</div>-->
     <div class="main-operation">
+        <!--<span class="main-operation-item">-->
+          <!--<el-button size="small" icon="fa fa-male"> 个人中心</el-button>-->
+        <!--</span>    -->
         <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-male"> 个人中心</el-button>
-        </span>    
-        <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key"> 修改密码</el-button>
+          <el-button size="small" icon="fa fa-key" @click="openPassVisible"> 修改密码</el-button>
         </span>    
     </div>
-    <div class="other-operation">
-        <div class="other-operation-item">
-          <li class="fa fa-eraser"></li>
-          清除缓存
-        </div>    
-        <div class="other-operation-item">
-          <li class="fa fa-user"></li>
-          在线人数
-        </div>    
-        <div class="other-operation-item">
-          <li class="fa fa-bell"></li>
-          访问次数
-        </div>    
-        <div class="other-operation-item" @click="showBackupDialog">
-          <li class="fa fa-undo"></li>
-          {{$t("common.backupRestore")}}
-        </div>    
-    </div>
+
+    <!--<div class="other-operation">-->
+        <!--<div class="other-operation-item">-->
+          <!--<li class="fa fa-eraser"></li>-->
+          <!--清除缓存-->
+        <!--</div>    -->
+        <!--<div class="other-operation-item">-->
+          <!--<li class="fa fa-user"></li>-->
+          <!--在线人数-->
+        <!--</div>    -->
+        <!--<div class="other-operation-item">-->
+          <!--<li class="fa fa-bell"></li>-->
+          <!--访问次数-->
+        <!--</div>    -->
+        <!--<div class="other-operation-item" @click="showBackupDialog">-->
+          <!--<li class="fa fa-undo"></li>-->
+          <!--{{$t("common.backupRestore")}}-->
+        <!--</div>    -->
+    <!--</div>-->
     <div class="personal-footer" @click="logout">
       <li class="fa fa-sign-out"></li>
       {{$t("common.logout")}}
     </div>
     <!--备份还原界面-->
-    <backup ref="backupDialog" @afterRestore="afterRestore"></backup>
+    <!--<backup ref="backupDialog" @afterRestore="afterRestore"></backup>-->
+      <password-up :passVisible="passVisible" @changePasswordupVisible="changePasswordupVisible"></password-up>
   </div>
 </template>
 
 <script>
 import Backup from "@/views/Backup/Backup"
+import PasswordUp from "@/views/PasswordUp/PasswordUp"
+
 export default {
   name: 'PersonalPanel',
   components:{
-    Backup
+      Backup,
+      PasswordUp
   },
   props: {
     user: {
@@ -74,12 +79,13 @@ export default {
   },
   data() {
     return {
+        passVisible:false
     }
   },
   methods: {
     // 退出登录
     logout: function() {
-      this.$confirm("确认退出吗?", "提示", {
+      this.$confirm(this.$t('action.loginOut'),this.$t('action.tips'), {
         type: "warning"
       })
       .then(() => {
@@ -92,19 +98,26 @@ export default {
       })
       .catch(() => {})
     },
-    // 打开备份还原界面
-    showBackupDialog: function() {
-      this.$refs.backupDialog.setBackupVisible(true)
-    },
-    // 成功还原之后，重新登录
-    afterRestore: function() {
-        this.$refs.backupDialog.setBackupVisible(false)
-        sessionStorage.removeItem("user")
-        this.$router.push("/login")
-        this.$api.login.logout().then((res) => {
-          }).catch(function(res) {
-        })
-    }
+    // // 打开备份还原界面
+    // showBackupDialog: function() {
+    //   this.$refs.backupDialog.setBackupVisible(true)
+    // },
+    // // 成功还原之后，重新登录
+    // afterRestore: function() {
+    //     this.$refs.backupDialog.setBackupVisible(false)
+    //     sessionStorage.removeItem("user")
+    //     this.$router.push("/login")
+    //     this.$api.login.logout().then((res) => {
+    //       }).catch(function(res) {
+    //     })
+    // },
+
+      openPassVisible:function () {
+          this.passVisible = true
+      },
+      changePasswordupVisible:function (val) {
+          this.passVisible = val;
+      }
   },
   mounted() {
   }
