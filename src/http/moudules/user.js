@@ -34,3 +34,7 @@ export const upload = (data,header) => {
 export const showFile = (data) => {
   return request.post('/document/queryByRelId',data);
 }
+
+export const updatePassword = (data) => {
+    return request.post('/user/updatePassword',data);
+}

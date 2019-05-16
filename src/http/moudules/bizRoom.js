@@ -18,8 +18,8 @@ export const saveStock = (data,headers) => {
   return request.post('/bizInv/save',data,headers);
 }
 // 删除
-export const batchDelete = (data) => {
-    return request.post('/bizRoom/delete',data);
+export const batchDelete = (data,headers) => {
+    return request.post('/bizRoom/delete',data,headers);
 }
 // 分页查询
 export const findPage = (data) => {
@@ -57,4 +57,9 @@ export const produceStockCalendar = (data,headers) => {
 //用户输入生成数据组，组装数据组，为了客户可以重复输入(库存)
 export const stockDatePro = (data,headers) => {
   return request.post('/bizRoom/stockDatePro',data,headers);
+}
+
+// 用户删除以前的图片
+export const deletePictureFile = (data) => {
+    return request.post('/document/deleteRealFiles',data);
 }
