@@ -9,8 +9,8 @@ export const save = (data,header) => {
     return request.post('/user/save',data,header);
 }
 // 删除
-export const batchDelete = (data) => {
-    return request.post('/user/delete',data);
+export const batchDelete = (data,header) => {
+    return request.post('/user/delete',data,header);
 }
 // 分页查询
 export const findPage = (data) => {

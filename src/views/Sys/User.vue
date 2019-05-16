@@ -302,13 +302,13 @@
       //加载性别角色字典
       findUserSex:function(){
           this.$api.sysParaConfig.findByCode({"paraSubCode2":"sex"}).then((res) => {
-              console.log(res)
               this.sexs = res;
           })
       },
       // 批量删除
       handleDelete: function (data) {
-        this.$api.user.batchDelete(data.params).then(data != null ? data.callback : '')
+          console.log(data.params)
+        this.$api.user.batchDelete(data.params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(data != null ? data.callback : '')
       },
       // 显示新增界面
       handleAdd: function () {
@@ -345,11 +345,14 @@
         }
         this.dataForm.userRoles = userRoles;
 
-        this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
-          let arr = new Array();
-          arr.push({url:this.baseUrl+"/document/preview/"+res});
-          this.fileList = arr;
-        })
+        if(this.dataForm.path != null){
+            this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
+                let arr = new Array();
+                arr.push({url:this.baseUrl+"/document/preview/"+res});
+                this.fileList = arr;
+            })
+        }
+
       },
       // 编辑
       submitForm:function () {

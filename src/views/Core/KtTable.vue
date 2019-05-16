@@ -49,8 +49,7 @@ export default {
       default: 'left'
     },
     maxHeight: {  // 表格最大高度
-      type: Number,
-      default: 420
+      type: Number
     },
     showOperation: {  // 是否显示操作组件
       type: Boolean,
@@ -126,31 +125,31 @@ export default {
 			this.delete(ids)
 		},
 		// 删除操作
-		delete: function (ids) {
-			this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
-				type: 'warning',
-        cancelButtonText: this.$t('action.cancel'),
-        confirmButtonText: this.$t('action.confirm')
-			}).then(() => {
-				let params = []
-				let idArray = (ids+'').split(',')
-				for(var i=0; i<idArray.length; i++) {
-					params.push({'id':idArray[i]})
+        delete: function (ids) {
+            this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+                let params = []
+                let idArray = (ids + '').split(',')
+                for (var i = 0; i < idArray.length; i++) {
+                    params.push({'id': idArray[i]})
+                }
+                this.loading = true
+                let callback = res => {
+                    if (res.code == 200) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                        this.findPage()
+                    } else {
+                        this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
+                    }
+                    this.loading = false
+                }
+                this.$emit('handleDelete', {params: params, callback: callback})
+            }).catch(() => {
+            })
         }
-        this.loading = true
-        let callback = res => {
-          if(res.code == 200) {
-            this.$message({message: this.$t('action.success'), type: 'success'})
-            this.findPage()
-          } else {
-            this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
-          }
-          this.loading = false
-        }
-        this.$emit('handleDelete', {params:params, callback:callback})
-			}).catch(() => {
-			})
-		}
   },
   mounted() {
     this.refreshPageRequest(1)
