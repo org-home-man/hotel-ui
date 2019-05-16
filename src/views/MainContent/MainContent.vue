@@ -4,7 +4,7 @@
         <!-- 标签页 -->
         <div class="tab-container">
             <el-tabs class="tabs" :class="$store.state.app.collapse?'position-collapse-left':'position-left'"
-                     v-model="mainTabsActiveName" :closable="true" type="card"
+                     v-model="mainTabsActiveName" type="card"
                      @tab-click="selectedTabHandle" @tab-remove="removeTabHandle">
                 <el-dropdown class="tabs-tools" :show-timeout="0" trigger="hover">
                     <div style="font-size:20px;width:50px;"><i class="el-icon-arrow-down"></i></div>
@@ -16,7 +16,7 @@
                     </el-dropdown-menu>
                 </el-dropdown>
                 <el-tab-pane v-for="item in mainTabs"
-                             :key="item.name" :label="generateTitle(item.title)" :name="item.name">
+                             :key="item.name" :label="generateTitle(item.title)" :closable="item.closable" :name="item.name">
                     <span slot="title"><i :class="item.icon"></i> {{generateTitle(item.title)}} </span>
                 </el-tab-pane>
             </el-tabs>
@@ -61,6 +61,9 @@
             generateTitle,
             // tabs, 选中tab
             selectedTabHandle(tab) {
+                if(this.mainTabsActiveName === tab.name){
+                    return;
+                }
                 tab = this.mainTabs.filter(item => item.name === tab.name)
                 if (tab.length >= 1) {
                     this.$router.push({name: tab[0].name})

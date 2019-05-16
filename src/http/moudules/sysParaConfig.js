@@ -1,6 +1,6 @@
 import request from '../axios'
 
-/* 
+/*
  * 用户管理模块
  */
 
@@ -24,6 +24,11 @@ export const findPermissions = (data) => {
 // 数据字典查询
 export const findKeyValue = (data) => {
   return request.post('/sysParaConfig/findListData',data);
+}
+
+// 数据字典查询
+export const findByCode = (data) => {
+    return request.post('/sysParaConfig/findByCode',data);
 }
 
 // 数据字典查询
