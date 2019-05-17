@@ -155,7 +155,7 @@ export default {
         confirmButtonText: this.$t('action.confirm')
       }).then(() => {
         let params = this.getDeleteIds([], row)
-        this.$api.dept.batchDelete(params).then( res => {
+        this.$api.dept.batchDelete(params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then( res => {
           this.findTreeData()
           this.$message({message: this.$t('action.delSuccess'), type: 'success'})
         })

@@ -3,15 +3,15 @@
 	<!--工具栏-->
 	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="params" :size="size">
-			<el-form-item>
-				<el-input v-model="params.name" placeholder="角色名"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="findPage(null)"/>
-			</el-form-item>
-			<el-form-item>
-				<kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:role:add" type="primary" @click="handleAdd" />
-			</el-form-item>
+            <el-form-item>
+                <el-input v-model="params.name" :placeholder="$t('table.name')"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="findPage(null)"/>
+            </el-form-item>
+            <el-form-item>
+                <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:role:add" type="primary" @click="handleAdd" />
+            </el-form-item>
 		</el-form>
 	</div>
 	<!--表格内容栏-->
@@ -21,17 +21,17 @@
 	</kt-table>
 	<!-- </el-col> -->
 	<!--新增编辑界面-->
-	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
+	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
 		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
-			<el-form-item label="ID" prop="id" v-if="false">
-				<el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="角色名" prop="name">
-				<el-input v-model="dataForm.name" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="备注 " prop="remark">
-				<el-input v-model="dataForm.remark" auto-complete="off" type="textarea"></el-input>
-			</el-form-item>
+            <el-form-item :label="$t('table.id')" prop="id" v-if="false">
+                <el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('table.name')" prop="name">
+                <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('table.remark') " prop="remark">
+                <el-input v-model="dataForm.remark" auto-complete="off" type="textarea"></el-input>
+            </el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
@@ -41,15 +41,15 @@
 	<!--角色菜单，表格树内容栏-->
 	<div class="menu-container" :v-if="true">
 		<div class="menu-header">
-			<span><B>角色菜单授权</B></span>
+			<span><B>{{$t('action.roleMenu')}}</B></span>
 		</div>
 		<el-tree :data="menuData" size="mini" show-checkbox node-key="id" :props="defaultProps"
 			style="width: 100%;pading-top:20px;" ref="menuTree" :render-content="renderContent"
-			v-loading="menuLoading" element-loading-text="拼命加载中" :check-strictly="true"
+			v-loading="menuLoading" element-loading-text="$t('action.loading')" :check-strictly="true"
 			@check-change="handleMenuCheckChange">
 		</el-tree>
 		<div style="float:left;padding-left:24px;padding-top:12px;padding-bottom:4px;">
-			<el-checkbox v-model="checkAll" @change="handleCheckAll" :disabled="this.selectRole.id == null"><b>全选</b></el-checkbox>
+			<el-checkbox v-model="checkAll" @change="handleCheckAll" :disabled="this.selectRole.id == null"><b>{{$t('common.selectAll')}}</b></el-checkbox>
 		</div>
 		<div style="float:right;padding-right:15px;padding-top:4px;padding-bottom:4px;">
 			<kt-button :label="$t('action.reset')" perms="sys:role:edit" type="primary" @click="resetSelection" 
@@ -76,12 +76,12 @@ export default {
 		return {
 			size: 'small',
 			columns: [
-				{prop:"id", label:"ID", minWidth:50},
-				{prop:"name", label:"角色名", minWidth:120},
-				{prop:"remark", label:"备注", minWidth:120},
-				{prop:"createName", label:"创建人", minWidth:120},
-				{prop:"createTime", label:"创建时间", minWidth:120, formatter:this.dateFormat}
-				// {prop:"lastUpdateBy", label:"更新人", minWidth:100},
+                {prop:"id", label:"id", minWidth:50},
+                {prop:"name", label:"name", minWidth:120},
+                {prop:"remark", label:"remark", minWidth:120},
+                {prop:"createBy", label:"createBy", minWidth:120},
+                {prop:"createTime", label:"createTime", minWidth:120, formatter:this.dateFormat}
+                // {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			],
 			params: {
@@ -96,7 +96,7 @@ export default {
 			editLoading: false,
 			dataFormRules: {
 				name: [
-					{ required: true, message: '请输入角色名', trigger: 'blur' }
+					{ required: true, message: this.$t('action.pRoleName'), trigger: 'blur' }
 				]
 			},
 			// 新增编辑界面数据
@@ -131,7 +131,7 @@ export default {
 		},
 		// 批量删除
 		handleDelete: function (data) {
-			this.$api.role.batchDelete(data.params).then(data.callback)
+			this.$api.role.batchDelete(data.params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then(data.callback)
 		},
 		// 显示新增界面
 		handleAdd: function () {
@@ -153,17 +153,17 @@ export default {
 		submitForm: function () {
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
-					this.$confirm('确认提交吗？', '提示', {}).then(() => {
+					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true
 						let params = Object.assign({}, this.dataForm)
 						this.$api.role.save(params).then((res) => {
 							this.editLoading = false
 							if(res.code == 200) {
-								this.$message({ message: '操作成功', type: 'success' })
+								this.$message({ message: this.$t('action.success'), type: 'success' })
 								this.dialogVisible = false
 								this.$refs['dataForm'].resetFields()
 							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+								this.$message({message: this.$t('action.fail') , type: 'error'})
 							}
 							this.findPage(null)
 						})
@@ -233,7 +233,7 @@ export default {
 		submitAuthForm() {
 			let roleId = this.selectRole.id
 			if('admin' == this.selectRole.name) {
-				this.$message({message: '超级管理员拥有所有菜单权限，不允许修改！', type: 'error'})
+				this.$message({message: this.$t('action.pModifyMenu'), type: 'error'})
 				return
 			}
 			this.authLoading = true
@@ -245,9 +245,9 @@ export default {
 			}
 			this.$api.role.saveRoleMenus(roleMenus,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
 				if(res.code == 200) {
-					this.$message({ message: '操作成功', type: 'success' })
+					this.$message({ message:this.$t('action.success'), type: 'success' })
 				} else {
-					this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+					this.$message({message:this.$t('action.fail'), type: 'error'})
 				}
 
 			}).finally(() => {this.authLoading = false})
@@ -258,11 +258,11 @@ export default {
 				<span style="text-algin:center;margin-right:80px;">{data.name}</span>
 				<span style="text-algin:center;margin-right:80px;">
 					<el-tag type={data.type === 0?'':data.type === 1?'success':'info'} size="small">
-						{data.type === 0?'目录':data.type === 1?'菜单':'按钮'}
+						{data.type === 0?this.$t('action.content'):data.type === 1?this.$t('action.tree'):this.$t('action.button')}
 					</el-tag>
 				</span>
 				<span style="text-algin:center;margin-right:80px;"> <i class={data.icon}></i></span>
-				<span style="text-algin:center;margin-right:80px;">{data.parentName?data.parentName:'顶级菜单'}</span>
+				<span style="text-algin:center;margin-right:80px;">{data.parentName?data.parentName:this.$t('common.topTree')}</span>
 				<span style="text-algin:center;margin-right:80px;">{data.url?data.url:'\t'}</span>
 			</div>);
       	},
