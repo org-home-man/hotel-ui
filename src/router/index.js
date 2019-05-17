@@ -11,7 +11,6 @@ import store from '@/store'
 import {getIFramePath, getIFrameUrl} from '@/utils/iframe'
 
 Vue.use(Router)
-const i18 = i18n;
 const router = new Router({
     routes: [
         {
@@ -21,7 +20,7 @@ const router = new Router({
             children: [
                 {
                     path: 'info/hotelRoomQry',
-                    name: i18.t('sys.hotelRoomQry'),
+                    name: i18n.t('sys.hotelRoomQry'),
                     component: HotelRoomQry,
                     meta: {
                         icon: 'fa fa-home fa-lg',
