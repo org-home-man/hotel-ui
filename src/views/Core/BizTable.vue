@@ -3,21 +3,55 @@
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" >
-      <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
-      <el-table-column v-for="column in columns" header-align="center" align="center"
-        :prop="column.prop" :label="$t('table.'+column.label)" :width="column.width" :min-width="column.minWidth"
-        :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
-        :sortable="column.sortable==null?true:column.sortable">
-      </el-table-column>
-      <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
-        <template slot-scope="scope">
-          <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-          <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
-        </template>
-      </el-table-column>
+          :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable">
+
+        <el-table-column type="expand">
+            <template slot-scope="props">
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item label="生日" style="width: 30%">
+                        <span>{{ props.row.birth }}</span>
+                    </el-form-item>
+                    <el-form-item label="所属店铺" style="width: 30%">
+                        <span>{{ props.row.passport }}</span>
+                    </el-form-item>
+                    <el-form-item label="电话" style="width: 30%">
+                        <span>{{ props.row.phone }}</span>
+                    </el-form-item>
+                </el-form>
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item label="商品描述" style="width: 30%">
+                        <span>{{ props.row.cNum }}</span>
+                    </el-form-item>
+                    <el-form-item label="邮件地址" style="width: 30%">
+                        <span>{{ props.row.emailAddress }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品分类" style="width: 30%">
+                        <span>{{ props.row.aNum }}</span>
+                    </el-form-item>
+                </el-form>
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item label="店铺地址" style="width: 30%">
+                        <span>{{ props.row.bNum }}</span>
+                    </el-form-item>
+                    <el-form-item label="店铺地址" style="width: 30%">
+                        <span>{{ props.row.bNum }}</span>
+                    </el-form-item>
+                </el-form>
+            </template>
+        </el-table-column>
+
+        <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
+        <el-table-column v-for="column in columns" header-align="center" align="center"
+                         :prop="column.prop" :label="$t(column.label)" :width="column.width" :key="column.prop"
+                         :sortable="column.sortable==null?true:column.sortable">
+        </el-table-column>
+        <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
+            <template slot-scope="scope">
+                <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+            </template>
+        </el-table-column>
     </el-table>
-    <!--分页栏-->
     <div class="toolbar" style="padding:10px;">
       <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
         :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
@@ -27,6 +61,20 @@
     </div>
   </div>
 </template>
+<style>
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        width: 100px;
+        color: #99a9bf;
+    }
+    .demo-table-expand {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 100%;
+    }
+</style>
 
 <script>
 import KtButton from "@/views/Core/KtButton"
@@ -76,17 +124,17 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      // 分页信息
-			pageRequest: {
-				page: 1,
-        rows: 10
-      },
-      loading: false,  // 加载标识
-      selections: []  // 列表选中列
-    }
-  },
+    data() {
+        return {
+            // 分页信息
+            pageRequest: {
+                page: 1,
+                rows: 10
+            },
+            loading: false,  // 加载标识
+            selections: []  // 列表选中列
+        }
+    },
     methods: {
         // 分页查询
         findPage: function () {
@@ -95,6 +143,9 @@ export default {
                 this.loading = false
             }
             this.$emit('findPage', {pageRequest: this.pageRequest, callback: callback})
+        },
+        expandChange(row,index,e){
+            this.$refs.refTable.toggleRowExpansion(row)
         },
         // 选择切换
         selectionChange: function (selections) {
