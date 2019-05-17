@@ -24,7 +24,7 @@
           <!--<el-button size="small" icon="fa fa-male"> 个人中心</el-button>-->
         <!--</span>    -->
         <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key" @click="openPassVisible"> 修改密码</el-button>
+          <el-button size="small" icon="fa fa-key" @click="openPassVisible"> {{$t('common.passwdUp')}}</el-button>
         </span>    
     </div>
 
