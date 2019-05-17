@@ -43,69 +43,70 @@
 		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
 	</kt-table>
 	<!--新增编辑界面-->
-	<el-dialog :title="operation?'新增':'编辑'" width="40%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size">
-			<el-form-item label="订单号" prop="orderCode"  v-if="dataForm.isPrimaryKey">
-				<el-input v-model="dataForm.orderCode" auto-complete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">
+	<el-dialog :title="operation?'新增':'编辑'" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+		<el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"  :size="size":inline="true" label-position="left" >
+
+			<!--<el-form-item label="订单号" prop="orderCode"  v-if="dataForm.isPrimaryKey">-->
+				<!--<el-input v-model="dataForm.orderCode" auto-complete="off"></el-input>-->
+			<!--</el-form-item>-->
+			<el-form-item label="hotel.roomCode" prop="roomCode"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="入住日期" prop="inDate"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.inDate" prop="inDate"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.inDate" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="退房日期" prop="outDate"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.outDate" prop="outDate"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.outDate" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="代表者姓名" prop="pName"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.pName" prop="pName"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.pName" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="护照号" prop="passport"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.passport" prop="passport"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.passport" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="出生年月" prop="birth"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.birth" prop="birth"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.birth" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="联系电话" prop="phone"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.phone" prop="phone"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.phone" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="联系人邮件" prop="emailAddress"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.emailAddress" prop="emailAddress"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.emailAddress" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="成人人数" prop="aNum"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.aNum" prop="aNum"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.aNum" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="儿童数" prop="bNum"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.bNum" prop="bNum"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.bNum" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="幼儿数" prop="cNum"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.cNum" prop="cNum"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.cNum" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="房间数" prop="roomNum"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.roomNum" prop="roomNum"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.roomNum" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="币种" prop="currency"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.currency" prop="currency"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.currency" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="销售总价" prop="totalSAmount"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.totalSAmount" prop="totalSAmount"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.totalSAmount" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="备注" prop="remark"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.remark" prop="remark"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.remark" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="订单状态" prop="status"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.status" prop="status"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.status" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建人员" prop="creatBy"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.creatBy" prop="creatBy"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatBy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="创建时间" prop="creatTime"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.creatTime" prop="creatTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.creatTime" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新时间" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.lastUpdateBy" prop="lastUpdateBy"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
 			</el-form-item>
-			<el-form-item label="更新时间" prop="lastUpdateTime"  v-if="dataForm.isPrimaryKey">
+			<el-form-item label="hotel.lastUpdateTime" prop="lastUpdateTime"  v-if="dataForm.isPrimaryKey">
 				<el-input v-model="dataForm.lastUpdateTime" auto-complete="off"></el-input>
 			</el-form-item>
 		</el-form>
