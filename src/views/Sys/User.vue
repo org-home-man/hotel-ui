@@ -94,7 +94,7 @@
                       <el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">
                           <el-select v-model="dataForm.sex" :placeholder="$t('action.select')"
                                      style="width: 200px;">
-                              <el-option v-for="item in sexs" :key="item.id"
+                              <el-option v-for="item in sexs" :key="item.paraCode"
                                          :label="$t(item.paraCode)" :value="item.paraValue1">
                               </el-option>
                           </el-select>
@@ -338,6 +338,7 @@
       handleEdit: function (params) {
         this.dialogVisible = true;
         this.operation = false;
+        console.log(params.row)
         this.dataForm = Object.assign({}, params.row);
         let userRoles = [];
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
