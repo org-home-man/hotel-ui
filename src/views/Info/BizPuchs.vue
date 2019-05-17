@@ -684,7 +684,7 @@
 </template>
 
 <script>
-import KtTable from "@/views/Core/KtTable"
+import KtTable from "@/views/Core/BizTable"
 import KtButton from "@/views/Core/KtButton"
 import { format } from "@/utils/datetime"
 export default {
@@ -767,14 +767,19 @@ export default {
             if (data !== null) {
                 this.pageRequest = data.pageRequest
             }
-            if(this.filters.confirmTimes.length > 0){
+            if(this.filters.confirmTimes != null && this.filters.confirmTimes.length > 0){
                 this.filters.confirmTimeStart = this.filters.confirmTimes[0];
                 this.filters.confirmTimeEnd = this.filters.confirmTimes[1];
+            }else{
+                this.filters.confirmTimeStart = null;
+                this.filters.confirmTimeEnd = null;
             }
-            if(this.filters.createTimes.length > 0){
-                console.log(this.filters.createTimes)
+            if(this.filters.createTimes != null && this.filters.createTimes.length > 0){
                 this.filters.createTimeStart = this.filters.createTimes[0];
                 this.filters.createTimeEnd = this.filters.createTimes[1];
+            }else{
+                this.filters.createTimeStart = null;
+                this.filters.createTimeEnd = null;
             }
             this.pageRequest = {...this.pageRequest, ...this.filters};
             this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
