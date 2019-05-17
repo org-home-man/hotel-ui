@@ -14,7 +14,7 @@ export const batchDelete = (data,header) => {
 }
 // 查找导航菜单树
 export const findNavTree = (data) => {
-    return request.get('/menu/findNavTree',data);
+    return request.post('/menu/findNavTree',data);
 }
 // 查找导航菜单树
 export const findMenuTree = () => {

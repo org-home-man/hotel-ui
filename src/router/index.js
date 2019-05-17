@@ -73,12 +73,16 @@ router.beforeEach((to, from, next) => {
 function addDynamicMenuAndRoutes(userName, to, from) {
     // 处理IFrame嵌套页面
     handleIFrameUrl(to.path)
-    console.log("menuRoute", store.state.app.menuRouteLoaded);
-    console.log("menuNavTree", store.state.menu.navTree);
+    // console.log("menuRoute", store.state.app.menuRouteLoaded);
+    // console.log("menuNavTree", store.state.menu.navTree);
+    // console.log("menuNavTree", store.state.tab.mainTabs);
+    // console.log("menuNavTree", store.state.tab.mainTabsActiveName);
     if (store.state.app.menuRouteLoaded && store.state.menu.navTree.length != 0) {
         console.log('动态菜单和路由已经存在.')
         return
     }
+    store.commit('updateMainTabs',[]);
+    store.commit('updateMainTabsActiveName','');
     api.menu.findNavTree({'userName': userName})
         .then(res => {
             // 添加动态路由
@@ -95,9 +99,9 @@ function addDynamicMenuAndRoutes(userName, to, from) {
             // 保存用户权限标识集合
             store.commit('setPerms', res)
         })
+    }).catch(function (res) {
+
     })
-        .catch(function (res) {
-        })
 }
 
 /**

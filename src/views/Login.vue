@@ -101,7 +101,7 @@
 
             Cookies.set('token', res.token) // 放置token到Cookie
             sessionStorage.setItem('user', userInfo.account) // userInfo保存用户到本地会话
-            this.$store.commit('menuRouteLoaded', true) // 要求重新加载导航菜单
+            this.$store.commit('menuRouteLoaded', false) // 要求重新加载导航菜单
             this.$router.push('/info/hotelRoomQry')  // 登录成功，跳转到主页
         }).finally(() => {
             this.loading = false;
