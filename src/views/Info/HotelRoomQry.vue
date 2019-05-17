@@ -605,9 +605,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
-
-
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">
@@ -873,11 +870,39 @@
             // 显示预订界面
             handleBookRoom: function (row) {
                 // console.log("param", params);
-                this.disableHotelName = true
-                this.editDialogVisible = true
-                this.operation = false
+                this.disableHotelName = true;
+                this.editDialogVisible = true;
+                this.operation = false;
+                this.dataForm = Object.assign({}, row);
+                this.dataForm.adultNum = this.filters.adultNum;
+                this.dataForm.childrenNum = this.filters.childrenNum;
+                this.dataForm.roomNum = this.filters.roomNum;
+            },
+            // 编辑
+            submitForm: function () {
 
-                this.dataForm = Object.assign({}, row)
+                this.$refs.dataForm.validate((valid) => {
+                    if (valid) {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                            this.editLoading = true
+                            let params = Object.assign({}, this.dataForm)
+                            this.$api.hotelRoom.save(params).then((res) => {
+                                if(res.code == 200) {
+                                    this.$message({ message: this.$t('action.success'), type: 'success' })
+                                } else {
+                                    this.$message({message: this.$t('action.fail') , type: 'error'})
+                                }
+                                this.editLoading = false
+                                this.$refs['dataForm'].resetFields()
+                                this.editDialogVisible = false
+                                this.disableHotelName = false
+                                this.findPage(null)
+                            })
+                        })
+                    } else {
+                        this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+                    }
+                })
             },
 
             // 时间格式化

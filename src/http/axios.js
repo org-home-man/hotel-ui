@@ -3,14 +3,15 @@ import config from './config';
 import Qs from 'qs';
 import Cookies from "js-cookie";
 import router from '@/router';
+import i18n from '@/i18n';
 import {Notification} from 'element-ui';
 
 // 使用vuex做全局loading时使用
 // import store from '@/store'
 
 const TIMEOUT = 30000, instance = axios.create(), errors = {
-    'Network Error': '网络错误',
-    'Timeout': '连接超时'
+    'Network Error': i18n.t('action.networkErr'),
+    'Timeout': i18n.t('action.timeOut')
 };
 instance.defaults.baseURL = config.baseUrl;
 instance.defaults.timeout = TIMEOUT;
@@ -48,11 +49,15 @@ instance.interceptors.response.use(function (response) {
         return data.data || data;
     } else if (data.code == '500') {
         Notification.error({
-            title: '系统错误',
-            message: data.msg
+            title: i18n.t('action.sysErr'),
+            message: i18n.t('action.requestErr')
         });
-        return data;
-    } else {
+    } else if (data.code == '10001'){
+        Notification.error({
+            title: i18n.t('action.sysErr'),
+            message: i18n.t('action.'+data.msg)
+        });
+    }else {
         if (data.rows) {
             return data;
         } else if (Array.isArray(data)) {
@@ -61,15 +66,14 @@ instance.interceptors.response.use(function (response) {
             return data.data;
         }
         Notification.error({
-            title: '系统错误',
+            title: i18n.t('action.sysErr'),
             message: data.msg
         });
 
-
-        return Promise.reject({
-            message: data.msg
-        });
     }
+    return Promise.reject({
+        message: data.msg
+    });
 }, function (error) {
     // if (error.response) {
     //     // 处理错误
@@ -89,10 +93,10 @@ instance.interceptors.response.use(function (response) {
     }else{
 
         if (/^timeout/.test(error.message)) {
-            error.message = 'Timeout';
+            error.message = i18n.t('action.timeOut');
         }
         Notification.error({
-            title: '请求异常',
+            title: i18n.t('action.sysErr'),
             message: errors[error.message] || error.message
         });
     }

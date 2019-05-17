@@ -2,7 +2,7 @@
   <div class="personal-panel">
     <div class="personal-desc" :style="{'background':this.$store.state.app.themeColor}">
         <div class="avatar-container">
-          <img class="avatar" :src="require('@/assets/user.png')" />
+          <img class="avatar" :src="user.path" />
         </div>  
         <div class="name-role">
           <span class="sender">{{ user.name }} - {{ user.role }}</span>  
@@ -70,7 +70,7 @@ export default {
     user: {
       type: Object,
       default: {
-        name: "admin",
+        name: "admin22",
         avatar: "@/assets/user.png",
         role: "超级管理员",
         registeInfo: "注册时间：2018-12-25 "
@@ -79,7 +79,7 @@ export default {
   },
   data() {
     return {
-        passVisible:false
+        passVisible:false,
     }
   },
   methods: {
@@ -117,7 +117,8 @@ export default {
       },
       changePasswordupVisible:function (val) {
           this.passVisible = val;
-      }
+      },
+
   },
   mounted() {
   }
