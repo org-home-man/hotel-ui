@@ -2,9 +2,9 @@
   <div class="page-container">
 	<!--工具栏-->
 	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
-		<el-form :inline="true" :model="params" :size="size">
+		<el-form :inline="true" :model="pageRequest" :size="size">
             <el-form-item>
-                <el-input v-model="params.name" :placeholder="$t('table.name')"></el-input>
+                <el-input v-model="pageRequest.name" :placeholder="$t('table.name')"></el-input>
             </el-form-item>
             <el-form-item>
                 <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary" @click="findPage(null)"/>
@@ -127,10 +127,8 @@ export default {
                 {paraValue1:'01',paraCode:'roleId.super'},
                 {paraValue1:"02",paraCode:'roleId.common'}
             ],
-			params: {
-			  page: 1,
-            rows: 10,
-            name: ''
+            pageRequest: {
+                name: ''
             },
 			pageResult: {},
 
@@ -186,8 +184,8 @@ export default {
                 confirmButtonText: this.$t('action.confirm')
             }).then(() => {
                 let params = this.getDeleteIds([], row)
-                this.$api.dept.batchDelete(params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then( res => {
-                    this.findPage()
+                this.$api.role.batchDelete(params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then( res => {
+                    this.findPage(null)
                     this.$message({message: this.$t('action.delSuccess'), type: 'success'})
                 })
             })
@@ -220,7 +218,7 @@ export default {
 		handleEdit: function (params) {
 			this.dialogVisible = true
 			this.operation = false
-			this.dataForm = Object.assign({}, params.row)
+			this.dataForm = Object.assign({}, params)
 		},
 		// 编辑
 		submitForm: function () {
