@@ -1,21 +1,42 @@
 <template>
-  <div class="container" style="width:99%;margin-top:-25px;">
+    <div class="page-container">
 	<!--工具栏-->
-	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
-		<el-form :inline="true" :model="filters" :size="size">
-			<el-form-item>
-        <el-input v-model="filters.orderCode" placeholder="订单号"></el-input>
-        <el-input v-model="filters.roomCode" placeholder="客房编号"></el-input>
-        <el-input v-model="filters.pName" placeholder="代表者姓名"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary" @click="findPage(null)"/>
-			</el-form-item>
-			<el-form-item>
-				<kt-button :label="$t('action.add')" perms="sys:bizPuchs:add" type="primary" @click="handleAdd" />
-			</el-form-item>
-		</el-form>
-	</div>
+      <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+          <el-form :inline="true" :model="filters" :size="size">
+              <el-form-item>
+                  <el-input v-model="filters.orderCode" placeholder="订单号"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-input v-model="filters.roomStatus" placeholder="订单状态"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-date-picker
+                      v-model="filters.createTimes"
+                      type="daterange"
+                      :range-separator="$t('hotel.dateSep')"
+                      value-format="yyyyMMdd"
+                      :start-placeholder="$t('hotel.creatTime')"
+                      :end-placeholder="$t('hotel.creatTime')">
+                  </el-date-picker>
+              </el-form-item>
+              <el-form-item>
+                  <el-date-picker
+                      v-model="filters.confirmTimes"
+                      type="daterange"
+                      :range-separator="$t('hotel.dateSep')"
+                      value-format="yyyyMMdd"
+                      :start-placeholder="$t('hotel.lastCrtTime')"
+                      :end-placeholder="$t('hotel.lastCrtTime')">
+                  </el-date-picker>
+              </el-form-item>
+              <el-form-item>
+                  <el-input v-model="filters.hotelName" placeholder="酒店名称"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary" @click="findPage(null)"/>
+              </el-form-item>
+          </el-form>
+      </div>
 	<!--表格内容栏-->
 	<kt-table permsEdit="sys:bizPuchs:edit" permsDelete="sys:bizPuchs:delete"
 		:data="pageResult" :columns="columns"
@@ -107,19 +128,24 @@ export default {
 	},
 	data() {
 		return {
-			size: 'small',
-			filters: {
-        orderCode:'',
-        roomCode:'',
-        pName:''
-			},
+            size: 'small',
+            filters: {
+                orderCode: '',
+                roomStatus: '',
+                createTimes: '',
+                confirmTimes:'',
+                hotelName:''
+            },
 			columns: [
-				{prop:"orderCode", label:"订单号", minWidth:100},
-				{prop:"roomCode", label:"客房编号", minWidth:100},
-				{prop:"inDate", label:"入住日期", minWidth:100},
-				{prop:"outDate", label:"退房日期", minWidth:100},
-				{prop:"pName", label:"代表者姓名", minWidth:100},
-				{prop:"passport", label:"护照号", minWidth:100},
+				{prop:"orderCode", label:"订单号", minWidth:60},
+                {prop:"hotelName", label:"酒店名称", minWidth:60},
+				{prop:"roomCode", label:"客房编号", minWidth:60},
+				{prop:"inDate", label:"入住日期", minWidth:60},
+				{prop:"outDate", label:"退房日期", minWidth:60},
+				{prop:"pName", label:"代表者姓名", minWidth:60},
+                {prop:"confirmTime", label:"确认时间", minWidth:60},
+                {prop:"status", label:"订单状态", minWidth:60},
+				/*{prop:"passport", label:"护照号", minWidth:100},
 				{prop:"birth", label:"出生年月", minWidth:100},
 				{prop:"phone", label:"联系电话", minWidth:100},
 				{prop:"emailAddress", label:"联系人邮件", minWidth:100},
@@ -130,11 +156,10 @@ export default {
 				{prop:"currency", label:"币种", minWidth:100},
 				{prop:"totalSAmount", label:"销售总价", minWidth:100},
 				{prop:"remark", label:"备注", minWidth:100},
-				{prop:"status", label:"订单状态", minWidth:100},
 				{prop:"creatBy", label:"创建人员", minWidth:100},
 				{prop:"creatTime", label:"创建时间", minWidth:100},
 				{prop:"lastUpdateBy", label:"更新时间", minWidth:100},
-				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},
+				{prop:"lastUpdateTime", label:"更新时间", minWidth:100},*/
 			],
 			pageRequest: { page: 1, rows: 8 },
 			pageResult: {},
@@ -142,11 +167,7 @@ export default {
 			operation: false, // true:新增, false:编辑
 			editDialogVisible: false, // 新增编辑界面是否显示
 			editLoading: false,
-			dataFormRules: {
-				label: [
-					{ required: true, message: '请输入名称', trigger: 'blur' }
-				]
-			},
+			dataFormRules: {},
 			// 新增编辑界面数据
 			dataForm: {
 				orderCode: null,
@@ -173,84 +194,93 @@ export default {
 			}
 		}
 	},
-	methods: {
-		// 获取分页数据
-		findPage: function (data) {
-			if(data !== null) {
-				this.pageRequest = data.pageRequest
-			}
-      this.pageRequest = {...this.pageRequest,...this.filters};
-			this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
-				this.pageResult = res
-			}).then(data!=null?data.callback:'')
-		},
-		// 批量删除
-		handleDelete: function (data) {
-			this.$api.bizPuchs.batchDelete(data.params).then(data!=null?data.callback:'')
-		},
-		// 显示新增界面
-		handleAdd: function () {
-			this.editDialogVisible = true
-			this.operation = true
-			this.dataForm = {
-				orderCode: null,
-				roomCode: null,
-				inDate: null,
-				outDate: null,
-				pName: null,
-				passport: null,
-				birth: null,
-				phone: null,
-				emailAddress: null,
-				aNum: null,
-				bNum: null,
-				cNum: null,
-				roomNum: null,
-				currency: null,
-				totalSAmount: null,
-				remark: null,
-				status: null,
-				creatBy: null,
-				creatTime: null,
-				lastUpdateBy: null,
-				lastUpdateTime: null,
-			}
-		},
-		// 显示编辑界面
-		handleEdit: function (params) {
-			this.editDialogVisible = true
-			this.operation = false
-			this.dataForm = Object.assign({}, params.row)
-		},
-		// 编辑
-		submitForm: function () {
-			this.$refs.dataForm.validate((valid) => {
-				if (valid) {
-					this.$confirm('确认提交吗？', '提示', {}).then(() => {
-						this.editLoading = true
-						let params = Object.assign({}, this.dataForm)
-						this.$api.bizPuchs.save(params).then((res) => {
-							if(res.code == 200) {
-								this.$message({ message: '操作成功', type: 'success' })
-							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
-							}
-							this.editLoading = false
-							this.$refs['dataForm'].resetFields()
-							this.editDialogVisible = false
-							this.findPage(null)
-						})
-					})
-				}
-			})
-		},
-		// 时间格式化
-      	dateFormat: function (row, column, cellValue, index){
-          	return format(row[column.property])
-      	}
-	},
-	mounted() {
-	}
+    methods: {
+        // 获取分页数据
+        findPage: function (data) {
+            if (data !== null) {
+                this.pageRequest = data.pageRequest
+            }
+            if(this.filters.confirmTimes.length > 0){
+                this.filters.confirmTimeStart = this.filters.confirmTimes[0];
+                this.filters.confirmTimeEnd = this.filters.confirmTimes[1];
+            }
+            if(this.filters.createTimes.length > 0){
+                console.log(this.filters.createTimes)
+                this.filters.createTimeStart = this.filters.createTimes[0];
+                this.filters.createTimeEnd = this.filters.createTimes[1];
+            }
+            this.pageRequest = {...this.pageRequest, ...this.filters};
+            this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
+                this.pageResult = res
+            }).then(data != null ? data.callback : '')
+        },
+        // 批量删除
+        handleDelete: function (data) {
+            this.$api.bizPuchs.batchDelete(data.params).then(data != null ? data.callback : '')
+        },
+        // 显示新增界面
+        handleAdd: function () {
+            this.editDialogVisible = true
+            this.operation = true
+            this.dataForm = {
+                orderCode: null,
+                roomCode: null,
+                inDate: null,
+                outDate: null,
+                pName: null,
+                passport: null,
+                birth: null,
+                phone: null,
+                emailAddress: null,
+                aNum: null,
+                bNum: null,
+                cNum: null,
+                roomNum: null,
+                currency: null,
+                totalSAmount: null,
+                remark: null,
+                status: null,
+                creatBy: null,
+                creatTime: null,
+                lastUpdateBy: null,
+                lastUpdateTime: null,
+            }
+        },
+        // 显示编辑界面
+        handleEdit: function (params) {
+            this.editDialogVisible = true
+            this.operation = false
+            this.dataForm = Object.assign({}, params.row)
+        },
+        // 编辑
+        submitForm: function () {
+            this.$refs.dataForm.validate((valid) => {
+                if (valid) {
+                    this.$confirm('确认提交吗？', '提示', {}).then(() => {
+                        this.editLoading = true
+                        let params = Object.assign({}, this.dataForm)
+                        this.$api.bizPuchs.save(params).then((res) => {
+                            if (res.code == 200) {
+                                this.$message({message: '操作成功', type: 'success'})
+                            } else {
+                                this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+                            }
+                            this.editLoading = false
+                            this.$refs['dataForm'].resetFields()
+                            this.editDialogVisible = false
+                            this.findPage(null)
+                        })
+                    })
+                }
+            })
+        },
+        // 时间格式化
+        dateFormat: function (row, column, cellValue, index) {
+            return format(row[column.property])
+        }
+    },
+    mounted() {
+    }
 }
 </script>
 
