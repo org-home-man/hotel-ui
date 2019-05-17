@@ -14,7 +14,7 @@
             <el-form-item>
                 <!--<el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>-->
                 <el-button size="small"  @click="cancelPassword">{{$t('action.cancel')}}</el-button>
-                <el-button size="small" @click="resetForm('passForm')">重置</el-button>
+                <el-button size="small" @click="resetForm('passForm')">{{$t('action.reset')}}</el-button>
                 <el-button size="small" :loading="passSubmitLoading" type="primary" @click="passwdUpdate">{{$t('action.submit')}}</el-button>
             </el-form-item>
         </el-form>
