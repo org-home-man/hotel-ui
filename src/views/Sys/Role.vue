@@ -14,11 +14,41 @@
             </el-form-item>
 		</el-form>
 	</div>
-	<!--表格内容栏-->
-	<kt-table permsEdit="sys:role:edit" permsDelete="sys:role:delete" :highlightCurrentRow="true" :stripe="false"
-		:data="pageResult" :columns="columns" :showBatchDelete="false" @handleCurrentChange="handleRoleSelectChange"
-		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-	</kt-table>
+      <!--表格树内容栏-->
+      <el-table :data="pageResult.rows" stripe size="mini" style="width: 100%;"
+                v-loading="loading" :element-loading-text="$t('action.loading')" @current-change="handleRoleSelectChange">
+          <el-table-column
+              prop="id" header-align="center" align="center" width="80" :label="$t('table.id')">
+          </el-table-column>
+          <table-tree-column
+              prop="name" header-align="center" treeKey="id" width="150" :label="$t('table.name')">
+          </table-tree-column>
+          <el-table-column
+              prop="roleIdKey" header-align="center" align="center" width="120" :label="$t('table.roleId.roleId')">
+              <template slot-scope="scope">
+                  <el-tag>{{$t('table.'+scope.row.roleIdKey)}}</el-tag>
+              </template>
+          </el-table-column>
+          <el-table-column
+              prop="remark" header-align="center" align="center" :label="$t('table.remark')">
+          </el-table-column>
+          <el-table-column
+              prop="createName" header-align="center" align="center" :label="$t('table.createBy')">
+          </el-table-column>
+          <el-table-column
+              prop="createTime" header-align="center" align="center" :label="$t('table.createTime')">
+          </el-table-column>
+          <el-table-column
+              fixed="right" header-align="center" align="center" width="185" :label="$t('action.operation')">
+              <template slot-scope="scope">
+                  <kt-button icon="fa fa-edit" :label="$t('action.edit')" perms="sys:dept:edit" @click="handleEdit(scope.row)"/>
+                  <kt-button icon="fa fa-trash" :label="$t('action.delete')" perms="sys:dept:delete" type="danger" @click="handleDelete(scope.row)"/>
+              </template>
+          </el-table-column>
+          <el-table-column
+              prop="roleId" header-align="center" align="center" v-if="show">
+          </el-table-column>
+      </el-table>
 	<!-- </el-col> -->
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
@@ -29,12 +59,18 @@
             <el-form-item :label="$t('table.name')" prop="name">
                 <el-input v-model="dataForm.name" auto-complete="off"></el-input>
             </el-form-item>
+
             <el-form-item :label="$t('table.remark') " prop="remark">
                 <el-input v-model="dataForm.remark" auto-complete="off" type="textarea"></el-input>
             </el-form-item>
+            <el-form-item :label="$t('table.roleId.roleId')" prop="roleId" align="left">
+                <el-select v-model="dataForm.roleId" auto-complete="off">
+                    <el-option v-for="bk in this.options" :key="bk.paraCode" :label="$t('table.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+                </el-select>
+            </el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
+			<el-button :size="size" @click.native="cancelForm">{{$t('action.cancel')}}</el-button>
 			<el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
 		</div>
 	</el-dialog>
@@ -75,20 +111,27 @@ export default {
 	data() {
 		return {
 			size: 'small',
+            loading:false,
+            show:false,
 			columns: [
                 {prop:"id", label:"id", minWidth:50},
                 {prop:"name", label:"name", minWidth:120},
+                {prop:"roleId", label:"roleId.roleId", minWidth:120},
                 {prop:"remark", label:"remark", minWidth:120},
                 {prop:"createBy", label:"createBy", minWidth:120},
                 {prop:"createTime", label:"createTime", minWidth:120, formatter:this.dateFormat}
                 // {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			],
+            options:[
+                {paraValue1:'01',paraCode:'roleId.super'},
+                {paraValue1:"02",paraCode:'roleId.common'}
+            ],
 			params: {
 			  page: 1,
-        rows: 10,
-        name: ''
-      },
+            rows: 10,
+            name: ''
+            },
 			pageResult: {},
 
 			operation: false, // true:新增, false:编辑
@@ -97,13 +140,17 @@ export default {
 			dataFormRules: {
 				name: [
 					{ required: true, message: this.$t('action.pRoleName'), trigger: 'blur' }
-				]
+				],
+                roleId:[
+                    {required:true,message:this.$t('action.incompleteInfo'),trigger:'blur'}
+                ]
 			},
 			// 新增编辑界面数据
 			dataForm: {
 				id: 0,
 				name: '',
-				remark: ''
+				remark: '',
+                roleId:''
 			},
 			selectRole: {},
 			menuData: [],
@@ -124,15 +171,37 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
+			this.loading = true;
 			this.$api.role.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res
+                this.loading = false;
 				this.findTreeData()
 			}).then(data!=null?data.callback:'')
 		},
-		// 批量删除
-		handleDelete: function (data) {
-			this.$api.role.batchDelete(data.params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then(data.callback)
-		},
+        // 删除
+        handleDelete (row) {
+            this.$confirm(this.$t("action.do"), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+                let params = this.getDeleteIds([], row)
+                this.$api.dept.batchDelete(params,{headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then( res => {
+                    this.findPage()
+                    this.$message({message: this.$t('action.delSuccess'), type: 'success'})
+                })
+            })
+        },
+        // 获取删除的包含子机构的id列表
+        getDeleteIds (ids, row) {
+            ids.push({id:row.id})
+            if(row.children != null) {
+                for(let i=0, len=row.children.length; i<len; i++) {
+                    this.getDeleteIds(ids, row.children[i])
+                }
+            }
+            return ids
+        },
 		// 显示新增界面
 		handleAdd: function () {
 			this.dialogVisible = true
@@ -143,6 +212,10 @@ export default {
 				remark: ''
 			}
 		},
+        cancelForm:function() {
+            this.dialogVisible = false;
+            this.editLoading = false;
+        },
 		// 显示编辑界面
 		handleEdit: function (params) {
 			this.dialogVisible = true
@@ -181,11 +254,12 @@ export default {
 		},
 		// 角色选择改变监听
 		handleRoleSelectChange(val) {
-			if(val == null || val.val == null) {
+		    console.log(val);
+			if(val == null ) {
 				return
 			}
-			this.selectRole = val.val
-			this.$api.role.findRoleMenus({roleId:val.val.id}).then((res) => {
+			this.selectRole = val
+			this.$api.role.findRoleMenus({roleId:val.id}).then((res) => {
 				this.currentRoleMenus = res
 				this.$refs.menuTree.setCheckedNodes(res)
 			})
@@ -273,6 +347,7 @@ export default {
 		
 	},
 	mounted() {
+	    this.findPage(null);
 	}
 }
 </script>
