@@ -19,9 +19,9 @@
         <!--表格树内容栏-->
         <el-table :data="tableTreeData" row-key="id" stripe size="mini" style="width: 100%;"
                   v-loading="loading" :element-loading-text="$t('action.loading')">
-            <table-tree-column
+            <el-table-column
                 prop="name" header-align="center" width="300" label="名称">
-            </table-tree-column>
+            </el-table-column>
             <el-table-column header-align="center" align="center" label="图标">
                 <template slot-scope="scope">
                     <i :class="scope.row.icon || ''"></i>
