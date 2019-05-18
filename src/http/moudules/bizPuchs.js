@@ -18,8 +18,8 @@ export const confirm = (data) => {
     return request.post('/bizPuchs/confirm',data);
 }
 // 删除
-export const batchDelete = (data) => {
-    return request.post('/bizPuchs/delete',data);
+export const batchCancel= (data) => {
+    return request.post('/bizPuchs/orderCancel',data);
 }
 // 分页查询
 export const findPage = (data) => {
