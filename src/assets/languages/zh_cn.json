@@ -98,7 +98,8 @@
         "timeOut": "连接超时",
         "sysErr": "系统错误",
         "requestErr": "请求异常",
-        "pTreeName":"菜单名不能为空"
+        "pTreeName":"菜单名不能为空",
+        "isOrderException" :"该订单已经预定，不能重复预定"
     },
     "user": {
         "id": "编号",
