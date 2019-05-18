@@ -48,6 +48,7 @@
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
                 <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-edit" :label="$t('sys.orderFirm')" :perms="permsConfirm" :size="size" @click="handleConfirm(scope.$index, scope.row)" />
                 <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
             </template>
         </el-table-column>
@@ -88,6 +89,7 @@ export default {
     data: Object, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
+       permsConfirm: String,  // 删除权限标识
     size: { // 尺寸样式
       type: String,
       default: 'mini'
@@ -164,6 +166,10 @@ export default {
         // 编辑
         handleEdit: function (index, row) {
             this.$emit('handleEdit', {index: index, row: row})
+        },
+        // 编辑
+        handleConfirm: function (index, row) {
+            this.$emit('handleConfirm', {index: index, row: row})
         },
         // 删除
         handleDelete: function (index, row) {

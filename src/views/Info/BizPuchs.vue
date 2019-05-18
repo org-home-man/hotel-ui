@@ -732,8 +732,7 @@ export default {
 
 			operation: false, // true:新增, false:编辑
 			editDialogVisible: false, // 新增编辑界面是否显示
-            confirmDialogVisible:false,
-            editLoading: false,
+			editLoading: false,
 			dataFormRules: {},
 			// 新增编辑界面数据
 			dataForm: {
@@ -794,7 +793,6 @@ export default {
         // 显示新增界面
         handleAdd: function () {
             this.editDialogVisible = true
-            this.confirmDialogVisible = true
             this.operation = true
             this.dataForm = {
                 orderCode: null,
@@ -822,15 +820,9 @@ export default {
         },
         // 显示编辑界面
         handleConfirm: function (params) {
-            this.confirmDialogVisible = true
+            this.editDialogVisible = true
             this.operation = false
-            // params.row.dataForm.outDate   =params.row.dataForm.commonDate[1]
-            // params.row.dataForm.inDate   =params.row.dataForm.commonDate[0]
             this.dataForm = Object.assign({}, params.row)
-            this.dataForm.outDate = this.filters.commonDate[1]
-            this.dataForm.inDate   =this.filters.commonDate[0]
-            console.log(this.dataForm)
-            console.log(this.filters.commonDate[1])
         },
         // 编辑
         submitConfirmForm: function () {
@@ -847,7 +839,7 @@ export default {
                             }
                             this.editLoading = false
                             this.$refs['dataForm'].resetFields()
-                            this.confirmDialogVisible = false
+                            this.editDialogVisible = false
                             this.findPage(null)
                         })
                     })
