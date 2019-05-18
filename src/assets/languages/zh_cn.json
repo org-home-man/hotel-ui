@@ -33,6 +33,7 @@
         "edit": "编辑",
         "editPrice": "牌价编辑",
         "editStock": "库存编辑",
+        "editPushs": "库存编辑",
         "delete": "删除",
         "select": "请选择",
         "pName": "请输入用户名",
@@ -169,6 +170,11 @@
     "table": {
         "id": "编号",
         "icon": "图标",
+        "roleId": {
+            "roleId": "角色类别",
+            "super": "管理员",
+            "common": "用户"
+        },
         "type": "类型",
         "preTree": "上级菜单",
         "treeURL": "菜单URL",
