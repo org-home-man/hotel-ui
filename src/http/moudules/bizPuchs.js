@@ -8,6 +8,15 @@ import request from '../axios'
 export const save = (data) => {
     return request.post('/bizPuchs/save',data);
 }
+// 保存
+export const update = (data) => {
+    return request.post('/bizPuchs/update',data);
+}
+
+// 订单确认
+export const confirm = (data) => {
+    return request.post('/bizPuchs/confirm',data);
+}
 // 删除
 export const batchDelete = (data) => {
     return request.post('/bizPuchs/delete',data);
