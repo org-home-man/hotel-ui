@@ -8,33 +8,44 @@
         <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="生日" style="width: 30%">
-                        <span>{{ props.row.birth }}</span>
-                    </el-form-item>
-                    <el-form-item label="所属店铺" style="width: 30%">
+                    <el-form-item label="护照号" style="width: 30%">
                         <span>{{ props.row.passport }}</span>
                     </el-form-item>
-                    <el-form-item label="电话" style="width: 30%">
+                    <el-form-item label="出生年月" style="width: 30%">
+                        <span>{{ props.row.birth }}</span>
+                    </el-form-item>
+                    <el-form-item label="联系电话" style="width: 30%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="商品描述" style="width: 30%">
-                        <span>{{ props.row.cNum }}</span>
-                    </el-form-item>
-                    <el-form-item label="邮件地址" style="width: 30%">
-                        <span>{{ props.row.emailAddress }}</span>
-                    </el-form-item>
-                    <el-form-item label="商品分类" style="width: 30%">
+                    <el-form-item label="成人人数" style="width: 30%">
                         <span>{{ props.row.aNum }}</span>
+                    </el-form-item>
+                    <el-form-item label="儿童数" style="width: 30%">
+                        <span>{{ props.row.bNum }}</span>
+                    </el-form-item>
+                    <el-form-item label="幼儿数" style="width: 30%">
+                        <span>{{ props.row.cNum }}</span>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="店铺地址" style="width: 30%">
-                        <span>{{ props.row.bNum }}</span>
+                    <el-form-item label="房间数" style="width: 30%">
+                        <span>{{ props.row.roomNum }}</span>
                     </el-form-item>
-                    <el-form-item label="店铺地址" style="width: 30%">
-                        <span>{{ props.row.bNum }}</span>
+                    <el-form-item label="币种" style="width: 30%">
+                        <span>{{ props.row.currency }}</span>
+                    </el-form-item>
+                    <el-form-item label="销售总价" style="width: 30%">
+                        <span>{{ props.row.totalSAmount }}</span>
+                    </el-form-item>
+                </el-form>
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item label="备注" style="width: 60%">
+                        <span>{{ props.row.remark }}</span>
+                    </el-form-item>
+                    <el-form-item>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 1" :label="$t('action.confirm')" :perms="permsConfirm" size="medium" type="primary" @click="confirm(props.row)"></kt-button>
                     </el-form-item>
                 </el-form>
             </template>
@@ -48,13 +59,12 @@
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
                 <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-                <kt-button icon="fa fa-edit" :label="$t('sys.orderFirm')" :perms="permsConfirm" :size="size" @click="handleConfirm(scope.$index, scope.row)" />
-                <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-trash" :label="$t('action.cancel')" :perms="permsCancel" :size="size" type="danger" @click="handleCancel(scope.$index, scope.row)" />
             </template>
         </el-table-column>
     </el-table>
     <div class="toolbar" style="padding:10px;">
-      <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
+      <kt-button :label="$t('action.batchDelete')" :perms="permsCancel" :size="size" type="danger" @click="handleBatchCancel()"
         :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
       <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
         :current-page="pageRequest.page" :page-size="pageRequest.rows" :total="data.total" style="float:right;">
@@ -88,8 +98,8 @@ export default {
     columns: Array, // 表格列配置
     data: Object, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
-    permsDelete: String,  // 删除权限标识
-       permsConfirm: String,  // 删除权限标识
+    permsCancel: String,  // 删除权限标识
+    permsConfirm: String,  // 确认权限标识
     size: { // 尺寸样式
       type: String,
       default: 'mini'
@@ -164,25 +174,20 @@ export default {
             this.findPage()
         },
         // 编辑
-        handleEdit: function (index, row) {
+        handleEdit: function (e,index, row) {
             this.$emit('handleEdit', {index: index, row: row})
         },
-        // 编辑
-        handleConfirm: function (index, row) {
-            this.$emit('handleConfirm', {index: index, row: row})
-        },
         // 删除
-        handleDelete: function (index, row) {
-
-            this.delete(row.id)
+        handleCancel: function (index, row) {
+            this.cancel(row.id)
         },
         // 批量删除
-        handleBatchDelete: function () {
+        handleBatchCancel: function () {
             let ids = this.selections.map(item => item.id).toString()
-            this.delete(ids)
+            this.cancel(ids)
         },
         // 删除操作
-        delete: function (ids) {
+        cancel: function (ids) {
             this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
                 type: 'warning',
                 cancelButtonText: this.$t('action.cancel'),
@@ -203,8 +208,26 @@ export default {
                     }
                     this.loading = false
                 }
-                this.$emit('handleDelete', {params: params, callback: callback})
+                this.$emit('handleCancel', {params: params, callback: callback})
             }).catch(() => {
+            })
+        },
+        confirm:function (row) {
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+                this.loading = true;
+                let callback = res =>{
+                    if(res.code == 200){
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
+                    }
+                    this.loading = false;
+                }
+                this.$emit('handleConfirm', {params: row, callback: callback})
             })
         }
     },
