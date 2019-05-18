@@ -829,6 +829,8 @@ export default {
             this.dataForm = Object.assign({}, params.row)
             this.dataForm.outDate = this.filters.commonDate[1]
             this.dataForm.inDate   =this.filters.commonDate[0]
+            console.log(this.dataForm)
+            console.log(this.filters.commonDate[1])
         },
         // 编辑
         submitConfirmForm: function () {
