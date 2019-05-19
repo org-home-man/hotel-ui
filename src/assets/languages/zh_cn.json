@@ -58,7 +58,7 @@
         "detileSearch": "详细查询",
         "loading": "拼命加载中",
         "submit": "提交",
-        "confirm": "确定",
+        "confirm": "确认",
         "cancel": "取消",
         "reset": "重置",
         "do": "确认删除选择记录吗?",
@@ -98,7 +98,8 @@
         "timeOut": "连接超时",
         "sysErr": "系统错误",
         "requestErr": "请求异常",
-        "pTreeName":"菜单名不能为空"
+        "pTreeName":"菜单名不能为空",
+        "isOrderException" :"该订单已经预定，不能重复预定"
     },
     "user": {
         "id": "编号",
