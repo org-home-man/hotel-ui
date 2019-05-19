@@ -471,6 +471,7 @@ export default {
             }
             this.pageRequest = {...this.pageRequest, ...this.filters};
             this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
+                console.log(res)
                 this.pageResult = res
             }).then(data != null ? data.callback : '')
         },
