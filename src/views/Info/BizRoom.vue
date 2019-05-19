@@ -1272,7 +1272,7 @@
 
                             //上传图片
 
-                            if (this.isUpload) {
+                            if (this.isUpload && this.formDate.get('files')!= null) {
                                 //上传图片
                                 this.$api.bizRoom.uploadFile(this.formDate, {headers: {'Content-Type': 'multipart/form-data;charset=UTF-8'}}).then((res) => {
                                     //保存信息图片信息 提交表单信息
@@ -1323,6 +1323,22 @@
                                 //只保存数据
                                 let params = Object.assign({}, this.dataForm)
                                 this.$api.bizRoom.save(params).then((res) => {
+
+                                    if(this.delFile.length > 0 ) {
+                                        var ids ='';
+                                        for (var i = 0 ; i < this.delFile.length; i++) {
+                                            if (ids == '') {
+                                                ids = this.delFile[i]
+                                            } else {
+                                                ids = ids +','+ this.delFile[i];
+                                            }
+
+                                        }
+                                        console.log("ids",ids);
+                                        this.$api.bizRoom.deletePictureFile({ids:ids}).then((res) => {
+
+                                        })
+                                    }
 
                                     if (res.code == 200) {
                                         this.$message({message: this.$t('action.success'), type: 'success'})
