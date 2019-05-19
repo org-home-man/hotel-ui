@@ -99,7 +99,14 @@
         "sysErr": "系统错误",
         "requestErr": "请求异常",
         "pTreeName":"菜单名不能为空",
-        "isOrderException" :"该订单已经预定，不能重复预定"
+        "isOrderException" :"该订单已经预定，不能重复预定",
+        "AccountException": "账号已被锁定,请联系高级管理员",
+        "pwdErException": "密码不正确",
+        "AcIsNotException": "账号不存在",
+        "oraException": "操作数据库异常，请联系开发人员",
+        "NotNullEception": "信息填写不全，请仔细填写",
+        "sysException": "系统异常，请联系开发人员",
+        "dateException": "日期异常"
     },
     "user": {
         "id": "编号",
