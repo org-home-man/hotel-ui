@@ -50,8 +50,6 @@
                 </el-form>
             </template>
         </el-table-column>
-
-        <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
         <el-table-column v-for="column in columns" header-align="center" align="center"
                          :prop="column.prop" :label="$t(column.label)" :width="column.width" :key="column.prop"
                          :sortable="column.sortable==null?true:column.sortable">
@@ -64,8 +62,6 @@
         </el-table-column>
     </el-table>
     <div class="toolbar" style="padding:10px;">
-      <kt-button :label="$t('action.batchDelete')" :perms="permsCancel" :size="size" type="danger" @click="handleBatchCancel()"
-        :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
       <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
         :current-page="pageRequest.page" :page-size="pageRequest.rows" :total="data.total" style="float:right;">
       </el-pagination>
@@ -180,11 +176,6 @@ export default {
         // 删除
         handleCancel: function (index, row) {
             this.cancel(row.id)
-        },
-        // 批量删除
-        handleBatchCancel: function () {
-            let ids = this.selections.map(item => item.id).toString()
-            this.cancel(ids)
         },
         // 删除操作
         cancel: function (ids) {
