@@ -1174,6 +1174,7 @@
                 this.editDialogVisible = true
                 this.operation = false
                 this.dataForm = Object.assign({}, params.row)
+                console.log("photo",this.dataForm.photo);
                 this.$api.bizRoom.queryByRelId({relationId: this.dataForm.photo}).then((res) => {
                     console.log("data:" + res);
 
@@ -1265,7 +1266,10 @@
                             this.$refs.upload.submit();
 
                             console.log(this.formDate.get('files'))
-                            this.formDate.append('businessId',this.dataForm.photo);
+                            if (this.dataForm.photo != null) {
+                                this.formDate.append('businessId',this.dataForm.photo);
+                            }
+
                             //上传图片
 
                             if (this.isUpload) {
