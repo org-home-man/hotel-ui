@@ -95,7 +95,7 @@
                           <el-select v-model="dataForm.sex" :placeholder="$t('action.select')"
                                      style="width: 200px;">
                               <el-option v-for="item in sexs" :key="item.paraCode"
-                                         :label="$t(item.paraCode)" :value="item.paraValue1">
+                                         :label="$t(item.paraCode)" :value="item.id">
                               </el-option>
                           </el-select>
                       </el-form-item>
