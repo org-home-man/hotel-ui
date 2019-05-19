@@ -287,7 +287,7 @@
           states:[{"code":"user.forbid","id":0},{"code":"user.normal","id":1}],
           fileList: [],
           files: null,
-          fileId:null
+          fileId:[]
       }
     },
     methods: {
