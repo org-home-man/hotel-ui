@@ -59,6 +59,7 @@
               :data="pageResult" :columns="filterColumns"
               @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
     </kt-table>
+
     <!--新增编辑界面-->
       <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="840px" :visible.sync="dialogVisible"
                  :close-on-click-modal="false">
@@ -289,7 +290,7 @@
         this.$api.user.findPage(this.pageRequest).then((res) => {
           this.pageResult = res;
           this.findUserRoles();
-          this.findUserSex();
+
         }).then(data != null ? data.callback : '')
       },
       // 加载用户角色信息
@@ -431,7 +432,7 @@
       // 处理表格列过滤显示
       handleFilterColumns: function (data) {
         this.filterColumns = data.filterColumns
-        this.$refs.tableColumnFilterDialog.setDialogVisible(false)
+        this.$refs.tableColumnFilterDialog.setDialogVisible(true)
       },
       // 处理表格列过滤显示
       initColumns: function () {
@@ -461,6 +462,7 @@
     mounted() {
       this.findDeptTree()
       this.initColumns()
+
     }
   }
 </script>
