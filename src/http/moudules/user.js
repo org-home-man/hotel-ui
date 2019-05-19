@@ -31,6 +31,11 @@ export const upload = (data,header) => {
   return request.post('/document/upload',data,header);
 }
 
+// 图片上传
+export const deleteRealFiles = (data) => {
+    return request.post('/document/deleteRealFiles',data);
+}
+
 export const showFile = (data) => {
   return request.post('/document/queryByRelId',data);
 }

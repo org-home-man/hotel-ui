@@ -286,7 +286,8 @@
           sexs:[],
           states:[{"code":"user.forbid","id":0},{"code":"user.normal","id":1}],
           fileList: [],
-          files: null
+          files: null,
+          fileId:null
       }
     },
     methods: {
@@ -306,8 +307,6 @@
       findUserRoles: function () {
         this.$api.role.findAll().then((res) => {
           // 加载角色集合
-            console.log(res)
-            console.log(this.states)
           this.roles = res
         })
       },
@@ -365,6 +364,7 @@
                 let arr = new Array();
                 arr.push({url:this.baseUrl+"/document/preview/"+res});
                 this.fileList = arr;
+                this.fileId = res;
             })
         }
 
@@ -386,9 +386,8 @@
                   if (res == null) {
                     this.$message({message: this.$t('action.fail'), type: 'error'});
                   }
-
+                  this.$api.user.deleteRealFiles({ids:this.fileId[0]});
                   this.dataForm.path = res;
-
                   this.sumbit()
                 })
               } else {

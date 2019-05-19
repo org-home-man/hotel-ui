@@ -205,7 +205,7 @@
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
                 <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-                <kt-button icon="fa fa-trash" :label="$t('action.cancel')" :disabled="scope.row.status == 3" :perms="permsCancel" :size="size" type="danger" @click="handleCancel(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-trash" :label="$t('action.cancel')" :perms="permsCancel" :size="size" type="danger" @click="handleCancel(scope.$index, scope.row)" />
             </template>
         </el-table-column>
     </el-table>

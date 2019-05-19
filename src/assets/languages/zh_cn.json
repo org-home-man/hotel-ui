@@ -236,6 +236,11 @@
             "hotelTp2": "商务酒店",
             "hotelTp3": "民宿/旅馆"
         },
+        "hotelStatus": {
+            "hotelStatus1": "未确认",
+            "hotelStatus2": "已确认",
+            "hotelStatus3": "取消"
+        },
         "hotelLevel": {
             "hotelLevel": "酒店星级",
             "hotelLevel1": "1星级",

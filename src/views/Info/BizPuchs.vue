@@ -7,7 +7,12 @@
                     <el-input v-model="filters.orderCode" placeholder="订单号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="filters.roomStatus" placeholder="订单状态"></el-input>
+                    <el-select v-model="filters.roomStatus" clearable placeholder="订单状态"
+                               style="width: 200px;">
+                        <el-option v-for="item in states" :key="item.paraCode"
+                                   :label="$t(item.paraCode)" :value="item.paraValue1">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-date-picker
@@ -447,6 +452,7 @@
                         return time.getTime() < Date.now() - 8.64e7
                     }
                 },
+                states:[]
             }
         },
         methods: {
@@ -471,7 +477,6 @@
                 }
                 this.pageRequest = {...this.pageRequest, ...this.filters};
                 this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
-                    console.log(res)
                     this.pageResult = res
                 }).then(data != null ? data.callback : '')
             },
@@ -509,9 +514,16 @@
             },
             handleConfirm:function (data) {
                 this.$api.bizPuchs.confirm(data.params).then(data != null ? data.callback : '')
-            }
+            },
+            //加载状态数据字典
+            findUserSex:function(){
+                this.$api.sysParaConfig.findByCode({"paraSubCode2":"puchsState"}).then((res) => {
+                    this.states = res;
+                })
+            },
         },
         mounted() {
+            this.findUserSex()
         }
     }
 </script>
