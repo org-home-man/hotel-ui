@@ -283,27 +283,27 @@
                     <el-table-column width="200" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center"
                                      align="center" :label="$t('hotel.hotelname')">
                     </el-table-column>
-                    <el-table-column width="120" prop="hotelType" header-align="center" align="center"
+                    <el-table-column prop="hotelType" header-align="center" align="center"
                                      :label="$t('hotel.hotelType.hotelType')">
                         <template slot-scope="scope">
                             <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}}</el-table-column>
                         </template>
                     </el-table-column>
 
-                    <el-table-column width="100" prop="roomTypeKey" header-align="center" align="center"
+                    <el-table-column prop="roomTypeKey" header-align="center" align="center"
                                      :label="$t('hotel.roomtype.roomtype')">
                         <template slot-scope="scope">
                             <el-tag>{{$t('hotel.'+scope.row.roomTypeKey)}}</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column width="100" prop="bedTypeKey" header-align="center" align="center"
+                    <el-table-column prop="bedTypeKey" header-align="center" align="center"
                                      :label="$t('hotel.bedtype.bedtype')">
                         <template slot-scope="scope">
                             <el-tag>{{$t('hotel.'+scope.row.bedTypeKey)}}</el-tag>
                         </template>
                     </el-table-column>
 
-                    <el-table-column min-width="100" prop="breakType" header-align="center" align="center"
+                    <el-table-column prop="breakType" header-align="center" align="center"
                                      :label="$t('hotel.breaktype.breaktype')">
                         <template slot-scope="scope">
                             <el-tag>{{$t('hotel.'+scope.row.breakTypeKey)}}</el-tag>

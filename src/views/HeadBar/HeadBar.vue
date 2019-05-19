@@ -125,15 +125,18 @@
             findUserRoles: function () {
                 let user = sessionStorage.getItem("user");
                 this.params.name = user;
-                this.$api.user.findByName(this.params).then((res) => {
-                    // 加载角色集合
-                    this.user = res;
+                this.$api.user.findByName(this.params).then((rs) => {
                     // 获取用户头像
-                    this.$api.user.showFile({'relationId':this.user.path}).then((res) =>{
+                    this.$api.user.showFile({'relationId':rs.path}).then((res) =>{
                         if(res instanceof Array && res.length>0){
                             var imageId = res[0];
-                            this.user.path = baseUrl + "/document/preview/" + imageId;
+                            rs.path = baseUrl + "/document/preview/" + imageId;
+                        }else{
+                            rs.path = ""
                         }
+                    }).then( () =>{
+                        // 加载角色集合
+                        this.user = rs;
                     });
                 })
             },

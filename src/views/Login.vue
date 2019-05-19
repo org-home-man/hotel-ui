@@ -72,8 +72,8 @@
       return {
         loading: false,
         loginForm: {
-          account: 'admin',
-          password: 'admin',
+          account: '',
+          password: '',
           captcha:'',
           src: ''
         },
