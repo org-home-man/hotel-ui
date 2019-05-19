@@ -900,11 +900,19 @@
             },
             // 显示预订界面
             handleBookRoom: function (row) {
-                // console.log("param", params);
+                // this.$refs['dataForm'].resetFields();
                 this.disableHotelName = true;
                 this.editDialogVisible = true;
                 this.operation = false;
-                this.dataForm = Object.assign({'adultNum':this.filters.adultNum,'childrenNum':this.filters.childrenNum,'roomNum':this.filters.roomNum}, row);
+                this.dataForm = Object.assign(row,
+                    {'adultNum':this.filters.adultNum,
+                    'childrenNum':this.filters.childrenNum,
+                    'roomNum':this.filters.roomNum,
+                    'inDateStart':this.filters.inDateStart,
+                    'outDateEnd':this.filters.outDateEnd
+                    }
+                    );
+                console.log(this.dataForm)
             },
             // 编辑
             submitForm: function () {
