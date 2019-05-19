@@ -560,8 +560,8 @@
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pname" >
-                            <el-input v-model="dataForm.pname"></el-input>
+                        <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pName" >
+                            <el-input v-model="dataForm.pName"></el-input>
                         </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.passportNo')" prop="passport" >
                             <el-input v-model="dataForm.passport"></el-input>
@@ -585,22 +585,19 @@
                         <el-form-item label-width="120px" :label="$t('hotel.contactEmail')" prop="emailAddress">
                             <el-input v-model="dataForm.emailAddress"></el-input>
                         </el-form-item>
-                        <el-form-item label-width="120px" :label="$t('hotel.adultNum1')" prop="adultNum1">
-                            <el-input-number v-model="dataForm.anum" :min="0" ></el-input-number>
-                        </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.children612')" prop="children612">
                             <el-input-number v-model="dataForm.bnum" :min="0" ></el-input-number>
                         </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.children46')" prop="children46" >
                             <el-input-number v-model="dataForm.cnum" :min="0" ></el-input-number>
                         </el-form-item>
+                        <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children04" >
+                            <el-input-number v-model="dataForm.children04" :min="0" ></el-input-number>
+                        </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children04" >
-                            <el-input-number v-model="dataForm.children04" :min="0" ></el-input-number>
-                        </el-form-item>
                         <el-form-item :label="$t('hotel.roomNum')" prop="roomNum" >
                             <el-input-number v-model="dataForm.roomNum" :min="1" :max="dataForm.inventory" ></el-input-number>
                         </el-form-item>
@@ -836,7 +833,7 @@
                     adultNum: null,
                     childrenNum: null,
                     lastCrtTime: null,
-                    pname: null,
+                    pName: null,
                     passport: null,
                     birth: null,
                     contactPhone: null,
@@ -896,7 +893,6 @@
             },
             getCurrentRow: function(row){
                 this.currentRow = row;
-                // this.$emit('handleBookRoom', row)
             },
             // 显示预订界面
             handleBookRoom: function (row) {
@@ -904,15 +900,14 @@
                 this.disableHotelName = true;
                 this.editDialogVisible = true;
                 this.operation = false;
-                this.dataForm = Object.assign(row,
-                    {'adultNum':this.filters.adultNum,
+                var obj = Object.assign({},{'adultNum':this.filters.adultNum,
                     'childrenNum':this.filters.childrenNum,
                     'roomNum':this.filters.roomNum,
                     'inDateStart':this.filters.inDateStart,
                     'outDateEnd':this.filters.outDateEnd
-                    }
-                    );
-                console.log(this.dataForm)
+                });
+                // this.dataForm = Object.assign(obj,row);
+                this.dataForm = {...row,...obj}
             },
             // 编辑
             submitForm: function () {
@@ -960,7 +955,6 @@
                 let params = Object.assign({}, this.sysPara);
                 this.$api.sysParaConfig.findKeyValueHotelRoom(params).then((res) => {
                     this.paraConfig = res
-                    console.log(this.paraConfig);
                 })
             },
 
