@@ -300,7 +300,7 @@
         this.$api.user.findPage(this.pageRequest).then((res) => {
           this.pageResult = res;
           this.findUserRoles();
-
+          this.findUserSex();
         }).then(data != null ? data.callback : '')
       },
       // 加载用户角色信息
