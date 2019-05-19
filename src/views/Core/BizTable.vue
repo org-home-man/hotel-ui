@@ -8,36 +8,184 @@
         <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="护照号" style="width: 30%">
+                    <el-form-item label="护照号" style="width: 24%">
                         <span>{{ props.row.passport }}</span>
                     </el-form-item>
-                    <el-form-item label="出生年月" style="width: 30%">
+                    <el-form-item label="出生年月" style="width: 24%">
                         <span>{{ props.row.birth }}</span>
                     </el-form-item>
-                    <el-form-item label="联系电话" style="width: 30%">
+                    <el-form-item label="联系电话" style="width: 24%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="成人人数" style="width: 30%">
+                    <el-form-item label="房间数" style="width: 24%">
+                        <span>{{ props.row.roomNum }}</span>
+                    </el-form-item>
+                    <el-form-item label="成人人数" style="width: 24%">
                         <span>{{ props.row.aNum }}</span>
                     </el-form-item>
-                    <el-form-item label="儿童数" style="width: 30%">
+                    <el-form-item label="儿童数" style="width: 24%">
                         <span>{{ props.row.bNum }}</span>
                     </el-form-item>
-                    <el-form-item label="幼儿数" style="width: 30%">
+                    <el-form-item label="幼儿数" style="width: 24%">
                         <span>{{ props.row.cNum }}</span>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="房间数" style="width: 30%">
-                        <span>{{ props.row.roomNum }}</span>
+                    <el-form-item label="房间类型" style="width: 24%">
+                        <span>{{ props.row.roomType }}</span>
                     </el-form-item>
-                    <el-form-item label="币种" style="width: 30%">
-                        <span>{{ props.row.currency }}</span>
+                    <el-form-item label="房间样式" style="width: 24%">
+                        <span>{{ props.row.roomStyle }}</span>
                     </el-form-item>
-                    <el-form-item label="销售总价" style="width: 30%">
-                        <span>{{ props.row.totalSAmount }}</span>
+                    <el-form-item label="床铺类型" style="width: 24%">
+                        <span>{{ props.row.bedType }}</span>
+                    </el-form-item>
+                    <el-form-item label="餐食条件" style="width: 24%">
+                        <span>{{ props.row.breakType }}</span>
+                    </el-form-item>
+                </el-form>
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item label="房间类型" style="width: 24%">
+                        <span>{{ props.row.roomType }}</span>
+                    </el-form-item>
+                    <el-form-item label="房间样式" style="width: 24%">
+                        <span>{{ props.row.roomStyle }}</span>
+                    </el-form-item>
+                    <el-form-item label="床铺类型" style="width: 24%">
+                        <span>{{ props.row.bedType }}</span>
+                    </el-form-item>
+                    <el-form-item label="餐食条件" style="width: 24%">
+                        <span>{{ props.row.breakType }}</span>
+                    </el-form-item>
+                </el-form>
+                <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.iswify==1" disabled fill="#409EFF" text-color="#ffffff"
+                                     true-label="1" false-label="2" :label="$t('hotel.iswify')"
+                                     v-model="props.row.iswify" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isfront==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isfront')"
+                                     v-model="props.row.isfront" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isbarrifr==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isbarrifr')"
+                                     v-model="props.row.isbarrifr" border></el-checkbox>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isbalcony==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isbalcony')"
+                                     v-model="props.row.isbalcony" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.iskitchen==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.iskitchen')"
+                                     v-model="props.row.iskitchen" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.iswindow==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.iswindow')"
+                                     v-model="props.row.iswindow" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isheat==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isheat')"
+                                     v-model="props.row.isheat" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isicebox==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isicebox')"
+                                     v-model="props.row.isicebox" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isiron==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isiron')"
+                                     v-model="props.row.isiron" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isnosmk==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isnosmk')"
+                                     v-model="props.row.isnosmk" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.islandscape==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.islandscape')"
+                                     v-model="props.row.islandscape" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.ishighrise==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.ishighrise')"
+                                     v-model="props.row.ishighrise" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.ispark==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.ispark')"
+                                     v-model="props.row.ispark" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isgym==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isgym')"
+                                     v-model="props.row.isgym" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isswmp==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isswmp')"
+                                     v-model="props.row.isswmp" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isbeach==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isbeach')"
+                                     v-model="props.row.isbeach" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.ishotsp==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.ishotsp')"
+                                     v-model="props.row.ishotsp" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.ischildct==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.ischildct')"
+                                     v-model="props.row.ischildct" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isroomserv==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isroomserv')"
+                                     v-model="props.row.isroomserv" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isknead==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isknead')"
+                                     v-model="props.row.isknead" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.islounge==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.islounge')"
+                                     v-model="props.row.islounge" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.issuper==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.issuper')"
+                                     v-model="props.row.issuper" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isbus==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isbus')"
+                                     v-model="props.row.isbus" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.istrafic==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.istrafic')"
+                                     v-model="props.row.istrafic" border></el-checkbox>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-checkbox v-show="props.row.isrestau==1" disabled true-label="1" false-label="2"
+                                     :label="$t('hotel.isrestau')"
+                                     v-model="props.row.isrestau" border></el-checkbox>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
@@ -57,7 +205,7 @@
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
                 <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-                <kt-button icon="fa fa-trash" :label="$t('action.cancel')" :perms="permsCancel" :size="size" type="danger" @click="handleCancel(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-trash" :label="$t('action.cancel')" :disabled="scope.row.status == 3" :perms="permsCancel" :size="size" type="danger" @click="handleCancel(scope.$index, scope.row)" />
             </template>
         </el-table-column>
     </el-table>
@@ -73,7 +221,7 @@
         font-size: 0;
     }
     .demo-table-expand label {
-        width: 100px;
+        min-width: 100px;
         color: #99a9bf;
     }
     .demo-table-expand {
@@ -175,20 +323,15 @@ export default {
         },
         // 删除
         handleCancel: function (index, row) {
-            this.cancel(row.id)
+            this.cancel(row)
         },
         // 删除操作
-        cancel: function (ids) {
+        cancel: function (row) {
             this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
                 type: 'warning',
                 cancelButtonText: this.$t('action.cancel'),
                 confirmButtonText: this.$t('action.confirm')
             }).then(() => {
-                let params = []
-                let idArray = (ids + '').split(',')
-                for (var i = 0; i < idArray.length; i++) {
-                    params.push({'id': idArray[i]})
-                }
                 this.loading = true
                 let callback = res => {
                     if (res.code == 200) {
@@ -199,7 +342,7 @@ export default {
                     }
                     this.loading = false
                 }
-                this.$emit('handleCancel', {params: params, callback: callback})
+                this.$emit('handleCancel', {params: row, callback: callback})
             }).catch(() => {
             })
         },
