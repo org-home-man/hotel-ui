@@ -38,7 +38,7 @@
           </el-form>
       </div>
 	<!--表格内容栏-->
-	<kt-table permsEdit="sys:bizPuchs:edit" permsDelete="sys:bizPuchs:delete"  permsConfirm="sys:bizPuchs:confirm"
+	<kt-table permsEdit="sys:bizPuchs:edit" permsCancel="sys:bizPuchs:cancel"  permsConfirm="sys:bizPuchs:confirm"
 		:data="pageResult" :columns="columns"
 		@findPage="findPage" @handleEdit="handleEdit" @handleCancel="handleCancel"  @handleConfirm="handleConfirm">
 	</kt-table>
