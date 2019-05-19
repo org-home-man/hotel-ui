@@ -76,6 +76,9 @@
                       <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
                           <el-input v-model="dataForm.realName" auto-complete="off"></el-input>
                       </el-form-item>
+                      <el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">
+                          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
+                      </el-form-item>
                   </div>
                   <div style="width: 50%;">
                       <el-form-item  prop="phto" style="width: 100%">
@@ -111,9 +114,6 @@
                               </el-option>
                           </el-select>
                       </el-form-item>
-                      <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
-                          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
-                      </el-form-item>
                       <el-form-item :label="$t('user.role')" prop="userRoles" style="width: 100%">
                           <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
                                      style="width: 200px;">
@@ -122,16 +122,24 @@
                               </el-option>
                           </el-select>
                       </el-form-item>
+                      <el-form-item :label="$t('user.status')" prop="sex" style="width: 100%">
+                          <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
+                                     style="width: 200px;">
+                              <el-option v-for="item in states" :key="item.code"
+                                         :label="$t(item.code)" :value="item.id">
+                              </el-option>
+                          </el-select>
+                      </el-form-item>
                   </div>
                   <div style="width: 50%;">
                       <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
                           <el-input v-model="dataForm.email" auto-complete="off"></el-input>
                       </el-form-item>
-                      <el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">
-                          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
-                      </el-form-item>
                       <el-form-item :label="$t('user.phone')" prop="phone" style="width: 100%">
                           <el-input v-model="dataForm.phone" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
+                          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
                       </el-form-item>
                       <el-form-item :label="$t('user.address')" prop="address" style="width: 100%">
                           <el-input v-model="dataForm.address" auto-complete="off"></el-input>
@@ -259,7 +267,7 @@
               birthday: '',
               email: '',
               mobile: '',
-              status: 1,
+              status: '',
               path: null,
               phone: '',
               address: '',
@@ -275,6 +283,7 @@
           },
           roles: [],
           sexs:[],
+          states:[{"code":"user.forbid","id":0},{"code":"user.normal","id":1}],
           fileList: [],
           files: null
       }
@@ -296,6 +305,8 @@
       findUserRoles: function () {
         this.$api.role.findAll().then((res) => {
           // 加载角色集合
+            console.log(res)
+            console.log(this.states)
           this.roles = res
         })
       },
@@ -324,7 +335,7 @@
               birthday: '',
               email: '',
               mobile: '',
-              status: 1,
+              status: '',
               phone: '',
               address: '',
               region: '',
@@ -336,12 +347,14 @@
       },
       // 显示编辑界面
       handleEdit: function (params) {
-        this.dialogVisible = true;
         this.operation = false;
-        console.log(params.row)
+
         this.dataForm = Object.assign({}, params.row);
         let userRoles = [];
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
+            if(params.row.userRoles[i].roleId == 1){
+                return this.$message({message:this.$t('action.noEdit'), type: 'error' })
+            }
           userRoles.push(params.row.userRoles[i].roleId)
         }
         this.dataForm.userRoles = userRoles;
@@ -354,6 +367,7 @@
             })
         }
 
+        this.dialogVisible = true;
       },
       // 编辑
       submitForm:function () {
@@ -431,7 +445,7 @@
       // 处理表格列过滤显示
       handleFilterColumns: function (data) {
         this.filterColumns = data.filterColumns
-        this.$refs.tableColumnFilterDialog.setDialogVisible(false)
+        this.$refs.tableColumnFilterDialog.setDialogVisible(true)
       },
       // 处理表格列过滤显示
       initColumns: function () {
