@@ -359,10 +359,10 @@
                 },
                 columns: [
                     {prop:"orderCode", label:"订单号", minWidth:60},
-                    {prop:"hotelName", label:"酒店名称", minWidth:60},
+                    {prop:"hotelCname", label:"酒店名称", minWidth:60},
                     {prop:"roomCode", label:"客房编号", minWidth:60},
-                    {prop:"inDate", label:"入住日期", minWidth:60},
-                    {prop:"outDate", label:"退房日期", minWidth:60},
+                    {prop:"inDateStart", label:"入住日期", minWidth:60},
+                    {prop:"outDateEnd", label:"退房日期", minWidth:60},
                     {prop:"pName", label:"代表者姓名", minWidth:60},
                     {prop:"confirmTime", label:"确认时间", minWidth:60},
                     {prop:"status", label:"订单状态", minWidth:60}
@@ -478,6 +478,7 @@
                 this.pageRequest = {...this.pageRequest, ...this.filters};
                 this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
                     this.pageResult = res
+                    console.log(res)
                 }).then(data != null ? data.callback : '')
             },
             // 批量删除
