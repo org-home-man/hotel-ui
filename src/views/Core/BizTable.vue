@@ -175,20 +175,15 @@ export default {
         },
         // 删除
         handleCancel: function (index, row) {
-            this.cancel(row.id)
+            this.cancel(row)
         },
         // 删除操作
-        cancel: function (ids) {
+        cancel: function (row) {
             this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
                 type: 'warning',
                 cancelButtonText: this.$t('action.cancel'),
                 confirmButtonText: this.$t('action.confirm')
             }).then(() => {
-                let params = []
-                let idArray = (ids + '').split(',')
-                for (var i = 0; i < idArray.length; i++) {
-                    params.push({'id': idArray[i]})
-                }
                 this.loading = true
                 let callback = res => {
                     if (res.code == 200) {
@@ -199,7 +194,7 @@ export default {
                     }
                     this.loading = false
                 }
-                this.$emit('handleCancel', {params: params, callback: callback})
+                this.$emit('handleCancel', {params: row, callback: callback})
             }).catch(() => {
             })
         },
