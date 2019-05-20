@@ -94,9 +94,11 @@ function addDynamicMenuAndRoutes(userName, to, from) {
             // 保存菜单树
             store.commit('setNavTree', res)
         }).then(res => {
+            console.log("userName:",userName)
         api.user.findPermissions({'name': userName}).then(res => {
             // 保存用户权限标识集合
             store.commit('setPerms', res)
+            console.log("resPerms:",res);
         })
     }).catch(function (res) {
 
