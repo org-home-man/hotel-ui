@@ -374,7 +374,8 @@
                                 :on-preview="handlePictureCardPreview"
                                 action="#"
                                 :file-list="files"
-                                multiple>
+                                multiple
+                                :limit="5">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
 
@@ -1248,9 +1249,21 @@
                 }
                 this.isUpload = true;
             },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size /1024 <= 512;
+                if (!isJPG) {
+                    this.$message.error(this.$t('action.imgNotType'));
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传客房图片大小不能超过 512KB!');
+                }
+                return isJPG && isLt2M;
+            },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
+                this.editLoading = false;
             },
             // 编辑
             submitInfoForm: function () {
@@ -1263,9 +1276,15 @@
                             this.editLoading = true;
                             this.formDate = new FormData();
 
-                            this.$refs.upload.submit();
+                            this.$refs.upload.submit()
 
-                            console.log(this.formDate.get('files'))
+                            console.log("formDate.files:",this.formDate.get('files'))
+
+                            if (! this.beforeAvatarUpload(this.formDate.get('files')) ) {
+                                return
+                            }
+
+
                             if (this.dataForm.photo != null) {
                                 this.formDate.append('businessId',this.dataForm.photo);
                             }
