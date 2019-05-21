@@ -287,7 +287,10 @@ export default {
         }
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
-			})
+
+			}).finally(()=>{
+			    this.loading = false
+            })
 		},
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}

@@ -402,7 +402,7 @@
         let params = Object.assign({}, this.dataForm)
         this.editLoading = true
         let userRoles = []
-        for (let i = 0, len = params.userRoles.length; i < len; i++) {
+        for (let i = 0  ; i < params.userRoles.length; i++) {
           let userRole = {
             userId: params.id,
             roleId: params.userRoles[i]
