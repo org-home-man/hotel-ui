@@ -118,7 +118,7 @@ export default {
                 {prop:"name", label:"name", minWidth:120},
                 {prop:"roleId", label:"roleId.roleId", minWidth:120},
                 {prop:"remark", label:"remark", minWidth:120},
-                {prop:"createBy", label:"createBy", minWidth:120},
+                {prop:"createName", label:"createBy", minWidth:120},
                 {prop:"createTime", label:"createTime", minWidth:120, formatter:this.dateFormat}
                 // {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
