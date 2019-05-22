@@ -1,5 +1,5 @@
 <template>
-  <el-button :size="size" :type="type" :icon="icon"
+  <el-button :size="size" :type="type" :icon="icon" :style="style"
     :loading="loading" :disabled="!hasPerms(perms)" @click.stop="handleClick">
     {{label}}
   </el-button>
@@ -37,7 +37,11 @@ export default {
     perms: {  // 按钮权限标识，外部使用者传入
       type: String,
       default: null
-    }
+    },
+      style: {
+        type:String,
+          default:""
+      }
   },
   data() {
     return {

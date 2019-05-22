@@ -202,10 +202,5 @@
 </script>
 
 <style scoped>
-.cc-box-left{
-    background-color: #3a8ee6;
-    width: 100px;
-    height: 100px;
-    float: left;
-}
+
 </style>

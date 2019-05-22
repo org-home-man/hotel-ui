@@ -30,10 +30,10 @@
         prop="orderNum" header-align="center" align="center" :label="$t('dept.order')">
       </el-table-column>
       <el-table-column
-        prop="createBy" header-align="center" align="center" :label="$t('dept.createName')">
+        prop="createName" header-align="center" align="center" :label="$t('dept.createName')">
       </el-table-column>
       <el-table-column
-        prop="createTime" header-align="center" align="center" :label="$t('dept.createTime')" :formatter="dateFormat">
+        prop="createTime" header-align="center" align="center" :label="$t('dept.createTime')">
       </el-table-column>
       <el-table-column
         fixed="right" header-align="center" align="center" width="185" :label="$t('action.operation')">
