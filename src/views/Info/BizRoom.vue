@@ -88,13 +88,13 @@
                 <el-breadcrumb-item>{{$t('sys.guestEdit')}}</el-breadcrumb-item>
             </el-breadcrumb>
 
-            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="100px" :rules="dataFormRules" ref="dataForm"
+            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="130px" :rules="dataFormRules" ref="dataForm"
                      :size="size" :inline="true" label-position="right">
                 <!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
                 <!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
                 <!--</el-form-item>-->
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="20" align="left">
                         <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
                             <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
                                 <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
@@ -102,113 +102,95 @@
                                            :value="hotelName.hotelCode"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="dataForm.roomType">
                                 <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
                                            :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off">
                             <el-select v-model="dataForm.roomStyle">
                                 <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode"
                                            :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
                             <el-select v-model="dataForm.bedType">
                                 <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode"
                                            :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
                             <el-select v-model="dataForm.breakType">
                                 <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode"
                                            :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomarea')+'(m2)'" prop="roomArea" auto-complete="off">
                             <el-input v-model="dataForm.roomArea"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.introc')" prop="introC" auto-complete="off" style="width: 100%">
                             <el-input class="textArea" v-model="dataForm.introC" type="textarea" ></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                </el-row>
+                <el-row>
+                    <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.introe')" prop="introE" auto-complete="off" style="width: 100%">
                             <el-input class="textArea" v-model="dataForm.introE" type="textarea" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
                             <el-input v-model.number="dataForm.scheduledays"></el-input>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
+
                         <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
                             <el-input v-model="dataForm.favorableprice"></el-input>
                         </el-form-item>
-                    </el-col>
-                </el-row>
 
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
                             <el-input v-model.number="dataForm.evenlive"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
+                </el-row>
+                <el-row>
+                    <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
                             <el-input class="textArea" v-model="dataForm.present" type="textarea" ></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
                             <el-input v-model.number="dataForm.roomStock"></el-input>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item>
-                            <!--<el-select v-model="dataForm.recommended" perms="sys:bizRoom:check" type="primary">-->
-                            <!--<el-option v-for="rm in paraConfig.recommended" :key="rm.paraCode" :label="$t('hotel.'+ rm.paraCode)" :value="rm.paraValue1"></el-option>-->
-                            <!--</el-select>-->
-                            <kt-checkbox trueLable="01" falseLable="02" :label="$t('hotel.recommended')"
-                                         @changeValue="changeValue" :modelParent="dataForm.recommended"
-                                         perms="sys:bizRoom:check"></kt-checkbox>
+                        <el-form-item :label="$t('hotel.recommended')">
+                            <kt-checkbox  trueLable="01" falseLable="02"
+                                          @changeValue="changeValue" :modelParent="dataForm.recommended"
+                                          perms="sys:bizRoom:check"></kt-checkbox>
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row>
+                    <el-col :span="24" align="left">
+
+                    </el-col>
+                </el-row>
+
+
+
                 <br>
-                <h3 style="text-align: left">常用信息:</h3>
+                <h3 style="text-align: left">{{$t('hotel.information')}}</h3>
                 <el-row >
-                    <el-col :span="12" align="left" class="check-el-col" >
+                    <el-col :span="24" align="justify" class="check-el-col" >
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswify')"
                                          v-model="dataForm.iswify" border></el-checkbox>
@@ -217,8 +199,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isfront')"
                                          v-model="dataForm.isfront" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbarrifr')"
                                          v-model="dataForm.isbarrifr" border></el-checkbox>
@@ -228,11 +208,7 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbalcony')"
                                          v-model="dataForm.isbalcony" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                </el-row>
 
-                <el-row >
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iskitchen')"
                                          v-model="dataForm.iskitchen" border></el-checkbox>
@@ -242,8 +218,6 @@
                                          v-model="dataForm.iswindow" border></el-checkbox>
                         </el-form-item>
 
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isheat')"
                                          v-model="dataForm.isheat" border></el-checkbox>
@@ -252,11 +226,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')"
                                          v-model="dataForm.isicebox" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')"
                                          v-model="dataForm.isiron" border></el-checkbox>
@@ -265,8 +234,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                          v-model="dataForm.isnosmk" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
                                          v-model="dataForm.islandscape" border></el-checkbox>
@@ -275,12 +242,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
                                          v-model="dataForm.ishighrise" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ispark')"
                                          v-model="dataForm.ispark" border></el-checkbox>
@@ -290,8 +251,6 @@
                                          v-model="dataForm.isgym" border></el-checkbox>
                         </el-form-item>
 
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
                                          v-model="dataForm.isswmp" border></el-checkbox>
@@ -300,11 +259,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
                                          v-model="dataForm.isbeach" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
                                          v-model="dataForm.ishotsp" border></el-checkbox>
@@ -313,8 +267,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ischildct')"
                                          v-model="dataForm.ischildct" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isroomserv')"
                                          v-model="dataForm.isroomserv" border></el-checkbox>
@@ -323,12 +275,6 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isknead')"
                                          v-model="dataForm.isknead" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="12" align="left" class="check-el-col">
-
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islounge')"
                                          v-model="dataForm.islounge" border></el-checkbox>
@@ -337,8 +283,7 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.issuper')"
                                          v-model="dataForm.issuper" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="12" align="left" class="check-el-col">
+
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbus')"
                                          v-model="dataForm.isbus" border></el-checkbox>
@@ -347,16 +292,12 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.istrafic')"
                                          v-model="dataForm.istrafic" border></el-checkbox>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="6" align="left" class="check-el-col">
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isrestau')"
                                          v-model="dataForm.isrestau" border></el-checkbox>
                         </el-form-item>
                     </el-col>
+
                 </el-row>
 
                 <el-row>
@@ -417,7 +358,7 @@
 
 
         <!--牌价修改弹出框-->
-        <el-dialog @open="datePickerMethod" :title="operation?$t('action.add'):$t('action.edit')" width="50%"
+        <el-dialog @open="datePickerMethod" :title="operation?$t('action.add'):$t('action.edit')" width="60%"
                    :visible.sync="editPriceDialogVisible" :close-on-click-modal="false">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
@@ -1570,20 +1511,17 @@
 </script>
 
 <style scoped>
-    .check-el-col{
-        display:flex;
-        justify-content:space-around;
-    }
+
     #roomForm .el-checkbox{
-        width:12rem;
+        width:180px;
     }
     .el-input {
-        width:13rem;
+        width:180px;
     }
     .el-select{
-        width:13rem;
+        width:180px;
     }
     .textArea{
-        width:13rem;
+        width:620px;
     }
 </style>
