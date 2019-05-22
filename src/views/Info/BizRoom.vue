@@ -366,8 +366,8 @@
                 <el-breadcrumb-item>{{$t('sys.guestPriceEdit')}}</el-breadcrumb-item>
             </el-breadcrumb>
 
-            <el-form style="margin-top: 20px" :model="priceForm" label-width="80px" :rules="priceFormRules"
-                     ref="priceForm" :size="size" :inline="true" label-position="left">
+            <el-form style="margin-top: 20px" :model="priceForm" label-width="130px" :rules="priceFormRules"
+                     ref="priceForm" :size="size" :inline="true" label-position="right">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomcode')" prop="hotelCode" auto-complete="off">
@@ -561,8 +561,8 @@
                 <el-breadcrumb-item>{{$t('sys.stockMng')}}</el-breadcrumb-item>
             </el-breadcrumb>
 
-            <el-form style="margin-top: 20px" :model="stockForm" label-width="80px" :rules="stockFormRules"
-                     ref="stockForm" :size="size" :inline="true" label-position="left">
+            <el-form style="margin-top: 20px" :model="stockForm" label-width="130px" :rules="stockFormRules"
+                     ref="stockForm" :size="size" :inline="true" label-position="right">
                 <el-row>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomcode')" prop="hotelCode" auto-complete="off">
