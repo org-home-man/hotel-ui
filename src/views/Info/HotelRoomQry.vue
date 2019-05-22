@@ -389,7 +389,6 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-row >
                     <el-col :span="18" align="left">
                         <el-form-item prop="roomType">
@@ -400,16 +399,15 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="adultNum" :label="$t('hotel.adultNum')">
-                            <el-input-number v-model="dataForm.adultNum" :placeholder="$t('hotel.adultNum')" :min="0"></el-input-number>
+                            <el-input-number v-model="dataForm.adultNum" controls-position="right" :placeholder="$t('hotel.adultNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="childrenNum" :label="$t('hotel.childrenNum')">
-                            <el-input-number v-model="dataForm.childrenNum" :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
+                            <el-input-number v-model="dataForm.childrenNum" controls-position="right" :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6" align="right" >
                         <el-form-item :label="$t('hotel.inventory')">
-                            <el-input-number v-model="dataForm.inventory" disabled
-                                      :placeholder="$t('hotel.inventory')"></el-input-number>
+                            <el-input-number v-model="dataForm.inventory" disabled controls-position="right" :placeholder="$t('hotel.inventory')"></el-input-number>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -439,125 +437,53 @@
 <!--                            <el-input type="textarea" v-model="dataForm.introE"  resize="none"  readonly autosize></el-input>-->
 <!--                        </el-form-item>-->
                     </el-col>
+                    <el-col :span="24" v-show="roomPhoto && roomPhoto.length>0">
+                        <el-carousel style="margin-top: 20px" :interval="4000" type="card" height="200px">
+                            <el-carousel-item v-for="ph in roomPhoto" :key="ph">
+                                <el-image style="width:400px;height:200px" :src="photoUrl+ ph">
+<!--                                <el-image style="width:400px;height:200px" src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg">-->
+                                    <div slot="error" class="el-image__error">
+                                        <h1 class="el-icon-picture-outline"></h1>
+                                    </div>
+                                </el-image>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </el-col>
                 </el-row>
 
                 <!--常用信息 -->
-                <el-row style="margin: 30px 0px">
-                    <el-col :span="24">
-                        <el-collapse>
-                            <el-collapse-item>
-                                <template slot="title">
-                                    <h2>{{$t('hotel.information')}}</h2>
-                                </template>
-                                <el-row style="margin-top: 10px">
-                                    <el-col :span="24" align="center">
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iswify==1" disabled fill="#409EFF" text-color="#ffffff" true-label="1" false-label="2" :label="$t('hotel.iswify')"
-                                                         v-model="dataForm.iswify"  border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isfront==1" disabled true-label="1" false-label="2" :label="$t('hotel.isfront')"
-                                                         v-model="dataForm.isfront"  border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbarrifr==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbarrifr')"
-                                                         v-model="dataForm.isbarrifr"  border></el-checkbox>
-                                        </el-form-item>
-
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbalcony==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbalcony')"
-                                                         v-model="dataForm.isbalcony" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iskitchen==1" disabled true-label="1" false-label="2" :label="$t('hotel.iskitchen')"
-                                                         v-model="dataForm.iskitchen" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iswindow==1" disabled true-label="1" false-label="2" :label="$t('hotel.iswindow')"
-                                                         v-model="dataForm.iswindow" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isheat==1" disabled true-label="1" false-label="2" :label="$t('hotel.isheat')"
-                                                         v-model="dataForm.isheat" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isicebox==1" disabled true-label="1" false-label="2" :label="$t('hotel.isicebox')"
-                                                         v-model="dataForm.isicebox" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isiron==1" disabled true-label="1" false-label="2" :label="$t('hotel.isiron')"
-                                                         v-model="dataForm.isiron" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isnosmk==1" disabled true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
-                                                         v-model="dataForm.isnosmk" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.islandscape==1" disabled true-label="1" false-label="2" :label="$t('hotel.islandscape')"
-                                                         v-model="dataForm.islandscape" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ishighrise==1" disabled true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
-                                                         v-model="dataForm.ishighrise" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ispark==1" disabled true-label="1" false-label="2" :label="$t('hotel.ispark')"
-                                                         v-model="dataForm.ispark" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isgym==1" disabled true-label="1" false-label="2" :label="$t('hotel.isgym')"
-                                                         v-model="dataForm.isgym" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isswmp==1" disabled true-label="1" false-label="2" :label="$t('hotel.isswmp')"
-                                                         v-model="dataForm.isswmp" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbeach==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbeach')"
-                                                         v-model="dataForm.isbeach" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ishotsp==1" disabled true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
-                                                         v-model="dataForm.ishotsp" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ischildct==1" disabled true-label="1" false-label="2" :label="$t('hotel.ischildct')"
-                                                         v-model="dataForm.ischildct" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isroomserv==1" disabled true-label="1" false-label="2" :label="$t('hotel.isroomserv')"
-                                                         v-model="dataForm.isroomserv" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isknead==1" disabled true-label="1" false-label="2" :label="$t('hotel.isknead')"
-                                                         v-model="dataForm.isknead" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.islounge==1" disabled true-label="1" false-label="2" :label="$t('hotel.islounge')"
-                                                         v-model="dataForm.islounge" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.issuper==1" disabled true-label="1" false-label="2" :label="$t('hotel.issuper')"
-                                                         v-model="dataForm.issuper" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbus==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbus')"
-                                                         v-model="dataForm.isbus" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.istrafic==1" disabled true-label="1" false-label="2" :label="$t('hotel.istrafic')"
-                                                         v-model="dataForm.istrafic" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isrestau==1" disabled true-label="1" false-label="2" :label="$t('hotel.isrestau')"
-                                                         v-model="dataForm.isrestau" border></el-checkbox>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-collapse-item>
-                        </el-collapse>
+                <el-row >
+                    <el-col :span="24" align="center">
+                        <h2>{{$t('hotel.information')}}</h2>
+                            <el-tag type="success" v-show="dataForm.iswify==1">{{$t('hotel.iswify')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isfront==1">{{$t('hotel.isfront')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isbarrifr==1">{{$t('hotel.isbarrifr')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isbalcony==1">{{$t('hotel.isbalcony')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.iskitchen==1">{{$t('hotel.iskitchen')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.iswindow==1">{{$t('hotel.iswindow')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isheat==1">{{$t('hotel.isheat')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isicebox==1">{{$t('hotel.isicebox')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isiron==1">{{$t('hotel.isiron')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isnosmk==1">{{$t('hotel.isnosmk')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.ishighrise==1">{{$t('hotel.ishighrise')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.ispark==1">{{$t('hotel.ispark')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isgym==1">{{$t('hotel.isgym')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isswmp==1">{{$t('hotel.isswmp')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isbeach==1">{{$t('hotel.isbeach')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.ishotsp==1">{{$t('hotel.ishotsp')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.ischildct==1">{{$t('hotel.ischildct')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isroomserv==1">{{$t('hotel.isroomserv')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isknead==1">{{$t('hotel.isknead')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.islounge==1">{{$t('hotel.islounge')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.issuper==1">{{$t('hotel.issuper')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isbus==1">{{$t('hotel.isbus')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.istrafic==1">{{$t('hotel.istrafic')}}</el-tag>
+                            <el-tag type="success" v-show="dataForm.isrestau==1">{{$t('hotel.isrestau')}}</el-tag>
                     </el-col>
                 </el-row>
+                <el-divider></el-divider>
+                <!--客户信息 start -->
                 <el-row>
                     <el-col :span="24">
                         <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pName" >
@@ -614,15 +540,14 @@
                     </el-col>
                 </el-row>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button :size="size" type="primary" @click.native="submitForm" :loading="editLoading">
+            <div slot="footer" class="dialog-footer" align="center">
+                <el-button icon="el-icon-s-order" type="primary" @click.native="submitForm" :loading="editLoading">
                     {{$t('action.makeAppointment')}}
                 </el-button>
-                <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.returnHome')}}
+                <el-button  @click.native="editDialogVisible = false">{{$t('action.returnHome')}}
                 </el-button>
             </div>
         </el-dialog>
-
     </div>
 </template>
 
@@ -636,7 +561,7 @@
 
     const invoice_start = new Date();
     const invoice_end = new Date();
-    invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 5)
+    invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 5);
     export default {
         components: {
             RoomTable,
@@ -686,13 +611,11 @@
                 able:false,
                 loading: false,  // tab加载标识
                 baseUrl: baseUrl,
-                priceBoolean: true,
-                stockBoolean: true,
                 radio:'',
-                disableHotelName: false,
-                dataurl: '/bizRoom/uploadFile',
+                photoUrl: baseUrl + '/document/preview/',
                 size: 'small',
                 nowDate:new Date(),
+                roomPhoto:[],
                 filters: {
                     provinceCode: '',
                     hotelName: '',
@@ -734,15 +657,15 @@
                     isbus: null,
                     istrafic: null,
                     isrestau: null,
-                    lowRoomPrice: null,
+                    lowRoomPrice: 0,
                     highRoomPrice: 1000,
                     hotelname: null,
                     inDateStart: null,
                     outDateEnd: null,
                     commonDate:[formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')],
                     roomNum: 1,
-                    adultNum: null,
-                    childrenNum: null,
+                    adultNum: 0,
+                    childrenNum: 0,
                     sPrice: null
                 },
                 pageRequest: {page: 1, rows: 10},
@@ -768,7 +691,7 @@
                     breakType: [
                         {required: true, message: this.$t('action.pBreakType'), trigger: 'blur'}
                     ],
-                    pname: [
+                    pName: [
                         {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
                     ],
                     passport: [
@@ -800,31 +723,6 @@
                     photo: null,
                     roomStock: null,
                     recommended: null,
-                    iswify: null,
-                    isfront: null,
-                    isbarrifr: null,
-                    isbalcony: null,
-                    iskitchen: null,
-                    iswindow: null,
-                    isheat: null,
-                    isicebox: null,
-                    isiron: null,
-                    isnosmk: null,
-                    islandscape: null,
-                    ishighrise: null,
-                    ispark: null,
-                    isgym: null,
-                    isswmp: null,
-                    isbeach: null,
-                    ishotsp: null,
-                    ischildct: null,
-                    isroomserv: null,
-                    isknead: null,
-                    islounge: null,
-                    issuper: null,
-                    isbus: null,
-                    istrafic: null,
-                    isrestau: null,
                     roomPrice: null,
                     hotelname: null,
                     inDateStart: null,
@@ -852,8 +750,6 @@
                 sysPara: {},
                 bizHotl: [],
                 language: {},
-                headersInfo: {},
-                fileList: [],
                 pickerOptions:{
                     disabledDate : (time) => {
                         return time.getTime() < Date.now() - 8.64e7
@@ -861,7 +757,6 @@
                 },
                 pickerOptions2:{
                     disabledDate : (time) =>{
-
                         if(this.filters.commonDate && this.filters.commonDate.length>0){
                             let beginDateVal = this.filters.commonDate[0];
                             let startDate = new Date(beginDateVal.substr(0,4),beginDateVal.substr(4,2)-1,beginDateVal.substr(6,2))
@@ -897,9 +792,6 @@
             // 显示预订界面
             handleBookRoom: function (row) {
                 // this.$refs['dataForm'].resetFields();
-                this.disableHotelName = true;
-                this.editDialogVisible = true;
-                this.operation = false;
                 var obj = Object.assign({},{'adultNum':this.filters.adultNum,
                     'childrenNum':this.filters.childrenNum,
                     'roomNum':this.filters.roomNum,
@@ -907,7 +799,14 @@
                     'outDateEnd':this.filters.outDateEnd
                 });
                 // this.dataForm = Object.assign(obj,row);
-                this.dataForm = {...row,...obj}
+                this.dataForm = {...row,...obj};
+                this.editDialogVisible = true;
+                this.operation = false;
+                if(row.photo){
+                    this.$api.user.showFile({'relationId':row.photo}).then((res) =>{
+                        this.roomPhoto = res;
+                    })
+                }
             },
             // 编辑
             submitForm: function () {
@@ -926,13 +825,11 @@
                                 this.editLoading = false
                                 this.$refs['dataForm'].resetFields()
                                 this.editDialogVisible = false
-                                this.disableHotelName = false
                                 this.findPage(null)
                             })
                         }).finally(() =>{
                             this.editLoading = false
                             this.editDialogVisible = false
-                            this.disableHotelName = false
                         })
                     } else {
                         this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
@@ -1002,11 +899,5 @@
 <style scoped>
 .el-checkbox {
     width: 190px;
-}
-thead .el-table-column--selection .cell {
-    display: none;
-}
-.el-form-item__content{
-    width: 100%;
 }
 </style>

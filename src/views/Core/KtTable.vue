@@ -22,7 +22,7 @@
       <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger" @click="handleBatchDelete()"
         :disabled="this.selections.length===0" style="float:left;" v-if="showBatchDelete & showOperation"/>
       <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
-        :current-page="pageRequest.page" :page-size="pageRequest.rows" :total="data.total" style="float:right;">
+        :current-page="pageRequest.page" :page-size="pageRequest.rows" :total="data.total==null?0:data.total" style="float:right;">
       </el-pagination>
     </div>
   </div>

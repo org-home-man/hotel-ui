@@ -85,7 +85,7 @@ instance.interceptors.response.use(function (response) {
 
     // 错误日志
 
-    if (+error.response.status === 403) {
+    if (+error.response.status === 403 || +error.response.status === 401) {
         // 无效的token
         // 重定向到登录页面
         sessionStorage.removeItem("user")
