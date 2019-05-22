@@ -36,6 +36,7 @@
         "editPushs": "库存编辑",
         "delete": "删除",
         "select": "请选择",
+        "selectRow": "请选择主分类",
         "pName": "请输入用户名",
         "pRealName": "请输入用户名",
         "pPassword": "请输入密码",
@@ -111,7 +112,10 @@
         "ExistsOrderException": "存在未完成的订单信息，不允许删除",
         "noBodyException": "用户或密码输入不正确",
         "imgNotType": "上传客房图片格式只能为JPG",
-        "imgLtKb": "上传头像图片大小不能超过 512KB"
+        "imgLtKb": "上传头像图片大小不能超过 512KB",
+        "noData": "暂无数据",
+        "codeNotNull": "字典编码有误",
+        "codeExist": "编码已存在"
     },
     "user": {
         "id": "编号",
@@ -214,6 +218,15 @@
         "code": "编码",
         "name": "名称",
         "sequence": "排序号"
+    },
+    "dict": {
+        "cnName": "中文名称",
+        "enName": "英文名称",
+        "code": "编码",
+        "type": "类型",
+        "sequence": "排序号",
+        "cnRemark": "中文备注",
+        "enRemark": "英文备注"
     },
     "hotel": {
         "roomtype": {
