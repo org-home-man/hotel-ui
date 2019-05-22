@@ -36,12 +36,12 @@
         <template slot-scope="scope">
           <el-row>
             <el-col>
-              <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-              <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-trash" style="width: 100px" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
             </el-col>
             <el-col style="padding-top: 5px">
-              <kt-button icon="fa fa-edit" :label="$t('action.editPrice')" :perms="permsPriceEdit" :size="size" @click="handlePriceEdit(scope.$index, scope.row)" />
-              <kt-button icon="fa fa-edit" :label="$t('action.editStock')" :perms="permsStockEdit" :size="size" @click="handleStockEdit(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.editPrice')" :perms="permsPriceEdit" :size="size" @click="handlePriceEdit(scope.$index, scope.row)" />
+              <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.editStock')" :perms="permsStockEdit" :size="size" @click="handleStockEdit(scope.$index, scope.row)" />
             </el-col>
           </el-row>
 
