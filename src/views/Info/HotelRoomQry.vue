@@ -61,16 +61,16 @@
 
                         <el-form-item prop="roomType" :label="$t('hotel.roomtype.roomtype')">
                             <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
-                                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in roomType" :key="rt.code"
+                                           :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12" align="left">
                         <el-form-item prop="roomStyle" :label="$t('hotel.roomstyle.roomstyle')">
                             <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
-                                <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode"
-                                           :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+                                <el-option v-for="rs in roomStyle" :key="rs.code"
+                                           :label="rs.name" :value="rs.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="bedType" :label="$t('hotel.bedtype.bedtype')">
@@ -100,8 +100,8 @@
                     <el-col :span="24" align="left">
                         <el-form-item prop="hotelLevel">
                             <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
-                                <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="hs in hotelStar" :key="hs.code"
+                                           :label="hs.name" :value="hs.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="hotelCode" >
@@ -746,6 +746,9 @@
                     roomNight: null
                 },
                 hotelNames: [],
+                hotelStar:[], //酒店星级
+                roomStyle:[], //房间样式
+                roomType:[], //房间类型
                 paraConfig: [],
                 sysPara: {},
                 bizHotl: [],
@@ -876,6 +879,17 @@
 
                 this.findPage()
             }
+        },
+        created(){
+            this.getTypeValue('ROOM_STYLE').then( res => {
+                this.roomStyle = res;
+            })
+            this.getTypeValue('ROOM_TYPE').then( res => {
+                this.roomType = res;
+            })
+            this.getTypeValue('HOTEL_STAR').then( res => {
+                this.hotelStar = res;
+            })
         },
         watch:{
             'dataForm.roomNum'(newVal,oldVal){

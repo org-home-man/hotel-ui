@@ -10,7 +10,8 @@ import api from '@/http/api'
 import store from '@/store'
 import {getIFramePath, getIFrameUrl} from '@/utils/iframe'
 
-Vue.use(Router)
+Vue.use(Router);
+
 const router = new Router({
     routes: [
         {
@@ -108,12 +109,13 @@ function addDynamicMenuAndRoutes(userName, to, from) {
  * 比如'代码生成'是要求直接绑定到'Generator'页面组件
  */
 function handleStaticComponent(router, dynamicRoutes) {
-    for (let j = 0; j < dynamicRoutes.length; j++) {
-        if (dynamicRoutes[j].name == '代码生成') {
-            dynamicRoutes[j].component = Generator
-            break
-        }
-    }
+    // for (let j = 0; j < dynamicRoutes.length; j++) {
+    //     if (dynamicRoutes[j].name == '代码生成') {
+    //         dynamicRoutes[j].component = Generator
+    //         break
+    //     }
+    // }
+    router.options.routes[0].name = i18n.t('sys.hotelRoomQry');
     router.options.routes[0].children = router.options.routes[0].children.concat(dynamicRoutes)
 }
 
