@@ -37,39 +37,31 @@
                     </el-row>
                     <el-row>
                         <el-col :span="24">
-<!--                            <kt-table permsEdit="sys:dict:edit" permsDelete="sys:dict:delete"-->
-<!--                                      :data="childDictData" :columns="childDictColumns" :showBatchDelete="false"-->
-<!--                                      @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">-->
-<!--                            </kt-table>-->
-                            <div>
-                                <!--表格栏-->
-                                <el-table :data="childDictData.rows" :highlight-current-row="true"
-                                          :empty-text="$t('action.noData')" v-loading="loading"
-                                          :element-loading-text="$t('action.loading')" :border="false" :stripe="true"
-                                          :show-overflow-tooltip="true" :size="size" align="left" style="width:100%;">
-                                    <el-table-column v-for="column in childDictColumns" header-align="center" align="center"
-                                                     :prop="column.prop" :label="$t('table.'+column.label)" :width="column.width"
-                                                     :min-width="column.minWidth"
-                                                     :fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"
-                                                     :sortable="column.sortable==null?true:column.sortable">
-                                    </el-table-column>
-                                    <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="true"
-                                                     header-align="center" align="center">
-                                        <template slot-scope="scope">
-                                            <kt-button icon="fa fa-edit" :label="$t('action.edit')" perms="sys:dict:edit" :size="size"
-                                                       @click="handleEdit(scope.row)"/>
-                                            <kt-button icon="fa fa-trash" :label="$t('action.delete')" perms="sys:dict:delete" :size="size"
-                                                       type="danger" @click="deleteChild(scope.row)"/>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                                <!--分页栏-->
-                                <div class="toolbar" style="padding:10px;">
-                                    <el-pagination layout="prev, pager, next"  @current-change="refreshPageRequest"
-                                                   :current-page="pageRequest.page" :page-size="pageRequest.rows"
-                                                   :total="childDictData.total==null?0:childDictData.total" style="float:right;">
-                                    </el-pagination>
-                                </div>
+                            <!--表格栏-->
+                            <el-table :data="childDictData.rows" :highlight-current-row="true"
+                                      :empty-text="$t('action.noData')" v-loading="loading" height="450px"
+                                      :element-loading-text="$t('action.loading')" :border="false" :stripe="true"
+                                      :show-overflow-tooltip="true" size="mini" align="left">
+                                <el-table-column v-for="column in childDictColumns" header-align="center" align="center"
+                                                 :prop="column.prop" :label="$t('table.'+column.label)" :key="column.prop"
+                                                 :sortable="column.sortable==null?true:column.sortable">
+                                </el-table-column>
+                                <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="true"
+                                                 header-align="center" align="center">
+                                    <template slot-scope="scope">
+                                        <kt-button icon="fa fa-edit" :label="$t('action.edit')" perms="sys:dict:edit" size="mini"
+                                                   @click="handleEdit(scope.row)"/>
+                                        <kt-button icon="fa fa-trash" :label="$t('action.delete')" perms="sys:dict:delete" size="mini"
+                                                   type="danger" @click="deleteChild(scope.row)"/>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <!--分页栏-->
+                            <div class="toolbar" style="padding:10px;">
+                                <el-pagination layout="prev, pager, next"  @current-change="refreshPageRequest"
+                                               :current-page="pageRequest.page" :page-size="pageRequest.rows"
+                                               :total="childDictData.total==null?0:childDictData.total" style="float:right;">
+                                </el-pagination>
                             </div>
                         </el-col>
                     </el-row>

@@ -850,8 +850,7 @@
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
             },
             commonDate(n,o){
-                var i = +n[1] - +n[0] -1;
-                console.log( " --------->" + i)
+                var i = +n[1] - +n[0];
                 this.filters.roomNight = i;
             }
         },

@@ -18,17 +18,17 @@ const router = new Router({
             path: '/',
             name: '首页',
             component: Home,
-            children: [
-                {
-                    path: 'info/hotelRoomQry',
-                    name: i18n.t('sys.hotelRoomQry'),
-                    component: HotelRoomQry,
-                    meta: {
-                        icon: 'fa fa-home fa-lg',
-                        index: 0
-                    }
-                }
-            ]
+            children: []
+            //     {
+            //         path: 'info/hotelRoomQry',
+            //         name: i18n.t('sys.hotelRoomQry'),
+            //         component: HotelRoomQry,
+            //         meta: {
+            //             icon: 'fa fa-home fa-lg',
+            //             index: 0
+            //         }
+            //     }
+            // ]
         },
         {
             path: '/login',
@@ -77,6 +77,8 @@ function addDynamicMenuAndRoutes(userName, to, from) {
     // console.log("menuNavTree", store.state.menu.navTree);
     // console.log("menuNavTree", store.state.tab.mainTabs);
     // console.log("menuNavTree", store.state.tab.mainTabsActiveName);
+    console.log("loaded --> " + store.state.app.menuRouteLoaded)
+    console.log("navTree --> " + store.state.menu.navTree.length)
     if (store.state.app.menuRouteLoaded && store.state.menu.navTree.length != 0) {
         console.log('动态菜单和路由已经存在.')
         return
@@ -95,7 +97,7 @@ function addDynamicMenuAndRoutes(userName, to, from) {
             // 保存菜单树
             store.commit('setNavTree', res)
         }).then(res => {
-        api.user.findPermissions({'name': userName}).then(res => {
+            api.user.findPermissions({'name': userName}).then(res => {
             // 保存用户权限标识集合
             store.commit('setPerms', res)
         })
@@ -115,7 +117,16 @@ function handleStaticComponent(router, dynamicRoutes) {
     //         break
     //     }
     // }
-    router.options.routes[0].name = i18n.t('sys.hotelRoomQry');
+    router.options.routes[0].children = [];
+    router.options.routes[0].children[0] = {
+        path: 'info/hotelRoomQry',
+        name: i18n.t('sys.hotelRoomQry'),
+        component: HotelRoomQry,
+        meta: {
+            icon: 'fa fa-home fa-lg',
+            index: 0
+        }
+    }
     router.options.routes[0].children = router.options.routes[0].children.concat(dynamicRoutes)
 }
 
