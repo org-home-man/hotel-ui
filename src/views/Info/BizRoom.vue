@@ -813,13 +813,7 @@
                 columns: [],
                 pageRequest: {
                     page: 1,
-                    rows: 10,
-                    hotelCode: null,
-                    hotelName: null,
-                    roomType: null,
-                    bedType: null,
-                    breakType: null,
-                    inventory: null
+                    rows: 10
                 },
                 pageResult: {},
 
@@ -1220,11 +1214,11 @@
                             this.$refs.upload.submit()
 
                             console.log("formDate.files:",this.formDate.get('files'))
-
-                            if (! this.beforeAvatarUpload(this.formDate.get('files')) ) {
-                                return
+                            if(this.formDate.get('files') !=null) {
+                                if (! this.beforeAvatarUpload(this.formDate.get('files')) ) {
+                                    return
+                                }
                             }
-
 
                             if (this.dataForm.photo != null) {
                                 this.formDate.append('businessId',this.dataForm.photo);
@@ -1276,9 +1270,9 @@
                                         this.isUpload = false;
                                         this.findPage(null)
                                     })
-                                }).finally(
+                                }).finally(()=>{
                                     this.editLoading = false
-                                )
+                                })
                             } else {
                                 //只保存数据
                                 let params = Object.assign({}, this.dataForm)
@@ -1313,9 +1307,9 @@
                                     this.files = [];
                                     this.delFile=[];
                                     this.findPage(null)
-                                }).finally(
+                                }).finally(()=>{
                                     this.editLoading = false
-                                )
+                                })
                             }
                         })
                     } else {
