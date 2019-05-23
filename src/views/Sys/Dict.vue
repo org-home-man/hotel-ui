@@ -66,7 +66,7 @@
                                 <!--分页栏-->
                                 <div class="toolbar" style="padding:10px;">
                                     <el-pagination layout="prev, pager, next"
-                                                   :current-page="pageRequest.page" :page-size="pageRequest.rows"
+                                                   :current-page="childDictData.pageNum" :page-size="childDictData.pageSize" @current-change="refreshPageRequest"
                                                    :total="childDictData.total==null?0:childDictData.total" style="float:right;">
                                     </el-pagination>
                                 </div>
@@ -204,10 +204,16 @@
                 if(this.dictSelectRow){
                     this.$api.dict.findPage({...{'parentId':this.dictSelectRow.id},...this.pageRequest}).then((res) =>{
                         this.childDictData = res;
+                        console.log("res",res)
                     });
                 }else{
                     this.$message.warning({message: this.$t('action.selectRow')});
                 }
+            },
+            refreshPageRequest: function (pageNum) {
+                console.log("pageNum",pageNum)
+                this.pageRequest.page = pageNum
+                this.findChildPage()
             },
             // 批量删除
             handleDelete: function (data) {

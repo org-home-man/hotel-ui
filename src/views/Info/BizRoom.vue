@@ -975,7 +975,7 @@
                     ]
                 },
                 hotelNames: [],
-                paraConfig: [],
+                paraConfig: {},
                 sysPara: {},
                 bizHotl: [],
                 language: {},
@@ -1467,7 +1467,7 @@
             }
         },
         created() {
-            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,BED_TYPE,BREAK_TYPE').then( res => {
+            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,BED_TYPE,BREAK_TYPE,PREFECTURE,DISTRICT').then( res => {
                 this.paraConfig = res;
                 console.log("this.paraConfig",this.paraConfig)
             })
