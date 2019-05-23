@@ -19,12 +19,12 @@
         <!--表格树内容栏-->
         <el-table :data="tableTreeData" row-key="id" stripe size="mini" style="width: 100%;"
                   v-loading="loading" :element-loading-text="$t('action.loading')">
+<!--            <el-table-column -->
+<!--                prop="id" header-align="center" align="center" width="100" :label="$t('table.id')">-->
+<!--            </el-table-column>-->
             <el-table-column
-                prop="id" header-align="center" align="center" width="80" :label="$t('table.id')">
+                prop="name" header-align="center" width="150" :label="$t('table.name')">
             </el-table-column>
-            <table-tree-column
-                prop="name" header-align="center" width="300" :label="$t('table.name')">
-            </table-tree-column>
             <el-table-column header-align="center" align="center" :label="$t('table.icon')">
                 <template slot-scope="scope">
                     <i :class="scope.row.icon || ''"></i>
