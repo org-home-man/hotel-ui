@@ -26,14 +26,14 @@
           <!--&lt;!&ndash; 主题切换 &ndash;&gt;-->
           <!--<theme-picker class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>-->
           <!--</el-menu-item>-->
-        <el-menu-item index="2" v-popover:popover-lang>
-          <!-- 语言切换 -->
-          <li style="color:#fff;" class="fa fa-language fa-lg"></li>
-          <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">
-            <div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>
-            <div class="lang-item" @click="changeLanguage('en_us')">English</div>
-          </el-popover>
-        </el-menu-item>
+<!--        <el-menu-item index="2" v-popover:popover-lang>-->
+<!--          &lt;!&ndash; 语言切换 &ndash;&gt;-->
+<!--          <li style="color:#fff;" class="fa fa-language fa-lg"></li>-->
+<!--          <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">-->
+<!--            <div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>-->
+<!--            <div class="lang-item" @click="changeLanguage('en_us')">English</div>-->
+<!--          </el-popover>-->
+<!--        </el-menu-item>-->
           <!--<el-menu-item index="3" v-popover:popover-message>-->
           <!--&lt;!&ndash; 我的私信 &ndash;&gt;-->
           <!--<el-badge :value="5" :max="99" class="badge" type="success">-->
@@ -114,12 +114,6 @@
             // 切换主题
             onThemeChange: function (themeColor) {
                 this.$store.commit('setThemeColor', themeColor)
-            },
-            // 语言切换
-            changeLanguage(lang) {
-                lang === '' ? 'zh_cn' : lang
-                this.$i18n.locale = lang
-                this.langVisible = false
             },
             // 加载用户角色信息
             findUserRoles: function () {

@@ -202,7 +202,7 @@
             },
             findChildPage: function () {
                 if(this.dictSelectRow){
-                    this.$api.dict.findPage({'parentId':this.dictSelectRow.id}).then((res) =>{
+                    this.$api.dict.findPage({...{'parentId':this.dictSelectRow.id},...this.pageRequest}).then((res) =>{
                         this.childDictData = res;
                     });
                 }else{
