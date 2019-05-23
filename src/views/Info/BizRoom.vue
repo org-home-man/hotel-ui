@@ -1197,7 +1197,7 @@
                     this.$message.error(this.$t('action.imgNotType'));
                 }
                 if (!isLt2M) {
-                    this.$message.error('上传客房图片大小不能超过 512KB!');
+                    this.$message.error(this.$t('action.imgLtKb'));
                 }
                 return isJPG && isLt2M;
             },
