@@ -17,8 +17,8 @@
                     <el-col :span="8">
                         <el-form-item prop="roomType">
                             <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
-                                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
+                                            :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -28,8 +28,7 @@
                     <el-col :span="8">
                         <el-form-item prop="bedType">
                             <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
-                                <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode"
-                                           :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
+                                <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name" :value="bt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -37,8 +36,7 @@
                     <el-col :span="8">
                         <el-form-item prop="breakType">
                             <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
-                                <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode"
-                                           :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+                                <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name" :value="bk.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -76,7 +74,7 @@
                     permsStockEdit="sys:bizRoom:editStock"
                     :data="pageResult"
                     @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete"
-                    @handlePriceEdit="handlePriceEdit" @handleStockEdit="handleStockEdit">
+                    @handlePriceEdit="handlePriceEdit" @handleStockEdit="handleStockEdit" :paraConfig="paraConfig">
         </room-table>
 
         <!--新增编辑界面-->
@@ -104,26 +102,22 @@
                         </el-form-item>
                         <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="dataForm.roomType">
-                                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"  :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off">
                             <el-select v-model="dataForm.roomStyle">
-                                <el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode"
-                                           :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
+                                <el-option v-for="rs in paraConfig.ROOM_STYLE" :key="rs.code" :label="rs.name" :value="rs.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
                             <el-select v-model="dataForm.bedType">
-                                <el-option v-for="bt in paraConfig.bedtype" :key="bt.paraCode"
-                                           :label="$t('hotel.'+ bt.paraCode)" :value="bt.paraValue1"></el-option>
+                                <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name" :value="bt.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
                             <el-select v-model="dataForm.breakType">
-                                <el-option v-for="bk in paraConfig.breaktype" :key="bk.paraCode"
-                                           :label="$t('hotel.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+                                <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name" :value="bk.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.roomarea')+'(m2)'" prop="roomArea" auto-complete="off">
@@ -1020,7 +1014,8 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }]
-                }
+                },
+                roomStyle:[],
 
             }
         },
@@ -1399,13 +1394,13 @@
                     this.hotelNames = res
                 })
             },
-            findDataSelect: function () {
-                this.sysPara = {paraSubCode1: 'bizroom'}
-                let params = Object.assign({}, this.sysPara);
-                this.$api.sysParaConfig.findKeyValue(params).then((res) => {
-                    this.paraConfig = res
-                })
-            },
+            // findDataSelect: function () {
+            //     this.sysPara = {paraSubCode1: 'bizroom'}
+            //     let params = Object.assign({}, this.sysPara);
+            //     this.$api.sysParaConfig.findKeyValue(params).then((res) => {
+            //         this.paraConfig = res
+            //     })
+            // },
             localLanguageLoad: function () {
                 this.language = {lge: this.$i18n.locale}
             },
@@ -1471,8 +1466,13 @@
                 this.stockDateData = [];
             }
         },
+        created() {
+            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,BED_TYPE,BREAK_TYPE').then( res => {
+                this.paraConfig = res;
+                console.log("this.paraConfig",this.paraConfig)
+            })
+        },
         mounted() {
-            this.findDataSelect()
             this.findHotlnmSelect()
             this.localLanguageLoad()
         },

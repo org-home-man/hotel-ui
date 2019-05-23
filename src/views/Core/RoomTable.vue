@@ -18,14 +18,14 @@
         </el-table-column>
         <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
         </el-table-column>
-      <el-table-column prop="roomTypeKey" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
+      <el-table-column prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
-          <el-tag>{{$t('hotel.'+scope.row.roomTypeKey)}}</el-tag>
+          <el-tag>{{resolveRoomTypeName(paraConfig.ROOM_TYPE,scope.row.roomType)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="bedTypeKey" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
+      <el-table-column prop="bedType" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
         <template slot-scope="scope">
-          <el-tag>{{$t('hotel.'+scope.row.bedTypeKey)}}</el-tag>
+          <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.roomType)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
@@ -49,96 +49,96 @@
       </el-table-column>
 
 
-      <el-table-column prop="hotelCode" header-align="center" align="center" v-if="show">
-      </el-table-column>
-        <el-table-column prop="provinceCode" header-align="center" align="center" v-if="show">
-        </el-table-column>
-        <el-table-column prop="cityCode" header-align="center" align="center" v-if="show">
-        </el-table-column>
-      <el-table-column prop="roomType" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="bedType" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="roomStyle" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="breakType" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="roomArea" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="introC" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="introE" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="photo" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="room_stock" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="recommended" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="iswify" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isfront" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isbarrifr" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isbalcony" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="iskitchen" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="iswindow" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isheat" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isicebox" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isiron" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isnosmk" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="islandscape" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="ishighrise" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="ispark" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isgym" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isswmp" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isbeach" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="ishotsp" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="ischildct" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isroomserv" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isknead" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="islounge" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="issuper" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isbus" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="istrafic" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="isrestau" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="autoClose" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="tprice" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="sprice" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="scheduledays" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="favorableprice" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="evenlive" header-align="center" align="center" v-if="show">
-      </el-table-column>
-      <el-table-column prop="present" header-align="center" align="center" v-if="show">
-      </el-table-column>
+      <!--<el-table-column prop="hotelCode" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+        <!--<el-table-column prop="provinceCode" header-align="center" align="center" v-if="show">-->
+        <!--</el-table-column>-->
+        <!--<el-table-column prop="cityCode" header-align="center" align="center" v-if="show">-->
+        <!--</el-table-column>-->
+      <!--<el-table-column prop="roomType" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="bedType" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="roomStyle" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="breakType" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="roomArea" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="introC" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="introE" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="photo" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="room_stock" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="recommended" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="iswify" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isfront" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isbarrifr" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isbalcony" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="iskitchen" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="iswindow" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isheat" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isicebox" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isiron" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isnosmk" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="islandscape" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="ishighrise" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="ispark" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isgym" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isswmp" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isbeach" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="ishotsp" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="ischildct" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isroomserv" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isknead" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="islounge" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="issuper" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isbus" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="istrafic" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="isrestau" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="autoClose" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="tprice" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="sprice" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="scheduledays" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="favorableprice" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="evenlive" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="present" header-align="center" align="center" v-if="show">-->
+      <!--</el-table-column>-->
 
 
 
@@ -168,6 +168,7 @@ export default {
     permsDelete: String,  // 删除权限标识
     permsPriceEdit:String, //编辑权限标识
     permsStockEdit:String, //库存编辑权限标识
+      paraConfig:Array,
     size: { // 尺寸样式
       type: String,
       default: 'mini'
