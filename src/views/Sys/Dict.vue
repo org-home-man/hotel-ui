@@ -65,8 +65,8 @@
                                 </el-table>
                                 <!--分页栏-->
                                 <div class="toolbar" style="padding:10px;">
-                                    <el-pagination layout="prev, pager, next"
-                                                   :current-page="childDictData.pageNum" :page-size="childDictData.pageSize" @current-change="refreshPageRequest"
+                                    <el-pagination layout="prev, pager, next"  @current-change="refreshPageRequest"
+                                                   :current-page="pageRequest.page" :page-size="pageRequest.rows"
                                                    :total="childDictData.total==null?0:childDictData.total" style="float:right;">
                                     </el-pagination>
                                 </div>
@@ -156,6 +156,7 @@
                 },
                 loading:false,
                 pageRequest: {page: 1, rows: 10},
+                pageRequestChild: {page: 1, rows: 10},
                 dictData: {},
                 childDictData: {},
                 operation: false, // true:新增, false:编辑
@@ -195,6 +196,7 @@
                     this.pageRequest = data.pageRequest
                 }
                 this.params.type = "1";
+                this.pageRequestChild.page = 1;
                 this.$api.dict.findPage({...this.params,...this.pageRequest}).then((res) => {
                     this.dictData = res;
                     this.dictSelectRow = null;
@@ -202,18 +204,12 @@
             },
             findChildPage: function () {
                 if(this.dictSelectRow){
-                    this.$api.dict.findPage({...{'parentId':this.dictSelectRow.id},...this.pageRequest}).then((res) =>{
+                    this.$api.dict.findPage({...{'parentId':this.dictSelectRow.id},...this.pageRequestChild}).then((res) =>{
                         this.childDictData = res;
-                        console.log("res",res)
                     });
                 }else{
                     this.$message.warning({message: this.$t('action.selectRow')});
                 }
-            },
-            refreshPageRequest: function (pageNum) {
-                console.log("pageNum",pageNum)
-                this.pageRequest.page = pageNum
-                this.findChildPage()
             },
             // 批量删除
             handleDelete: function (data) {
@@ -238,6 +234,7 @@
             // 点击当前数据行
             handleRowClick: function(row){
                 this.dictSelectRow = row;
+                this.pageRequestChild.page = 1;
                 this.findChildPage();
             },
             // 父类新增界面
@@ -317,6 +314,11 @@
             // 时间格式化
             dateFormat: function (row, column, cellValue, index) {
                 return format(row[column.property])
+            },
+            // 换页刷新
+            refreshPageRequest: function (pageNum) {
+                this.pageRequestChild.page = pageNum;
+                this.findChildPage()
             }
         },
         computed:{
