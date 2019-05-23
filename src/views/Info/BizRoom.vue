@@ -1032,7 +1032,7 @@
                 // this.pageRequest.breakType = this.filters.breakType;
                 // this.pageRequest.inventory = this.filters.inventory;
                 this.$api.bizRoom.findPage({...this.pageRequest, ...this.filters}).then((res) => {
-                    this.pageRequest = {}
+                    this.pageResult = {}
                     this.pageResult = res
                 }).then(data != null ? data.callback : '')
             },
@@ -1205,22 +1205,17 @@
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editLoading = true;
                             this.formDate = new FormData();
-
                             this.$refs.upload.submit()
-
                             console.log("formDate.files:",this.formDate.get('files'))
                             if(this.formDate.get('files') !=null) {
                                 if (! this.beforeAvatarUpload(this.formDate.get('files')) ) {
                                     return
                                 }
                             }
-
                             if (this.dataForm.photo != null) {
                                 this.formDate.append('businessId',this.dataForm.photo);
                             }
-
                             //上传图片
-
                             if (this.isUpload && this.formDate.get('files')!= null) {
                                 //上传图片
                                 this.$api.bizRoom.uploadFile(this.formDate, {headers: {'Content-Type': 'multipart/form-data;charset=UTF-8'}}).then((res) => {
@@ -1394,13 +1389,6 @@
                     this.hotelNames = res
                 })
             },
-            // findDataSelect: function () {
-            //     this.sysPara = {paraSubCode1: 'bizroom'}
-            //     let params = Object.assign({}, this.sysPara);
-            //     this.$api.sysParaConfig.findKeyValue(params).then((res) => {
-            //         this.paraConfig = res
-            //     })
-            // },
             localLanguageLoad: function () {
                 this.language = {lge: this.$i18n.locale}
             },
