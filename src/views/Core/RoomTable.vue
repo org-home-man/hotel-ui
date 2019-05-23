@@ -14,9 +14,15 @@
       </el-table-column>
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-        <el-table-column :prop="language.lge=='zh_cn'?'provinceCname':'provinceEname'" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.PREFECTURE,scope.row.provinceCode)}}</el-tag>
+            </template>
         </el-table-column>
-        <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.DISTRICT,scope.row.cityCode)}}</el-tag>
+            </template>
         </el-table-column>
       <el-table-column prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
@@ -168,7 +174,7 @@ export default {
     permsDelete: String,  // 删除权限标识
     permsPriceEdit:String, //编辑权限标识
     permsStockEdit:String, //库存编辑权限标识
-      paraConfig:Array,
+      paraConfig:Object,
     size: { // 尺寸样式
       type: String,
       default: 'mini'
