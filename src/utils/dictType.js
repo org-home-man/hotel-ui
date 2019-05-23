@@ -6,6 +6,13 @@ export function getTypeValue(code) {
     }
     return request.post('/dict/findByCode/'+code,data);
 }
+//多参数接口
+export function getTypeValues(code) {
+    var data = {
+        'locale': this.$i18n.locale
+    }
+    return request.post('/dict/findByCodes/'+code,data);
+}
 //回显类型名称
 export function resolveRoomTypeName(dataArr,code) {
     let ret = ''

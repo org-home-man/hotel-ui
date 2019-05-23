@@ -881,14 +881,20 @@
             }
         },
         created(){
-            this.getTypeValue('ROOM_STYLE').then( res => {
-                this.roomStyle = res;
-            })
-            this.getTypeValue('ROOM_TYPE').then( res => {
-                this.roomType = res;
-            })
-            this.getTypeValue('HOTEL_STAR').then( res => {
-                this.hotelStar = res;
+            // this.getTypeValue('ROOM_STYLE').then( res => {
+            //     this.roomStyle = res;
+            // })
+            // this.getTypeValue('ROOM_TYPE').then( res => {
+            //     this.roomType = res;
+            // })
+            // this.getTypeValue('HOTEL_STAR').then( res => {
+            //     this.hotelStar = res;
+            // })
+            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR').then( res =>{
+                console.log(res)
+                this.roomStyle = res.ROOM_STYLE
+                this.roomType = res.ROOM_TYPE
+                this.hotelStar = res.HOTEL_STAR
             })
         },
         watch:{
