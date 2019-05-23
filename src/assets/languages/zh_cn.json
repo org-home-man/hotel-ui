@@ -376,5 +376,9 @@
         "laterOneWeek": "最近一周",
         "laterOneMonth": "最近一月",
         "laterThreeMonth": "最近三月"
+    },
+    "order": {
+        "roomStatus": "订单状态",
+        "orderCode": "订单号"
     }
 }
