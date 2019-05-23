@@ -293,7 +293,7 @@
                     <el-table-column prop="roomTypeKey" header-align="center" align="center"
                                      :label="$t('hotel.roomtype.roomtype')">
                         <template slot-scope="scope">
-                            <el-tag>{{$t('hotel.'+scope.row.roomTypeKey)}}</el-tag>
+                            <el-tag>{{resolveRoomTypeName(roomType,scope.row.roomType)}}</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column prop="bedTypeKey" header-align="center" align="center"

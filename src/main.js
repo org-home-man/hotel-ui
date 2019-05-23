@@ -5,7 +5,7 @@ import api from './http'
 import i18n from './i18n'
 import store from './store'
 import global from '@/utils/global'
-import { getTypeValue } from "@/utils/dictType"
+import { getTypeValue,resolveRoomTypeName } from "@/utils/dictType"
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
@@ -17,6 +17,7 @@ Vue.use(api);
 Vue.config.devtools = true
 Vue.prototype.global = global;
 Vue.prototype.getTypeValue = getTypeValue;
+Vue.prototype.resolveRoomTypeName = resolveRoomTypeName;
 
 new Vue({
   el: '#app',
