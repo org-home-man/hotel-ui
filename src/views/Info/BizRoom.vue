@@ -839,15 +839,19 @@
                         {validator:checkNumber,trigger:'blur'}
                     ],
                     roomArea:[
+
                         {validator:checkDoubleNumber}
                     ],
                     scheduledays:[
+                        {required: true, message: this.$t('action.pScheduledays'), trigger: 'blur'},
                         {validator:checkNumber}
                     ],
                     evenlive:[
+                        {required: true, message: this.$t('action.pEvenlive'), trigger: 'blur'},
                         {validator:checkNumber}
                     ],
                     favorableprice:[
+                        {required: true, message: this.$t('action.pFavorableprice'), trigger: 'blur'},
                         {validator:checkDoubleNumber}
                     ],
                     introC:[
@@ -857,6 +861,7 @@
                         {validator:checkLength1}
                     ],
                     present:[
+                        {required: true, message: this.$t('action.present'), trigger: 'blur'},
                         {validator:checkLength2}
                     ]
                 },

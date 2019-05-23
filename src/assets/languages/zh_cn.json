@@ -115,7 +115,11 @@
         "imgLtKb": "上传头像图片大小不能超过 512KB",
         "noData": "暂无数据",
         "codeNotNull": "字典编码有误",
-        "codeExist": "编码已存在"
+        "codeExist": "编码已存在",
+        "present": "请填写馈赠信息",
+        "pFavorableprice": "请填写优惠价格",
+        "pEvenlive": "请填写连住天数",
+        "pScheduledays": "请填写提前预定天数"
     },
     "user": {
         "id": "编号",

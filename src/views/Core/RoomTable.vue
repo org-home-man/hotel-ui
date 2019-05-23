@@ -31,7 +31,7 @@
       </el-table-column>
       <el-table-column prop="bedType" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
         <template slot-scope="scope">
-          <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.roomType)}}</el-tag>
+          <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.bedType)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
