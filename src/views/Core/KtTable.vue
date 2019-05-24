@@ -154,7 +154,7 @@
                     let callback = res => {
                         if (res.code == 200) {
                             this.$message({message: this.$t('action.success'), type: 'success'})
-                            this.findPage()
+                            this.refreshPageRequest()
                         } else {
                             this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
                         }

@@ -216,7 +216,7 @@
                     this.$api.dict.del({'id':row.id}).then((res) =>{
                         if (res.code == 200) {
                             this.$message({message: this.$t('action.success'), type: 'success'})
-                            this.findChildPage()
+                            this.refreshPageRequest(1)
                         } else {
                             this.$message({message: this.$t('action.fail'), type: 'error'})
                         }
@@ -289,7 +289,7 @@
                                 if(this.isMain){
                                     this.findPage(null)
                                 }else{
-                                    this.findChildPage();
+                                    this.refreshPageRequest(1);
                                 }
                             },(err) =>{
                                 //错误处理

@@ -89,11 +89,12 @@ export default {
         type: "warning"
       })
       .then(() => {
-        sessionStorage.removeItem("user")
-        // this.$router.push("/login")
-          window.location.href = "/";
+
         // store.state.app.menuRouteLoaded = false
         this.$api.login.logout().then((res) => {
+            sessionStorage.removeItem("user")
+            // this.$router.push("/login")
+            window.location.href = "/";
           }).catch(function(res) {
         })
       })

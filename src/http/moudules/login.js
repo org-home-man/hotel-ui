@@ -10,5 +10,5 @@ export const login = data => {
 
 // // 登出
 export const logout = () => {
-    return request.get('/logout')
+    return request.get('/signOut')
 }

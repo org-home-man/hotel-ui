@@ -115,7 +115,11 @@
         "imgLtKb": "上传头像图片大小不能超过 512KB",
         "noData": "暂无数据",
         "codeNotNull": "字典编码有误",
-        "codeExist": "编码已存在"
+        "codeExist": "编码已存在",
+        "captchaNotMatch": "验证码错误",
+        "captchaExpire": "验证码已失效",
+        "noAuth": "无权限",
+        "loginExpired": "登录已过期"
     },
     "user": {
         "id": "ID",

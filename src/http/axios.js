@@ -9,14 +9,19 @@ import {Notification} from 'element-ui';
 // 使用vuex做全局loading时使用
 // import store from '@/store'
 
-const TIMEOUT = 30000, instance = axios.create(), errors = {
+const TIMEOUT = 30000, instance = axios.create({
+    baseURL : config.baseUrl,
+    timeout: TIMEOUT,
+    withCredentials: config.withCredentials
+}), errors = {
     'Network Error': i18n.t('action.networkErr'),
     'Timeout': i18n.t('action.timeOut')
 };
-instance.defaults.baseURL = config.baseUrl;
-instance.defaults.timeout = TIMEOUT;
+// instance.defaults.baseURL = config.baseUrl;
+// instance.defaults.timeout = TIMEOUT;
 instance.defaults.responseType = 'json';
 instance.defaults.responseEncoding = 'utf8';
+// instance.withCredentials = true;
 instance.defaults.transformRequest = [function (data, header) {
     if (header.hasOwnProperty('Content-Type') && header["Content-Type"].indexOf('application/json') != -1) {
         data = JSON.stringify(data);// 这里必须使用内置JSON对象转换
@@ -47,12 +52,19 @@ instance.interceptors.response.use(function (response) {
     const data = response.data;
     if (data.success === true) {
         return data.data || data;
-    } else if (data.code == '500') {
+    } else if (data.code == 500) {
         Notification.error({
             title: i18n.t('action.sysErr'),
             message: i18n.t('action.requestErr')
         });
-    } else if (data.code == '10001'){
+    } else if(data.code == 2001){
+        Notification.error({
+            title: i18n.t('action.sysErr'),
+            message: i18n.t('action.loginExpired')
+        });
+        sessionStorage.removeItem("user");
+        router.push('/login')
+    } else if (data.code == 10001){
         Notification.error({
             title: i18n.t('action.sysErr'),
             message: i18n.t('action.'+data.msg)
@@ -87,6 +99,10 @@ instance.interceptors.response.use(function (response) {
 
     if (+error.response.status === 403 || +error.response.status === 401) {
         // 无效的token
+        Notification.error({
+            title: i18n.t('action.sysErr'),
+            message: i18n.t('action.noAuth')
+        });
         // 重定向到登录页面
         sessionStorage.removeItem("user")
         router.push('/login')

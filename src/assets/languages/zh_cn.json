@@ -119,7 +119,11 @@
         "present": "请填写馈赠信息",
         "pFavorableprice": "请填写优惠价格",
         "pEvenlive": "请填写连住天数",
-        "pScheduledays": "请填写提前预定天数"
+        "pScheduledays": "请填写提前预定天数",
+        "captchaNotMatch": "验证码错误",
+        "captchaExpire": "验证码已失效",
+        "noAuth": "无权限",
+        "loginExpired": "登录已过期"
     },
     "user": {
         "id": "编号",
