@@ -127,7 +127,7 @@
                           <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
                                      style="width: 200px;">
                               <el-option v-for="item in paraConfig.STATUS" :key="item.code"
-                                         :label="$t(item.code)" :value="item.id">
+                                         :label="$t(item.name)" :value="item.code">
                               </el-option>
                           </el-select>
                       </el-form-item>
@@ -343,7 +343,6 @@
           userRoles.push(params.row.userRoles[i].roleId)
         }
         this.dataForm.userRoles = userRoles;
-
         if(this.dataForm.path != null){
             this.$api.user.showFile({relationId:this.dataForm.path}).then((res) => {
                 let arr = new Array();
@@ -352,9 +351,8 @@
                 this.fileId = res;
             })
         }
-
         this.dialogVisible = true;
-        console.log("dataForm",this.dataForm)
+        this.dataForm.status = (String)(this.dataForm.status)
       },
       // 编辑
       submitForm:function () {
