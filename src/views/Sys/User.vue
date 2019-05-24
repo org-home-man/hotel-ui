@@ -361,7 +361,7 @@
         this.$refs.dataForm.validate((valid) => {
           if (valid) {
 
-            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.Tips'), {}).then(() => {
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 
               if (this.files != null) {
                 let formDate = new FormData();
