@@ -55,10 +55,10 @@
       </table-column-filter-dialog>
     </div>
     <!--表格内容栏-->
-    <kt-table permsEdit="sys:user:edit" permsDelete="sys:user:delete"
-              :data="pageResult" :columns="filterColumns"
+    <user-table permsEdit="sys:user:edit" permsDelete="sys:user:delete"
+              :data="pageResult" :paraConfig="paraConfig"
               @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
-    </kt-table>
+    </user-table>
 
     <!--新增编辑界面-->
       <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="840px" :visible.sync="dialogVisible"
@@ -98,8 +98,8 @@
                       <el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">
                           <el-select v-model="dataForm.sex" :placeholder="$t('action.select')"
                                      style="width: 200px;">
-                              <el-option v-for="item in sexs" :key="item.paraCode"
-                                         :label="$t(item.paraCode)" :value="item.id">
+                              <el-option v-for="item in paraConfig.SEX" :key="item.code"
+                                         :label="item.name" :value="item.code">
                               </el-option>
                           </el-select>
                       </el-form-item>
@@ -126,7 +126,7 @@
                       <el-form-item :label="$t('user.status')" prop="sex" style="width: 100%">
                           <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
                                      style="width: 200px;">
-                              <el-option v-for="item in states" :key="item.code"
+                              <el-option v-for="item in paraConfig.STATUS" :key="item.code"
                                          :label="$t(item.code)" :value="item.id">
                               </el-option>
                           </el-select>
@@ -172,7 +172,7 @@
 
 <script>
   import PopupTreeInput from "@/components/PopupTreeInput"
-  import KtTable from "@/views/Core/KtTable"
+  import UserTable from "@/views/Core/UserTable"
   import KtButton from "@/views/Core/KtButton"
   import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog"
   import {format} from "@/utils/datetime"
@@ -181,7 +181,7 @@
   export default {
     components: {
       PopupTreeInput,
-      KtTable,
+        UserTable,
       KtButton,
       TableColumnFilterDialog
     },
@@ -262,7 +262,7 @@
               id: 0,
               name: '',
               realName: '',
-              sex: '',
+              sex: null,
               password: '',
               deptId: '',
               birthday: '',
@@ -282,9 +282,8 @@
               label: 'name',
               children: 'children'
           },
-          roles: [],
-          sexs:[],
-          states:[{"code":"user.forbid","id":0},{"code":"user.normal","id":1}],
+          roles:[],
+          paraConfig:{},
           fileList: [],
           files: null,
           fileId:[]
@@ -299,23 +298,10 @@
         this.pageRequest = {...this.pageRequest,...this.filters};
         this.$api.user.findPage(this.pageRequest).then((res) => {
           this.pageResult = res;
-          this.findUserRoles();
-          this.findUserSex();
         }).then(data != null ? data.callback : '')
       },
-      // 加载用户角色信息
-      findUserRoles: function () {
-        this.$api.role.findAll().then((res) => {
-          // 加载角色集合
-          this.roles = res
-        })
-      },
-      //加载性别角色字典
-      findUserSex:function(){
-          this.$api.sysParaConfig.findByCode({"paraSubCode2":"sex"}).then((res) => {
-              this.sexs = res;
-          })
-      },
+
+
       // 批量删除
       handleDelete: function (data) {
           console.log(data.params)
@@ -348,7 +334,6 @@
       // 显示编辑界面
       handleEdit: function (params) {
         this.operation = false;
-
         this.dataForm = Object.assign({}, params.row);
         let userRoles = [];
         for (let i = 0, len = params.row.userRoles.length; i < len; i++) {
@@ -369,6 +354,7 @@
         }
 
         this.dialogVisible = true;
+        console.log("dataForm",this.dataForm)
       },
       // 编辑
       submitForm:function () {
@@ -472,6 +458,15 @@
         });
       }
     },
+      created() {
+          this.getTypeValues("SEX,STATUS").then((res)=>{//加载性别
+              this.paraConfig = res
+          });
+          this.$api.role.findAll().then((res) => {// 加载用户角色信息
+              // 加载角色集合
+              this.roles = res
+          });
+      },
     mounted() {
       this.findDeptTree()
       this.initColumns()
