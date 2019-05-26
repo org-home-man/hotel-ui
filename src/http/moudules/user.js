@@ -23,7 +23,12 @@ export const findPermissions = (data) => {
 
 //根据用户名查找用户
 export const findByName = (data) =>{
-  return request.post('/user/findByName',data);
+    return request.post('/user/findByName',data);
+}
+
+//根据用户名模糊查找用户
+export const findLikeByName = (data) =>{
+    return request.post('/user/findLikeByName',data);
 }
 
 // 图片上传

@@ -1,6 +1,6 @@
 import request from '../axios'
 
-/* 
+/*
  * 用户管理模块
  */
 
@@ -20,5 +20,10 @@ export const findPage = (data) => {
 // 查找用户的菜单权限标识集合
 export const findPermissions = (data) => {
   return request.get('/hotelRoom/findPermissions',data);
+}
+
+// 查找用户的菜单权限标识集合
+export const findLikeByName = (data) => {
+    return request.post('/hotelRoom/findLikeByName',data);
 }
 
