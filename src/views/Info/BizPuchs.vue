@@ -3,65 +3,58 @@
         <!--工具栏-->
         <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
             <el-form :inline="true" :model="filters" :size="size" align="left">
-                <el-row>
-                    <el-col :span="8">
-                        <el-form-item>
-                            <el-input v-model="filters.orderCode" :placeholder="$t('order.orderCode')"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item>
-                            <el-select v-model="filters.roomStatus" clearable :placeholder="$t('order.roomStatus')"
-                                       style="width: 200px;">
-                                <el-option v-for="item in states" :key="item.paraCode"
-                                           :label="$t(item.paraCode)" :value="item.paraValue1">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item>
-                            <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                <el-form-item @mouseleave.native="serch_result_user = false">
+                    <el-input v-model="filters.createName" @input="inputUserFunc" :placeholder="$t('user.name')"></el-input>
 
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item>
-                            <el-date-picker
-                                v-model="filters.createTimes"
-                                type="daterange"
-                                :range-separator="$t('hotel.dateSep')"
-                                value-format="yyyyMMdd"
-                                :start-placeholder="$t('hotel.creatTime')"
-                                :end-placeholder="$t('hotel.creatTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item>
-                            <el-date-picker
-                                v-model="filters.confirmTimes"
-                                type="daterange"
-                                :range-separator="$t('hotel.dateSep')"
-                                value-format="yyyyMMdd"
-                                :start-placeholder="$t('hotel.lastCrtTime')"
-                                :end-placeholder="$t('hotel.lastCrtTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col align="center">
-                        <el-form-item>
-                            <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary" @click="findPage(null)"/>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
+                    <div class="serch_result" v-show="serch_result_user" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
+                        <li v-for="item in user_result" class="serch-list" @click="filters.createName = item.name">
+                            {{ item.name }}
+                        </li>
+                    </div>
+                </el-form-item>
+                <el-form-item @mouseleave.native="serch_result_hotel = false">
+                    <el-input v-model="filters.hotelName" @input="inputHotelFunc" :placeholder="$t('hotel.hotelname')"></el-input>
+                    <div class="serch_result" v-show="serch_result_hotel" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
+                        <li v-for="item in hotel_result" class="serch-list" @click="hotelClick(item)">
+                            {{ $i18n.locale === "zh_cn"?item.hotelCname:item.hotelEname }}
+                        </li>
+                    </div>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="filters.orderCode" :placeholder="$t('order.orderCode')"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-select v-model="filters.roomStatus" clearable :placeholder="$t('order.roomStatus')"
+                               style="width: 200px;">
+                        <el-option v-for="item in states" :key="item.paraCode"
+                                   :label="$t(item.paraCode)" :value="item.paraValue1">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-date-picker
+                        v-model="filters.createTimes"
+                        type="daterange"
+                        :range-separator="$t('hotel.dateSep')"
+                        value-format="yyyyMMdd"
+                        :start-placeholder="$t('hotel.creatTime')"
+                        :end-placeholder="$t('hotel.creatTime')">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-date-picker
+                        v-model="filters.confirmTimes"
+                        type="daterange"
+                        :range-separator="$t('hotel.dateSep')"
+                        value-format="yyyyMMdd"
+                        :start-placeholder="$t('hotel.lastCrtTime')"
+                        :end-placeholder="$t('hotel.lastCrtTime')">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary"
+                               @click="findPage(null)"/>
+                </el-form-item>
             </el-form>
         </div>
         <!--表格内容栏-->
@@ -69,6 +62,7 @@
                   :data="pageResult" :columns="columns"
                   @findPage="findPage" @handleEdit="handleEdit" @handleCancel="handleCancel"  @handleConfirm="handleConfirm">
         </kt-table>
+
         <!--新增编辑界面-->
         <el-dialog :title="operation?'新增':'编辑'" width="80%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
             <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"  :size="size":inline="true" label-position="left" >
@@ -354,7 +348,15 @@
 
     </div>
 </template>
-
+<style>
+    .serch-list{
+        padding: 4px 10px;
+    }
+    .serch-list:hover{
+        background: #DCDFE6;
+        cursor: pointer;
+    }
+</style>
 <script>
     import KtTable from "@/views/Core/BizTable"
     import KtButton from "@/views/Core/KtButton"
@@ -372,13 +374,18 @@
             return {
                 able:false,
                 size: 'small',
+                serch_result_user:false,
+                serch_result_hotel:false,
                 filters: {
+                    createName:'',
                     orderCode: '',
                     roomStatus: '',
                     createTimes: '',
                     confirmTimes:'',
                     hotelName:''
                 },
+                user_result:[],
+                hotel_result:[],
                 columns: [
                     {prop:"orderCode", label:"订单号", minWidth:60},
                     {prop:"hotelCname", label:"酒店名称", minWidth:60},
@@ -386,8 +393,7 @@
                     {prop:"inDateStart", label:"入住日期", minWidth:60},
                     {prop:"outDateEnd", label:"退房日期", minWidth:60},
                     {prop:"pName", label:"代表者姓名", minWidth:60},
-                    {prop:"confirmTime", label:"确认时间", minWidth:60},
-                    {prop:"status", label:"订单状态", minWidth:60}
+                    {prop:"confirmTime", label:"确认时间", minWidth:60}
                 ],
                 pageRequest: { page: 1, rows: 8 },
                 pageResult: {},
@@ -539,14 +545,46 @@
                 this.$api.bizPuchs.confirm(data.params).then(data != null ? data.callback : '')
             },
             //加载状态数据字典
-            findUserSex:function(){
+            findStatus:function(){
                 this.$api.sysParaConfig.findByCode({"paraSubCode2":"puchsState"}).then((res) => {
                     this.states = res;
                 })
             },
+            inputUserFunc(){
+                if(this.filters.createName.length>0){
+                    this.$api.user.findLikeByName({name:this.filters.createName}).then((res) =>{
+                        if(res != null) {
+                            this.user_result = res;
+                            this.serch_result_user = true;
+                        }
+                    });
+                }else{
+                    this.serch_result_user = false
+                }
+            },
+            inputHotelFunc(){
+                if(this.filters.hotelName.length>0){
+                    this.$api.hotelRoom.findLikeByName({name:this.filters.hotelName}).then((res) =>{
+                        if(res != null && res.length > 0){
+                            this.hotel_result = res;
+                            this.serch_result_hotel = true;
+                        }
+                    });
+                }else{
+                    this.serch_result_hotel = false
+                }
+            },
+            hotelClick:function (row) {
+                if(this.$i18n.locale === "zh_cn"){
+                    this.filters.hotelName = row.hotelCname
+                }else{
+                    this.filters.hotelName = row.hotelEname
+                }
+
+            }
         },
         mounted() {
-            this.findUserSex()
+            this.findStatus()
         }
     }
 </script>
