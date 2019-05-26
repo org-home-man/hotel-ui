@@ -296,7 +296,10 @@ export default {
 							this.editDialogVisible = false
 							this.findPage(null)
 						})
-					})
+					}).finally(() =>{
+              this.editLoading = false
+              this.editDialogVisible = false
+          })
 				}
 			})
 		},

@@ -46,13 +46,13 @@
       <!--</el-table-column>-->
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')" width="120">
       </el-table-column>
-      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')" width="120">
+      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')" width="170">
       </el-table-column>
       <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')"width="100">
       </el-table-column>
       <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')" width="105">
       </el-table-column>
-      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')"width="120">
+      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')"width="170">
       </el-table-column>
       <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
       </el-table-column>
@@ -204,6 +204,7 @@ export default {
         }
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
+                this.loading = false
 			})
 		},
     localLanguageLoad:function () {
