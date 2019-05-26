@@ -148,14 +148,13 @@
                         <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
                             <el-input v-model="dataForm.favorableprice"></el-input>
                         </el-form-item>
-
-                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
-                            <el-input v-model.number="dataForm.evenlive"></el-input>
-                        </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24" align="left">
+                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
+                            <el-input v-model.number="dataForm.evenlive"></el-input>
+                        </el-form-item>
                         <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
                             <el-input class="textArea" v-model="dataForm.present" type="textarea" ></el-input>
                         </el-form-item>
@@ -415,16 +414,14 @@
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="priceForm.roomType" :disabled="priceBoolean">
-                                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"  :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="priceForm.bedType" :disabled="priceBoolean">
-                                <el-option v-for="rt in paraConfig.bedtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.BED_TYPE" :key="rt.code" :label="rt.name"  :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -610,16 +607,14 @@
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="stockForm.roomType" :disabled="stockBoolean">
-                                <el-option v-for="rt in paraConfig.roomtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"  :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="roomType" auto-complete="off">
                             <el-select v-model="stockForm.bedType" :disabled="stockBoolean">
-                                <el-option v-for="rt in paraConfig.bedtype" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+                                <el-option v-for="rt in paraConfig.BED_TYPE" :key="rt.code" :label="rt.name"  :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -1119,6 +1114,7 @@
                     }
                     console.log("files:" , this.files);
                 })
+                console.log("dataFormBizRoom",this.dataForm)
 
             },
             cancelForm: function () {
@@ -1462,7 +1458,6 @@
         created() {
             this.getTypeValues('ROOM_STYLE,ROOM_TYPE,BED_TYPE,BREAK_TYPE,PREFECTURE,DISTRICT').then( res => {
                 this.paraConfig = res;
-                console.log("this.paraConfig",this.paraConfig)
             })
         },
         mounted() {
@@ -1473,16 +1468,16 @@
             sRoomPrice: function () {
                 let total = 0;
                 let me = this;
-                if (me.priceForm.roomType == "01") {
+                if (me.priceForm.roomType == "1") {
                     total = me.priceForm.sprice * 1
                 }
-                if (me.priceForm.roomType == "02") {
+                if (me.priceForm.roomType == "2") {
                     total = me.priceForm.sprice * 2
                 }
-                if (me.priceForm.roomType == "03") {
+                if (me.priceForm.roomType == "3") {
                     total = me.priceForm.sprice * 3
                 }
-                if (me.priceForm.roomType == "04") {
+                if (me.priceForm.roomType == "4") {
                     total = me.priceForm.sprice * 4
                 }
                 if (isNaN(total)) {
