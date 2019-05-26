@@ -5,40 +5,39 @@
 		<el-form :inline="true" :model="filters" :size="size">
 
       <el-form-item>
-        <el-input v-model="filters.hotelCode" :placeholder="$t('hotel.hotelCode')"></el-input>
-      </el-form-item>
-
-
-      <el-form-item>
-        <el-select v-model="filters.provinceCode" :placeholder="$t('hotel.provinceCode.provinceCode')">
-          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
-        </el-select>
+        <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')">
-          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
-        </el-select>
-      </el-form-item>
-      <!--:label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"-->
-      <!--<el-form-item>-->
-        <!--<el-input v-model="filters.cityCode" :placeholder="$t('hotel.cityCode.cityCode')"></el-input>-->
-      <!--</el-form-item>-->
-
-      <el-form-item>
-        <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
+          <el-select v-model="filters.provinceCode" clearable filterable :placeholder="$t('hotel.provinceCode.provinceCode')">
+              <el-option v-for="rt in provinceCode" :key="rt.code"
+                         :label="rt.name" :value="rt.code"></el-option>
+          </el-select>
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
-          <el-option v-for="rt in paraConfig.hotelType" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-        </el-select>
+          <el-select v-model="filters.cityCode" clearable filterable :placeholder="$t('hotel.cityCode.cityCode')">
+              <el-option v-for="rt in cityCode" :key="rt.code"
+                         :label="rt.name" :value="rt.code"></el-option>
+          </el-select>
+      </el-form-item>
+
+      <el-form-item  >
+        <el-input   v-model="filters.hotelname" clearable :placeholder="$t('hotel.hotelname')" style="width:300px;" ></el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="filters.hotelLevel" :placeholder="$t('hotel.hotelLevel.hotelLevel')">
-          <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-        </el-select>
+          <el-select v-model="filters.hotelType" clearable :placeholder="$t('hotel.hotelType.hotelType')">
+              <el-option v-for="rt in hotelType" :key="rt.code"
+                         :label="rt.name" :value="rt.code"></el-option>
+          </el-select>
+      </el-form-item>
+
+      <el-form-item>
+          <el-select v-model="filters.hotelLevel" clearable :placeholder="$t('hotel.hotelLevel.hotelLevel')">
+              <el-option v-for="hs in hotelStar" :key="hs.code"
+                         :label="hs.name" :value="hs.code"></el-option>
+          </el-select>
       </el-form-item>
 
 			<el-form-item>
@@ -52,7 +51,7 @@
 	<!--表格内容栏-->
 	<hotle-table permsEdit="sys:bizHotl:edit" permsDelete="sys:bizHotl:delete"
 		:data="pageResult"
-		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
+		@findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete" :paraConfig="paraConfig">
 	</hotle-table>
 
 	<!--新增编辑界面-->
@@ -72,29 +71,37 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode" auto-complete="off" >
-        <el-select v-model="dataForm.provinceCode" >
-          <!--<el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>-->
-          <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
-        </el-select>
-      </el-form-item>
+            <el-form-item  prop="provinceCode"  >
+                <el-select v-model="dataForm.provinceCode" >
+                    <el-option v-for="rt in provinceCode" :key="rt.code"
+                               :label="rt.name" :value="rt.code"></el-option>
+                </el-select>
+            </el-form-item>
 
-      <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >
-        <el-select v-model="dataForm.cityCode" >
-          <!--<el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>-->
-          <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>
-        </el-select>
-      </el-form-item>
+      <!--<el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off" >-->
+        <!--<el-select v-model="dataForm.cityCode" >-->
+          <!--&lt;!&ndash;<el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>&ndash;&gt;-->
+          <!--<el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode" :label="language.lge=='zh_cn'?rt.areaCname:rt.areaEname" :value="rt.areaCode"></el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+            <el-form-item  prop="cityCode"  >
+                <el-select v-model="dataForm.cityCode" >
+                    <el-option v-for="rt in cityCode" :key="rt.code"
+                               :label="rt.name" :value="rt.code"></el-option>
+                </el-select>
+            </el-form-item>
 
       <el-form-item :label="$t('hotel.hotelType.hotelType')" prop="hotelType" auto-complete="off" >
         <el-select v-model="dataForm.hotelType" >
-          <el-option v-for="rt in paraConfig.hotelType" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+            <el-option v-for="rt in hotelType" :key="rt.code"
+                       :label="rt.name" :value="rt.code"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item :label="$t('hotel.hotelLevel.hotelLevel')" prop="hotelLevel" auto-complete="off" >
         <el-select v-model="dataForm.hotelLevel" >
-          <el-option v-for="rt in paraConfig.hotelLevel" :key="rt.paraCode" :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
+            <el-option v-for="rt in hotelStar" :key="rt.code"
+                       :label="rt.name" :value="rt.code"></el-option>
         </el-select>
       </el-form-item>
 
@@ -152,12 +159,22 @@ export default {
 	data() {
 		return {
 			size: 'small',
-			filters: {
+            hotelType: [], //酒店类型
+            hotelStar:[], //酒店星级
+            roomStyle:[], //房间样式
+            roomType:[], //房间类型
+            breakType: [], //餐饮条件
+            bedType: [], //床铺类型
+            provinceCode: [], //地区编码
+            cityCode: [], //城市编码
+            language: {},
+            filters: {
         hotelCode: '',
         provinceCode:'',
         cityCode:'',
-        hotelName:'',
+        hotelname:'',
         hotelType:'',
+                hotelStar:'',
         hotelLevel:''
 			},
 			columns: [
@@ -197,7 +214,7 @@ export default {
       sysPara1:{},
       bizHotl:[],
       hotelArea:[],
-      paraConfig:[],
+            paraConfig: {},
       areaConfig:[],
       language:{}
 		}
@@ -210,14 +227,7 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			// this.pageRequest.columnFilters = {
-      //   hotelCode: {name:'hotelCode', value:this.filters.hotelCode},
-      //   provinceCode: {name:'provinceCode', value:this.filters.provinceCode},
-      //   cityCode: {name:'cityCode', value:this.filters.cityCode},
-      //   hotelCname: {name:'hotelCname', value:this.filters.hotelCname},
-      //   hotelType: {name:'hotelType', value:this.filters.hotelType},
-      //   hotelLevel: {name:'hotelLevel', value:this.filters.hotelLevel}
-			// }
+
 			this.$api.bizHotl.findPage({...this.pageRequest,...this.filters}).then((res) => {
 				this.pageResult = res
 			}).then(data!=null?data.callback:'')
@@ -237,6 +247,7 @@ export default {
 				cityCode: null,
 				hotelType: null,
 				hotelLevel: null,
+                hotelStar: null,
 				hotelCname: null,
 				hotelEname: null,
         hotelAddr: null,
@@ -302,6 +313,7 @@ export default {
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
     },
+
     findAreaPage : function () {
     this.sysPara1={}
     let params = Object.assign({}, this.sysPara1);
@@ -315,8 +327,22 @@ export default {
     return format(row[column.property])
   }
 },
+    created(){
+        this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT').then( res =>{
+            // console.log(res)
+            this.paraConfig = res;
+            this.roomStyle = res.ROOM_STYLE;
+            this.roomType = res.ROOM_TYPE;
+            this.hotelStar = res.HOTEL_STAR;
+            this.hotelType = res.HOTEL_TYPE;
+            this.breakType = res.BREAK_TYPE;
+            this.bedType = res.BED_TYPE;
+            this.provinceCode = res.PREFECTURE;
+            this.cityCode = res.DISTRICT;
+        })
+    },
 	mounted() {
-    this.findDataSelect()
+    // this.findDataSelect()
     this.localLanguageLoad()
      // this.findAreaPage()
   }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
@@ -10,40 +10,49 @@
         <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
         <!--:sortable="column.sortable==null?true:column.sortable">-->
       <!--</el-table-column>-->
-      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')" width="105">
       </el-table-column>
       <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
       </el-table-column>
-      <!--<el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">-->
+
+        <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')" width="120">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.PREFECTURE,scope.row.provinceCode)}}</el-tag>
+            </template>
+        </el-table-column>
+
+        <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')" width="120">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.DISTRICT,scope.row.cityCode)}}</el-tag>
+            </template>
+        </el-table-column>
+
+        <el-table-column prop="hotelType" header-align="center" align="center"
+                         :label="$t('hotel.hotelType.hotelType')" width="100">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.HOTEL_TYPE,scope.row.hotelType)}}</el-tag>
+            </template>
+        </el-table-column>
+        <el-table-column prop="hotelType" header-align="center" align="center"
+                         :label="$t('hotel.hotelLevel.hotelLevel')" width="105">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(paraConfig.HOTEL_STAR,scope.row.hotelLevel)}}</el-tag>
+            </template>
+        </el-table-column>
+      <!--<el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-table-column>{{$t('hotel.'+scope.row.hotelLevelKey)}} </el-table-column>-->
+        <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column :prop="language.lge=='zh_cn'?'provinceCname':'provinceEname'" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')" width="120">
       </el-table-column>
-      <!--<el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">-->
-      <!--</el-table-column>-->
-
-
-      <el-table-column :prop="language.lge=='zh_cn'?'cityCname':'cityEname'" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')" width="120">
       </el-table-column>
-
-      <el-table-column prop="hotelType" header-align="center" align="center" :label="$t('hotel.hotelType.hotelType')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.hotelTypeKey)}} </el-table-column>
-        </template>
+      <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')"width="100">
       </el-table-column>
-      <el-table-column prop="hotelLevel" header-align="center" align="center" :label="$t('hotel.hotelLevel.hotelLevel')">
-        <template slot-scope="scope">
-          <el-table-column>{{$t('hotel.'+scope.row.hotelLevelKey)}} </el-table-column>
-        </template>
+      <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')" width="105">
       </el-table-column>
-      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
-      </el-table-column>
-      <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')">
-      </el-table-column>
-      <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')">
-      </el-table-column>
-      <el-table-column prop="hotelFax" header-align="center" align="center" :label="$t('hotel.hotelFax')">
-      </el-table-column>
-      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')">
+      <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')"width="120">
       </el-table-column>
       <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
       </el-table-column>
@@ -83,7 +92,9 @@ export default {
     data: Object, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
-    size: { // 尺寸样式
+      paraConfig:Object,
+
+      size: { // 尺寸样式
       type: String,
       default: 'mini'
     },
