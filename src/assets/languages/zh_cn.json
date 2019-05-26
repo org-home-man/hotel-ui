@@ -381,9 +381,11 @@
         "isFriday": "五",
         "isSaterday": "六",
         "isSunday": "日",
+        "month": "月",
         "laterOneWeek": "最近一周",
         "laterOneMonth": "最近一月",
-        "laterThreeMonth": "最近三月"
+        "laterThreeMonth": "最近三月",
+        "stockNum": "库"
     },
     "order": {
         "roomStatus": "订单状态",

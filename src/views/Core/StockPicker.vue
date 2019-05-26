@@ -10,7 +10,7 @@
           </li>
           <li class="year-month" @click="pickYear(currentYear,currentMonth)">
             <span class="choose-year">{{ currentYear }}</span>
-            <span class="choose-month">{{ currentMonth }}月</span>
+            <span class="choose-month">{{ currentMonth }}{{$t('hotel.month')}}</span>
           </li>
           <li class="arrow">
             <span class="arrowSpan" @click="pickNext(currentYear,currentMonth)">❯</span>
@@ -20,13 +20,13 @@
       </div>
       <!-- 星期 -->
       <ul class="weekdays">
-        <li>月</li>
-        <li>火</li>
-        <li>水</li>
-        <li>木</li>
-        <li>金</li>
-        <li style="color:red">土</li>
-        <li style="color:red">日</li>
+          <li>{{$t('hotel.isMonday')}}</li>
+          <li>{{$t('hotel.isTuesday')}}</li>
+          <li>{{$t('hotel.isThursday')}}</li>
+          <li>{{$t('hotel.isFourday')}}</li>
+          <li>{{$t('hotel.isFriday')}}</li>
+          <li style="color:red">{{$t('hotel.isSaterday')}}</li>
+          <li style="color:red">{{$t('hotel.isSunday')}}</li>
       </ul>
       <!-- 日期 -->
       <ul class="days">
@@ -36,7 +36,7 @@
           <!--如果不是本月  改变类名加灰色-->
           <div v-if="new Date(dayobject.invDate).getMonth()+1 != currentMonth" class="other-month">
             <span>{{ new Date(dayobject.invDate).getDate() }}</span><br/>
-            <span style="color: burlywood">num:{{ dayobject.inventory }}</span><br/>
+            <span style="color: burlywood">{{$t('hotel.stockNum')}}:{{ dayobject.inventory }}</span><br/>
           </div>
 
           <!--如果是本月  还需要判断是不是这一天-->
@@ -44,12 +44,12 @@
             <!--今天  同年同月同日-->
             <div v-if="new Date(dayobject.invDate).getFullYear() == new Date().getFullYear() && new Date(dayobject.invDate).getMonth() == new Date().getMonth() && new Date(dayobject.invDate).getDate() == new Date().getDate()" class="active">
               <span>{{ new Date(dayobject.invDate).getDate() }}</span><br/>
-              <span style="color: burlywood">num:{{ dayobject.inventory }}</span><br/>
+              <span style="color: burlywood">{{$t('hotel.stockNum')}}:{{ dayobject.inventory }}</span><br/>
 
             </div>
             <div v-else>
               <span>{{ new Date(dayobject.invDate).getDate() }}</span><br/>
-              <span style="color: burlywood">num:{{ dayobject.inventory }}</span><br/>
+              <span style="color: burlywood">{{$t('hotel.stockNum')}}:{{ dayobject.inventory }}</span><br/>
             </div>
           </div>
 
