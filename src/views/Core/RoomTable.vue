@@ -276,8 +276,9 @@ export default {
 		delete: function (ids) {
 			this.$confirm(this.$t('action.do'), this.$t('action.tips'), {
 				type: 'warning',
-        cancelButtonText: this.$t('action.cancel'),
-        confirmButtonText: this.$t('action.confirm')
+                confirmButtonText: this.$t('action.confirm'),
+                cancelButtonText: this.$t('action.cancel')
+
 			}).then(() => {
 				let params = []
 				let idArray = (ids+'').split(',')
