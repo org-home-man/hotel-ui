@@ -54,14 +54,14 @@
       </el-table-column>
       <el-table-column prop="hotelWeb" header-align="center" align="center" :label="$t('hotel.hotelWeb')"width="170">
       </el-table-column>
-      <el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">
-      </el-table-column>
-      <el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">
-      </el-table-column>
-      <el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">
-      </el-table-column>
-      <el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">
-      </el-table-column>
+      <!--<el-table-column prop="creatCy" header-align="center" align="center" :label="$t('hotel.creatCy')">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="creatTime" header-align="center" align="center" :label="$t('hotel.creatTime')">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="lastUpdateBy" header-align="center" align="center" :label="$t('hotel.lastUpdateBy')">-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="lastUpdateTime" header-align="center" align="center" :label="$t('hotel.lastUpdateTime')">-->
+      <!--</el-table-column>-->
       <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
           <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
