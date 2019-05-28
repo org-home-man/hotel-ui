@@ -178,8 +178,6 @@
                     </el-col>
                 </el-row>
 
-
-
                 <br>
                 <h3 style="text-align: left">{{$t('hotel.information')}}</h3>
                 <el-row >
