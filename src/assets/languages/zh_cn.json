@@ -25,7 +25,11 @@
         "selectAll": "全选",
         "recommondHouse": "推荐房源",
         "lowPriceHouse": "价格最低房源",
-        "maxCountHouse": "预定最多房源"
+        "maxCountHouse": "预定最多房源",
+        "tabsCloseCurrentHandle": "关闭当前标签",
+        "tabsCloseOtherHandle": "关闭其它标签",
+        "tabsCloseAllHandle": "关闭全部标签",
+        "tabsRefreshCurrentHandle": "刷新当前标签"
     },
     "action": {
         "operation": "操作",
