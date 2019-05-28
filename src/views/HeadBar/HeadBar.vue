@@ -24,7 +24,7 @@
                :active-text-color="themeColor" mode="horizontal">
         <!--<el-menu-item index="1">-->
           <!--&lt;!&ndash; 主题切换 &ndash;&gt;-->
-          <!--<theme-picker class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>-->
+          <theme-picker class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange" v-show="false"></theme-picker>
           <!--</el-menu-item>-->
 <!--        <el-menu-item index="2" v-popover:popover-lang>-->
 <!--          &lt;!&ndash; 语言切换 &ndash;&gt;-->
