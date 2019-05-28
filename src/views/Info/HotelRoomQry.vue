@@ -1,7 +1,7 @@
 <template>
-    <div class="container" style="width:99%;margin-top:-25px;margin-bottom: 50px;">
+    <div class="container room_container">
         <!--工具栏-->
-        <div class="header" style="padding-top:30px;padding-left:20px;">
+        <div class="header query_room_container"  >
             <el-form :inline="true" ref="filters" :model="filters" :size="size">
                 <el-row>
                     <el-col :span="50" align="left">
@@ -245,7 +245,7 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item>
+                <el-form-item align="center">
                     <kt-button :label="$t('action.search')" style="width: 200px" perms="sys:bizRoom:view" type="primary"
                                @click="findPage(null)"/>
                     <el-button style="width: 200px" type="info" @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
@@ -253,8 +253,7 @@
             </el-form>
         </div>
         <!--表格内容栏-->
-        <template>
-            <div>
+        <div class="table_room_container">
                 <!--表格栏-->
                 <el-table :data="this.pageResult.rows" ref="table" :highlight-current-row="highlightCurrentRow" @row-click="selectRow"
                            v-loading="loading" :element-loading-text="$t('action.loading')"
@@ -312,8 +311,8 @@
                     <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')">
                     </el-table-column>
                 </el-table>
-                <!--分页栏-->
-                <div class="toolbar" style="padding:10px;">
+<!--                分页栏-->
+                <div  style="padding:10px;height: 35px">
                     <kt-button icon="fa fa-edit" type="danger" :label="$t('hotel.reservatRoom')" style="float:left;padding: 10px 20px" perms="sys:bizRoom:reservatRoom" size="mini"
                                :disabled="this.radio===''" @click="handleBookRoom(currentRow)" />
                     <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
@@ -322,7 +321,6 @@
                     </el-pagination>
                 </div>
             </div>
-        </template>
 
         <!--新增订单界面-->
         <el-dialog :title="$t('hotel.reservatRoom')" width="90%" style="margin-top: -70px" :visible.sync="editDialogVisible"
@@ -866,4 +864,19 @@
 .el-checkbox {
     width: 190px;
 }
+    .room_container{
+        width:100%;
+        /*margin-top:-25px;*/
+        margin-bottom: 50px;
+        /*background: #FFFFFF;*/
+    }
+    .query_room_container{
+        padding-top:10px;
+        padding-left:20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 10px
+    }
 </style>
