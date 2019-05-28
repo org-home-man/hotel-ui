@@ -22,7 +22,10 @@
         "reset": "reset",
         "validmsg": "Verification Code",
         "passwdUp": "修改密码",
-        "selectAll": "全选"
+        "selectAll": "全选",
+        "recommondHouse": "推荐房源",
+        "lowPriceHouse": "价格最低房源",
+        "maxCountHouse": "预定最多房源"
     },
     "action": {
         "operation": "Operation",

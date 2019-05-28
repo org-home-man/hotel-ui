@@ -9,15 +9,15 @@
       </el-menu>
     </span>
         <!-- 导航菜单 -->
-        <!--<span class="navbar">-->
-        <!--<el-menu :default-active="activeIndex" class="el-menu-demo" -->
-        <!--:background-color="themeColor" text-color="#fff" active-text-color="#ffd04b" mode="horizontal" @select="selectNavBar()">-->
-        <!--<el-menu-item index="1" @click="$router.push('/')"><i class="fa fa-home fa-lg"></i>  </el-menu-item>-->
-        <!--<el-menu-item index="2" @click="openWindow('https://gitee.com/liuge1988/kitty')">{{$t("common.projectRepo")}}</el-menu-item>-->
-        <!--<el-menu-item index="3" @click="openWindow('https://gitee.com/liuge1988/kitty/wikis/Home')">{{$t("common.doc")}}</el-menu-item>-->
+        <span class="navbar">
+        <el-menu class="el-menu-demo"
+        :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal" @select="selectNavBar()">
+            <el-menu-item index="1" @click="$router.push('/')">{{$t('common.recommondHouse')}}  </el-menu-item>
+            <el-menu-item index="2" @click="">{{$t("common.lowPriceHouse")}}</el-menu-item>
+            <el-menu-item index="3" @click="">{{$t("common.maxCountHouse")}}</el-menu-item>
         <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->
-        <!--</el-menu>-->
-        <!--</span>-->
+        </el-menu>
+        </span>
         <!-- 工具栏 -->
         <span class="toolbar">
       <el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor"
@@ -96,7 +96,6 @@
                 params: {
                     name: ''
                 },
-                activeIndex: '1',
                 langVisible: false
             }
         },
