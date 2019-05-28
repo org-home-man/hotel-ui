@@ -56,6 +56,8 @@
         "pRemark":"请输入备注信息",
         "batchDelete": "批量删除",
         "search": "查询",
+        "isinDateOutException": "入住时间已经小于当前确认订单时间",
+        "invIsOutException": "该房型库存数小于订单房间数",
         "detileSearch": "详细查询",
         "loading": "拼命加载中",
         "submit": "提交",
