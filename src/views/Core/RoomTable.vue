@@ -10,35 +10,35 @@
         <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
         <!--:sortable="column.sortable==null?true:column.sortable">-->
       <!--</el-table-column>-->
-      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      <el-table-column width="110px" prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
       </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" prop="roomCode" header-align="center" align="center" :label="$t('hotel.roomcode')">
+        <el-table-column width="150px" :show-overflow-tooltip="true" prop="roomCode" header-align="center" align="center" :label="$t('hotel.roomcode')">
         </el-table-column>
-      <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+      <el-table-column width="250px" :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-        <el-table-column prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <el-table-column width="80px" prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(paraConfig.PREFECTURE,scope.row.provinceCode)}}</el-tag>
             </template>
         </el-table-column>
-        <el-table-column prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <el-table-column width="100px" prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(paraConfig.DISTRICT,scope.row.cityCode)}}</el-tag>
             </template>
         </el-table-column>
-      <el-table-column prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
+      <el-table-column width="150px" prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
         <template slot-scope="scope">
           <el-tag>{{resolveRoomTypeName(paraConfig.ROOM_TYPE,scope.row.roomType)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="bedType" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
+      <el-table-column width="80px" prop="bedType" header-align="center" align="center" :label="$t('hotel.bedtype.bedtype')">
         <template slot-scope="scope">
           <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.bedType)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
+      <el-table-column width="80px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
       </el-table-column>
-      <el-table-column prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
+      <el-table-column width="80px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">

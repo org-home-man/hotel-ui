@@ -73,6 +73,7 @@
           currentMonth: 1,
           currentYear: 1970,
           currentWeek: 1,
+
           days: [],
           tempArray:[],
           dataRequest:{
@@ -192,7 +193,7 @@
 
   .month {
     width: 100%;
-    background: #409EFF;
+    background: rgb(19, 138, 156);
   }
 
   .month ul {
@@ -231,7 +232,7 @@
   }
 
   .arrowSpan:hover {
-    background: #409EFF;
+    background: rgb(19, 138, 156);
   }
 
   .month ul li {
@@ -244,7 +245,7 @@
   .weekdays {
     margin: 0;
     padding: 10px 0;
-    background-color: #409EFF;
+    background-color: rgb(19, 138, 156);
     display: flex;
     flex-wrap: wrap;
     color: #FFFFFF;
@@ -280,12 +281,12 @@
   .days li .active {
     padding: 6px 10px;
     border-radius: 50%;
-    background: #409EFF;
+    background: rgb(19, 138, 156);
     color: #fff;
   }
 
   .days li .other-month {
-    padding: 5px;
+    /*padding: 5px;*/
     color: gainsboro;
   }
 
