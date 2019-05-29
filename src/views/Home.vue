@@ -13,7 +13,7 @@
 import HeadBar from "./HeadBar/HeadBar"
 import NavBar from "./NavBar/NavBar"
 import MainContent from "./MainContent/MainContent"
-import {baseUrl} from "@utils/global"
+import {baseUrl} from "../utils/global"
 export default {
   components:{
         HeadBar,
@@ -34,7 +34,8 @@ if(typeof(WebSocket) == "undefined") {
     console.log("您的浏览器支持WebSocket");
     //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
     //等同于socket = new WebSocket("ws://localhost:8083/checkcentersys/websocket/20");
-    socket = new WebSocket(baseUrl+"/websocket/${cid}".replace("http","ws"));
+    console.log((baseUrl+"/websocket/${cid}").replace("http","ws"))
+    socket = new WebSocket((baseUrl+"/websocket/20").replace("http","ws"));
     //打开事件
     socket.onopen = function() {
         console.log("Socket 已打开");
