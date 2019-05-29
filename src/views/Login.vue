@@ -4,7 +4,7 @@
         <div class="tool-bar">
 
             <!-- 主题切换 -->
-            <!--<theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>-->
+            <theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange" v-show="false" ></theme-picker>
             <!-- 语言切换 -->
             <!--<el-menu class="el-menu-demo" :background-color="themeColor" :text-color="themeColor" :active-text-color="themeColor" mode="horizontal" style="position: relative;">-->
             <!--<el-menu-item index="1" v-popover:popover-lang style="position: absolute;right:5px;">-->

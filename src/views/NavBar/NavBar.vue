@@ -99,7 +99,7 @@
 <style scoped lang="scss">
     .menu-bar-container {
         position: fixed;
-        top: 0px;
+        top: 0;
         left: 0;
         bottom: 0;
         z-index: 1020;

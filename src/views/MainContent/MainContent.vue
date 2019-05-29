@@ -9,10 +9,10 @@
                 <el-dropdown class="tabs-tools" :show-timeout="0" trigger="hover">
                     <div style="font-size:20px;width:50px;"><i class="el-icon-arrow-down"></i></div>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item @click.native="tabsCloseCurrentHandle">关闭当前标签</el-dropdown-item>
-                        <el-dropdown-item @click.native="tabsCloseOtherHandle">关闭其它标签</el-dropdown-item>
-                        <el-dropdown-item @click.native="tabsCloseAllHandle">关闭全部标签</el-dropdown-item>
-                        <el-dropdown-item @click.native="tabsRefreshCurrentHandle">刷新当前标签</el-dropdown-item>
+                        <el-dropdown-item @click.native="tabsCloseCurrentHandle">{{$t('common.tabsCloseCurrentHandle')}}</el-dropdown-item>
+                        <el-dropdown-item @click.native="tabsCloseOtherHandle">{{$t('common.tabsCloseOtherHandle')}}</el-dropdown-item>
+                        <el-dropdown-item @click.native="tabsCloseAllHandle">{{$t('common.tabsCloseAllHandle')}}</el-dropdown-item>
+                        <el-dropdown-item @click.native="tabsRefreshCurrentHandle">{{$t('common.tabsRefreshCurrentHandle')}}</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
                 <el-tab-pane v-for="item in mainTabs"
