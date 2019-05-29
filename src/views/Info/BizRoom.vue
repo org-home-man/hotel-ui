@@ -78,7 +78,7 @@
         </room-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="60%" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
@@ -86,7 +86,7 @@
                 <el-breadcrumb-item>{{$t('sys.guestEdit')}}</el-breadcrumb-item>
             </el-breadcrumb>
 
-            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="130px" :rules="dataFormRules" ref="dataForm"
+            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="140px" :rules="dataFormRules" ref="dataForm"
                      :size="size" :inline="true" label-position="right">
                 <!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
                 <!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
@@ -181,7 +181,7 @@
                 <br>
                 <h3 style="text-align: left">{{$t('hotel.information')}}</h3>
                 <el-row >
-                    <el-col :span="24" align="justify" class="check-el-col" >
+                    <el-col :span="24" align="center" >
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.iswify')"
                                          v-model="dataForm.iswify" border></el-checkbox>
@@ -371,7 +371,7 @@
                                 v-model="priceForm.priceYear"
                                 align="right"
                                 type="year"
-                                :placeholder="$t('action.pPriceYear')">
+                                :placeholder="$t('action.pPriceYear')" style="width: 180px;">
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -542,7 +542,7 @@
         </el-dialog>
 
         <!--库存修改弹出框-->
-        <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.edit')" width="50%"
+        <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.edit')" width="60%"
                    :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
@@ -564,7 +564,7 @@
                                 v-model="stockForm.stockYear"
                                 align="right"
                                 type="year"
-                                :placeholder="$t('action.pPriceYear')">
+                                :placeholder="$t('action.pPriceYear')" style="width: 180px">
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -1494,12 +1494,16 @@
 
     #roomForm .el-checkbox{
         width:180px;
+        text-align: left;
     }
     .el-input {
         width:180px;
     }
     .el-select{
         width:180px;
+    }
+    el-date-picker{
+        width: 180px;
     }
     .textArea{
         width:620px;
