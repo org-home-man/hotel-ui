@@ -8,6 +8,10 @@ import request from '../axios'
 export const save = (data) => {
     return request.post('/role/save',data);
 }
+// 修改
+export const update = (data) => {
+    return request.post('/role/update',data);
+}
 // 删除
 export const batchDelete = (data,headers) => {
     return request.post('/role/delete',data,headers);
