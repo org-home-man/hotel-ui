@@ -1,7 +1,6 @@
 import axios from 'axios';
 import config from './config';
 import Qs from 'qs';
-import Cookies from "js-cookie";
 import router from '@/router';
 import i18n from '@/i18n';
 import {Notification} from 'element-ui';
@@ -36,7 +35,7 @@ instance.defaults.transformRequest = [function (data, header) {
 //请求拦截器
 instance.interceptors.request.use(function (config) {
     // 认证消息头
-    const token = Cookies.get('token');
+    const token = sessionStorage.getItem('sessionId');
 
     if (token) {
         config.headers.token = token
@@ -62,7 +61,7 @@ instance.interceptors.response.use(function (response) {
             title: i18n.t('action.sysErr'),
             message: i18n.t('action.loginExpired')
         });
-        sessionStorage.removeItem("user");
+        clearToken();
         router.push('/login')
     } else if (data.code == 10001){
         Notification.error({
@@ -87,26 +86,22 @@ instance.interceptors.response.use(function (response) {
         message: data.msg
     });
 }, function (error) {
-    // if (error.response) {
-    //     // 处理错误
-    // } else if (error.request) {
-    //     // 未响应
-    // } else {
-    //
-    // }
+    if(error.response.status){
+        if (+error.response.status === 403 || +error.response.status === 401) {
+            // 无效的token
+            Notification.error({
+                title: i18n.t('action.sysErr'),
+                message: i18n.t('action.noAuth')
+            });
+            // 重定向到登录页面
+            sessionStorage.removeItem("user")
+            router.push('/login');
+            return ;
+        }
+    }
 
     // 错误日志
 
-    if (+error.response.status === 403 || +error.response.status === 401) {
-        // 无效的token
-        Notification.error({
-            title: i18n.t('action.sysErr'),
-            message: i18n.t('action.noAuth')
-        });
-        // 重定向到登录页面
-        sessionStorage.removeItem("user")
-        router.push('/login')
-    }else{
 
         if (/^timeout/.test(error.message)) {
             error.message = i18n.t('action.timeOut');
@@ -115,7 +110,6 @@ instance.interceptors.response.use(function (response) {
             title: i18n.t('action.sysErr'),
             message: errors[error.message] || error.message
         });
-    }
 
 
     return Promise.reject(error);

@@ -138,7 +138,7 @@
                             <el-input v-model="dataForm.adultNum" :placeholder="$t('hotel.adultNum')"></el-input>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.childrenNum')">
-                            <el-input v-model="dataForm.childrenNum" :placeholder="$t('hotel.childrenNum')"></el-input>
+                            <el-input v-model="dataForm.childNum" :placeholder="$t('hotel.childrenNum')"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6" align="right" >
@@ -311,7 +311,7 @@
                             <el-input v-model="dataForm.emailAddress"></el-input>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.adultNum1')" prop="adultNum1" auto-complete="off">
-                            <el-input v-model="dataForm.anum"></el-input>
+                            <el-input v-model="dataForm.adultNum"></el-input>
                         </el-form-item>
                         <el-form-item :label="$t('hotel.children612')" prop="children612" auto-complete="off">
                             <el-input v-model="dataForm.bnum"></el-input>
@@ -393,7 +393,7 @@
                     {prop:"inDateStart", label:"入住日期", minWidth:60},
                     {prop:"outDateEnd", label:"退房日期", minWidth:60},
                     {prop:"pName", label:"代表者姓名", minWidth:60},
-                    {prop:"confirmTime", label:"确认时间", minWidth:60}
+                    {prop:"lastCrtTime", label:"确认时间", minWidth:60}
                 ],
                 pageRequest: { page: 1, rows: 8 },
                 pageResult: {},
@@ -421,10 +421,6 @@
                     totalSAmount: null,
                     remark: null,
                     status: null,
-                    creatBy: null,
-                    creatTime: null,
-                    lastUpdateBy: null,
-                    lastUpdateTime: null,
                     provinceCode: '',
                     hotelName: '',
                     inventory: '',
@@ -471,7 +467,7 @@
                     outDateEnd: null,
                     commonDate:[formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')],
                     adultNum: null,
-                    childrenNum: null,
+                    childNum: null,
                     sPrice: null
                 },
                 paraConfig: [],
@@ -537,6 +533,10 @@
                                 this.editDialogVisible = false
                                 this.findPage(null)
                             })
+                        },() =>{
+                            this.editLoading = false
+                            this.editDialogVisible = false
+                            this.findPage(null)
                         })
                     }
                 })

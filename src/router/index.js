@@ -73,13 +73,7 @@ router.beforeEach((to, from, next) => {
 function addDynamicMenuAndRoutes(userName, to, from) {
     // 处理IFrame嵌套页面
     handleIFrameUrl(to.path)
-    // console.log("menuRoute", store.state.app.menuRouteLoaded);
-    // console.log("menuNavTree", store.state.menu.navTree);
-    // console.log("menuNavTree", store.state.tab.mainTabs);
-    // console.log("menuNavTree", store.state.tab.mainTabsActiveName);
-    console.log("loaded --> " + store.state.app.menuRouteLoaded)
-    console.log("navTree --> " + store.state.menu.navTree.length)
-    if (store.state.app.menuRouteLoaded && store.state.menu.navTree.length != 0) {
+    if (store.state.app.menuRouteLoaded && store.state.menu.navTree && store.state.menu.navTree.length != 0) {
         console.log('动态菜单和路由已经存在.')
         return
     }

@@ -32,7 +32,7 @@
                     </el-form-item>
                     <el-form-item style="margin-bottom: 0;vertical-align: middle;" align="center">
                         <el-button style="width: 100px" size="medium" perms="sys:bizRoom:view" type="primary" @click="findPage(null)">{{$t('action.search')}}</el-button>
-                        <el-button type="info" size="medium" @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
+                        <el-button style="width: 100px" type="info" size="medium" @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
                     </el-form-item>
                 </div>
 
@@ -40,19 +40,19 @@
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">数量</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="roomNum" :label="$t('hotel.roomNum')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.roomNum" :placeholder="$t('hotel.roomNum')" :min="1"></el-input-number>
+                            <el-input-number v-model="filters.roomNum" controls-position="right"  :placeholder="$t('hotel.roomNum')" :min="1"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="adultNum" :label="$t('hotel.adultNum')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.adultNum" :placeholder="$t('hotel.adultNum')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.adultNum" controls-position="right"  :placeholder="$t('hotel.adultNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="childNum" :label="$t('hotel.childrenNum')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.childNum" :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.childNum" controls-position="right"  :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.lowRoomPrice" :placeholder="$t('hotel.lowRoomPrice')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.highRoomPrice" :placeholder="$t('hotel.highRoomPrice')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="roomArea" style="margin-bottom: 0;vertical-align: middle;width: 140px;">
                             <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'"></el-input>
@@ -99,7 +99,7 @@
                 <div style="display: flex;margin-bottom: 6px;">
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">星级</div>
                     <div style="width: 100%;padding: 0 10px;">
-                        <el-form-item v-for="hs in hotelStar" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
+                        <el-form-item v-for="hs in hotelStar" :key="hs.code" prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
                             <el-radio style="width: 215px;box-sizing: border-box;" :label="hs.name" v-model="filters.hotelLevel" :value="hs.code" border/>
                         </el-form-item>
                     </div>
@@ -225,10 +225,11 @@
         <!--表格内容栏-->
         <div class="table_room_container" style="min-width: 1300px;">
                 <!--表格栏-->
-                <el-table :data="this.pageResult.rows" ref="table" :highlight-current-row="highlightCurrentRow" @row-click="selectRow"
+                <el-table :data="this.pageResult.rows" ref="table"  @row-click="selectRow"
                            v-loading="loading" :element-loading-text="$t('action.loading')"
-                          :border="border" :stripe="stripe"
-                          :show-overflow-tooltip="showOverflowTooltip" size="mini" :align="align">
+                          :border="border"
+                          :row-class-name="tableRowClassName"
+                          :show-overflow-tooltip="showOverflowTooltip" :align="align">
                     <!--<el-table-column :label="$t('action.operation')" width="55">
                         <template slot-scope="scope">
                             <el-radio class="radio" v-model="radio" :label="scope.$index" @change.native="getCurrentRow(scope.row)">&nbsp;</el-radio>
@@ -280,7 +281,7 @@
 
                     <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')">
                     </el-table-column>
-                    <el-table-column :label="$t('action.operation')" align="center">
+                    <el-table-column :label="$t('action.operation')" fixed="right" align="center">
                         <template slot-scope="scope">
                         <kt-button icon="fa fa-edit" type="danger" :label="$t('hotel.reservatRoom')" perms="sys:bizRoom:reservatRoom" size="mini"
                                    @click="handleBookRoom(scope.row)" />
@@ -483,13 +484,13 @@
                             </el-date-picker>
                         </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.children612')" prop="children612">
-                            <el-input-number v-model="dataForm.children612" :min="0" ></el-input-number>
+                            <el-input-number v-model="dataForm.children612" controls-position="right"  :min="0" ></el-input-number>
                         </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.children46')" prop="children46" >
-                            <el-input-number v-model="dataForm.children46" :min="0" ></el-input-number>
+                            <el-input-number v-model="dataForm.children46" controls-position="right"  :min="0" ></el-input-number>
                         </el-form-item>
                         <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children4" >
-                            <el-input-number v-model="dataForm.children4" :min="0" ></el-input-number>
+                            <el-input-number v-model="dataForm.children4" controls-position="right"  :min="0" ></el-input-number>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -603,6 +604,7 @@
                     provinceCode: '',
                     hotelName: '',
                     hotelLevel:'',
+                    hotelType:null,
                     roomCode: null,
                     hotelCode: null,
                     roomType: null,
@@ -638,7 +640,6 @@
                     isrestau: null,
                     lowRoomPrice: 0,
                     highRoomPrice: 1000,
-                    hotelName: null,
                     inDateStart: null,
                     outDateEnd: null,
                     roomNum: 1,
@@ -672,10 +673,10 @@
                     pName: null,
                     passport: null,
                     birth: null,
-                    contactPhone: null,
+                    phone: null,
                     emailAddress: null,
                     children612: 0,
-                    children416: 0,
+                    children46: 0,
                     children4: 0,
                     totalSAmount: null,
                     remark: null,
@@ -743,23 +744,24 @@
             },
             // 显示预订界面
             handleBookRoom: function (row) {
-                // this.$refs['dataForm'].resetFields();
+                this.editDialogVisible = true;
+                if(this.$refs.dataForm){
+                    this.$refs.dataForm.resetFields();
+                }
                 var obj = Object.assign({},{'adultNum':this.filters.adultNum,
                     'childNum':this.filters.childNum,
                     'roomNum':this.filters.roomNum,
                     'inDateStart':this.filters.inDateStart,
                     'outDateEnd':this.filters.outDateEnd
                 });
-                var newRow = Object.assign({},row);
-                this.dataForm = Object.assign(newRow,obj)
-                this.editDialogVisible = true;
+                this.dataForm = Object.assign(this.dataForm,obj,row)
                 if(row.photo){
                     this.$api.user.showFile({'relationId':row.photo}).then((res) =>{
                         this.roomPhoto = res;
                     })
                 }
             },
-            // 编辑
+            // 预约
             submitForm: function () {
 
                 this.$refs.dataForm.validate((valid) => {
@@ -799,6 +801,12 @@
             refreshPageRequest: function (pageNum) {
                 this.pageRequest.page = pageNum;
                 this.findPage()
+            },
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex % 2 !=0) {
+                    return 'success-row';
+                }
+                return '';
             }
         },
         created(){
@@ -822,8 +830,13 @@
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
             },
             commonDate(n,o){
-                var i = +n[1] - +n[0];
-                this.filters.roomNight = i;
+                var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
+                var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
+                var oDate1, oDate2, iDays ;
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                this.filters.roomNight = iDays;
             }
         },
         mounted() {
@@ -835,7 +848,6 @@
 </script>
 
 <style scoped>
-
     .el-collapse-item__content{
         padding-bottom: 0;
     }
@@ -847,7 +859,6 @@
     }
     .query_room_container{
         padding-top:10px;
-        padding-left:20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
     .table_room_container{
