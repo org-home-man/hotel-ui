@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container" style="margin-bottom: 50px">
 	<!--工具栏-->
 	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="pageRequest" :size="size">
@@ -26,7 +26,7 @@
           <el-table-column
               prop="roleIdKey" header-align="center" align="center" width="120" :label="$t('table.roleId.roleId')">
               <template slot-scope="scope">
-                  <el-tag>{{$t('table.'+scope.row.roleIdKey)}}</el-tag>
+                  <el-tag>{{resolveRoomTypeName(options,scope.row.isManager)}}</el-tag>
               </template>
           </el-table-column>
           <el-table-column
@@ -63,9 +63,9 @@
             <el-form-item :label="$t('table.remark') " prop="remark">
                 <el-input v-model="dataForm.remark" auto-complete="off" type="textarea"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('table.roleId.roleId')" prop="roleId" align="left">
-                <el-select v-model="dataForm.roleId" auto-complete="off">
-                    <el-option v-for="bk in this.options" :key="bk.paraCode" :label="$t('table.'+ bk.paraCode)" :value="bk.paraValue1"></el-option>
+            <el-form-item :label="$t('table.roleId.roleId')" prop="isManager" align="left">
+                <el-select v-model="dataForm.isManager" auto-complete="off">
+                    <el-option v-for="bk in this.options" :key="bk.code" :label="bk.name" :value="bk.code"></el-option>
                 </el-select>
             </el-form-item>
 		</el-form>
@@ -123,12 +123,11 @@ export default {
                 // {prop:"lastUpdateBy", label:"更新人", minWidth:100},
 				// {prop:"lastUpdateTime", label:"更新时间", minWidth:120, formatter:this.dateFormat}
 			],
-            options:[
-                {paraValue1:'01',paraCode:'roleId.super'},
-                {paraValue1:"02",paraCode:'roleId.common'}
-            ],
+            options:[],
             pageRequest: {
-                name: ''
+                name: '',
+                page: 1,
+                rows: 10
             },
 			pageResult: {},
 
@@ -148,7 +147,7 @@ export default {
 				id: 0,
 				name: '',
 				remark: '',
-                roleId:''
+                isManager:''
 			},
 			selectRole: {},
 			menuData: [],
@@ -227,17 +226,32 @@ export default {
 					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
 						this.editLoading = true
 						let params = Object.assign({}, this.dataForm)
-						this.$api.role.save(params).then((res) => {
-							this.editLoading = false
-							if(res.code == 200) {
-								this.$message({ message: this.$t('action.success'), type: 'success' })
-								this.dialogVisible = false
-								this.$refs['dataForm'].resetFields()
-							} else {
-								this.$message({message: this.$t('action.fail') , type: 'error'})
-							}
-							this.findPage(null)
-						})
+                        if(this.operation){
+                            this.$api.role.save(params).then((res) => {
+                                this.editLoading = false
+                                if(res.code == 200) {
+                                    this.$message({ message: this.$t('action.success'), type: 'success' })
+                                    this.dialogVisible = false
+                                    this.$refs['dataForm'].resetFields()
+                                } else {
+                                    this.$message({message: this.$t('action.fail') , type: 'error'})
+                                }
+                                this.findPage(null)
+                            })
+                        }else{
+                            this.$api.role.update(params).then((res) => {
+                                this.editLoading = false
+                                if(res.code == 200) {
+                                    this.$message({ message: this.$t('action.success'), type: 'success' })
+                                    this.dialogVisible = false
+                                    this.$refs['dataForm'].resetFields()
+                                } else {
+                                    this.$message({message: this.$t('action.fail') , type: 'error'})
+                                }
+                                this.findPage(null)
+                            })
+                        }
+
 					})
 				}
 			})
@@ -252,7 +266,6 @@ export default {
 		},
 		// 角色选择改变监听
 		handleRoleSelectChange(val) {
-		    console.log(val);
 			if(val == null ) {
 				return
 			}
@@ -344,6 +357,11 @@ export default {
       	}
 		
 	},
+    created(){
+	    this.getTypeValue('ROLE_TYPE').then( res =>{
+	        this.options = res;
+        })
+    },
 	mounted() {
 	    this.findPage(null);
 	}
