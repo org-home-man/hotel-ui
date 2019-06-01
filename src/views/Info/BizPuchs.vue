@@ -107,7 +107,7 @@
                                         <label>入离时间</label>
                                         <input hidden v-model="dataForm.inDate"/>
                                         <input hidden v-model="dataForm.outDate"/>
-                                        <span>{{dataForm.inDate}}  至  {{dataForm.outDate}} 共 {{dataForm.roomNight}} 晚</span>
+                                        <span>{{dataForm.inDateStart}}  至  {{dataForm.outDateEnd}} 共 {{dataForm.roomNight}} 晚</span>
                                     </li>
                                     <li style="display: flex">
                                         <label>入住人数</label>
@@ -351,8 +351,6 @@
                 dataForm: {
                     orderCode: null,
                     roomCode: null,
-                    inDate: null,
-                    outDate: null,
                     pName: null,
                     passport: null,
                     birth: null,
@@ -369,7 +367,7 @@
                     provinceCode: '',
                     cityCode:'',
                     hotelName: '',
-                    inventory: '',
+                    inventory: 0,
                     hotelCode: null,
                     roomType: null,
                     roomStyle: null,
@@ -572,10 +570,5 @@
     .hotel-base>li>label{
         width: 80px;
         display: inline-block;
-    }
-    .query_room_container {
-        width: 60%;
-        padding-top: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
 </style>
