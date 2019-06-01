@@ -25,4 +25,8 @@ export const batchCancel= (data) => {
 export const findPage = (data) => {
     return request.post('/bizPuchs/findPage',data);
 }
+// 库存查询
+export const findInv = (data) => {
+    return request.post('/bizInv/findInv',data);
+}
 

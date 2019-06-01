@@ -466,10 +466,14 @@
             },
             // 显示编辑界面
             handleEdit: function (params) {
-                this.editDialogVisible = true
-                this.operation = false
-                console.log(params.index)
-                this.dataForm = Object.assign({}, params.index)
+                var prm = {'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode};
+                this.$api.bizPuchs.findInv(prm).then( res =>{
+                    this.editDialogVisible = true;
+                    this.operation = false;
+                    console.log(params.index);
+                    this.dataForm = Object.assign({}, params.index)
+                    this.dataForm.inventory = res.data===0?0:res;
+                });
             },
             // 编辑
             submitConfirmForm: function () {
