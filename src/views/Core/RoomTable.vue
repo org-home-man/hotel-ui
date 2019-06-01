@@ -10,9 +10,9 @@
         <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
         <!--:sortable="column.sortable==null?true:column.sortable">-->
       <!--</el-table-column>-->
-      <el-table-column width="110px" prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
+      <el-table-column width="120px" prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')">
       </el-table-column>
-        <el-table-column width="150px" :show-overflow-tooltip="true" prop="roomCode" header-align="center" align="center" :label="$t('hotel.roomcode')">
+        <el-table-column width="170px" :show-overflow-tooltip="true" prop="roomCode" header-align="center" align="center" :label="$t('hotel.roomcode')">
         </el-table-column>
       <el-table-column width="250px" :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
@@ -36,7 +36,7 @@
           <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.bedType)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="80px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
+      <el-table-column width="100px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
       </el-table-column>
       <el-table-column width="80px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>

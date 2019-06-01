@@ -10,7 +10,7 @@
         <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
         <!--:sortable="column.sortable==null?true:column.sortable">-->
       <!--</el-table-column>-->
-      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')" width="105">
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')" width="120">
       </el-table-column>
       <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
       </el-table-column>
