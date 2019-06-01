@@ -452,7 +452,6 @@
                 this.pageRequest = {...this.pageRequest, ...this.filters};
                 this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
                     this.pageResult = res
-                    console.log(res)
                 }).then(data != null ? data.callback : '')
             },
             // 批量删除
@@ -463,7 +462,8 @@
             handleEdit: function (params) {
                 this.editDialogVisible = true
                 this.operation = false
-                this.dataForm = Object.assign({}, params.row)
+                console.log(params.index)
+                this.dataForm = Object.assign({}, params.index)
             },
             // 编辑
             submitConfirmForm: function () {
@@ -500,6 +500,19 @@
                     this.states = res;
                 })
             },
+            created(){
+                this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT').then( res =>{
+                    // console.log(res)
+                    this.roomStyle = res.ROOM_STYLE;
+                    this.roomType = res.ROOM_TYPE;
+                    this.hotelStar = res.HOTEL_STAR;
+                    this.hotelType = res.HOTEL_TYPE;
+                    this.breakType = res.BREAK_TYPE;
+                    this.bedType = res.BED_TYPE;
+                    this.provinceCode = res.PREFECTURE;
+                    this.cityCode = res.DISTRICT;
+                })
+            },
             inputUserFunc(){
                 if(this.filters.createName.length>0){
                     this.$api.user.findLikeByName({name:this.filters.createName}).then((res) =>{
@@ -534,7 +547,8 @@
             }
         },
         mounted() {
-            this.findStatus()
+            this.findStatus();
+            this.created();
         }
     }
 </script>
