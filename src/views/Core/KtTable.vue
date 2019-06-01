@@ -2,7 +2,7 @@
     <div class="table_room_container">
         <!--表格栏-->
         <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-                  :empty-text="$t('action.noData')" height="450px"
+                  :empty-text="$t('action.noData')"
                   @current-change="handleCurrentChange" @row-click="handleRowClick" v-loading="loading"
                   :element-loading-text="$t('action.loading')" :border="border" :row-class-name="tableRowClassName"
                   :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;">

@@ -25,6 +25,7 @@
                             type="daterange"
                             :clearable="false"
                             value-format="yyyyMMdd"
+                            @blur="findPage"
                             :start-placeholder="$t('hotel.inDateStart')"
                             :end-placeholder="$t('hotel.outDateEnd')"
                             :picker-options="pickerOptions">
@@ -279,7 +280,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')">
+                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('hotel.sAverageSprice')">
                     </el-table-column>
                     <el-table-column :label="$t('action.operation')" fixed="right" align="center">
                         <template slot-scope="scope">
@@ -341,7 +342,7 @@
                                         <label>{{$t('order.departureTime')}}</label>
                                         <input hidden v-model="commonDate"/>
                                         <input v-model="filters.roomNight" hidden/>
-                                        <span>{{commonDate[0]}}  -  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
+                                        <span>{{commonDate[0]}}  {{$t('hotel.dateSep')}}  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
 
                                     </li>
                                     <li style="display: flex">
@@ -352,7 +353,7 @@
                                             </el-form-item>
 
                                             <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="children46"  style="margin-bottom: 6px;margin-right: 0;">
-                                                <el-input-number v-model="dataForm.childrenNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
+                                                <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
                                         </div>
                                     </li>
@@ -654,7 +655,7 @@
                     adultNum: 0,
                     childNum: 0,
                     sPrice: null,
-                    roomNight: null
+                    roomNight: 0
                 },
                 // 新增编辑界面数据
                 dataForm: {
@@ -832,10 +833,10 @@
         },
         watch:{
             'dataForm.roomNum'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             },
             'dataForm.sPrice'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
@@ -845,6 +846,7 @@
                 oDate2 = Date.parse(endDate);
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 this.filters.roomNight = iDays;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             }
         },
         mounted() {

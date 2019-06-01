@@ -75,13 +75,13 @@ router.beforeEach((to, from, next) => {
 function addDynamicMenuAndRoutes(userName, to, from) {
     // 处理IFrame嵌套页面
     handleIFrameUrl(to.path)
-    console.log('navTree: '+store.state.menu.navTree)
-    console.log('menuRouteLoaded: '+store.state.app.menuRouteLoaded)
-    if(store.state.menu.navTree){
-        console.log('navTree-length: '+store.state.menu.navTree.length)
-    }
+    // console.log('navTree: '+store.state.menu.navTree)
+    // console.log('menuRouteLoaded: '+store.state.app.menuRouteLoaded)
+    // if(store.state.menu.navTree){
+    //     console.log('navTree-length: '+store.state.menu.navTree.length)
+    // }
     if (store.state.app.menuRouteLoaded && store.state.menu.navTree && store.state.menu.navTree.length != 0) {
-        console.log('动态菜单和路由已经存在.')
+        // console.log('动态菜单和路由已经存在.')
         return
     }
     store.commit('updateMainTabs',[]);
@@ -92,7 +92,6 @@ function addDynamicMenuAndRoutes(userName, to, from) {
             let dynamicRoutes = addDynamicRoutes(res)
             // 处理静态组件绑定路由
             handleStaticComponent(router, dynamicRoutes)
-
             router.addRoutes(router.options.routes)
             // 保存加载状态
             store.commit('menuRouteLoaded', true)

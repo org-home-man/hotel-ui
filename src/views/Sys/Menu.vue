@@ -242,7 +242,7 @@
                     type: "warning"
                 }).then(() => {
                     let params = this.getDeleteIds([], row);
-                    this.$api.menu.batchDelete(params, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then(res => {
+                    this.$api.menuTree.batchDelete(params, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then(res => {
                         this.findTreeData();
                         this.$message({message: this.$t('action.success'), type: "success"});
                     });
@@ -274,7 +274,7 @@
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editLoading = true;
                             let params = Object.assign({}, this.dataForm);
-                            this.$api.menu.save(params).then(res => {
+                            this.$api.menuTree.save(params).then(res => {
                                 this.editLoading = false;
                                 if (res.code == 200) {
                                     this.$message({message: this.$t('action.success'), type: "success"});
@@ -302,7 +302,6 @@
 <style scoped>
 
     .query_room_container{
-        width: 60%;
         padding-top:10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }

@@ -43,16 +43,17 @@
                                            :label="hs.name" :value="hs.code"></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.search')" perms="sys:bizHotl:view" type="primary"
+                                       @click="findPage(null)"/>
+                        </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.add')" perms="sys:bizHotl:add" type="primary" @click="handleAdd"/>
+                        </el-form-item>
                     </el-col>
                 </el-row>
 
-                <el-form-item>
-                    <kt-button :label="$t('action.search')" perms="sys:bizHotl:view" type="primary"
-                               @click="findPage(null)"/>
-                </el-form-item>
-                <el-form-item>
-                    <kt-button :label="$t('action.add')" perms="sys:bizHotl:add" type="primary" @click="handleAdd"/>
-                </el-form-item>
+
             </el-form>
         </div>
         <!--表格内容栏-->
@@ -391,7 +392,6 @@
     }
 
     .query_room_container {
-        width: 60%;
         padding-top: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
