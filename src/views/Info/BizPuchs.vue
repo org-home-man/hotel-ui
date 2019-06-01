@@ -112,7 +112,7 @@
                                     <li style="display: flex">
                                         <label>入住人数</label>
                                         <div style="width: 200px;">
-                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childrenNum}}</span>
+                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childNum}}</span>
                                         </div>
                                     </li>
                                 </ul>
