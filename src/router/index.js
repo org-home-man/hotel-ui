@@ -92,7 +92,6 @@ function addDynamicMenuAndRoutes(userName, to, from) {
             let dynamicRoutes = addDynamicRoutes(res)
             // 处理静态组件绑定路由
             handleStaticComponent(router, dynamicRoutes)
-
             router.addRoutes(router.options.routes)
             // 保存加载状态
             store.commit('menuRouteLoaded', true)
