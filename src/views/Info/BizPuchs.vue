@@ -105,9 +105,9 @@
                                     </li>
                                     <li>
                                         <label>入离时间</label>
-                                        <input hidden v-model="commonDate"/>
-                                        <input v-model="dataForm.roomNight" hidden/>
-                                        <span>{{commonDate[0]}}  至  {{commonDate[1]}} 共 {{dataForm.roomNight}} 晚</span>
+                                        <input hidden v-model="dataForm.inDate"/>
+                                        <input hidden v-model="dataForm.outDate"/>
+                                        <span>{{dataForm.inDate}}  至  {{dataForm.outDate}} 共 {{dataForm.roomNight}} 晚</span>
                                     </li>
                                     <li style="display: flex">
                                         <label>入住人数</label>
@@ -289,10 +289,6 @@
     import KtTable from "@/views/Core/BizTable"
     import KtButton from "@/views/Core/KtButton"
     import {format,formatDate} from "@/utils/datetime"
-
-    const invoice_start = new Date();
-    const invoice_end = new Date();
-    invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 5)
     export default {
         components:{
             KtTable,
@@ -404,7 +400,6 @@
                     hotelname: null,
                     inDateStart: null,
                     outDateEnd: null,
-                    commonDate:[formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')],
                     adultNum: null,
                     childrenNum: null,
                     sPrice: null
