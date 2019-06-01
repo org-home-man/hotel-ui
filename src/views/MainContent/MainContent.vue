@@ -160,7 +160,7 @@
                 }else if(messageObj.type == "100"){
                     //心跳回应,不做操作
                     console.log(messageObj.message);
-                }else{
+                }else if(messageObj.type = "201"){
                     this.$notify.info({
                         title: this.$t('common.notice'),
                         message: messageObj.message,
