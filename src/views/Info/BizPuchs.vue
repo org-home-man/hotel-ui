@@ -64,283 +64,211 @@
         </kt-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?'新增':'编辑'" width="80%" :visible.sync="editDialogVisible" :close-on-click-modal="false">
-            <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"  :size="size":inline="true" label-position="left" >
-                <el-row >
-                    <el-col :span="18" align="left">
-                        <el-form-item  prop="provinceCode" auto-complete="off" >
-                            <el-select v-model="dataForm.provinceCode" disabled>
-                                <el-option v-for="rt in paraConfig.provinceCode" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item  prop="cityCode" auto-complete="off" >
-                            <el-select v-model="dataForm.cityCode" disabled>
-                                <el-option v-for="rt in paraConfig.cityCode" :key="rt.paraCode"
-                                           :label="$t('hotel.'+rt.paraCode)" :value="rt.paraValue1"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="commonDate">
-                            <el-date-picker disabled
-                                            v-model="filters.commonDate"
-                                            type="daterange"
-                                            :range-separator="$t('hotel.dateSep')"
-                                            value-format="yyyyMMdd"
-                                            :start-placeholder="$t('hotel.inDateStart')"
-                                            :end-placeholder="$t('hotel.outDateEnd')"
-                                            :picker-options="pickerOptions">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-form-item >
-                            <el-input style="width: 50px" v-model="dataForm.roomNight" :placeholder="$t('hotel.roomNight')"></el-input>
-                        </el-form-item>
+        <el-dialog :title="operation?'新增':'编辑'" width="70%"  style="margin-top: -120px" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 
-                    </el-col>
-                    <el-col :span="6" align="right">
-                        <el-form-item label-width="100px" :label="$t('hotel.sPrice')">
-                            <el-input  v-model="dataForm.sPrice" disabled ></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="18" align="left">
-                        <el-form-item  prop="hotelCode" >
-                            <!--<el-select v-model="dataForm.hotelCode" disabled >
-                                <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
-                                           :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"
-                                           :value="hotelName.hotelCode"></el-option>
-                            </el-select>-->
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="right">
-                        <el-form-item label-width="100px" style="margin-left: 20px" :label="$t('hotel.lastCrtTime')">
-                            <el-date-picker
-                                style="width: 188px"
-                                v-model="dataForm.lastCrtTime"
-                                align="right"
-                                type="date"
-                                :placeholder="$t('hotel.lastCrtTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row >
-                    <el-col :span="18" align="left">
-                        <el-form-item>
-                            <el-select v-model="dataForm.roomType" disabled
-                                       :placeholder="$t('hotel.roomtype.roomtype')">
-                                <el-option v-for="rs in paraConfig.roomtype" :key="rs.paraCode"
-                                           :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.adultNum')">
-                            <el-input v-model="dataForm.adultNum" :placeholder="$t('hotel.adultNum')"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.childrenNum')">
-                            <el-input v-model="dataForm.childNum" :placeholder="$t('hotel.childrenNum')"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="right" >
-                        <el-form-item :label="$t('hotel.inventory')">
-                            <el-input v-model="dataForm.inventory" disabled
-                                      :placeholder="$t('hotel.inventory')"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row >
-                    <el-col :span="18" align="left">
-                        <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr">
-                            <el-input style="width: 500px" v-model="dataForm.hotelAddr" :disabled="true" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.hotelPhone')" prop="hotelPhone">
-                            <el-input  v-model="dataForm.hotelPhone" :disabled="true" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6" align="right">
-                        <el-form-item  prop="hotelWeb">
-                            <el-input style="width: 297px" v-model="dataForm.hotelWeb" :disabled="true" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <!--酒店简介 -->
+            <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+                     :inline="true">
                 <el-row>
                     <el-col :span="24">
-                        <el-input v-show="able"  type="textarea" style="width: 90%" v-model="dataForm.introC" :autosize="{ minRows: 5, maxRows: 20}" resize="none" readonly ></el-input>
-                        <el-input v-show="!able" :label="$t('hotel.introe')" type="textarea" style="width: 90%" v-model="dataForm.introE"  resize="none"  readonly autosize></el-input>
-
+                        <el-carousel :interval="4000" type="card" height="200px">
+                            <el-carousel-item>
+                                <el-image style="width:100%;height:200px" src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
+                            </el-carousel-item>
+                        </el-carousel>
                     </el-col>
-                </el-row>
+                    <!--<el-col :span="24" v-show="roomPhoto && roomPhoto.length>0">
+                       <el-carousel style="margin-top: 20px" :interval="4000" type="card" height="200px">
+                           <el-carousel-item v-for="ph in roomPhoto" :key="ph">
+                               <el-image style="width:400px;height:200px" :src="photoUrl+ ph">
+                                   <div slot="error" class="el-image__error">
+                                       <h1 class="el-icon-picture-outline"></h1>
+                                   </div>
+                               </el-image>
+                           </el-carousel-item>
+                       </el-carousel>
+                   </el-col>-->
 
-                <!--常用信息 -->
-                <el-row style="margin: 30px 0px">
-                    <el-col :span="24">
-                        <el-collapse>
-                            <el-collapse-item>
-                                <template slot="title">
-                                    <h2>{{$t('hotel.information')}}</h2>
-                                </template>
-                                <el-row style="margin-top: 10px">
-                                    <el-col :span="24" align="center">
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iswify==1" disabled fill="#409EFF" text-color="#ffffff" true-label="1" false-label="2" :label="$t('hotel.iswify')"
-                                                         v-model="dataForm.iswify"  border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isfront==1" disabled true-label="1" false-label="2" :label="$t('hotel.isfront')"
-                                                         v-model="dataForm.isfront"  border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbarrifr==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbarrifr')"
-                                                         v-model="dataForm.isbarrifr"  border></el-checkbox>
-                                        </el-form-item>
-
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbalcony==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbalcony')"
-                                                         v-model="dataForm.isbalcony" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iskitchen==1" disabled true-label="1" false-label="2" :label="$t('hotel.iskitchen')"
-                                                         v-model="dataForm.iskitchen" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.iswindow==1" disabled true-label="1" false-label="2" :label="$t('hotel.iswindow')"
-                                                         v-model="dataForm.iswindow" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isheat==1" disabled true-label="1" false-label="2" :label="$t('hotel.isheat')"
-                                                         v-model="dataForm.isheat" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isicebox==1" disabled true-label="1" false-label="2" :label="$t('hotel.isicebox')"
-                                                         v-model="dataForm.isicebox" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isiron==1" disabled true-label="1" false-label="2" :label="$t('hotel.isiron')"
-                                                         v-model="dataForm.isiron" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isnosmk==1" disabled true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
-                                                         v-model="dataForm.isnosmk" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.islandscape==1" disabled true-label="1" false-label="2" :label="$t('hotel.islandscape')"
-                                                         v-model="dataForm.islandscape" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ishighrise==1" disabled true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
-                                                         v-model="dataForm.ishighrise" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ispark==1" disabled true-label="1" false-label="2" :label="$t('hotel.ispark')"
-                                                         v-model="dataForm.ispark" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isgym==1" disabled true-label="1" false-label="2" :label="$t('hotel.isgym')"
-                                                         v-model="dataForm.isgym" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isswmp==1" disabled true-label="1" false-label="2" :label="$t('hotel.isswmp')"
-                                                         v-model="dataForm.isswmp" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbeach==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbeach')"
-                                                         v-model="dataForm.isbeach" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ishotsp==1" disabled true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
-                                                         v-model="dataForm.ishotsp" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.ischildct==1" disabled true-label="1" false-label="2" :label="$t('hotel.ischildct')"
-                                                         v-model="dataForm.ischildct" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isroomserv==1" disabled true-label="1" false-label="2" :label="$t('hotel.isroomserv')"
-                                                         v-model="dataForm.isroomserv" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isknead==1" disabled true-label="1" false-label="2" :label="$t('hotel.isknead')"
-                                                         v-model="dataForm.isknead" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.islounge==1" disabled true-label="1" false-label="2" :label="$t('hotel.islounge')"
-                                                         v-model="dataForm.islounge" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.issuper==1" disabled true-label="1" false-label="2" :label="$t('hotel.issuper')"
-                                                         v-model="dataForm.issuper" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isbus==1" disabled true-label="1" false-label="2" :label="$t('hotel.isbus')"
-                                                         v-model="dataForm.isbus" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.istrafic==1" disabled true-label="1" false-label="2" :label="$t('hotel.istrafic')"
-                                                         v-model="dataForm.istrafic" border></el-checkbox>
-                                        </el-form-item>
-                                        <el-form-item>
-                                            <el-checkbox v-show="dataForm.isrestau==1" disabled true-label="1" false-label="2" :label="$t('hotel.isrestau')"
-                                                         v-model="dataForm.isrestau" border></el-checkbox>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-collapse-item>
-                        </el-collapse>
-                    </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="24">
-                        <el-form-item :label="$t('hotel.representName')" prop="representName" auto-complete="off">
-                            <el-input v-model="dataForm.pname"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.passportNo')" prop="passportNo" auto-complete="off">
-                            <el-input v-model="dataForm.passport"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.birthday')" prop="birthday" auto-complete="off">
-                            <el-input v-model="dataForm.birth"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.contactPhone')" prop="contactPhone" auto-complete="off">
-                            <el-input v-model="dataForm.phone"></el-input>
-                        </el-form-item>
+                    <el-col :span="11">
+                        <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
+                            <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
+                                <label style="font-size: 16px;color: #212121;">基本信息</label>
+                            </el-col>
+                            <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
+                                <ul class="hotel-base">
+                                    <li>
+                                        <label>所在区域</label>
+                                        <input hidden v-model="dataForm.provinceCode"/>
+                                        <span>{{resolveRoomTypeName(provinceCode,dataForm.provinceCode)}}</span>
+                                        <span>{{resolveRoomTypeName(cityCode,dataForm.cityCode)}}</span>
+                                    </li>
+                                    <li>
+                                        <label>入离时间</label>
+                                        <input hidden v-model="commonDate"/>
+                                        <input v-model="dataForm.roomNight" hidden/>
+                                        <span>{{commonDate[0]}}  至  {{commonDate[1]}} 共 {{dataForm.roomNight}} 晚</span>
+                                    </li>
+                                    <li style="display: flex">
+                                        <label>入住人数</label>
+                                        <div style="width: 200px;">
+                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childrenNum}}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </el-col>
+                        </el-row>
+                        <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
+                            <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
+                                <label style="font-size: 16px;color: #212121;">酒店信息</label>
+                            </el-col>
+                            <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
+                                <ul class="hotel-base">
+                                    <li>
+                                        <label>{{$t('hotel.hotelAddr')}}</label>
+                                        <input hidden v-model="dataForm.hotelAddr"/>
+                                        <span>{{dataForm.hotelAddr}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.hotelPhone')}}</label>
+                                        <input hidden v-model="dataForm.hotelPhone"/>
+                                        <span>{{dataForm.hotelPhone}}</span>
+                                    </li>
+                                    <li>
+                                        <label>酒店网站</label>
+                                        <input hidden v-model="dataForm.hotelWeb"/>
+                                        <span>{{dataForm.hotelWeb}}</span>
+                                    </li>
+                                    <li>
+                                        <label>房间费用</label>
+                                        <input hidden v-model="dataForm.sPrice"/>
+                                        <span>{{dataForm.sPrice}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.inventory')}}</label>
+                                        <input hidden v-model="dataForm.inventory"/>
+                                        <span>{{dataForm.inventory}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{able?$t('hotel.introc'):$t('hotel.introe')}}</label>
+                                        <input hidden v-model="dataForm.introC"/>
+                                        <input hidden v-model="dataForm.introE"/>
+                                        <span>{{able?dataForm.introC:dataForm.introE}}</span>
+                                    </li>
+                                </ul>
+                            </el-col>
+                        </el-row>
+                        <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
+                            <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
+                                <label style="font-size: 16px;color: #212121;">房间信息</label>
+                            </el-col>
+                            <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
+                                <ul class="hotel-base">
+                                    <li>
+                                        <label>{{$t('hotel.roomtype.roomtype')}}</label>
+                                        <input hidden v-model="dataForm.roomType"/>
+                                        <span>{{resolveRoomTypeName(roomType,dataForm.roomType)}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.roomstyle.roomstyle')}}</label>
+                                        <input hidden v-model="dataForm.roomStyle"/>
+                                        <span>{{resolveRoomTypeName(roomStyle,dataForm.roomStyle)}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.bedtype.bedtype')}}</label>
+                                        <input hidden v-model="dataForm.bedType"/>
+                                        <span>{{resolveRoomTypeName(bedType,dataForm.bedType)}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.breaktype.breaktype')}}</label>
+                                        <input hidden v-model="dataForm.breakType"/>
+                                        <span>{{resolveRoomTypeName(breakType,dataForm.breakType)}}</span>
+                                    </li>
+                                </ul>
+                            </el-col>
+                        </el-row>
+                        <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
+                            <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
+                                <label style="font-size: 16px;color: #212121;">{{$t('hotel.information')}}</label>
+                            </el-col>
+                            <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;padding: 0 10px;">
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.iswify==1">{{$t('hotel.iswify')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isfront==1">{{$t('hotel.isfront')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isbarrifr==1">{{$t('hotel.isbarrifr')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isbalcony==1">{{$t('hotel.isbalcony')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.iskitchen==1">{{$t('hotel.iskitchen')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.iswindow==1">{{$t('hotel.iswindow')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isheat==1">{{$t('hotel.isheat')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isicebox==1">{{$t('hotel.isicebox')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isiron==1">{{$t('hotel.isiron')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isnosmk==1">{{$t('hotel.isnosmk')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.ishighrise==1">{{$t('hotel.ishighrise')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.ispark==1">{{$t('hotel.ispark')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isgym==1">{{$t('hotel.isgym')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isswmp==1">{{$t('hotel.isswmp')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isbeach==1">{{$t('hotel.isbeach')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.ishotsp==1">{{$t('hotel.ishotsp')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.ischildct==1">{{$t('hotel.ischildct')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isroomserv==1">{{$t('hotel.isroomserv')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isknead==1">{{$t('hotel.isknead')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.islounge==1">{{$t('hotel.islounge')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.issuper==1">{{$t('hotel.issuper')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isbus==1">{{$t('hotel.isbus')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.istrafic==1">{{$t('hotel.istrafic')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isrestau==1">{{$t('hotel.isrestau')}}</el-tag>
+                            </el-col>
+                        </el-row>
                     </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item :label="$t('hotel.contactEmail')" prop="contactEmail" auto-complete="off">
-                            <el-input v-model="dataForm.emailAddress"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.adultNum1')" prop="adultNum1" auto-complete="off">
-                            <el-input v-model="dataForm.adultNum"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.children612')" prop="children612" auto-complete="off">
-                            <el-input v-model="dataForm.bnum"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.children46')" prop="children46" auto-complete="off">
-                            <el-input v-model="dataForm.cnum"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item :label="$t('hotel.children04')" prop="children04" auto-complete="off">
-                            <el-input v-model="dataForm.children04"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.roomNum')" prop="roomNum" auto-complete="off">
-                            <el-input v-model="dataForm.roomNum"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.totalPrice')" prop="totalPrice" auto-complete="off">
-                            <el-input v-model="dataForm.totalSAmount"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.reMark')" prop="reMark" auto-complete="off">
-                            <el-input v-model="dataForm.remark"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
+                    <el-col :span="2"></el-col>
+                    <el-col :span="11">
+                        <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
+                            <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;text-align: center;">
+                            </el-col>
+                            <el-col :span="18" align="center">
+                                <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pName" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.pName}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.passportNo')" prop="passport" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.passport}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.contactEmail')" prop="emailAddress">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.emailAddress}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.phone}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="pName" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.lastCrtTime}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.birth}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.children612')" prop="children612">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.children612}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.children46')" prop="children46" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.children46}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children4" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.children4}}</span>
+                                </el-form-item>
+                                <el-form-item :label="$t('hotel.roomNum')" label-width="120px" prop="roomNum" >
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.roomNum}}</span>
+                                </el-form-item>
+                                <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;">{{dataForm.remark}}</span>
+                                </el-form-item>
+                                <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" prop="totalPrice">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalSAmount}}</span>
+                                </el-form-item>
 
-
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                </el-row>
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer" align="center">
                 <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
                 <el-button :size="size" type="primary" @click.native="submitConfirmForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
             </div>
@@ -401,6 +329,16 @@
                 operation: false, // true:新增, false:编辑
                 editDialogVisible: false, // 新增编辑界面是否显示
                 editLoading: false,
+                provinceCode: [], //地区编码
+                cityCode: [], //城市编码
+                commonDate:[],
+                roomPhoto:[],
+                hotelType: [], //酒店类型
+                hotelStar:[], //酒店星级
+                roomStyle:[], //房间样式
+                roomType:[], //房间类型
+                breakType: [], //餐饮条件
+                bedType: [], //床铺类型
                 dataFormRules: {},
                 // 新增编辑界面数据
                 dataForm: {
@@ -422,6 +360,7 @@
                     remark: null,
                     status: null,
                     provinceCode: '',
+                    cityCode:'',
                     hotelName: '',
                     inventory: '',
                     hotelCode: null,
@@ -467,7 +406,7 @@
                     outDateEnd: null,
                     commonDate:[formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')],
                     adultNum: null,
-                    childNum: null,
+                    childrenNum: null,
                     sPrice: null
                 },
                 paraConfig: [],
@@ -476,7 +415,18 @@
                         return time.getTime() < Date.now() - 8.64e7
                     }
                 },
-                states:[]
+                states:[],
+                pickerOptions2:{
+                    disabledDate : (time) =>{
+                        if(this.commonDate && this.commonDate.length>0){
+                            let beginDateVal = this.commonDate[0];
+                            let startDate = new Date(beginDateVal.substr(0,4),beginDateVal.substr(4,2)-1,beginDateVal.substr(6,2))
+                            return time.getTime() < Date.now() - 8.64e7 || time.getTime() > startDate.getTime()
+                        }
+
+                        return time.getTime() > Date.now()
+                    }
+                },
             }
         },
         methods: {
@@ -590,5 +540,17 @@
 </script>
 
 <style scoped>
-
+    .hotel-base{
+        margin: 0;
+        padding: 0;
+        color: #212121;
+    }
+    .hotel-base>li{
+        padding: 10px 20px;
+        list-style: none;
+    }
+    .hotel-base>li>label{
+        width: 80px;
+        display: inline-block;
+    }
 </style>
