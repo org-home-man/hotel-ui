@@ -34,6 +34,7 @@
 
 <script>
     import {generateTitle} from '@/utils/i18n'
+    import {clearToken} from "@/utils/token"
     import {baseUrl} from "@/utils/global"
 
     export default {
@@ -48,7 +49,8 @@
                     type:null,
                     token:null,
                     message:null
-                }
+                },
+                notifyArr:[]
             }
         },
         computed: {
@@ -139,12 +141,27 @@
             },            //各种问题导致的 连接关闭
             webSocketOnMessage(data){
                 this.heatBeat();      //收到消息会刷新心跳检测，如果一直收到消息，就推迟心跳发送
-                this.$notify({
-                    title: this.$t('messTitle'),
-                    message: data.data,
-                    duration:0,
-                    position: 'bottom-right'
-                })
+                let messageObj = JSON.parse(data.data);
+                if(messageObj.type == "101"){
+                    //跳到登录页
+                    clearToken();
+                    // window.location.href = "/";
+                    this.$router.push("/login");
+                    this.$notify({
+                        title: this.$t('common.warning'),
+                        message: this.$t('action.'+messageObj.message),
+                        duration:0,
+                        type: 'warning',
+                        position: 'top-left'
+                    })
+                }else{
+                    this.$notify.info({
+                        title: this.$t('common.notice'),
+                        message: messageObj.message,
+                        duration:0,
+                        position: 'bottom-right'
+                    })
+                }
             },    //数据接收
             webSocketSend(data){
                 this.websock.send(JSON.stringify(data));

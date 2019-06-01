@@ -58,6 +58,7 @@
 
 <script>
 import Backup from "@/views/Backup/Backup"
+import {clearToken} from "@/utils/token"
 import PasswordUp from "@/views/PasswordUp/PasswordUp"
 
 export default {
@@ -92,9 +93,7 @@ export default {
 
         // store.state.app.menuRouteLoaded = false
         this.$api.login.logout().then((res) => {
-            sessionStorage.removeItem("sessionId");
-            sessionStorage.removeItem("user");
-            // this.$router.push("/login")
+            clearToken();
             window.location.href = "/";
           }).catch(function(res) {
         })

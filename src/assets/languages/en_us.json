@@ -29,7 +29,9 @@
         "tabsCloseCurrentHandle": "关闭当前标签",
         "tabsCloseOtherHandle": "关闭其它标签",
         "tabsCloseAllHandle": "关闭全部标签",
-        "tabsRefreshCurrentHandle": "刷新当前标签"
+        "tabsRefreshCurrentHandle": "刷新当前标签",
+        "notice": "Notice",
+        "warning": "Warning"
     },
     "action": {
         "operation": "Operation",
@@ -130,7 +132,8 @@
         "loginExpired": "登录已过期",
         "roleNameExist": "角色名存在",
         "messNoReadTitle": "New Order",
-        "messTitle": "New Order"
+        "messTitle": "New Order",
+        "removeLogin": "账号已在别处登录"
     },
     "user": {
         "id": "ID",
