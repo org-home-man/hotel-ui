@@ -279,7 +279,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('table.sAverageSprice')">
+                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('hotel.sAverageSprice')">
                     </el-table-column>
                     <el-table-column :label="$t('action.operation')" fixed="right" align="center">
                         <template slot-scope="scope">
