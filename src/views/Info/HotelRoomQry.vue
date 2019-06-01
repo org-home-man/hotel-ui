@@ -352,7 +352,7 @@
                                             </el-form-item>
 
                                             <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="children46"  style="margin-bottom: 6px;margin-right: 0;">
-                                                <el-input-number v-model="dataForm.childrenNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
+                                                <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
                                         </div>
                                     </li>
