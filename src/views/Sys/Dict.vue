@@ -42,7 +42,7 @@
                             <el-table :data="childDictData.rows" :highlight-current-row="true"
                                       :empty-text="$t('action.noData')" v-loading="loading" height="450px"
                                       :element-loading-text="$t('action.loading')" :border="false" :row-class-name="tableRowClassName"
-                                      :show-overflow-tooltip="true" size="mini" align="left">
+                                      :show-overflow-tooltip="true" align="left">
                                 <el-table-column v-for="column in childDictColumns" header-align="center" align="center"
                                                  :prop="column.prop" :label="$t('table.'+column.label)" :key="column.prop"
                                                  :sortable="column.sortable==null?true:column.sortable">

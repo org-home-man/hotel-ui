@@ -5,7 +5,7 @@
                   :empty-text="$t('action.noData')"
                   @current-change="handleCurrentChange" @row-click="handleRowClick" v-loading="loading"
                   :element-loading-text="$t('action.loading')" :border="border" :row-class-name="tableRowClassName"
-                  :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;">
+                  :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;">
             <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
 
             <el-table-column prop="id" header-align="center" align="center" :label="$t('table.id')">

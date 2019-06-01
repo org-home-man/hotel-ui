@@ -16,7 +16,7 @@
 	</div>
 	<!--表格树内容栏-->
       <div class="table_room_container">
-    <el-table :data="tableTreeDdata" size="mini" style="width: 100%;" :row-class-name="tableRowClassName"
+    <el-table :data="tableTreeDdata" style="width: 100%;" :row-class-name="tableRowClassName"
       v-loading="loading" :element-loading-text="$t('action.loading')">
       <el-table-column
         prop="id" header-align="center" align="center" width="80" :label="$t('dept.id')">
