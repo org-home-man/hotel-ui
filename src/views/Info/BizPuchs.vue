@@ -470,6 +470,14 @@
                 this.operation = false
                 console.log(params.index)
                 this.dataForm = Object.assign({}, params.index)
+                if (this.dataForm.status != "1")
+                {
+
+                    this.$message({message: "只有未确认订单才能编辑", type: 'error'})
+                    this.editLoading = false
+                    this.$refs['dataForm'].resetFields()
+                    this.editDialogVisible = false
+                }
             },
             // 编辑
             submitConfirmForm: function () {
