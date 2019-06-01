@@ -1,7 +1,7 @@
 <template>
   <div class="page-container" style="margin-bottom: 50px">
 	<!--工具栏-->
-	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="pageRequest" :size="size">
             <el-form-item>
                 <el-input v-model="pageRequest.name" :placeholder="$t('table.name')"></el-input>
@@ -14,8 +14,9 @@
             </el-form-item>
 		</el-form>
 	</div>
+      <div class="table_room_container">
       <!--表格树内容栏-->
-      <el-table :data="pageResult.rows" stripe size="mini" style="width: 100%;"
+      <el-table :data="pageResult.rows" style="width: 100%;" :row-class-name="tableRowClassName" highlight-current-row
                 v-loading="loading" :element-loading-text="$t('action.loading')" @current-change="handleRoleSelectChange">
           <el-table-column
               prop="id" header-align="center" align="center" width="80" :label="$t('table.id')">
@@ -49,6 +50,7 @@
               prop="roleId" header-align="center" align="center" v-if="show">
           </el-table-column>
       </el-table>
+      </div>
 	<!-- </el-col> -->
 	<!--新增编辑界面-->
 	<el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
@@ -314,6 +316,12 @@ export default {
 				}
 			});
 		},
+        tableRowClassName({row, rowIndex}) {
+            if (rowIndex % 2 !=0) {
+                return 'success-row';
+            }
+            return '';
+        },
 		// 角色菜单授权提交
 		submitAuthForm() {
 			let roleId = this.selectRole.id
@@ -372,11 +380,25 @@ export default {
 	margin-top: 10px;
 }
 .menu-header {
+    margin-top: 20px;
 	padding-left: 8px;
 	padding-bottom: 5px;
 	text-align: left;
 	font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 	color: rgb(20, 89, 121);
 	
+}
+.el-tree {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+.table_room_container{
+     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+     margin-top: 20px
+ }
+.query_room_container{
+    width: 60%;
+    padding-top:10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
 </style>

@@ -37,11 +37,12 @@
                     </el-row>
                     <el-row>
                         <el-col :span="24">
+                            <div class="table_room_container">
                             <!--表格栏-->
                             <el-table :data="childDictData.rows" :highlight-current-row="true"
                                       :empty-text="$t('action.noData')" v-loading="loading" height="450px"
-                                      :element-loading-text="$t('action.loading')" :border="false" :stripe="true"
-                                      :show-overflow-tooltip="true" size="mini" align="left">
+                                      :element-loading-text="$t('action.loading')" :border="false" :row-class-name="tableRowClassName"
+                                      :show-overflow-tooltip="true" align="left">
                                 <el-table-column v-for="column in childDictColumns" header-align="center" align="center"
                                                  :prop="column.prop" :label="$t('table.'+column.label)" :key="column.prop"
                                                  :sortable="column.sortable==null?true:column.sortable">
@@ -62,6 +63,7 @@
                                                :current-page="pageRequest.page" :page-size="pageRequest.rows"
                                                :total="childDictData.total==null?0:childDictData.total" style="float:right;">
                                 </el-pagination>
+                            </div>
                             </div>
                         </el-col>
                     </el-row>
@@ -307,6 +309,12 @@
             dateFormat: function (row, column, cellValue, index) {
                 return format(row[column.property])
             },
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex % 2 !=0) {
+                    return 'success-row';
+                }
+                return '';
+            },
             // 换页刷新
             refreshPageRequest: function (pageNum) {
                 this.pageRequestChild.page = pageNum;
@@ -350,5 +358,9 @@
     height: 50px;
     margin-top: 10px;
     right: 20px;
+}
+.table_room_container{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    margin-top: 20px
 }
 </style>

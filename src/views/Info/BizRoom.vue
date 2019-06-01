@@ -1,7 +1,7 @@
 <template>
-    <div class="container" style="width:99%;margin-top:-25px;">
+    <div class="container room_container">
         <!--工具栏-->
-        <div class="toolbar" style="float:left;padding-top:30px;padding-left:20px;">
+        <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
             <el-form :inline="true" :model="filters" :size="size" ref="filters">
                 <el-row>
                     <el-col :span="8">
@@ -1496,6 +1496,12 @@
         width:180px;
         text-align: left;
     }
+    .room_container{
+        width:100%;
+        /*margin-top:-25px;*/
+        margin-bottom: 30px;
+        /*background: #FFFFFF;*/
+    }
     .el-input {
         width:180px;
     }
@@ -1507,5 +1513,10 @@
     }
     .textArea{
         width:620px;
+    }
+    .query_room_container{
+        width: 60%;
+        padding-top:10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
 </style>

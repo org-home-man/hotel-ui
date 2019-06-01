@@ -1,16 +1,16 @@
 <template>
-  <div style="height: auto">
+  <div class="table_room_container" style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" >
+          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :row-class-name="tableRowClassName"
+          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
         <!--:prop="column.prop" :label="$t('user.'+column.label)" :width="column.width" :min-width="column.minWidth"-->
         <!--:fixed="column.fixed" :key="column.prop" :type="column.type" :formatter="column.formatter"-->
         <!--:sortable="column.sortable==null?true:column.sortable">-->
       <!--</el-table-column>-->
-      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')" width="105">
+      <el-table-column prop="hotelCode" header-align="center" align="center" :label="$t('hotel.hotelCode')" width="120">
       </el-table-column>
       <el-table-column prop="countryCode" header-align="center"align="center" :label="$t('hotel.countryCode.countryCode')">
       </el-table-column>
@@ -204,12 +204,20 @@ export default {
         }
         this.$emit('handleDelete', {params:params, callback:callback})
 			}).catch(() => {
+                // this.loading = false
+			}).finally(()=>{
                 this.loading = false
-			})
+            })
 		},
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
-    }
+    },
+      tableRowClassName({row, rowIndex}) {
+          if (rowIndex % 2 !=0) {
+              return 'success-row';
+          }
+          return '';
+      }
   },
   mounted() {
     this.refreshPageRequest(1)
@@ -219,5 +227,9 @@ export default {
 </script>
 
 <style scoped>
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
+    }
 
 </style>
