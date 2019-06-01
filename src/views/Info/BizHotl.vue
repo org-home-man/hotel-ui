@@ -43,16 +43,17 @@
                                            :label="hs.name" :value="hs.code"></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.search')" perms="sys:bizHotl:view" type="primary"
+                                       @click="findPage(null)"/>
+                        </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.add')" perms="sys:bizHotl:add" type="primary" @click="handleAdd"/>
+                        </el-form-item>
                     </el-col>
                 </el-row>
 
-                <el-form-item>
-                    <kt-button :label="$t('action.search')" perms="sys:bizHotl:view" type="primary"
-                               @click="findPage(null)"/>
-                </el-form-item>
-                <el-form-item>
-                    <kt-button :label="$t('action.add')" perms="sys:bizHotl:add" type="primary" @click="handleAdd"/>
-                </el-form-item>
+
             </el-form>
         </div>
         <!--表格内容栏-->
