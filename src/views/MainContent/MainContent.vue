@@ -34,7 +34,7 @@
 
 <script>
     import {generateTitle} from '@/utils/i18n'
-    import {clearToken} from "@/utils/token"
+    import {clearToken,getToken} from "@/utils/token"
     import {baseUrl} from "@/utils/global"
 
     export default {
@@ -104,6 +104,9 @@
             },
             // tabs, 关闭全部
             tabsCloseAllHandle() {
+                if(this.mainTabs.length===1){
+                    return;
+                }
                 this.mainTabs = []
                 this.$router.push("/info/hotelRoomQry")
             },
@@ -126,7 +129,7 @@
             },             //初始化weosocket
             webSocketOnOpen(){
                 console.log('连接成功' + new Date().getTime());
-                this.message.type = 101;
+                this.message.type = "101";
                 this.message.token = sessionStorage.getItem('sessionId');
                 this.webSocketSend(this.message)
                 this.heatBeat();
@@ -142,7 +145,7 @@
             webSocketOnMessage(data){
                 this.heatBeat();      //收到消息会刷新心跳检测，如果一直收到消息，就推迟心跳发送
                 let messageObj = JSON.parse(data.data);
-                if(messageObj.type == "101"){
+                if(messageObj.type == "102"){
                     //跳到登录页
                     clearToken();
                     // window.location.href = "/";
@@ -154,6 +157,9 @@
                         type: 'warning',
                         position: 'top-left'
                     })
+                }else if(messageObj.type == "100"){
+                    //心跳回应,不做操作
+                    console.log(messageObj.message);
                 }else{
                     this.$notify.info({
                         title: this.$t('common.notice'),
@@ -181,7 +187,7 @@
                 this.timeoutObj && clearTimeout(this.timeoutObj);
                 this.serverTimeoutObj && clearTimeout(this.serverTimeoutObj);
                 this.timeoutObj = setTimeout(()=>{
-                    this.webSocketSend({type:'1',message:'心跳检测'})   //根据后台要求发送
+                    this.webSocketSend({type:'100',message:getToken()})   //根据后台要求发送
                     this.serverTimeoutObj = setTimeout(()=> {
                         this.websock.close();       //如果  5秒之后我们没有收到 后台返回的心跳检测数据 断开socket，断开后会启动重连机制
                     }, 5000);
