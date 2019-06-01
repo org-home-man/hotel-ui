@@ -12,7 +12,7 @@
         <span class="navbar">
         <el-menu class="el-menu-demo"
         :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal" @select="selectNavBar()">
-            <el-menu-item index="1" @click="$router.push('/')">{{$t('common.recommondHouse')}}  </el-menu-item>
+            <el-menu-item index="1" @click="$router.push({path:'/info/BizHotelOrder'})">{{$t('common.recommondHouse')}}  </el-menu-item>
             <el-menu-item index="2" @click="">{{$t("common.lowPriceHouse")}}</el-menu-item>
             <el-menu-item index="3" @click="">{{$t("common.maxCountHouse")}}</el-menu-item>
         <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->

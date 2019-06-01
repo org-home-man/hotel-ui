@@ -1,5 +1,5 @@
 <template>
-    <div style="height: auto">
+    <div class="table_room_container" style="">
         <!--表格栏-->
         <el-table :data="data.rows" ref="table" :highlight-current-row="highlightCurrentRow" @row-click="selectRow"
                   @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')"
@@ -200,5 +200,9 @@
 <style>
     thead .el-table-column--selection .cell {
         display: none;
+    }
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
     }
 </style>

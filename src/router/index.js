@@ -4,6 +4,7 @@ import Login from '@/views/Login'
 import NotFound from '@/views/Error/404'
 import Home from '@/views/Home'
 import HotelRoomQry from '@/views/Info/HotelRoomQry'
+import BizHotelOrder from '@/views/Info/BizHotelOrder'
 import Generator from '@/views/Generator/Generator'
 import i18n from '@/i18n'
 import api from '@/http/api'
@@ -119,6 +120,14 @@ function handleStaticComponent(router, dynamicRoutes) {
         meta: {
             icon: 'fa fa-home fa-lg',
             index: 0
+        }
+    }
+    router.options.routes[0].children[1] = {
+        path: 'info/bizHotelOrder',
+        name: i18n.t('sys.orderCrt'),
+        component: BizHotelOrder,
+        meta: {
+            index: 1
         }
     }
     router.options.routes[0].children = router.options.routes[0].children.concat(dynamicRoutes)

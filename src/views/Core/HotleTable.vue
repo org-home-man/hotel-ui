@@ -1,8 +1,8 @@
 <template>
-  <div style="height: auto">
+  <div class="table_room_container" style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
+          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :row-class-name="tableRowClassName"
           :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
@@ -209,7 +209,13 @@ export default {
 		},
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
-    }
+    },
+      tableRowClassName({row, rowIndex}) {
+          if (rowIndex % 2 !=0) {
+              return 'success-row';
+          }
+          return '';
+      }
   },
   mounted() {
     this.refreshPageRequest(1)
@@ -219,5 +225,9 @@ export default {
 </script>
 
 <style scoped>
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
+    }
 
 </style>

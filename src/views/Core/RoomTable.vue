@@ -1,8 +1,8 @@
 <template>
-  <div style="height: auto">
+  <div class="table_room_container" style="min-width: 1300px;">
     <!--表格栏-->
-    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
+    <el-table  :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
+          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
           :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" :height="maxHeight">
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->
@@ -55,100 +55,6 @@
 
         </template>
       </el-table-column>
-
-
-      <!--<el-table-column prop="hotelCode" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-        <!--<el-table-column prop="provinceCode" header-align="center" align="center" v-if="show">-->
-        <!--</el-table-column>-->
-        <!--<el-table-column prop="cityCode" header-align="center" align="center" v-if="show">-->
-        <!--</el-table-column>-->
-      <!--<el-table-column prop="roomType" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="bedType" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="roomStyle" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="breakType" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="roomArea" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="introC" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="introE" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="photo" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="room_stock" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="recommended" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="iswify" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isfront" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isbarrifr" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isbalcony" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="iskitchen" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="iswindow" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isheat" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isicebox" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isiron" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isnosmk" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="islandscape" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="ishighrise" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="ispark" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isgym" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isswmp" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isbeach" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="ishotsp" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="ischildct" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isroomserv" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isknead" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="islounge" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="issuper" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isbus" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="istrafic" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="isrestau" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="autoClose" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="tprice" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="sprice" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="scheduledays" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="favorableprice" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="evenlive" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-      <!--<el-table-column prop="present" header-align="center" align="center" v-if="show">-->
-      <!--</el-table-column>-->
-
-
 
     </el-table>
     <!--分页栏-->
@@ -304,7 +210,13 @@ export default {
 		},
     localLanguageLoad:function () {
       this.language={lge:this.$i18n.locale}
-    }
+    },
+      tableRowClassName({row, rowIndex}) {
+          if (rowIndex % 2 !=0) {
+              return 'success-row';
+          }
+          return '';
+      }
   },
   mounted() {
     this.refreshPageRequest(1)
@@ -314,5 +226,10 @@ export default {
 </script>
 
 <style scoped>
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
+    }
+
 
 </style>
