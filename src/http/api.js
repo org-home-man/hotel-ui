@@ -14,6 +14,7 @@ import * as hotelArea from './moudules/hotelArea'
 import * as sysParaConfig from './moudules/sysParaConfig'
 import * as hotelRoom from './moudules/hotelRoom'
 import * as bizPuchs from './moudules/bizPuchs'
+import * as socketMess from './moudules/message'
 
 // 默认全部导出
 export default {
@@ -29,5 +30,6 @@ export default {
     sysParaConfig,
     hotelArea,
     hotelRoom,
-    bizPuchs
+    bizPuchs,
+    socketMess
 }

@@ -34,10 +34,22 @@
 
 <script>
     import {generateTitle} from '@/utils/i18n'
+    import {baseUrl} from "@/utils/global"
 
     export default {
         data() {
-            return {}
+            return {
+                webSocket : null,
+                lockReconnect: false,
+                reconnectData:null,
+                timeoutObj:null,
+                timeout:4 * 60 * 1000, //1分钟
+                message:{
+                    type:null,
+                    token:null,
+                    message:null
+                }
+            }
         },
         computed: {
             mainTabs: {
@@ -91,7 +103,7 @@
             // tabs, 关闭全部
             tabsCloseAllHandle() {
                 this.mainTabs = []
-                this.$router.push("/")
+                this.$router.push("/info/hotelRoomQry")
             },
             // tabs, 刷新当前
             tabsRefreshCurrentHandle() {
@@ -100,7 +112,74 @@
                 this.$nextTick(() => {
                     this.$router.push({name: tempTabName})
                 })
-            }
+            },
+            initWebSocket(){
+                console.log('启动中')
+                let wsUrl = (baseUrl+"/websocket/20").replace("http","ws");
+                this.websock = new WebSocket(wsUrl);
+                this.websock.onopen = this.webSocketOnOpen;          //连接成功
+                this.websock.onmessage = this.webSocketOnMessage;    //广播成功
+                this.websock.onerror = this.webSocketOnError;        //连接断开，失败
+                this.websock.onclose = this.webSocketClose;          //连接关闭
+            },             //初始化weosocket
+            webSocketOnOpen(){
+                console.log('连接成功' + new Date().getTime());
+                this.message.type = 101;
+                this.message.token = sessionStorage.getItem('sessionId');
+                this.webSocketSend(this.message)
+                this.heatBeat();
+            },           //连接成功
+            webSocketOnError(){
+                console.log('连接失败')
+                this.reconnect();
+            },          //连接失败
+            webSocketClose(){
+                console.log('断开连接');
+                this.reconnect();
+            },            //各种问题导致的 连接关闭
+            webSocketOnMessage(data){
+                this.heatBeat();      //收到消息会刷新心跳检测，如果一直收到消息，就推迟心跳发送
+                this.$notify({
+                    title: this.$t('messTitle'),
+                    message: data.data,
+                    duration:0,
+                    position: 'bottom-right'
+                })
+            },    //数据接收
+            webSocketSend(data){
+                this.websock.send(JSON.stringify(data));
+            },         //数据发送
+            reconnect(){
+                if(this.lockReconnect){       //这里很关键，因为连接失败之后之后会相继触发 连接关闭，不然会连接上两个 WebSocket
+                    return
+                }
+                this.lockReconnect = true;
+                this.reconnectData && clearTimeout(this.reconnectData);
+                this.reconnectData = setTimeout(()=>{
+                    this.initWebSocket();
+                    this.lockReconnect = false;
+                },5000)
+            },
+            heatBeat(){
+                this.timeoutObj && clearTimeout(this.timeoutObj);
+                this.serverTimeoutObj && clearTimeout(this.serverTimeoutObj);
+                this.timeoutObj = setTimeout(()=>{
+                    this.webSocketSend({type:'1',message:'心跳检测'})   //根据后台要求发送
+                    this.serverTimeoutObj = setTimeout(()=> {
+                        this.websock.close();       //如果  5秒之后我们没有收到 后台返回的心跳检测数据 断开socket，断开后会启动重连机制
+                    }, 5000);
+                }, this.timeout)
+            },               //心跳检测
+        },
+        created() {
+            this.initWebSocket();
+        },
+        destroyed() {
+            this.lockReconnect = true;
+            this.websock.close()                   //离开路由之后断开websocket连接
+            clearTimeout(this.reconnectData);      //离开清除 timeout
+            clearTimeout(this.timeoutObj);         //离开清除 timeout
+            clearTimeout(this.serverTimeoutObj);   //离开清除 timeout
         }
     }
 </script>

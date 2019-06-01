@@ -67,7 +67,7 @@
 <script>
     import {mapState} from 'vuex'
     import {baseUrl} from '../utils/global'
-    import Cookies from "js-cookie"
+    import {setToken,setUser} from "@/utils/token"
     import ThemePicker from "@/components/ThemePicker"
     import LangSelector from "@/components/LangSelector"
 
@@ -113,14 +113,16 @@
                 }
                 this.$api.login.login(this.loginForm).then((res) => {
 
-                    Cookies.set('token', res.token) // 放置token到Cookie
-                    sessionStorage.setItem('user', userInfo.account) // userInfo保存用户到本地会话
-                    this.$store.commit('menuRouteLoaded', false) // 要求重新加载导航菜单
-
-                    this.$router.push('/info/hotelRoomQry')  // 登录成功，跳转到主页
-                }).finally(() => {
+                    // sessionStorage.setItem('sessionId',res.token); // 放置token到Cookie
+                    // sessionStorage.setItem('user', userInfo.account);// userInfo保存用户到本地会话
+                    setToken(res.token);
+                    setUser(userInfo.account);
+                    this.$store.commit('menuRouteLoaded', false); // 要求重新加载导航菜单
+                    this.$router.push('/info/hotelRoomQry'); // 登录成功，跳转到主页
                     this.loading = false;
-                });
+                },() =>{
+                    this.loading = false;
+                })
             },
             refreshCaptcha: function () {
                 this.loginForm.src = this.global.baseUrl + "/captcha.jpg?t=" + new Date().getTime();
@@ -137,31 +139,6 @@
                 lang === '' ? 'zh_cn' : lang
                 sessionStorage.setItem("locale",lang);
                 this.$i18n.locale = lang;
-            },
-            initWebSocket(){ //初始化weosocket
-                const wsUrl = baseUrl.replace("http","ws") + "/websocket/" + sessionStorage.getItem("user");
-                this.websock = new WebSocket(wsUrl);
-                this.websock.onmessage = this.webSocketOnMessage;
-                this.websock.onopen = this.webSocketOnOpen;
-                this.websock.onerror = this.webSocketOnError;
-                this.websock.onclose = this.webSocketClose;
-            },
-            webSocketOnOpen(){ //连接建立之后执行send方法发送数据
-                console.log("Socket 已打开");
-            },
-            webSocketOnError(){//连接建立失败重连
-                this.initWebSocket();
-            },
-            webSocketOnMessage(msg){ //数据接收
-                // const redata = JSON.parse(msg.data);
-                console.log(redata.data);
-                //发现消息进入    开始处理前端触发逻辑
-            },
-            webSocketSend(Data){//数据发送
-                this.websock.send(Data);
-            },
-            webSocketClose(e){  //关闭
-                console.log('断开连接',e);
             }
 
         },

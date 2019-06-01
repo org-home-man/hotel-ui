@@ -24,5 +24,11 @@
         left: 0px;
         right: 0px;
         height: 100%;
+    }.el-table .warning-row {
+         background: #dbf6fa;
+     }
+
+    .el-table .success-row {
+        background: #dbf6fa;
     }
 </style>

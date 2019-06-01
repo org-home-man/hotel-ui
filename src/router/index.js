@@ -4,6 +4,7 @@ import Login from '@/views/Login'
 import NotFound from '@/views/Error/404'
 import Home from '@/views/Home'
 import HotelRoomQry from '@/views/Info/HotelRoomQry'
+import BizHotelOrder from '@/views/Info/BizHotelOrder'
 import Generator from '@/views/Generator/Generator'
 import i18n from '@/i18n'
 import api from '@/http/api'
@@ -73,13 +74,7 @@ router.beforeEach((to, from, next) => {
 function addDynamicMenuAndRoutes(userName, to, from) {
     // 处理IFrame嵌套页面
     handleIFrameUrl(to.path)
-    // console.log("menuRoute", store.state.app.menuRouteLoaded);
-    // console.log("menuNavTree", store.state.menu.navTree);
-    // console.log("menuNavTree", store.state.tab.mainTabs);
-    // console.log("menuNavTree", store.state.tab.mainTabsActiveName);
-    console.log("loaded --> " + store.state.app.menuRouteLoaded)
-    console.log("navTree --> " + store.state.menu.navTree.length)
-    if (store.state.app.menuRouteLoaded && store.state.menu.navTree.length != 0) {
+    if (store.state.app.menuRouteLoaded && store.state.menu.navTree && store.state.menu.navTree.length != 0) {
         console.log('动态菜单和路由已经存在.')
         return
     }
@@ -125,6 +120,14 @@ function handleStaticComponent(router, dynamicRoutes) {
         meta: {
             icon: 'fa fa-home fa-lg',
             index: 0
+        }
+    }
+    router.options.routes[0].children[1] = {
+        path: 'info/bizHotelOrder',
+        name: i18n.t('sys.orderCrt'),
+        component: BizHotelOrder,
+        meta: {
+            index: 1
         }
     }
     router.options.routes[0].children = router.options.routes[0].children.concat(dynamicRoutes)
