@@ -327,24 +327,25 @@
                     <el-col :span="11">
                         <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
                             <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
-                                <label style="font-size: 16px;color: #212121;">基本信息</label>
+                                <label style="font-size: 16px;color: #212121;">{{$t('order.baseInfo')}}</label>
                             </el-col>
                             <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
                                 <ul class="hotel-base">
                                     <li>
-                                        <label>所在区域</label>
+                                        <label>{{$t('order.localArea')}}</label>
                                         <input hidden v-model="dataForm.provinceCode"/>
                                         <span>{{resolveRoomTypeName(provinceCode,dataForm.provinceCode)}}</span>
                                         <span>{{resolveRoomTypeName(cityCode,dataForm.cityCode)}}</span>
                                     </li>
                                     <li>
-                                        <label>入离时间</label>
+                                        <label>{{$t('order.departureTime')}}</label>
                                         <input hidden v-model="commonDate"/>
                                         <input v-model="filters.roomNight" hidden/>
-                                        <span>{{commonDate[0]}}  至  {{commonDate[1]}} 共 {{filters.roomNight}} 晚</span>
+                                        <span>{{commonDate[0]}}  -  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
+
                                     </li>
                                     <li style="display: flex">
-                                        <label>入住人数</label>
+                                        <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
                                             <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="children46" style="margin-bottom: 6px;margin-right: 0;">
                                                 <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
@@ -360,7 +361,7 @@
                         </el-row>
                         <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
                             <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
-                                <label style="font-size: 16px;color: #212121;">酒店信息</label>
+                                <label style="font-size: 16px;color: #212121;">{{$t('order.hotelInfo')}}</label>
                             </el-col>
                             <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
                                 <ul class="hotel-base">
@@ -375,12 +376,12 @@
                                         <span>{{dataForm.hotelPhone}}</span>
                                     </li>
                                     <li>
-                                        <label>酒店网站</label>
+                                        <label>{{$t('order.hotelWWW')}}</label>
                                         <input hidden v-model="dataForm.hotelWeb"/>
                                         <span>{{dataForm.hotelWeb}}</span>
                                     </li>
                                     <li>
-                                        <label>房间费用</label>
+                                        <label>{{$t('order.roomPrice')}}</label>
                                         <input hidden v-model="dataForm.sPrice"/>
                                         <span>{{dataForm.sPrice}}</span>
                                     </li>
@@ -400,7 +401,7 @@
                         </el-row>
                         <el-row style="width: 100%;text-align: left;display: flex;margin: 0 auto;">
                             <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e6e6e6;text-align: center;">
-                                <label style="font-size: 16px;color: #212121;">房间信息</label>
+                                <label style="font-size: 16px;color: #212121;">{{$t('order.roomInfo')}}</label>
                             </el-col>
                             <el-col :span="18" style="border-bottom: 1px solid #e6e6e6;">
                                 <ul class="hotel-base">
