@@ -478,7 +478,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
-                            this.$api.bizPuchs.confirm(params).then((res) => {
+                            this.$api.bizPuchs.update(params).then((res) => {
                                 if (res.code == 200) {
                                     this.$message({message: '操作成功', type: 'success'})
                                 } else {
