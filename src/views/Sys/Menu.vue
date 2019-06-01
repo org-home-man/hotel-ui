@@ -1,7 +1,7 @@
 <template>
     <div class="page-container">
         <!--工具栏-->
-        <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
             <el-form :inline="true" :model="filters" :size="size">
                 <el-form-item>
                     <el-input v-model="filters.name" placeholder="名称"></el-input>
@@ -17,6 +17,7 @@
             </el-form>
         </div>
         <!--表格树内容栏-->
+        <div class="table_room_container">
         <el-table :data="tableTreeData" row-key="id" size="mini" style="width: 100%;" :row-class-name="tableRowClassName"
                   v-loading="loading" :element-loading-text="$t('action.loading')">
 <!--            <el-table-column -->
@@ -61,6 +62,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        </div>
         <!-- 新增修改界面 -->
         <el-dialog :title="!dataForm.id ?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible"
                    :close-on-click-modal="false">
@@ -298,4 +300,14 @@
 </script>
 
 <style scoped>
+
+    .query_room_container{
+        width: 60%;
+        padding-top:10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
+    }
 </style>

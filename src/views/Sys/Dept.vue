@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
 	<!--工具栏-->
-	<div class="toolbar query_room_container" style="float:left;padding-top:10px;padding-left:15px;">
+	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="filters" :size="size">
 			<el-form-item>
 				<el-input v-model="filters.name" :placeholder="$t('dept.name')"></el-input>
@@ -15,7 +15,8 @@
 		</el-form>
 	</div>
 	<!--表格树内容栏-->
-    <el-table :data="tableTreeDdata" stripe size="mini" style="width: 100%;"
+      <div class="table_room_container">
+    <el-table :data="tableTreeDdata" size="mini" style="width: 100%;" :row-class-name="tableRowClassName"
       v-loading="loading" :element-loading-text="$t('action.loading')">
       <el-table-column
         prop="id" header-align="center" align="center" width="80" :label="$t('dept.id')">
@@ -43,6 +44,7 @@
         </template>
       </el-table-column>
     </el-table>
+      </div>
     <!-- 新增修改界面 -->
     <el-dialog :title="!dataForm.id ?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="submitForm()"
@@ -198,6 +200,13 @@ export default {
 				}
       })
     },
+        tableRowClassName({row, rowIndex}) {
+            if (rowIndex % 2 !=0) {
+                return 'success-row';
+            }
+            return '';
+        },
+
 		// 时间格式化
     dateFormat: function (row, column, cellValue, index){
       return format(row[column.property])
@@ -220,5 +229,9 @@ export default {
         width: 60%;
         padding-top:10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
     }
 </style>
