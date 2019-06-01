@@ -17,7 +17,7 @@
             </el-form>
         </div>
         <!--表格树内容栏-->
-        <el-table :data="tableTreeData" row-key="id" stripe size="mini" style="width: 100%;"
+        <el-table :data="tableTreeData" row-key="id" size="mini" style="width: 100%;" :row-class-name="tableRowClassName"
                   v-loading="loading" :element-loading-text="$t('action.loading')">
 <!--            <el-table-column -->
 <!--                prop="id" header-align="center" align="center" width="100" :label="$t('table.id')">-->
@@ -222,6 +222,12 @@
                     icon: "",
                     iconList: []
                 };
+            },
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex % 2 !=0) {
+                    return 'success-row';
+                }
+                return '';
             },
             // 显示编辑界面
             handleEdit: function (row) {

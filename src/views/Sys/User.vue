@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <!--工具栏-->
-    <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+    <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
       <el-form :inline="true" :model="filters" :size="size">
         <el-form-item>
           <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
@@ -474,5 +474,9 @@
 </script>
 
 <style scoped>
-
+    .query_room_container{
+        width: 60%;
+        padding-top:10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
 </style>
