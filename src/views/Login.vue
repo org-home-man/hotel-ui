@@ -67,7 +67,7 @@
 <script>
     import {mapState} from 'vuex'
     import {baseUrl} from '../utils/global'
-    import Cookies from "js-cookie"
+    import {setToken,setUser} from "@/utils/token"
     import ThemePicker from "@/components/ThemePicker"
     import LangSelector from "@/components/LangSelector"
 
@@ -113,14 +113,16 @@
                 }
                 this.$api.login.login(this.loginForm).then((res) => {
 
-                    sessionStorage.setItem('sessionId',res.token); // 放置token到Cookie
-                    sessionStorage.setItem('user', userInfo.account);// userInfo保存用户到本地会话
+                    // sessionStorage.setItem('sessionId',res.token); // 放置token到Cookie
+                    // sessionStorage.setItem('user', userInfo.account);// userInfo保存用户到本地会话
+                    setToken(res.token);
+                    setUser(userInfo.account);
                     this.$store.commit('menuRouteLoaded', false); // 要求重新加载导航菜单
-
-                    this.$router.push('/info/hotelRoomQry')  // 登录成功，跳转到主页
-                }).finally(() => {
+                    this.$router.push('/info/hotelRoomQry'); // 登录成功，跳转到主页
                     this.loading = false;
-                });
+                },() =>{
+                    this.loading = false;
+                })
             },
             refreshCaptcha: function () {
                 this.loginForm.src = this.global.baseUrl + "/captcha.jpg?t=" + new Date().getTime();

@@ -135,14 +135,13 @@
             },          //连接失败
             webSocketClose(){
                 console.log('断开连接');
-                this.webSocketSend(this.message)
                 this.reconnect();
             },            //各种问题导致的 连接关闭
             webSocketOnMessage(data){
                 this.heatBeat();      //收到消息会刷新心跳检测，如果一直收到消息，就推迟心跳发送
                 this.$notify({
-                    title:'有新订单啦~!',
-                    message:data.data,
+                    title: this.$t('messTitle'),
+                    message: data.data,
                     duration:0,
                     position: 'bottom-right'
                 })
@@ -165,7 +164,7 @@
                 this.timeoutObj && clearTimeout(this.timeoutObj);
                 this.serverTimeoutObj && clearTimeout(this.serverTimeoutObj);
                 this.timeoutObj = setTimeout(()=>{
-                    this.webSocketSend({type:'心跳检测'})   //根据后台要求发送
+                    this.webSocketSend({type:'1',message:'心跳检测'})   //根据后台要求发送
                     this.serverTimeoutObj = setTimeout(()=> {
                         this.websock.close();       //如果  5秒之后我们没有收到 后台返回的心跳检测数据 断开socket，断开后会启动重连机制
                     }, 5000);

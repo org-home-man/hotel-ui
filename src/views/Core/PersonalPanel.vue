@@ -92,7 +92,8 @@ export default {
 
         // store.state.app.menuRouteLoaded = false
         this.$api.login.logout().then((res) => {
-            sessionStorage.removeItem("user")
+            sessionStorage.removeItem("sessionId");
+            sessionStorage.removeItem("user");
             // this.$router.push("/login")
             window.location.href = "/";
           }).catch(function(res) {
