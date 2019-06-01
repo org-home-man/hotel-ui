@@ -351,6 +351,8 @@
                 dataForm: {
                     orderCode: null,
                     roomCode: null,
+                    inDate: null,
+                    outDate: null,
                     pName: null,
                     passport: null,
                     birth: null,

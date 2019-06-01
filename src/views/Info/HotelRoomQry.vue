@@ -279,7 +279,7 @@
                         </template>
                     </el-table-column>
 
-                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('table.sSprice')">
+                    <el-table-column  prop="sPrice" header-align="center" align="center" :label="$t('hotel.sAverageSprice')">
                     </el-table-column>
                     <el-table-column :label="$t('action.operation')" fixed="right" align="center">
                         <template slot-scope="scope">
@@ -341,7 +341,7 @@
                                         <label>{{$t('order.departureTime')}}</label>
                                         <input hidden v-model="commonDate"/>
                                         <input v-model="filters.roomNight" hidden/>
-                                        <span>{{commonDate[0]}}  -  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
+                                        <span>{{commonDate[0]}}  {{$t('hotel.dateSep')}}  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
 
                                     </li>
                                     <li style="display: flex">

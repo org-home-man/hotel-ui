@@ -400,7 +400,8 @@
         "laterOneWeek": "最近一周",
         "laterOneMonth": "最近一月",
         "laterThreeMonth": "最近三月",
-        "stockNum": "库"
+        "stockNum": "库",
+        "sAverageSprice": "房间均价"
     },
     "order": {
         "roomStatus": "订单状态",
