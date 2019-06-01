@@ -3,6 +3,7 @@ import config from './config';
 import Qs from 'qs';
 import router from '@/router';
 import i18n from '@/i18n';
+import {getToken,clearToken} from '@/utils/token';
 import {Notification} from 'element-ui';
 
 // 使用vuex做全局loading时使用
@@ -35,7 +36,8 @@ instance.defaults.transformRequest = [function (data, header) {
 //请求拦截器
 instance.interceptors.request.use(function (config) {
     // 认证消息头
-    const token = sessionStorage.getItem('sessionId');
+    // const token = sessionStorage.getItem('sessionId');
+    const token = getToken();
 
     if (token) {
         config.headers.token = token
@@ -94,7 +96,7 @@ instance.interceptors.response.use(function (response) {
                 message: i18n.t('action.noAuth')
             });
             // 重定向到登录页面
-            sessionStorage.removeItem("user")
+            clearToken();
             router.push('/login');
             return ;
         }
@@ -103,13 +105,13 @@ instance.interceptors.response.use(function (response) {
     // 错误日志
 
 
-        if (/^timeout/.test(error.message)) {
-            error.message = i18n.t('action.timeOut');
-        }
-        Notification.error({
-            title: i18n.t('action.sysErr'),
-            message: errors[error.message] || error.message
-        });
+    if (/^timeout/.test(error.message)) {
+        error.message = i18n.t('action.timeOut');
+    }
+    Notification.error({
+        title: i18n.t('action.sysErr'),
+        message: errors[error.message] || error.message
+    });
 
 
     return Promise.reject(error);

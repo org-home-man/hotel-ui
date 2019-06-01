@@ -11,11 +11,12 @@
         <!-- 导航菜单 -->
         <span class="navbar">
         <el-menu class="el-menu-demo"
-        :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal" @select="selectNavBar()">
-            <el-menu-item index="1" @click="$router.push({path:'/info/BizHotelOrder'})">{{$t('common.recommondHouse')}}  </el-menu-item>
+                 :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal"
+                 @select="selectNavBar()">
+            <el-menu-item index="1" @click="$router.push('/')">{{$t('common.recommondHouse')}}  </el-menu-item>
             <el-menu-item index="2" @click="">{{$t("common.lowPriceHouse")}}</el-menu-item>
             <el-menu-item index="3" @click="">{{$t("common.maxCountHouse")}}</el-menu-item>
-        <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->
+            <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->
         </el-menu>
         </span>
         <!-- 工具栏 -->
@@ -24,34 +25,35 @@
                :active-text-color="themeColor" mode="horizontal">
         <!--<el-menu-item index="1">-->
           <!--&lt;!&ndash; 主题切换 &ndash;&gt;-->
-          <theme-picker class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange" v-show="false"></theme-picker>
+          <theme-picker class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"
+                        v-show="false"></theme-picker>
           <!--</el-menu-item>-->
-<!--        <el-menu-item index="2" v-popover:popover-lang>-->
-<!--          &lt;!&ndash; 语言切换 &ndash;&gt;-->
-<!--          <li style="color:#fff;" class="fa fa-language fa-lg"></li>-->
-<!--          <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">-->
-<!--            <div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>-->
-<!--            <div class="lang-item" @click="changeLanguage('en_us')">English</div>-->
-<!--          </el-popover>-->
-<!--        </el-menu-item>-->
-          <!--<el-menu-item index="3" v-popover:popover-message>-->
-          <!--&lt;!&ndash; 我的私信 &ndash;&gt;-->
-          <!--<el-badge :value="5" :max="99" class="badge" type="success">-->
-          <!--<li style="color:#fff;" class="fa fa-envelope-o fa-lg"></li>-->
-          <!--</el-badge>-->
-          <!--<el-popover ref="popover-message" placement="bottom-end" trigger="click">-->
-          <!--<message-panel></message-panel>-->
-          <!--</el-popover>-->
-          <!--</el-menu-item>-->
-          <!--<el-menu-item index="4" v-popover:popover-notice>-->
-          <!--&lt;!&ndash; 系统通知 &ndash;&gt;-->
-          <!--<el-badge :value="4" :max="99" class="badge" type="success">-->
-          <!--<li style="color:#fff;" class="fa fa-bell-o fa-lg"></li>-->
-          <!--</el-badge>-->
-          <!--<el-popover ref="popover-notice" placement="bottom-end" trigger="click">-->
-          <!--<notice-panel></notice-panel>-->
-          <!--</el-popover>-->
-          <!--</el-menu-item>-->
+          <!--        <el-menu-item index="2" v-popover:popover-lang>-->
+          <!--          &lt;!&ndash; 语言切换 &ndash;&gt;-->
+          <!--          <li style="color:#fff;" class="fa fa-language fa-lg"></li>-->
+          <!--          <el-popover ref="popover-lang" placement="bottom-start" trigger="click" v-model="langVisible">-->
+          <!--            <div class="lang-item" @click="changeLanguage('zh_cn')">简体中文</div>-->
+          <!--            <div class="lang-item" @click="changeLanguage('en_us')">English</div>-->
+          <!--          </el-popover>-->
+          <!--        </el-menu-item>-->
+          <!--          <el-menu-item index="3" v-popover:popover-message>-->
+          <!--          &lt;!&ndash; 我的私信 &ndash;&gt;-->
+          <!--          <el-badge :value="5" :max="99" class="badge" type="success">-->
+          <!--          <li style="color:#fff;" class="fa fa-envelope-o fa-lg"></li>-->
+          <!--          </el-badge>-->
+          <!--          <el-popover ref="popover-message" placement="bottom-end" trigger="click">-->
+          <!--          <message-panel></message-panel>-->
+          <!--          </el-popover>-->
+          <!--          </el-menu-item>-->
+          <el-menu-item index="4" v-popover:popover-notice>
+          <!-- 系统通知 -->
+          <el-badge :value="noReadCount" :max="99" class="badge" type="success">
+                <li style="color:#fff;" class="fa fa-bell-o fa-lg"></li>
+          </el-badge>
+          <el-popover ref="popover-notice" placement="bottom-end" trigger="click">
+                <notice-panel></notice-panel>
+          </el-popover>
+          </el-menu-item>
         <el-menu-item index="5" v-popover:popover-personal>
           <!-- 用户信息 -->
           <span class="user-info"><img :src="user.path"/>{{user.name}}</span>
@@ -66,7 +68,7 @@
 
 <script>
     import {mapState} from 'vuex'
-    import { baseUrl } from "@/utils/global"
+    import {baseUrl} from "@/utils/global"
     import Hamburger from "@/components/Hamburger"
     import ThemePicker from "@/components/ThemePicker"
     import LangSelector from "@/components/LangSelector"
@@ -96,7 +98,8 @@
                 params: {
                     name: ''
                 },
-                langVisible: false
+                langVisible: false,
+                noReadCount: 0
             }
         },
         methods: {
@@ -120,19 +123,34 @@
                 this.params.name = user;
                 this.$api.user.findByName(this.params).then((rs) => {
                     // 获取用户头像
-                    this.$api.user.showFile({'relationId':rs.path}).then((res) =>{
-                        if(res instanceof Array && res.length>0){
+                    this.$api.user.showFile({'relationId': rs.path}).then((res) => {
+                        if (res instanceof Array && res.length > 0) {
                             var imageId = res[0];
                             rs.path = baseUrl + "/document/preview/" + imageId;
-                        }else{
+                        } else {
                             rs.path = ""
                         }
-                    }).then( () =>{
+                    }).then(() => {
                         // 加载角色集合
                         this.user = rs;
                     });
                 })
             },
+            findNoReadCount: function () {
+                let self = this;
+                this.$api.socketMess.findNoReadCount().then( res =>{
+                    if(!isNaN(res) && res > 0){
+                        this.$notify({
+                            title: self.$t('messNoReadTitle'),
+                            message:data.data,
+                            duration:0,
+                            position: 'bottom-right'
+                        })
+                    }
+                    this.noReadCount = res;
+
+                })
+            }
         },
         mounted() {
             this.sysName = "Hotel"
