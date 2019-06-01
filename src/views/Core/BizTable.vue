@@ -230,6 +230,11 @@ export default {
         },
         // 删除
         handleCancel: function (index, row) {
+            if (row.status != "1" && row.status != "2")
+            {
+                this.$message({message: this.$t('action.canotCancel'), type: 'error'})
+                return
+            }
             this.cancel(row)
         },
         // 删除操作

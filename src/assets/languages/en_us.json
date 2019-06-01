@@ -133,7 +133,9 @@
         "roleNameExist": "角色名存在",
         "messNoReadTitle": "New Order",
         "messTitle": "New Order",
-        "removeLogin": "账号已在别处登录"
+        "removeLogin": "账号已在别处登录",
+        "canotCancel": "此订单不能被取消",
+        "canotEdite": "此订单不能编辑"
     },
     "user": {
         "id": "ID",
