@@ -2,7 +2,7 @@
   <div class="table_room_container" style="height: auto">
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" height="450px"
+          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
           :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable">
 
         <el-table-column type="expand">
@@ -26,10 +26,10 @@
                         <span>{{ props.row.roomNum }}</span>
                     </el-form-item>
                     <el-form-item label="成人人数" style="width: 24%">
-                        <span>{{ props.row.aNum }}</span>
+                        <span>{{ props.row.adultNum }}</span>
                     </el-form-item>
                     <el-form-item label="儿童数" style="width: 24%">
-                        <span>{{ props.row.bNum }}</span>
+                        <span>{{ props.row.childNum }}</span>
                     </el-form-item>
                     <el-form-item label="幼儿数" style="width: 24%">
                         <span>{{ props.row.cNum }}</span>
@@ -230,6 +230,11 @@ export default {
         },
         // 删除
         handleCancel: function (index, row) {
+            if (row.status != "1" && row.status != "2")
+            {
+                this.$message({message: this.$t('action.canotCancel'), type: 'error'})
+                return
+            }
             this.cancel(row)
         },
         // 删除操作

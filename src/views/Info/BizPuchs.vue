@@ -112,7 +112,7 @@
                                     <li style="display: flex">
                                         <label>入住人数</label>
                                         <div style="width: 200px;">
-                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childrenNum}}</span>
+                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childNum}}</span>
                                         </div>
                                     </li>
                                 </ul>
@@ -466,12 +466,17 @@
             },
             // 显示编辑界面
             handleEdit: function (params) {
+                if (params.index.status != "1")
+                {
+                    this.$message({message: this.$t('action.canotEdite'), type: 'error'})
+                    return
+                }
                 var prm = {'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode};
                 this.$api.bizPuchs.findInv(prm).then( res =>{
                     this.editDialogVisible = true;
                     this.operation = false;
                     console.log(params.index);
-                    this.dataForm = Object.assign({}, params.index)
+                    this.dataForm = Object.assign({}, params.index);
                     this.dataForm.inventory = res.data===0?0:res;
                 });
             },
@@ -482,7 +487,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
-                            this.$api.bizPuchs.confirm(params).then((res) => {
+                            this.$api.bizPuchs.update(params).then((res) => {
                                 if (res.code == 200) {
                                     this.$message({message: '操作成功', type: 'success'})
                                 } else {
