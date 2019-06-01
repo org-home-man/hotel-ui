@@ -26,10 +26,10 @@
                         <span>{{ props.row.roomNum }}</span>
                     </el-form-item>
                     <el-form-item label="成人人数" style="width: 24%">
-                        <span>{{ props.row.aNum }}</span>
+                        <span>{{ props.row.adultNum }}</span>
                     </el-form-item>
                     <el-form-item label="儿童数" style="width: 24%">
-                        <span>{{ props.row.bNum }}</span>
+                        <span>{{ props.row.childNum }}</span>
                     </el-form-item>
                     <el-form-item label="幼儿数" style="width: 24%">
                         <span>{{ props.row.cNum }}</span>
