@@ -23,7 +23,9 @@
 
 <script>
     import {mapState} from 'vuex'
+    import {getUser} from '@/utils/token'
     import MenuTree from "@/components/MenuTree"
+    import BizHotelOrder from '@/views/Info/BizHotelOrder'
 
     export default {
         components: {

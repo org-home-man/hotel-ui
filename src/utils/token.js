@@ -13,7 +13,7 @@ export const getToken = () => {
     return sessionStorage.getItem(TOKEN_KEY);
 };
 
-export const getUse = () =>{
+export const getUser = () =>{
     return sessionStorage.getItem(USER_KEY);
 }
 export const clearToken = () => {

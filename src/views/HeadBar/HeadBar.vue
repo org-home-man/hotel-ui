@@ -137,10 +137,9 @@
                 })
             },
             findNoReadCount: function () {
-                let self = this;
                 this.$api.socketMess.findNoReadCount().then( res =>{
                     if(!isNaN(res) && res > 0){
-                        this.$notify({
+                        this.$notify.info({
                             title: this.$t('action.messTitle'),
                             message:this.$t('action.messNoReadTitle'),
                             duration:0,

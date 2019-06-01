@@ -136,9 +136,11 @@
             },
             // 语言切换
             changeLanguage: function (lang) {
+                this.$refs.loginForm.resetFields();
                 lang === '' ? 'zh_cn' : lang
                 sessionStorage.setItem("locale",lang);
                 this.$i18n.locale = lang;
+                this.$router.go(0);
             }
 
         },
