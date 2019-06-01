@@ -1278,7 +1278,7 @@
                                         this.isUpload = false;
                                         this.findPage(null)
                                     })
-                                }).finally(() => {
+                                }).catch(() => {
                                     this.editLoading = false
                                 })
                             } else {
@@ -1315,7 +1315,7 @@
                                     this.files = [];
                                     this.delFile = [];
                                     this.findPage(null)
-                                }).finally(() => {
+                                }).catch(() => {
                                     this.editLoading = false
                                 })
                             }
@@ -1347,6 +1347,8 @@
                                 this.editPriceDialogVisible = false
                                 this.priceDateData = []
                                 this.findPage(null)
+                            }).catch(()=>{
+                                this.editPriceLoading = false
                             })
                         })
                     } else {
@@ -1384,6 +1386,8 @@
                                 this.editStockDialogVisible = false
                                 this.stockDateData = []
                                 this.findPage(null)
+                            }).catch(()=>{
+                                this.editStockLoading = false
                             })
                         })
                     } else {
