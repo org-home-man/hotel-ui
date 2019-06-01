@@ -654,7 +654,7 @@
                     adultNum: 0,
                     childNum: 0,
                     sPrice: null,
-                    roomNight: null
+                    roomNight: 0
                 },
                 // 新增编辑界面数据
                 dataForm: {
@@ -832,10 +832,10 @@
         },
         watch:{
             'dataForm.roomNum'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             },
             'dataForm.sPrice'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
@@ -845,6 +845,7 @@
                 oDate2 = Date.parse(endDate);
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 this.filters.roomNight = iDays;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             }
         },
         mounted() {
