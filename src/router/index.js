@@ -60,7 +60,8 @@ router.beforeEach((to, from, next) => {
         if (!userName) {
             // 如果访问非登录界面，且户会话信息不存在，代表未登录，则跳转到登录界面
             next({path: '/login'})
-        } else {
+        }
+        else {
             // 加载动态菜单和路由
             addDynamicMenuAndRoutes(userName, to, from)
             next()
@@ -74,18 +75,24 @@ router.beforeEach((to, from, next) => {
 function addDynamicMenuAndRoutes(userName, to, from) {
     // 处理IFrame嵌套页面
     handleIFrameUrl(to.path)
+    console.log('navTree: '+store.state.menu.navTree)
+    console.log('menuRouteLoaded: '+store.state.app.menuRouteLoaded)
+    if(store.state.menu.navTree){
+        console.log('navTree-length: '+store.state.menu.navTree.length)
+    }
     if (store.state.app.menuRouteLoaded && store.state.menu.navTree && store.state.menu.navTree.length != 0) {
         console.log('动态菜单和路由已经存在.')
         return
     }
     store.commit('updateMainTabs',[]);
     store.commit('updateMainTabsActiveName','');
-    api.menu.findNavTree({'userName': userName})
+    api.menuTree.findNavTree({'userName': userName})
         .then(res => {
             // 添加动态路由
             let dynamicRoutes = addDynamicRoutes(res)
             // 处理静态组件绑定路由
             handleStaticComponent(router, dynamicRoutes)
+
             router.addRoutes(router.options.routes)
             // 保存加载状态
             store.commit('menuRouteLoaded', true)
@@ -113,16 +120,16 @@ function handleStaticComponent(router, dynamicRoutes) {
     //     }
     // }
     router.options.routes[0].children = [];
+    // router.options.routes[0].children[0] = {
+    //     path: 'info/hotelRoomQry',
+    //     name: i18n.t('sys.hotelRoomQry'),
+    //     component: HotelRoomQry,
+    //     meta: {
+    //         icon: 'fa fa-home fa-lg',
+    //         index: 0
+    //     }
+    // }
     router.options.routes[0].children[0] = {
-        path: 'info/hotelRoomQry',
-        name: i18n.t('sys.hotelRoomQry'),
-        component: HotelRoomQry,
-        meta: {
-            icon: 'fa fa-home fa-lg',
-            index: 0
-        }
-    }
-    router.options.routes[0].children[1] = {
         path: 'info/bizHotelOrder',
         name: i18n.t('sys.orderCrt'),
         component: BizHotelOrder,
@@ -162,6 +169,7 @@ function addDynamicRoutes(menuList = [], routes = []) {
             temp = temp.concat(menuList[i].children)
         } else if (menuList[i].url && /\S/.test(menuList[i].url)) {
             menuList[i].url = menuList[i].url.replace(/^\//, '')
+
             // 创建路由配置
             var route = {
                 path: menuList[i].url,

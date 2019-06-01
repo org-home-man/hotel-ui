@@ -193,7 +193,7 @@
             // 获取数据
             findTreeData: function () {
                 this.loading = true;
-                this.$api.menu.findMenuTree().then(res => {
+                this.$api.menuTree.findMenuTree().then(res => {
                     this.tableTreeData = res;
                     this.popupTreeData = this.getParentMenuTree(res);
                     this.loading = false;
