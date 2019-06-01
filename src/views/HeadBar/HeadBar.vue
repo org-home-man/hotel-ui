@@ -146,7 +146,7 @@
                             position: 'bottom-right'
                         })
                     }
-                    this.noReadCount = res;
+                    this.noReadCount = res.data===0?0:res;
 
                 })
             }

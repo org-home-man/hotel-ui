@@ -25,6 +25,7 @@
                             type="daterange"
                             :clearable="false"
                             value-format="yyyyMMdd"
+                            @blur="findPage"
                             :start-placeholder="$t('hotel.inDateStart')"
                             :end-placeholder="$t('hotel.outDateEnd')"
                             :picker-options="pickerOptions">
