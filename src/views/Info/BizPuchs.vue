@@ -1,7 +1,7 @@
 <template>
     <div class="page-container">
         <!--工具栏-->
-        <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
             <el-form :inline="true" :model="filters" :size="size" align="left">
                 <el-form-item @mouseleave.native="serch_result_user = false">
                     <el-input v-model="filters.createName" @input="inputUserFunc" :placeholder="$t('user.name')"></el-input>
@@ -64,7 +64,7 @@
         </kt-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?'新增':'编辑'" width="70%"  style="margin-top: -120px" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%"  style="margin-top: -120px" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 
             <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
@@ -572,5 +572,10 @@
     .hotel-base>li>label{
         width: 80px;
         display: inline-block;
+    }
+    .query_room_container {
+        width: 60%;
+        padding-top: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
 </style>

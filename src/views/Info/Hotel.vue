@@ -43,7 +43,7 @@
     </kt-table>
     <!--新增编辑界面-->
     <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+      <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"
                label-position="right">
         <el-form-item label="ID" prop="id" v-if="false">
           <el-input v-model="dataForm.id" :disabled="true" auto-complete="off"></el-input>

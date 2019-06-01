@@ -1,9 +1,9 @@
 <template>
-  <div style="height: auto">
+  <div class="table_room_container" style="height: auto">
     <!--表格栏-->
-    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" :stripe="stripe"
-          :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable">
+    <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
+          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border" height="450px"
+          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable">
 
         <el-table-column type="expand">
             <template slot-scope="props">
@@ -273,6 +273,12 @@ export default {
         },
         formatRole: function(row, column) {
             return row.status == 1? this.$t('hotel.hotelStatus.hotelStatus1') : row.status == 2? this.$t('hotel.hotelStatus.hotelStatus2') : this.$t('hotel.hotelStatus.hotelStatus3');
+        },
+        tableRowClassName({row, rowIndex}) {
+            if (rowIndex % 2 !=0) {
+                return 'success-row';
+            }
+            return '';
         }
     },
     mounted() {
@@ -283,5 +289,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .table_room_container{
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin-top: 20px
+    }
 </style>
