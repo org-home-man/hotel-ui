@@ -141,8 +141,8 @@
                 this.$api.socketMess.findNoReadCount().then( res =>{
                     if(!isNaN(res) && res > 0){
                         this.$notify({
-                            title: self.$t('messNoReadTitle'),
-                            message:data.data,
+                            title: this.$t('action.messTitle'),
+                            message:this.$t('action.messNoReadTitle'),
                             duration:0,
                             position: 'bottom-right'
                         })
@@ -155,6 +155,7 @@
         mounted() {
             this.sysName = "Hotel"
             this.findUserRoles();
+            this.findNoReadCount();
         },
         computed: {
             ...mapState({

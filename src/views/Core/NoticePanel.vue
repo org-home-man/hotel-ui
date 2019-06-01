@@ -36,7 +36,7 @@
             }
         },
         created(){
-            this.findSocketMessage;
+            this.findSocketMessage();
         },
         mounted() {
         }
