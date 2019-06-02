@@ -120,6 +120,7 @@ export default {
       this.loading = true
 			this.$api.dept.findDeptTree().then((res) => {
         this.tableTreeDdata = res
+                console.log("tableTreeDdata",this.tableTreeDdata)
         this.popupTreeData = this.getParentMenuTree(res)
         this.loading = false
 			})
@@ -129,7 +130,7 @@ export default {
       let parent = {
         parentId: 0,
         name: this.$t('common.topTree'),
-        children: tableTreeDdata
+        // children: tableTreeDdata
       }
       return [parent]
     },
