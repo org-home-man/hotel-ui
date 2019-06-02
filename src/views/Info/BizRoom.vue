@@ -1199,7 +1199,7 @@
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 <= 512;
+                const isLt2M = file.size / 1024 <= 1024;
                 if (!isJPG) {
                     this.$message.error(this.$t('action.imgNotType'));
                 }
@@ -1227,6 +1227,7 @@
                             console.log("formDate.files:", this.formDate.get('files'))
                             if (this.formDate.get('files') != null) {
                                 if (!this.beforeAvatarUpload(this.formDate.get('files'))) {
+                                    this.editLoading = false;
                                     return
                                 }
                             }
@@ -1373,7 +1374,6 @@
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editStockLoading = true
                             this.stockForm.stockDateData = this.stockDateData;
-
                             let params = Object.assign({}, this.stockForm)
                             this.$api.bizRoom.saveStock(params, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
                                 if (res.code == 200) {

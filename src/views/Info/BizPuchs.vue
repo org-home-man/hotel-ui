@@ -69,14 +69,14 @@
             <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
                 <el-row>
-                    <el-col :span="24">
-                        <el-carousel :interval="4000" type="card" height="200px">
-                            <el-carousel-item>
-                                <el-image style="width:100%;height:200px" src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
-                            </el-carousel-item>
-                        </el-carousel>
-                    </el-col>
-                    <!--<el-col :span="24" v-show="roomPhoto && roomPhoto.length>0">
+                    <!--<el-col :span="24">-->
+                        <!--<el-carousel :interval="4000" type="card" height="200px">-->
+                            <!--<el-carousel-item>-->
+                                <!--<el-image style="width:100%;height:200px" src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>-->
+                            <!--</el-carousel-item>-->
+                        <!--</el-carousel>-->
+                    <!--</el-col>-->
+                    <el-col :span="24" v-show="roomPhoto && roomPhoto.length>0">
                        <el-carousel style="margin-top: 20px" :interval="4000" type="card" height="200px">
                            <el-carousel-item v-for="ph in roomPhoto" :key="ph">
                                <el-image style="width:400px;height:200px" :src="photoUrl+ ph">
@@ -86,7 +86,7 @@
                                </el-image>
                            </el-carousel-item>
                        </el-carousel>
-                   </el-col>-->
+                   </el-col>
 
                 </el-row>
                 <el-row>
