@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="main-content" style="width: 100%;height: 100%">
         <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
-                 :inline="true">
+                 :inline="true" v-loading="loading">
             <el-row>
 
                 <el-col :span="24" v-show="roomPhoto && roomPhoto.length>0">
@@ -31,12 +31,9 @@
                                     <span>{{resolveRoomTypeName(provinceCode,dataForm.provinceCode)}}</span>
                                     <span>{{resolveRoomTypeName(cityCode,dataForm.cityCode)}}</span>
                                 </li>
-                                <li>
+                                <li style="padding-top: 4px">
                                     <label>{{$t('order.departureTime')}}</label>
-                                    <!--<input hidden v-model="commonDate"/>-->
-                                    <!--<input v-model="filters.roomNight" hidden/>-->
-                                    <!--<span>{{commonDate[0]}}  至  {{commonDate[1]}} 共 {{filters.roomNight}} 晚</span>-->
-                                    <el-form-item prop="commonDate" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="commonDate" style="margin-bottom: 0;vertical-align: middle;width: 100px">
                                         <el-date-picker
                                             v-model="commonDate"
                                             type="daterange"
@@ -47,11 +44,13 @@
                                             :picker-options="pickerOptions">
                                         </el-date-picker>
                                     </el-form-item>
-                                    <el-form-item label-width="60px" :label="$t('order.night')" prop="roomNight" style="margin-bottom: 6px;margin-right: 0;">
-                                        <el-input v-model="dataForm.roomNight" hidden></el-input>
+                                </li>
+                                <li style="padding-top: 4px">
+                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$t('order.night')}}</label>
+                                    <el-form-item label-width="60px" prop="roomNight" style="margin-bottom: 6px;margin-right: 0;">
+                                        <input v-model="dataForm.roomNight" hidden></input>
                                         <el-tag>{{dataForm.roomNight}}</el-tag>
                                     </el-form-item>
-
                                 </li>
                                 <li style="display: flex">
                                     <label>{{$t('order.peopleNum')}}</label>
@@ -229,11 +228,11 @@
                 </el-col>
             </el-row>
         </el-form>
-        <div slot="footer" class="dialog-footer" align="center">
+        <div slot="footer" class="form-footer" align="center">
             <el-button icon="el-icon-s-order" type="primary" @click.native="submitForm" :loading="editLoading">
                 {{$t('action.makeAppointment')}}
             </el-button>
-            <el-button  @click.native="editDialogVisible = false">{{$t('action.returnHome')}}
+            <el-button  @click.native="">{{$t('action.returnHome')}}
             </el-button>
         </div>
     </div>
@@ -244,9 +243,12 @@
         name: "BizHotelOrder",
         data() {
             return {
+                loading:false,
+                editLoading:false,
                 able:false,
                 size: 'small',
                 commonDate:[],
+                pageRequest: {page: 1, rows: 10},
                 roomPhoto:[],
                 hotelType: [], //酒店类型
                 hotelStar:[], //酒店星级
@@ -257,6 +259,19 @@
                 provinceCode: [], //地区编码
                 cityCode: [], //城市编码
                 language: {},
+                filters: {
+                    hotelType:null,
+                    roomCode: null,
+                    photo: null,
+                    lowRoomPrice: 0,
+                    highRoomPrice: 1000,
+                    inDateStart: null,
+                    outDateEnd: null,
+                    roomNum: 1,
+                    adultNum: 0,
+                    childNum: 0,
+                    roomNight: 0
+                },
                 dataForm: {
                     roomCode: null,
                     inventory: 0,
@@ -328,10 +343,73 @@
             }
         },
         methods:{
+            // 获取分页数据
+            findPage: function () {
+                this.loading = true;
+                if(this.commonDate.length>0){
+                    this.filters.inDateStart = this.commonDate[0];
+                    this.filters.outDateEnd = this.commonDate[1];
+                }
+                if (!this.$route.query.recommondCode) {
+                    this.$message({ message: this.$t('action.noHaveRoomInfo'), type: 'warn' })
+                    this.tabsCloseCurrentHandle();
 
+                }
+                this.filters.roomCode = this.$route.query.recommondCode
+                this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
+                    console.log("resPage",res)
+                    this.dataForm = res.rows[0];
+                    this.loading = false;
+                },() =>{
+                    this.loading = false;
+                })
+            },
+            submitForm: function () {
+                this.$refs.dataForm.validate((valid) => {
+                    if (valid) {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                            this.editLoading = true
+                            let params = Object.assign({}, this.dataForm)
+                            this.$api.hotelRoom.save(params).then((res) => {
+                                if(res.code == 200) {
+                                    this.$message({ message: this.$t('action.success'), type: 'success' })
+                                } else {
+                                    this.$message({message: this.$t('action.fail') , type: 'error'})
+                                }
+                                this.editLoading = false
+                                this.$refs['dataForm'].resetFields()
+                                this.findPage(null)
+                            })
+                        }).finally(() =>{
+                            this.editLoading = false
+                        })
+                    } else {
+                        this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+                    }
+                })
+            },
             localLanguageLoad: function () {
                 this.language = {lge: this.$i18n.locale}
                 this.able = this.language.lge=='zh_cn'?true:false
+            },
+            // tabs, 删除tab
+            removeTabHandle(tabName) {
+                this.mainTabs = this.mainTabs.filter(item => item.name !== tabName)
+                if (this.mainTabs.length >= 1) {
+                    // 当前选中tab被删除
+                    if (tabName === this.mainTabsActiveName) {
+                        this.$router.push({name: this.mainTabs[this.mainTabs.length - 1].name}, () => {
+                            this.mainTabsActiveName = this.$route.name
+                        })
+                    }
+                } else {
+                    this.$router.push("/info/hotelRoomQry")
+                }
+            },
+            // tabs, 关闭当前
+            tabsCloseCurrentHandle() {
+                console.log("mainTabsActiveName",this.mainTabsActiveName)
+                this.removeTabHandle(this.mainTabsActiveName)
             }
         },
         created(){
@@ -347,11 +425,43 @@
                 this.cityCode = res.DISTRICT;
             })
         },
+        mounted() {
+            this.localLanguageLoad();
+            this.findPage();
+        },
+        computed: {
+            mainTabs: {
+                get() {
+                    return this.$store.state.tab.mainTabs
+                },
+                set(val) {
+                    this.$store.commit('updateMainTabs', val)
+                }
+            },
+            mainTabsActiveName: {
+                get() {
+                    return this.$store.state.tab.mainTabsActiveName
+                },
+                set(val) {
+                    this.$store.commit('updateMainTabsActiveName', val)
+                }
+            }
+        },
+        destroyed() {
+            this.dataForm = {};
+        }
 
     }
 
 </script>
 
 <style scoped>
-
+    .main-content {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+    .form-footer {
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
 </style>

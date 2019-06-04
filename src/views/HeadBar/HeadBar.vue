@@ -13,9 +13,9 @@
         <el-menu class="el-menu-demo"
                  :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal"
                  @select="selectNavBar()">
-            <el-menu-item index="1" @click="$router.push('/')">{{$t('common.recommondHouse')}}  </el-menu-item>
-            <el-menu-item index="2" @click="">{{$t("common.lowPriceHouse")}}</el-menu-item>
-            <el-menu-item index="3" @click="">{{$t("common.maxCountHouse")}}</el-menu-item>
+            <el-menu-item index="1" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:recommondHouse}})">{{$t('common.recommondHouse')}}  </el-menu-item>
+            <el-menu-item index="2" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:lowPriceHouse}})">{{$t("common.lowPriceHouse")}}</el-menu-item>
+            <el-menu-item index="3" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode: maxCountHouse}})">{{$t("common.maxCountHouse")}}</el-menu-item>
             <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->
         </el-menu>
         </span>
@@ -99,7 +99,11 @@
                     name: ''
                 },
                 langVisible: false,
-                noReadCount: 0
+                noReadCount: 0,
+                recommondHouse:null,
+                lowPriceHouse:null,
+                maxCountHouse:null
+
             }
         },
         methods: {
@@ -149,12 +153,30 @@
                     this.noReadCount = res.data===0?0:res;
 
                 })
+            },
+            findRecommendRoom:function () {
+                this.$api.hotelRoom.findCustroomInfo().then( res =>{
+                    if (res) {
+                        for (var i = 0 ; i<res.length;i++) {
+                            if ("01" === res[i].custroomType) {
+                                this.lowPriceHouse = res[i].roomCode
+                            } else if ("02" === res[i].custroomType) {
+                                this.maxCountHouse = res[i].roomCode
+                            } else if ("03" === res[i].custroomType) {
+                                this.recommondHouse = res[i].roomCode
+
+                            }
+                        }
+                        console.log("recommondHouse",this.recommondHouse)
+                    }
+                })
             }
         },
         mounted() {
             this.sysName = "Hotel"
             this.findUserRoles();
             this.findNoReadCount();
+            this.findRecommendRoom();
         },
         computed: {
             ...mapState({

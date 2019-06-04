@@ -140,7 +140,8 @@
         "messTitle": "新订单",
         "removeLogin": "账号已在别处登录",
         "canotCancel": "此订单不能被取消",
-        "canotEdite": "此订单不能编辑"
+        "canotEdite": "此订单不能编辑",
+        "noHaveRoomInfo": "没有相应的客房信息"
     },
     "user": {
         "id": "编号",
