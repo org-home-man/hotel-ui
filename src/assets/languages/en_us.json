@@ -136,7 +136,8 @@
         "removeLogin": "账号已在别处登录",
         "canotCancel": "此订单不能被取消",
         "canotEdite": "此订单不能编辑",
-        "noHaveRoomInfo": "没有相应的客房信息"
+        "noHaveRoomInfo": "没有相应的客房信息",
+        "pInOutDate": "请选择入离日期"
     },
     "user": {
         "id": "ID",
@@ -413,6 +414,8 @@
         "hotelInfo": "酒店信息",
         "hotelWWW": "酒店网站",
         "roomPrice":"房间费用",
-        "roomInfo": "房间信息"
+        "roomInfo": "房间信息",
+        "priceDetail": "价格详情",
+        "detail": "详情"
     }
 }
