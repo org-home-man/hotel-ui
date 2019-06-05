@@ -17,6 +17,10 @@ export const batchDelete = (data) => {
 export const findPage = (data) => {
   return request.post('/hotelRoom/page',data);
 }
+//查询符合的客房信息
+export const findCustroomInfo = (data) => {
+    return request.post('/hotelRoom/findCustroomInfo',data);
+}
 // 查找用户的菜单权限标识集合
 export const findPermissions = (data) => {
   return request.get('/hotelRoom/findPermissions',data);

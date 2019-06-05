@@ -41,7 +41,8 @@
                                             value-format="yyyyMMdd"
                                             :start-placeholder="$t('hotel.inDateStart')"
                                             :end-placeholder="$t('hotel.outDateEnd')"
-                                            :picker-options="pickerOptions">
+                                            :picker-options="pickerOptions"
+                                            @blur="dateChangeCanculate">
                                         </el-date-picker>
                                     </el-form-item>
                                 </li>
@@ -51,6 +52,19 @@
                                         <input v-model="dataForm.roomNight" hidden></input>
                                         <el-tag>{{dataForm.roomNight}}</el-tag>
                                     </el-form-item>
+                                </li>
+                                <li style="padding-top: 4px">
+                                    <label>{{$t('order.priceDetail')}}</label>
+                                    <el-popover
+                                        placement="right"
+                                        width="300px"
+                                        trigger="click">
+                                        <el-table :data="gridData" height="400px">
+                                            <el-table-column width="150" property="priceDate" label="日期"></el-table-column>
+                                            <el-table-column width="100" property="sroomPrice" label="房价"></el-table-column>
+                                        </el-table>
+                                        <el-button slot="reference">{{$t('order.detail')}}</el-button>
+                                    </el-popover>
                                 </li>
                                 <li style="display: flex">
                                     <label>{{$t('order.peopleNum')}}</label>
@@ -90,8 +104,8 @@
                                 </li>
                                 <li>
                                     <label>{{$t('order.roomPrice')}}</label>
-                                    <input hidden v-model="dataForm.sPrice"/>
-                                    <span>{{dataForm.sPrice}}</span>
+                                    <input hidden v-model="dataForm.sRoomPrice"/>
+                                    <span>{{dataForm.sRoomPrice}}</span>
                                 </li>
                                 <li>
                                     <label>{{$t('hotel.inventory')}}</label>
@@ -239,6 +253,7 @@
 </template>
 
 <script>
+
     export default {
         name: "BizHotelOrder",
         data() {
@@ -247,6 +262,7 @@
                 editLoading:false,
                 able:false,
                 size: 'small',
+                gridData:[],
                 commonDate:[],
                 pageRequest: {page: 1, rows: 10},
                 roomPhoto:[],
@@ -303,7 +319,7 @@
                     children4: 0,
                     totalSAmount: null,
                     remark: null,
-                    sPrice: null,
+                    sRoomPrice: null,
                     roomNight:null
                 },
                 dataFormRules: {
@@ -353,7 +369,6 @@
                 if (!this.$route.query.recommondCode) {
                     this.$message({ message: this.$t('action.noHaveRoomInfo'), type: 'warn' })
                     this.tabsCloseCurrentHandle();
-
                 }
                 this.filters.roomCode = this.$route.query.recommondCode
                 this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
@@ -410,6 +425,32 @@
             tabsCloseCurrentHandle() {
                 console.log("mainTabsActiveName",this.mainTabsActiveName)
                 this.removeTabHandle(this.mainTabsActiveName)
+            },
+            dateChangeCanculate: function() {
+                if(this.commonDate.length>0){
+                    this.filters.inDateStart = this.commonDate[0];
+                    this.filters.outDateEnd = this.commonDate[1];
+                } else {
+                    this.$message({ message: this.$t('action.pInOutDate'), type: 'warn' })
+                    return
+                }
+                this.filters.roomCode = this.$route.query.recommondCode
+                this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
+                    console.log("hotelRoom",res)
+                    this.dataForm = res.rows[0];
+                    this.dataForm.roomNight = this.commonDate[1] - this.commonDate[0]
+                    this.dataForm.sRoomPrice = res.rows[0].sPrice
+                },() =>{
+
+                })
+
+                this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
+                    console.log("bizPuchs",res)
+                    this.gridData = res;
+                },() =>{
+                })
+
+
             }
         },
         created(){
@@ -463,5 +504,18 @@
     .form-footer {
         margin-top: 20px;
         margin-bottom: 50px;
+    }
+    .hotel-base{
+        margin: 0;
+        padding: 0;
+        color: #212121;
+    }
+    .hotel-base>li{
+        padding: 10px 20px;
+        list-style: none;
+    }
+    .hotel-base>li>label{
+        width: 80px;
+        display: inline-block;
     }
 </style>

@@ -30,3 +30,8 @@ export const findInv = (data) => {
     return request.post('/bizInv/findInv',data);
 }
 
+//入退时间范围内唯一客房的查询
+export const findByDate = (data) => {
+    return request.post('/bizPrise/findByDate',data);
+}
+
