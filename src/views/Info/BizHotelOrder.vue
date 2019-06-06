@@ -49,8 +49,8 @@
                                 <li style="padding-top: 4px">
                                     <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$t('order.night')}}</label>
                                     <el-form-item label-width="60px" prop="roomNight" style="margin-bottom: 6px;margin-right: 0;">
-                                        <input v-model="dataForm.roomNight" hidden></input>
-                                        <el-tag>{{dataForm.roomNight}}</el-tag>
+                                        <input v-model="filters.roomNight" hidden></input>
+                                        <el-tag>{{filters.roomNight}}</el-tag>
                                     </el-form-item>
                                 </li>
                                 <li style="padding-top: 4px">
@@ -59,9 +59,9 @@
                                         placement="right"
                                         width="300px"
                                         trigger="click">
-                                        <el-table :data="gridData" height="400px">
-                                            <el-table-column width="150" property="priceDate" label="日期"></el-table-column>
-                                            <el-table-column width="100" property="sroomPrice" label="房价"></el-table-column>
+                                        <el-table :data="gridData" height="300px">
+                                            <el-table-column width="150" property="priceDate" :label="$t('order.date')"></el-table-column>
+                                            <el-table-column width="100" property="sroomPrice" :label="$t('hotel.sRoomPrice')"></el-table-column>
                                         </el-table>
                                         <el-button slot="reference">{{$t('order.detail')}}</el-button>
                                     </el-popover>
@@ -246,7 +246,7 @@
             <el-button icon="el-icon-s-order" type="primary" @click.native="submitForm" :loading="editLoading">
                 {{$t('action.makeAppointment')}}
             </el-button>
-            <el-button  @click.native="">{{$t('action.returnHome')}}
+            <el-button  @click.native="returnHome">{{$t('action.returnHome')}}
             </el-button>
         </div>
     </div>
@@ -374,6 +374,13 @@
                 this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("resPage",res)
                     this.dataForm = res.rows[0];
+
+                    //查询图片
+                    if(res.rows[0].photo){
+                        this.$api.user.showFile({'relationId':res.rows[0].photo}).then((res) =>{
+                            this.roomPhoto = res;
+                        })
+                    }
                     this.loading = false;
                 },() =>{
                     this.loading = false;
@@ -384,7 +391,9 @@
                     if (valid) {
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editLoading = true
-                            let params = Object.assign({}, this.dataForm)
+                            let params = Object.assign({}, this.dataForm,
+                                {'inDateStart':this.filters.inDateStart,
+                                'outDateEnd':this.filters.outDateEnd})
                             this.$api.hotelRoom.save(params).then((res) => {
                                 if(res.code == 200) {
                                     this.$message({ message: this.$t('action.success'), type: 'success' })
@@ -393,7 +402,7 @@
                                 }
                                 this.editLoading = false
                                 this.$refs['dataForm'].resetFields()
-                                this.findPage(null)
+                                this.tabsCloseCurrentHandle();
                             })
                         }).finally(() =>{
                             this.editLoading = false
@@ -423,7 +432,6 @@
             },
             // tabs, 关闭当前
             tabsCloseCurrentHandle() {
-                console.log("mainTabsActiveName",this.mainTabsActiveName)
                 this.removeTabHandle(this.mainTabsActiveName)
             },
             dateChangeCanculate: function() {
@@ -438,7 +446,6 @@
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("hotelRoom",res)
                     this.dataForm = res.rows[0];
-                    this.dataForm.roomNight = this.commonDate[1] - this.commonDate[0]
                     this.dataForm.sRoomPrice = res.rows[0].sPrice
                 },() =>{
 
@@ -449,7 +456,18 @@
                     this.gridData = res;
                 },() =>{
                 })
-
+            },
+            returnHome:function() {
+                this.mainTabs = this.mainTabs.filter(item => item.name !== this.mainTabsActiveName)
+                if (this.mainTabs.length >= 1) {
+                    // 当前选中tab被删除
+                    if (this.mainTabsActiveName === this.mainTabsActiveName) {
+                        this.$router.push({name: this.mainTabs[this.mainTabs.length - 1].name}, () => {
+                            this.mainTabsActiveName = this.$route.name
+                        })
+                    }
+                }
+                this.$router.push("/info/hotelRoomQry")
 
             }
         },
@@ -486,6 +504,52 @@
                 set(val) {
                     this.$store.commit('updateMainTabsActiveName', val)
                 }
+            }
+        },
+        watch:{
+            'dataForm.roomNum'(){
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
+
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
+            },
+            'dataForm.sPrice'(){
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
+
+            },
+            commonDate(n,o){
+                var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
+                var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
+                var oDate1, oDate2, iDays ;
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                console.log("iDays",iDays);
+                this.filters.roomNight = iDays;
+
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
             }
         },
         destroyed() {
