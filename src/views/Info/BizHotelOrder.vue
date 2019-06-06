@@ -253,7 +253,7 @@
 </template>
 
 <script>
-
+    import {baseUrl} from '@/utils/global'
     export default {
         name: "BizHotelOrder",
         data() {
@@ -264,6 +264,7 @@
                 size: 'small',
                 gridData:[],
                 commonDate:[],
+                photoUrl: baseUrl + '/document/preview/',
                 pageRequest: {page: 1, rows: 10},
                 roomPhoto:[],
                 hotelType: [], //酒店类型
