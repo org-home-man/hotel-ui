@@ -421,6 +421,7 @@
         "roomPrice":"房间费用",
         "roomInfo": "房间信息",
         "priceDetail": "价格详情",
-        "detail": "详情"
+        "detail": "详情",
+        "date": "日期"
     }
 }
