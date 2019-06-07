@@ -107,7 +107,7 @@
                                         <label>入离时间</label>
                                         <input hidden v-model="dataForm.inDate"/>
                                         <input hidden v-model="dataForm.outDate"/>
-                                        <span>{{dataForm.inDateStart}}  至  {{dataForm.outDateEnd}} 共 {{dataForm.roomNight}} 晚</span>
+                                        <span>{{dataForm.inDateStart}}  至  {{dataForm.outDateEnd}} 共 {{filters.roomNight}} 晚</span>
                                     </li>
                                     <li style="display: flex">
                                         <label>入住人数</label>
@@ -317,7 +317,8 @@
                     roomStatus: '',
                     createTimes: '',
                     confirmTimes:'',
-                    hotelName:''
+                    hotelName:'',
+                    roomNight:''
                 },
                 user_result:[],
                 hotel_result:[],
@@ -413,7 +414,8 @@
                     outDateEnd: null,
                     adultNum: null,
                     childrenNum: null,
-                    sPrice: null
+                    sPrice: null,
+                    roomNight:null
                 },
                 paraConfig: [],
                 pickerOptions:{
@@ -471,13 +473,16 @@
                     this.$message({message: this.$t('action.canotEdite'), type: 'error'})
                     return
                 }
-                var prm = {'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode};
-                this.$api.bizPuchs.findInv(prm).then( res =>{
+                console.log("params",params)
+                this.commonDate = [params.index.inDateStart,params.index.outDateEnd]
+                var prm = {page:1,rows:10,'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode};
+                this.$api.hotelRoom.findPage(prm).then( res =>{
                     this.editDialogVisible = true;
                     this.operation = false;
-                    console.log(params.index);
-                    this.dataForm = Object.assign({}, params.index);
-                    this.dataForm.inventory = res.data===0?0:res;
+                    console.log("param.index",params.index);
+                    console.log("res.rows[0]",res.rows[0])
+                    this.dataForm = Object.assign({}, params.index,res.rows[0]);
+                    console.log("this.dataForm",this.dataForm)
                 });
             },
             // 编辑
@@ -487,7 +492,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
-                            this.$api.bizPuchs.update(params).then((res) => {
+                            this.$api.bizPuchs.save(params).then((res) => {
                                 if (res.code == 200) {
                                     this.$message({message: '操作成功', type: 'success'})
                                 } else {
@@ -497,11 +502,9 @@
                                 this.$refs['dataForm'].resetFields()
                                 this.editDialogVisible = false
                                 this.findPage(null)
+                            }).catch((res) =>{
+                                this.editLoading = false
                             })
-                        },() =>{
-                            this.editLoading = false
-                            this.editDialogVisible = false
-                            this.findPage(null)
                         })
                     }
                 })
@@ -559,6 +562,24 @@
                     this.filters.hotelName = row.hotelEname
                 }
 
+            }
+        },
+        watch:{
+            'dataForm.roomNum'(){
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+            },
+            'dataForm.sPrice'(){
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+            },
+            commonDate(n,o){
+                var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
+                var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
+                var oDate1, oDate2, iDays ;
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                this.filters.roomNight = iDays;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             }
         },
         mounted() {
