@@ -460,7 +460,7 @@
                 this.pageRequest = {...this.pageRequest, ...this.filters};
                 this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
                     this.pageResult = res
-                }).then(data != null ? data.callback : '')
+                }).then(data!=null?data.callback:'' )
             },
             // 批量删除
             handleCancel: function (data) {
@@ -510,7 +510,7 @@
                 })
             },
             handleConfirm:function (data) {
-                this.$api.bizPuchs.confirm(data.params).then(data != null ? data.callback : '')
+                this.$api.bizPuchs.confirm(data.params).then(data!=null?data.callback:'' )
             },
             //加载状态数据字典
             findStatus:function(){

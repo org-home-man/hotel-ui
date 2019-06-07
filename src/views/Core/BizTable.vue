@@ -271,6 +271,7 @@ export default {
                     } else {
                         this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
                     }
+                    this.findPage()
                     this.loading = false;
                 }
                 this.$emit('handleConfirm', {params: row, callback: callback})
