@@ -5,19 +5,19 @@
             <el-form :inline="true" ref="filters" :model="filters" :size="size" align="left" style="width: 1300px">
                 <div style="background: #daf6fa;display: inline-block;padding: 10px;width: 1300px;box-sizing: border-box;margin-bottom: 4px;">
                     <el-form-item prop="provinceCode" style="margin-bottom: 0;vertical-align: middle;">
-                        <el-select v-model="filters.provinceCode" filterable :placeholder="$t('hotel.provinceCode.provinceCode')">
+                        <el-select v-model="filters.provinceCode" filterable clearable :placeholder="$t('hotel.provinceCode.provinceCode')">
                             <el-option v-for="rt in provinceCode" :key="rt.code"
                                        :label="rt.name" :value="rt.code"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item prop="cityCode" style="margin-bottom: 0;vertical-align: middle;">
-                        <el-select v-model="filters.cityCode" filterable :placeholder="$t('hotel.cityCode.cityCode')">
+                        <el-select v-model="filters.cityCode" filterable clearable :placeholder="$t('hotel.cityCode.cityCode')">
                             <el-option v-for="rt in cityCode" :key="rt.code"
                                        :label="rt.name" :value="rt.code"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item prop="hotelName" style="margin-bottom: 0;vertical-align: middle;">
-                        <el-input v-model="filters.hotelName" :placeholder="$t('hotel.hotelname')"></el-input>
+                        <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
                     </el-form-item>
                     <el-form-item prop="commonDate" style="margin-bottom: 0;vertical-align: middle;">
                         <el-date-picker
@@ -65,31 +65,31 @@
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">类型</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="hotelType" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-select v-model="filters.hotelType" :placeholder="$t('hotel.hotelType.hotelType')">
+                            <el-select v-model="filters.hotelType"  clearable :placeholder="$t('hotel.hotelType.hotelType')">
                                 <el-option v-for="rt in hotelType" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="roomType" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-select v-model="filters.roomType" :placeholder="$t('hotel.roomtype.roomtype')">
+                            <el-select v-model="filters.roomType" clearable :placeholder="$t('hotel.roomtype.roomtype')">
                                 <el-option v-for="rt in roomType" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="roomStyle" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">
+                            <el-select v-model="filters.roomStyle" clearable :placeholder="$t('hotel.roomstyle.roomstyle')">
                                 <el-option v-for="rs in roomStyle" :key="rs.code"
                                            :label="rs.name" :value="rs.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="bedType" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-select v-model="filters.bedType" :placeholder="$t('hotel.bedtype.bedtype')">
+                            <el-select v-model="filters.bedType" clearable :placeholder="$t('hotel.bedtype.bedtype')">
                                 <el-option v-for="bt in bedType" :key="bt.code"
                                            :label="bt.name" :value="bt.code"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="breakType" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-select v-model="filters.breakType" :placeholder="$t('hotel.breaktype.breaktype')">
+                            <el-select v-model="filters.breakType" clearable :placeholder="$t('hotel.breaktype.breaktype')">
                                 <el-option v-for="bk in breakType" :key="bk.code"
                                            :label="bk.name" :value="bk.code"></el-option>
                             </el-select>
@@ -100,11 +100,12 @@
                 <div style="display: flex;margin-bottom: 6px;">
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">星级</div>
                     <div style="width: 100%;padding: 0 10px;">
-                        <el-form-item v-for="hs in hotelStar" :key="hs.code" prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
+                        <el-form-item v-for="hs in hotelStar" :key="hs.code"  prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
                             <el-radio style="width: 215px;box-sizing: border-box;" :label="hs.name" v-model="filters.hotelLevel" :value="hs.code" border/>
                         </el-form-item>
                     </div>
                 </div>
+
 
                 <div style="display: flex;margin-bottom: 6px;">
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 50px;font-size:.9em;color: #14889a;">{{$t('hotel.information')}}</div>
