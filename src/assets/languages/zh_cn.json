@@ -121,6 +121,7 @@
         "dateException": "日期异常",
         "ExistRoomException": "存在客房信息，不允许删除",
         "ExistsOrderException": "存在未完成的订单信息，不允许删除",
+        "OverSevenAfterExcetpion": "已过预定时间，无法预约",
         "noBodyException": "用户或密码输入不正确",
         "imgNotType": "上传客房图片格式只能为JPG",
         "imgLtKb": "上传头像图片大小不能超过 512KB",

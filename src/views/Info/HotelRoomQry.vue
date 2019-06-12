@@ -609,6 +609,7 @@
                 bedType: [], //床铺类型
                 provinceCode: [], //地区编码
                 cityCode: [], //城市编码
+                systemDays:[],//系统参数 天数
                 language: {},
                 filters: {
                     provinceCode: '',
@@ -754,6 +755,28 @@
             },
             // 显示预订界面
             handleBookRoom: function (row) {
+                var date = new Date();
+                var y = date.getFullYear();
+                var m = date.getMonth() +1;
+                var d = date.getDate();
+                var t = y+"-"+m+"-"+d+" "+"18:30:00";
+                var tDate = new Date(Date.parse(t.replace(/-/g, "/")))
+                var inDateStart = this.filters.inDateStart;
+                inDateStart = inDateStart.substring(0,4)+"-"+inDateStart.substring(4,6)+"-"+inDateStart.substring(6)+ " "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                var dateStart = new Date(Date.parse(inDateStart.replace(/-/g, "/")))
+                console.log("this.systemDays[0].code",this.systemDays[0].code-1)
+                if ( date>=tDate ) {
+                    var i = this.systemDays[0].code
+                    date.setDate(date.getDate()+i)
+                }else {
+                    var i = this.systemDays[0].code -1
+                    date.setDate(date.getDate()+i)
+                }
+                if (dateStart<date) {
+                    this.$message({message: this.$t('action.OverSevenAfterExcetpion') , type: 'warn'})
+                    return;
+                }
+
                 this.editDialogVisible = true;
                 if(this.$refs.dataForm){
                     this.$refs.dataForm.resetFields();
@@ -820,7 +843,7 @@
             }
         },
         created(){
-            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT').then( res =>{
+            this.getTypeValues('SYSTEM_DAYS,ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT').then( res =>{
                 // console.log(res)
                 this.roomStyle = res.ROOM_STYLE;
                 this.roomType = res.ROOM_TYPE;
@@ -830,6 +853,7 @@
                 this.bedType = res.BED_TYPE;
                 this.provinceCode = res.PREFECTURE;
                 this.cityCode = res.DISTRICT;
+                this.systemDays = res.SYSTEM_DAYS;
             })
         },
         watch:{
