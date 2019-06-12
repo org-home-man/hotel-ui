@@ -186,17 +186,19 @@ export default {
             roomType:[], //房间类型
             breakType: [], //餐饮条件
             bedType: [], //床铺类型
+            roomStatus:[],
         }
     },
     methods: {
         created(){
-            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE').then( res =>{
+            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,ROOM_STATUS').then( res =>{
                 this.roomStyle = res.ROOM_STYLE;
                 this.roomType = res.ROOM_TYPE;
                 this.hotelStar = res.HOTEL_STAR;
                 this.hotelType = res.HOTEL_TYPE;
                 this.breakType = res.BREAK_TYPE;
                 this.bedType = res.BED_TYPE;
+                this.roomStatus = res.ROOM_STATUS;
             })
         },
         // 分页查询
@@ -277,7 +279,7 @@ export default {
                 this.$emit('handleConfirm', {params: row, callback: callback})
             })
         },
-        formatRole: function(row, column) {
+        formatRole: function(row, roomStatus) {
             return row.status == 1? this.$t('hotel.hotelStatus.hotelStatus1') : row.status == 2? this.$t('hotel.hotelStatus.hotelStatus2') : this.$t('hotel.hotelStatus.hotelStatus3');
         },
         tableRowClassName({row, rowIndex}) {

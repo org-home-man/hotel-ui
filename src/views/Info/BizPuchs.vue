@@ -4,7 +4,7 @@
         <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
             <el-form :inline="true" :model="filters" :size="size" align="left">
                 <el-form-item @mouseleave.native="serch_result_user = false">
-                    <el-input v-model="filters.createName" @input="inputUserFunc" :placeholder="$t('user.name')"></el-input>
+                    <el-input v-model="filters.createName" @input="inputUserFunc" clearable :placeholder="$t('user.name')"></el-input>
 
                     <div class="serch_result" v-show="serch_result_user" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
                         <li v-for="item in user_result" class="serch-list" @click="filters.createName = item.name">
@@ -13,7 +13,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item @mouseleave.native="serch_result_hotel = false">
-                    <el-input v-model="filters.hotelName" @input="inputHotelFunc" :placeholder="$t('hotel.hotelname')"></el-input>
+                    <el-input v-model="filters.hotelName" @input="inputHotelFunc" clearable :placeholder="$t('hotel.hotelname')"></el-input>
                     <div class="serch_result" v-show="serch_result_hotel" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
                         <li v-for="item in hotel_result" class="serch-list" @click="hotelClick(item)">
                             {{ $i18n.locale === "zh_cn"?item.hotelCname:item.hotelEname }}
@@ -21,14 +21,19 @@
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="filters.orderCode" :placeholder="$t('order.orderCode')"></el-input>
+                    <el-input v-model="filters.orderCode" clearable :placeholder="$t('order.orderCode')"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-select v-model="filters.roomStatus" clearable :placeholder="$t('order.roomStatus')"
-                               style="width: 200px;">
-                        <el-option v-for="item in states" :key="item.paraCode"
-                                   :label="$t(item.paraCode)" :value="item.paraValue1">
-                        </el-option>
+                    <!--<el-select v-model="filters.roomStatus" clearable :placeholder="$t('order.roomStatus')"-->
+                               <!--style="width: 200px;">-->
+                        <!--<el-option v-for="item in states" :key="item.paraCode"-->
+                                   <!--:label="$t(item.paraCode)" :value="item.paraValue1">-->
+                        <!--</el-option>-->
+                    <!--</el-select>-->
+                    <el-select v-model="filters.roomStatus" clearable filterable
+                               :placeholder="$t('order.roomStatus')">
+                        <el-option v-for="rt in roomStatus" :key="rt.code"
+                                   :label="rt.name" :value="rt.code"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -339,6 +344,7 @@
                 editLoading: false,
                 provinceCode: [], //地区编码
                 cityCode: [], //城市编码
+                roomStatus:[],// 订单状态
                 commonDate:[],
                 roomPhoto:[],
                 hotelType: [], //酒店类型
@@ -519,7 +525,7 @@
                 })
             },
             created(){
-                this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT').then( res =>{
+                this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT,ROOM_STATUS').then( res =>{
                     // console.log(res)
                     this.roomStyle = res.ROOM_STYLE;
                     this.roomType = res.ROOM_TYPE;
@@ -529,6 +535,7 @@
                     this.bedType = res.BED_TYPE;
                     this.provinceCode = res.PREFECTURE;
                     this.cityCode = res.DISTRICT;
+                    this.roomStatus = res.ROOM_STATUS;
                 })
             },
             inputUserFunc(){
@@ -583,7 +590,7 @@
             }
         },
         mounted() {
-            this.findStatus();
+            // this.findStatus();
             this.created();
         }
     }
