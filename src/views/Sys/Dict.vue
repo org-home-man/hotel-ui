@@ -257,9 +257,17 @@
                 }
                 this.editDialogVisible = true;
                 this.operation = true;
-                if(this.$refs['dataForm']){
-                    this.$refs['dataForm'].resetFields();
-                };
+                this.dataForm = {
+                    id: null,
+                    cnName: null,
+                    enName: null,
+                    code: null,
+                    type: "2",
+                    sort: 0,
+                    parentId: null,
+                    cnRemark: null,
+                    enRemark: null
+                }
                 this.dataForm.type = "2";
                 this.dataForm.parentId = this.dictSelectRow.id;
 
