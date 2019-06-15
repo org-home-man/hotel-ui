@@ -1,6 +1,6 @@
 <template>
     <div class="main-content" style="width: 100%;height: 100%">
-        <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+        <el-form :model="dataForm" label-width="160px" :rules="dataFormRules" ref="dataForm" :size="size"
                  :inline="true" v-loading="loading">
             <el-row>
 
@@ -118,6 +118,28 @@
                                     <input hidden v-model="dataForm.introE"/>
                                     <span>{{able?dataForm.introC:dataForm.introE}}</span>
                                 </li>
+
+                                <li>
+                                    <label>{{$t('hotel.scheduledays')}}</label>
+                                    <input hidden v-model="dataForm.scheduledays"/>
+                                    <span>{{dataForm.scheduledays}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.favorableprice')}}</label>
+                                    <input hidden v-model="dataForm.favorableprice"/>
+                                    <span>{{dataForm.favorableprice}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.evenlive')}}</label>
+                                    <input hidden v-model="dataForm.evenlive"/>
+                                    <span>{{dataForm.evenlive}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.present')}}</label>
+                                    <input hidden v-model="dataForm.present"/>
+                                    <span>{{dataForm.present}}</span>
+                                </li>
+
                             </ul>
                         </el-col>
                     </el-row>
@@ -580,7 +602,9 @@
         list-style: none;
     }
     .hotel-base>li>label{
-        width: 80px;
+        width: 130px;
         display: inline-block;
+        text-align: right;
+        margin-right: 20px;
     }
 </style>
