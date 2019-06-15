@@ -212,8 +212,8 @@
             },
             //导出Excel
             r0002ExportExcel() {
-                this.$api.report.exportR0002Report(this.dataForm).then((res) => {
-
+                this.$api.report.exportR0002Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+                    alert(res)
                 })
             },
 

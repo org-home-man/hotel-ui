@@ -17,7 +17,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item prop="hotelName" style="margin-bottom: 0;vertical-align: middle;">
-                        <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
+                        <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')" ></el-input>
                     </el-form-item>
                     <el-form-item prop="commonDate" style="margin-bottom: 0;vertical-align: middle;">
                         <el-date-picker
@@ -50,13 +50,13 @@
                             <el-input-number v-model="filters.childNum" controls-position="right"  :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="100"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0"></el-input-number>
+                            <el-input-number v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="100"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="roomArea" style="margin-bottom: 0;vertical-align: middle;width: 140px;">
-                            <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'"></el-input>
+                            <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'" clearable></el-input>
                         </el-form-item>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">星级</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
-                            <el-checkbox-group v-model="filters.starLevel">
+                            <el-checkbox-group v-model="starLevel">
                                 <el-checkbox v-for="hs in hotelStar" style="width: 202px;box-sizing: border-box;margin-bottom: 0;vertical-align: middle;margin-right: 5px"
                                              :label="hs.code" :key="hs.code" name="hotelLevel" border>{{hs.name}}</el-checkbox>
                             </el-checkbox-group>
@@ -346,17 +346,17 @@
                                         <label>{{$t('order.departureTime')}}</label>
                                         <input hidden v-model="commonDate"/>
                                         <input v-model="filters.roomNight" hidden/>
-                                        <span>{{commonDate[0]}}  {{$t('hotel.dateSep')}}  {{commonDate[1]}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
+                                        <span>{{parseStrToDate(commonDate[0])}}  {{$t('hotel.dateSep')}}  {{parseStrToDate(commonDate[1])}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
 
                                     </li>
                                     <li style="display: flex">
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
-                                            <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="children46" style="margin-bottom: 6px;margin-right: 0;">
-                                                <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
+                                            <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
+                                                <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="1" ></el-input-number>
                                             </el-form-item>
 
-                                            <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="children46"  style="margin-bottom: 6px;margin-right: 0;">
+                                            <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
                                                 <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
                                         </div>
@@ -484,7 +484,7 @@
                                 <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
                                     <el-input v-model="dataForm.phone"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="pName" >
+                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="lastCrtTime" >
                                     <el-date-picker
                                         v-model="dataForm.lastCrtTime"
                                         align="right"
@@ -517,8 +517,11 @@
                                 <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
                                     <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
                                 </el-form-item>
-                                <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" prop="totalPrice">
+                                <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" >
                                     <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalSAmount}}</span>
+                                </el-form-item>
+                                <el-form-item  label="结算价" label-width="120px" prop="totalTAmount">
+                                    <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalTAmount}}</span>
                                 </el-form-item>
 
                             </el-col>
@@ -542,10 +545,11 @@
     import KtCheckbox from "@/views/Core/KtCheckbox"
     import KtButton from "@/views/Core/KtButton"
     import {baseUrl} from '@/utils/global'
-    import {format,formatDate} from "@/utils/datetime"
+    import {parseStrToDate,formatDate} from "@/utils/datetime"
 
     const invoice_start = new Date();
     const invoice_end = new Date();
+    invoice_start.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 7);
     invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 5);
     export default {
         components: {
@@ -695,8 +699,12 @@
                     children46: 0,
                     children4: 0,
                     totalSAmount: null,
+                    totalTAmount: null,
                     remark: null,
-                    sPrice:null
+                    sPrice:null,
+                    endPrice:null,
+                    scheduledays:0,
+                    favorableprice:0
                 },
                 dataFormRules: {
                     pName: [
@@ -718,7 +726,12 @@
                 },
                 pickerOptions:{
                     disabledDate : (time) => {
-                        return time.getTime() < Date.now() - 8.64e7
+                        var nowDate = new Date();
+                        var day = 7;
+                        if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                            day = 8;
+                        }
+                        return time.getTime() < Date.now() - 8.64e7 +  3600 * 1000 * 24 * day;
                     }
                 },
                 pickerOptions2:{
@@ -774,10 +787,10 @@
                 var dateStart = new Date(Date.parse(inDateStart.replace(/-/g, "/")))
                 if ( date>=tDate ) {
                     var i = this.systemDays[0].code
-                    date.setDate(date.getDate()+i)
+                    date.setDate(date.getDate()+ parseInt(i))
                 }else {
                     var i = this.systemDays[0].code -1
-                    date.setDate(date.getDate()+i)
+                    date.setDate(date.getDate()+ parseInt(i))
                 }
                 if (dateStart<date) {
                     this.$message({message: this.$t('action.OverSevenAfterExcetpion') , type: 'warn'})
@@ -836,6 +849,7 @@
             },
             clearAll: function (formName) {
                 this.$refs[formName].resetFields();
+                this.starLevel = [];
             },
             // 换页刷新
             refreshPageRequest: function (pageNum) {
@@ -847,6 +861,12 @@
                     return 'success-row';
                 }
                 return '';
+            },
+            parseStrToDate(str) {
+                if(str == undefined){
+                    return ;
+                }
+                return str.substr(0,4) + "-" + str.substr(4,2) +"-" + str.substr(6,2)
             }
         },
         created(){
@@ -865,10 +885,32 @@
         },
         watch:{
             'dataForm.roomNum'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+
+                var num = 0;
+                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
             },
             'dataForm.sPrice'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+                var num = 0;
+                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
+            },
+            'filters.roomNight'(){
+                var num = 0;
+                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
+            },
+            'dataForm.adultNum'(){
+                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * this.dataForm.endPrice * this.filters.roomNight;
+            },
+            'dataForm.childNum'(){
+                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * this.dataForm.endPrice * this.filters.roomNight;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
@@ -878,13 +920,17 @@
                 oDate2 = Date.parse(endDate);
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 this.filters.roomNight = iDays;
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
             },
             starLevel(n,o){
                 this.filters.hotelLevel = this.starLevel.join(",");
-            }
+            },
         },
         mounted() {
+            var nowDate = new Date();
+            if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                invoice_start.setDate(invoice_start.getDate() + 1 );
+                invoice_end.setDate(invoice_end.getDate() + 1);
+            }
             this.commonDate = [formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')];
             this.localLanguageLoad()
             this.findPage();

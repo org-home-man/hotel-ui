@@ -51,6 +51,25 @@ instance.interceptors.request.use(function (config) {
 //响应拦截器
 instance.interceptors.response.use(function (response) {
     const data = response.data;
+    if(data.type && data.type === 'application/octet-stream'){
+        let blob = data;
+        let date = new Date();
+        let filefix = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        if (window.navigator.msSaveOrOpenBlob) {
+            navigator.msSaveBlob(blob, filefix +'.xlsx');
+        } else {
+            let link = document.createElement("a");
+            let evt = document.createEvent("HTMLEvents");
+            evt.initEvent("click", false, false);
+            link.href = URL.createObjectURL(blob);
+            link.download = filefix +'.xlsx';
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
+            window.URL.revokeObjectURL(link.href);
+        }
+        return '1';
+    }
     if (data.success === true) {
         return data.data || data;
     } else if (data.code == 500) {
