@@ -265,6 +265,7 @@ export default {
             })
         },
         confirm:function (row) {
+
             this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
                 type: 'warning',
                 cancelButtonText: this.$t('action.cancel'),
