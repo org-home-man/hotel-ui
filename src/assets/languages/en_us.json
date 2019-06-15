@@ -73,6 +73,7 @@
         "reset": "Reset",
         "do": "Are you sure to delete the selection record?",
         "loginOut": "确认退出吗?",
+        "sureChangeStatus": "确定改变用户状态吗？",
         "tips": "Tips",
         "success": "Success",
         "fail": "Fail",

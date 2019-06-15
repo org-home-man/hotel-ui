@@ -50,10 +50,10 @@
                             <el-input-number v-model="filters.childNum" controls-position="right"  :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="100"></el-input-number>
+                            <el-input-number  v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="500"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="100"></el-input-number>
+                            <el-input-number  v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="500"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="roomArea" style="margin-bottom: 0;vertical-align: middle;width: 140px;">
                             <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'" clearable></el-input>
@@ -303,7 +303,7 @@
             </div>
 
         <!--新增订单界面-->
-        <el-dialog :title="$t('hotel.reservatRoom')" width="70%" style="margin-top: -120px" :visible.sync="editDialogVisible"
+        <el-dialog :title="$t('hotel.reservatRoom')" width="80%" style="margin-top: -120px" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
             <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
@@ -349,6 +349,20 @@
                                         <span>{{parseStrToDate(commonDate[0])}}  {{$t('hotel.dateSep')}}  {{parseStrToDate(commonDate[1])}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
 
                                     </li>
+                                    <li style="padding-top: 4px">
+                                        <label>{{$t('order.priceDetail')}}</label>
+                                        <el-popover
+                                            placement="right"
+                                            width="300px"
+                                            trigger="click">
+                                            <el-table :data="gridData" height="300px">
+                                                <el-table-column width="150" property="priceDate" :label="$t('order.date')"></el-table-column>
+                                                <el-table-column width="100" property="sroomPrice" :label="$t('hotel.sRoomPrice')"></el-table-column>
+                                            </el-table>
+                                            <el-button slot="reference">{{$t('order.detail')}}</el-button>
+                                        </el-popover>
+                                    </li>
+
                                     <li style="display: flex">
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
@@ -400,6 +414,27 @@
                                         <input hidden v-model="dataForm.introC"/>
                                         <input hidden v-model="dataForm.introE"/>
                                         <span>{{able?dataForm.introC:dataForm.introE}}</span>
+                                    </li>
+
+                                    <li>
+                                        <label>{{$t('hotel.scheduledays')}}</label>
+                                        <input hidden v-model="dataForm.scheduledays"/>
+                                        <span>{{dataForm.scheduledays}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.favorableprice')}}</label>
+                                        <input hidden v-model="dataForm.favorableprice"/>
+                                        <span>{{dataForm.favorableprice}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.evenlive')}}</label>
+                                        <input hidden v-model="dataForm.evenlive"/>
+                                        <span>{{dataForm.evenlive}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.present')}}</label>
+                                        <input hidden v-model="dataForm.present"/>
+                                        <span>{{dataForm.present}}</span>
                                     </li>
                                 </ul>
                             </el-col>
@@ -520,9 +555,6 @@
                                 <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" >
                                     <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalSAmount}}</span>
                                 </el-form-item>
-                                <el-form-item  label="结算价" label-width="120px" prop="totalTAmount">
-                                    <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalTAmount}}</span>
-                                </el-form-item>
 
                             </el-col>
                         </el-row>
@@ -602,6 +634,7 @@
                 photoUrl: baseUrl + '/document/preview/',
                 size: 'small',
                 commonDate:[],
+                gridData:[],//牌价详细信息
                 pageRequest: {page: 1, rows: 10},
                 pageResult: {},
                 editDialogVisible: false, // 新增编辑界面是否显示
@@ -808,11 +841,16 @@
                     'outDateEnd':this.filters.outDateEnd
                 });
                 this.dataForm = Object.assign(this.dataForm,obj,row)
+                console.log("this.dataForm",this.dataForm)
                 if(row.photo){
                     this.$api.user.showFile({'relationId':row.photo}).then((res) =>{
                         this.roomPhoto = res;
                     })
                 }
+                this.$api.bizPuchs.findByDate({'inDateStart': obj.inDateStart,'outDateEnd': obj.outDateEnd,'roomCode':row.roomCode}).then((res) => {
+                    this.gridData = res;
+                },() =>{
+                })
             },
             // 预约
             submitForm: function () {
@@ -966,7 +1004,7 @@
         list-style: none;
     }
     .hotel-base>li>label{
-        width: 80px;
+        width: 120px;
         display: inline-block;
     }
 </style>
