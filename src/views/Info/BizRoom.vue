@@ -90,7 +90,7 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
-                                    <el-select v-model="dataForm.roomType">
+                                    <el-select v-model="dataForm.roomType" :disabled="operation?false:true">
                                         <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
                                                    :value="rt.code"></el-option>
                                     </el-select>
