@@ -100,8 +100,11 @@
                 <div style="display: flex;margin-bottom: 6px;">
                     <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">星级</div>
                     <div style="width: 100%;padding: 0 10px;">
-                        <el-form-item v-for="hs in hotelStar" :key="hs.code"  prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
-                            <el-radio style="width: 215px;box-sizing: border-box;" :label="hs.name" v-model="filters.hotelLevel" :value="hs.code" border/>
+                        <el-form-item prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
+                            <el-checkbox-group v-model="filters.starLevel">
+                                <el-checkbox v-for="hs in hotelStar" style="width: 202px;box-sizing: border-box;margin-bottom: 0;vertical-align: middle;margin-right: 5px"
+                                             :label="hs.code" :key="hs.code" name="hotelLevel" border>{{hs.name}}</el-checkbox>
+                            </el-checkbox-group>
                         </el-form-item>
                     </div>
                 </div>
@@ -611,6 +614,7 @@
                 cityCode: [], //城市编码
                 systemDays:[],//系统参数 天数
                 language: {},
+                starLevel:[],
                 filters: {
                     provinceCode: '',
                     hotelName: '',
@@ -874,6 +878,9 @@
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 this.filters.roomNight = iDays;
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+            },
+            starLevel(n,o){
+                this.filters.hotelLevel = this.starLevel.join(",");
             }
         },
         mounted() {
