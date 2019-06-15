@@ -277,6 +277,10 @@ export default {
                     this.loading = false;
                 }
                 this.$emit('handleConfirm', {params: row, callback: callback})
+            }).catch(() => {
+                // this.loading = false
+            }).finally(()=>{
+                this.loading = false
             })
         },
         formatRole: function(row, roomStatus) {
