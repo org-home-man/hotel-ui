@@ -137,8 +137,6 @@
                                     <el-input v-model.number="dataForm.roomStock"></el-input>
                                 </el-form-item>
                             </el-col>
-                        </el-row>
-                        <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.recommended')">
                                     <kt-checkbox trueLable="01" falseLable="02"
