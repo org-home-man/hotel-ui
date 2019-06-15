@@ -755,6 +755,9 @@
             },
             // 显示预订界面
             handleBookRoom: function (row) {
+                /*
+                入住日算起，倒退七天前的那一天18:30分开始，将无法预约入住日的酒店客
+                 */
                 var date = new Date();
                 var y = date.getFullYear();
                 var m = date.getMonth() +1;
@@ -764,7 +767,6 @@
                 var inDateStart = this.filters.inDateStart;
                 inDateStart = inDateStart.substring(0,4)+"-"+inDateStart.substring(4,6)+"-"+inDateStart.substring(6)+ " "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
                 var dateStart = new Date(Date.parse(inDateStart.replace(/-/g, "/")))
-                console.log("this.systemDays[0].code",this.systemDays[0].code-1)
                 if ( date>=tDate ) {
                     var i = this.systemDays[0].code
                     date.setDate(date.getDate()+i)
