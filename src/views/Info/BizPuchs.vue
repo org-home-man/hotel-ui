@@ -114,6 +114,19 @@
                                         <input hidden v-model="dataForm.outDate"/>
                                         <span>{{dataForm.inDateStart}}  {{$t('order.to')}}  {{dataForm.outDateEnd}} {{$t('order.total')}} {{filters.roomNight}} {{$t('order.night')}}</span>
                                     </li>
+                                    <li style="padding-top: 4px">
+                                        <label>{{$t('order.priceDetail')}}</label>
+                                        <el-popover
+                                            placement="right"
+                                            width="300px"
+                                            trigger="click">
+                                            <el-table :data="gridData" height="300px">
+                                                <el-table-column width="150" property="priceDate" :label="$t('order.date')"></el-table-column>
+                                                <el-table-column width="100" property="sroomPrice" :label="$t('hotel.sRoomPrice')"></el-table-column>
+                                            </el-table>
+                                            <el-button slot="reference">{{$t('order.detail')}}</el-button>
+                                        </el-popover>
+                                    </li>
                                     <li style="display: flex">
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
@@ -159,6 +172,27 @@
                                         <input hidden v-model="dataForm.introC"/>
                                         <input hidden v-model="dataForm.introE"/>
                                         <span>{{able?dataForm.introC:dataForm.introE}}</span>
+                                    </li>
+
+                                    <li>
+                                        <label>{{$t('hotel.scheduledays')}}</label>
+                                        <input hidden v-model="dataForm.scheduledays"/>
+                                        <span>{{dataForm.scheduledays}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.favorableprice')}}</label>
+                                        <input hidden v-model="dataForm.favorableprice"/>
+                                        <span>{{dataForm.favorableprice}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.evenlive')}}</label>
+                                        <input hidden v-model="dataForm.evenlive"/>
+                                        <span>{{dataForm.evenlive}}</span>
+                                    </li>
+                                    <li>
+                                        <label>{{$t('hotel.present')}}</label>
+                                        <input hidden v-model="dataForm.present"/>
+                                        <span>{{dataForm.present}}</span>
                                     </li>
                                 </ul>
                             </el-col>
@@ -440,6 +474,7 @@
                     sPrice: null,
                     roomNight:null
                 },
+                gridData:[],
                 paraConfig: [],
                 pickerOptions:{
                     disabledDate : (time) => {
@@ -496,6 +531,7 @@
                     this.$message({message: this.$t('action.canotEdite'), type: 'error'})
                     return
                 }
+                this.gridData=[];
                 console.log("params",params)
                 this.commonDate = [params.index.inDateStart,params.index.outDateEnd]
                 var prm = {page:1,rows:10,'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode};
@@ -507,6 +543,13 @@
                     this.dataForm = Object.assign({}, params.index,res.rows[0]);
                     console.log("this.dataForm",this.dataForm)
                 });
+
+                this.$api.bizPuchs.findByDate(prm).then((res) => {
+                    console.log("bizPuchs",res)
+                    this.gridData = res;
+                },() =>{
+                })
+
             },
             // 编辑
             submitConfirmForm: function () {
@@ -624,7 +667,8 @@
         list-style: none;
     }
     .hotel-base>li>label{
-        width: 80px;
+        width: 120px;
         display: inline-block;
+
     }
 </style>

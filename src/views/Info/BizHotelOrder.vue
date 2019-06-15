@@ -1,6 +1,6 @@
 <template>
     <div class="main-content" style="width: 100%;height: 100%">
-        <el-form :model="dataForm" label-width="160px" :rules="dataFormRules" ref="dataForm" :size="size"
+        <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
                  :inline="true" v-loading="loading">
             <el-row>
 
@@ -600,11 +600,10 @@
     .hotel-base>li{
         padding: 10px 20px;
         list-style: none;
+        font-size: 14px;
     }
-    .hotel-base>li>label{
-        width: 130px;
+    .hotel-base>li>label {
+        width: 120px;
         display: inline-block;
-        text-align: right;
-        margin-right: 20px;
     }
 </style>
