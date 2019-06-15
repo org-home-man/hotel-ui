@@ -1,45 +1,41 @@
 <template>
     <div class="container room_container">
         <!--工具栏-->
-        <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
-            <el-form :inline="true" :model="filters" :size="size" ref="filters">
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item prop="hotelCode">
-                            <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
-                        </el-form-item>
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
+            <el-form :inline="true" :model="filters" :size="size" ref="filters" align="left">
+                <el-form-item prop="hotelCode">
+                    <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
+                </el-form-item>
 
-                        <el-form-item prop="hotelName">
-                            <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
-                        </el-form-item>
+                <el-form-item prop="hotelName">
+                    <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
+                </el-form-item>
 
-                        <el-form-item prop="roomType">
-                            <el-select v-model="filters.roomType" clearable :placeholder="$t('hotel.roomtype.roomtype')">
-                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
-                                           :value="rt.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="bedType">
-                            <el-select v-model="filters.bedType" clearable :placeholder="$t('hotel.bedtype.bedtype')">
-                                <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
-                                           :value="bt.code"></el-option>
-                            </el-select>
-                        </el-form-item>
+                <el-form-item prop="roomType">
+                    <el-select v-model="filters.roomType" clearable :placeholder="$t('hotel.roomtype.roomtype')">
+                        <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
+                                   :value="rt.code"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item prop="bedType">
+                    <el-select v-model="filters.bedType" clearable :placeholder="$t('hotel.bedtype.bedtype')">
+                        <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
+                                   :value="bt.code"></el-option>
+                    </el-select>
+                </el-form-item>
 
-                        <el-form-item prop="breakType">
-                            <el-select v-model="filters.breakType" clearable :placeholder="$t('hotel.breaktype.breaktype')">
-                                <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
-                                           :value="bk.code"></el-option>
-                            </el-select>
-                        </el-form-item>
+                <el-form-item prop="breakType">
+                    <el-select v-model="filters.breakType" clearable :placeholder="$t('hotel.breaktype.breaktype')">
+                        <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
+                                   :value="bk.code"></el-option>
+                    </el-select>
+                </el-form-item>
 
 
-                        <el-form-item prop="inventory">
-                            <el-input v-model="filters.inventory" clearable :placeholder="$t('hotel.inventory')"></el-input>
-                        </el-form-item>
+                <el-form-item prop="inventory">
+                    <el-input v-model="filters.inventory" clearable :placeholder="$t('hotel.inventory')"></el-input>
+                </el-form-item>
 
-                    </el-col>
-                </el-row>
                 <!--<el-form-item>-->
                 <!--<el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">-->
                 <!--<el-option v-for="rs in paraConfig.roomstyle" :key="rs.paraCode" :label="$t('hotel.'+ rs.paraCode)" :value="rs.paraValue1"></el-option>-->
@@ -70,13 +66,8 @@
         </room-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
-                <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
-                <el-breadcrumb-item>{{$t('sys.guestEdit')}}</el-breadcrumb-item>
-            </el-breadcrumb>
 
             <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="140px" :rules="dataFormRules"
                      ref="dataForm"
@@ -84,96 +75,142 @@
                 <!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
                 <!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
                 <!--</el-form-item>-->
-                <el-row>
-                    <el-col :span="20" align="left">
-                        <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
-                            <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
-                                <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
-                                           :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"
-                                           :value="hotelName.hotelCode"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off" >
-                            <el-select v-model="dataForm.roomType" :disabled="operation?false:true">
-                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
-                                           :value="rt.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off">
-                            <el-select v-model="dataForm.roomStyle">
-                                <el-option v-for="rs in paraConfig.ROOM_STYLE" :key="rs.code" :label="rs.name"
-                                           :value="rs.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
-                            <el-select v-model="dataForm.bedType">
-                                <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
-                                           :value="bt.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
-                            <el-select v-model="dataForm.breakType">
-                                <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
-                                           :value="bk.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.roomarea')+'(m2)'" prop="roomArea" auto-complete="off">
-                            <el-input v-model="dataForm.roomArea"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.introc')" prop="introC" auto-complete="off" style="width: 100%">
-                            <el-input class="textArea" v-model="dataForm.introC" type="textarea"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.introe')" prop="introE" auto-complete="off" style="width: 100%">
-                            <el-input class="textArea" v-model="dataForm.introE" type="textarea"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
-                            <el-input v-model.number="dataForm.scheduledays"></el-input>
-                        </el-form-item>
 
-                        <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
-                            <el-input v-model="dataForm.favorableprice"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
                 <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
-                            <el-input v-model.number="dataForm.evenlive"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
-                            <el-input class="textArea" v-model="dataForm.present" type="textarea"></el-input>
-                        </el-form-item>
+                    <el-col :span="16">
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
+                                    <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
+                                        <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
+                                                   :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"
+                                                   :value="hotelName.hotelCode"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
+                                    <el-select v-model="dataForm.roomType">
+                                        <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
+                                                   :value="rt.code"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off">
+                                    <el-select v-model="dataForm.roomStyle">
+                                        <el-option v-for="rs in paraConfig.ROOM_STYLE" :key="rs.code" :label="rs.name"
+                                                   :value="rs.code"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
+                                    <el-select v-model="dataForm.bedType">
+                                        <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
+                                                   :value="bt.code"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
+                                    <el-select v-model="dataForm.breakType">
+                                        <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
+                                                   :value="bk.code"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.roomarea')+'(m2)'" prop="roomArea" auto-complete="off">
+                                    <el-input v-model="dataForm.roomArea"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
+                                    <el-input v-model.number="dataForm.scheduledays"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
+                                    <el-input v-model="dataForm.favorableprice"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
+                                    <el-input v-model.number="dataForm.roomStock"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
+                                    <el-input v-model.number="dataForm.evenlive"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item :label="$t('hotel.recommended')">
+                                    <kt-checkbox trueLable="01" falseLable="02"
+                                                 @changeValue="changeValue" :modelParent="dataForm.recommended"
+                                                 perms="sys:bizRoom:check"></kt-checkbox>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24" align="left">
+                                <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
+                                    <el-input class="textArea" v-model="dataForm.present" type="textarea"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24" align="left">
+                                <el-form-item :label="$t('hotel.introc')" prop="introC" auto-complete="off" style="width: 100%">
+                                    <el-input class="textArea" v-model="dataForm.introC" type="textarea"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24" align="left">
+                                <el-form-item :label="$t('hotel.introe')" prop="introE" auto-complete="off" style="width: 100%">
+                                    <el-input class="textArea" v-model="dataForm.introE" type="textarea"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
                     </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                            <el-input v-model.number="dataForm.roomStock"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.recommended')">
-                            <kt-checkbox trueLable="01" falseLable="02"
-                                         @changeValue="changeValue" :modelParent="dataForm.recommended"
-                                         perms="sys:bizRoom:check"></kt-checkbox>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24" align="left">
+                    <el-col :span="8">
+                        <el-form-item  prop="photo" auto-complete="off">
+                            <el-upload
+                                ref="upload"
+                                :http-request="uploadFile"
+                                list-type="picture-card"
+                                :on-error="handlerror"
+                                :on-success="handlesuccess"
+                                :on-change="handlePictureChange"
+                                :on-remove="handlePictureRemove"
+                                :auto-upload="false"
+                                :on-preview="handlePictureCardPreview"
+                                action="#"
+                                :file-list="files"
+                                multiple
+                                :limit="5">
+                                <i class="el-icon-plus"></i>
+                            </el-upload>
 
+                            <el-dialog :visible.sync="dialogVisible" width="65%" append-to-body>
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
+                        </el-form-item>
                     </el-col>
                 </el-row>
+
 
                 <br>
                 <h3 style="text-align: left">{{$t('hotel.information')}}</h3>
@@ -288,57 +325,10 @@
 
                 </el-row>
 
-                <el-row>
-                    <el-col>
-                        <el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">
-                            <el-upload
-                                ref="upload"
-                                :http-request="uploadFile"
-                                list-type="picture-card"
-                                :on-error="handlerror"
-                                :on-success="handlesuccess"
-                                :on-change="handlePictureChange"
-                                :on-remove="handlePictureRemove"
-                                :auto-upload="false"
-                                :on-preview="handlePictureCardPreview"
-                                action="#"
-                                :file-list="files"
-                                multiple
-                                :limit="5">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
-
-                            <el-dialog :visible.sync="dialogVisible" width="65%" append-to-body>
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <!--<el-row>-->
-                <!--<el-col>-->
-                <!--<el-form-item :label="$t('hotel.photo')" prop="photo" auto-complete="off">-->
-                <!--<el-upload-->
-                <!--ref="upload"-->
-                <!--list-type="picture-card"-->
-                <!--:on-error="handlerror"-->
-                <!--:on-success="handlesuccess"-->
-                <!--:file-list="files"-->
-                <!--:auto-upload="false"-->
-                <!--:action="baseUrl+dataurl"-->
-                <!--name="files"-->
-                <!--multiple>-->
-                <!--<i class="el-icon-plus"></i>-->
-                <!--</el-upload>-->
-
-                <!--</el-form-item>-->
-                <!--</el-col>-->
-                <!--</el-row>-->
-
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer" align="center">
                 <el-button :size="size" @click.native="cancelForm">{{$t('action.cancel')}}</el-button>
-                <el-button :size="size" @click.native="submitInfoForm" :loading="editLoading">
+                <el-button :size="size" type="primary" @click.native="submitInfoForm" :loading="editLoading">
                     {{$t('action.submit')}}
                 </el-button>
             </div>
@@ -1549,7 +1539,7 @@
     }
 
     .textArea {
-        width: 620px;
+        width: 640px;
     }
 
     .query_room_container {
