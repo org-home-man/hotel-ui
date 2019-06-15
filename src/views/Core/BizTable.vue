@@ -91,7 +91,11 @@
                          :sortable="column.sortable==null?true:column.sortable" >
         </el-table-column>
 
-        <el-table-column prop="status" :label="$t('order.roomStatus')" :formatter="formatRole"></el-table-column>
+        <el-table-column prop="status" :label="$t('order.roomStatus')">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(roomStatus,scope.row.status)}}</el-tag>
+            </template>
+        </el-table-column>
 
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
@@ -261,6 +265,7 @@ export default {
             })
         },
         confirm:function (row) {
+
             this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
                 type: 'warning',
                 cancelButtonText: this.$t('action.cancel'),
@@ -277,10 +282,11 @@ export default {
                     this.loading = false;
                 }
                 this.$emit('handleConfirm', {params: row, callback: callback})
+            }).catch(() => {
+                // this.loading = false
+            }).finally(()=>{
+                this.loading = false
             })
-        },
-        formatRole: function(row, roomStatus) {
-            return row.status == 1? this.$t('hotel.hotelStatus.hotelStatus1') : row.status == 2? this.$t('hotel.hotelStatus.hotelStatus2') : this.$t('hotel.hotelStatus.hotelStatus3');
         },
         tableRowClassName({row, rowIndex}) {
             if (rowIndex % 2 !=0) {
