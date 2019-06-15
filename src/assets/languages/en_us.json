@@ -421,6 +421,7 @@
         "departureTime": "入离时间",
         "total": "共",
         "night": "晚",
+        "to" : "to",
         "peopleNum": "入住人数",
         "hotelInfo": "酒店信息",
         "hotelWWW": "酒店网站",

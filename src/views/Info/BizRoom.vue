@@ -90,7 +90,7 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
-                                    <el-select v-model="dataForm.roomType">
+                                    <el-select v-model="dataForm.roomType" :disabled="operation?false:true">
                                         <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
                                                    :value="rt.code"></el-option>
                                     </el-select>
@@ -130,29 +130,11 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
-                                    <el-input v-model.number="dataForm.scheduledays"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
-                                    <el-input v-model="dataForm.favorableprice"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
                                     <el-input v-model.number="dataForm.roomStock"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="12">
-                                <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
-                                    <el-input v-model.number="dataForm.evenlive"></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="12">
@@ -163,13 +145,7 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row>
-                            <el-col :span="24" align="left">
-                                <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
-                                    <el-input class="textArea" v-model="dataForm.present" type="textarea"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+
                         <el-row>
                             <el-col :span="24" align="left">
                                 <el-form-item :label="$t('hotel.introc')" prop="introC" auto-complete="off" style="width: 100%">
@@ -781,16 +757,7 @@
                     callback();
                 }
             };
-            var checkLength2 = (rule, value, callback) => {
-                if (!value) {
-                    callback();
-                } else {
-                    if (value.length > 200) {
-                        callback(new Error(this.$t('action.pLengthValue2')));
-                    }
-                    callback();
-                }
-            };
+
             return {
                 baseUrl: baseUrl,
                 priceBoolean: false,
@@ -844,27 +811,12 @@
 
                         {validator: checkDoubleNumber}
                     ],
-                    scheduledays: [
-                        {required: true, message: this.$t('action.pScheduledays'), trigger: 'blur'},
-                        {validator: checkNumber}
-                    ],
-                    evenlive: [
-                        {required: true, message: this.$t('action.pEvenlive'), trigger: 'blur'},
-                        {validator: checkNumber}
-                    ],
-                    favorableprice: [
-                        {required: true, message: this.$t('action.pFavorableprice'), trigger: 'blur'},
-                        {validator: checkDoubleNumber}
-                    ],
+
                     introC: [
                         {validator: checkLength1}
                     ],
                     introE: [
                         {validator: checkLength1}
-                    ],
-                    present: [
-                        {required: true, message: this.$t('action.present'), trigger: 'blur'},
-                        {validator: checkLength2}
                     ]
                 },
 
@@ -882,10 +834,6 @@
                     photo: null,
                     roomStock: null,
                     recommended: null,
-                    scheduledays: null,
-                    favorableprice: null,
-                    evenlive: null,
-                    present: null,
                     iswify: null,
                     isfront: null,
                     isbarrifr: null,
@@ -1069,10 +1017,6 @@
                     introE: null,
                     photo: null,
                     files: [],
-                    scheduledays: null,
-                    favorableprice: null,
-                    evenlive: null,
-                    present: null,
                     roomStock: null,
                     recommended: null,
                     iswify: null,

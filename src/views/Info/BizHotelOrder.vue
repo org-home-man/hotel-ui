@@ -118,6 +118,28 @@
                                     <input hidden v-model="dataForm.introE"/>
                                     <span>{{able?dataForm.introC:dataForm.introE}}</span>
                                 </li>
+
+                                <li>
+                                    <label>{{$t('hotel.scheduledays')}}</label>
+                                    <input hidden v-model="dataForm.scheduledays"/>
+                                    <span>{{dataForm.scheduledays}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.favorableprice')}}</label>
+                                    <input hidden v-model="dataForm.favorableprice"/>
+                                    <span>{{dataForm.favorableprice}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.evenlive')}}</label>
+                                    <input hidden v-model="dataForm.evenlive"/>
+                                    <span>{{dataForm.evenlive}}</span>
+                                </li>
+                                <li>
+                                    <label>{{$t('hotel.present')}}</label>
+                                    <input hidden v-model="dataForm.present"/>
+                                    <span>{{dataForm.present}}</span>
+                                </li>
+
                             </ul>
                         </el-col>
                     </el-row>
@@ -388,6 +410,10 @@
                 })
             },
             submitForm: function () {
+                if (this.commonDate.length <1) {
+                    this.$message({message: this.$t('action.pInOutDate') , type: 'error'})
+                    return;
+                }
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
@@ -578,9 +604,10 @@
     .hotel-base>li{
         padding: 10px 20px;
         list-style: none;
+        font-size: 14px;
     }
-    .hotel-base>li>label{
-        width: 80px;
+    .hotel-base>li>label {
+        width: 120px;
         display: inline-block;
     }
 </style>
