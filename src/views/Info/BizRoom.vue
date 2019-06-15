@@ -1062,6 +1062,8 @@
             },
             // 显示新增界面
             handleAdd: function () {
+                this.files = [];
+                this.delFile = [];
                 this.disableHotelName = false
                 this.editDialogVisible = true
                 this.operation = true
@@ -1116,6 +1118,8 @@
             },
             // 显示编辑界面
             handleEdit: function (params) {
+                this.files = [];
+                this.delFile = [];
 
                 console.log("param", params);
                 this.disableHotelName = true
