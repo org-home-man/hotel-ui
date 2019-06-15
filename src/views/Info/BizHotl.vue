@@ -135,6 +135,34 @@
                     </el-col>
                 </el-row>
                 <el-row>
+                    <el-col :span="12">
+                        <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
+                            <el-input v-model.number="dataForm.scheduledays"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
+                            <el-input v-model="dataForm.favorableprice"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
+                            <el-input v-model.number="dataForm.evenlive"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24" align="left">
+                        <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
+                            <el-input class="textArea" v-model="dataForm.present" type="textarea"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
+                <el-row>
                     <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr">
                             <el-input v-model="dataForm.hotelAddr" auto-complete="off"></el-input>
@@ -188,6 +216,37 @@
             KtButton
         },
         data() {
+            var checkLength2 = (rule, value, callback) => {
+                if (!value) {
+                    callback();
+                } else {
+                    if (value.length > 200) {
+                        callback(new Error(this.$t('action.pLengthValue2')));
+                    }
+                    callback();
+                }
+            };
+            var checkNumber = (rule, value, callback) => {
+                if (!value) {
+                    callback();
+                } else {
+                    if (!Number.isInteger(value)) {
+                        callback(new Error(this.$t('action.pNum')));
+                    }
+                    callback();
+                }
+            };
+            var checkDoubleNumber = (rule, value, callback) => {
+                var regNumber = /(^[1-9](\d+)?(\.\d{1,2})?$)|(^0$)|(^\d\.\d{1,2}$)/;
+                if (!value) {
+                    callback();
+                } else {
+                    if (!regNumber.test(value)) {
+                        callback(new Error(this.$t('action.pDoubleNum')));
+                    }
+                    callback();
+                }
+            };
             return {
                 size: 'small',
                 hotelType: [], //酒店类型
@@ -218,6 +277,22 @@
                 dataFormRules: {
                     label: [
                         {required: true, message: '请输入名称', trigger: 'blur'}
+                    ],
+                    scheduledays: [
+                        {required: true, message: this.$t('action.pScheduledays'), trigger: 'blur'},
+                        {validator: checkNumber}
+                    ],
+                    evenlive: [
+                        {required: true, message: this.$t('action.pEvenlive'), trigger: 'blur'},
+                        {validator: checkNumber}
+                    ],
+                    favorableprice: [
+                        {required: true, message: this.$t('action.pFavorableprice'), trigger: 'blur'},
+                        {validator: checkDoubleNumber}
+                    ],
+                    present: [
+                        {required: true, message: this.$t('action.present'), trigger: 'blur'},
+                        {validator: checkLength2}
                     ]
                 },
                 // 新增编辑界面数据
@@ -228,6 +303,10 @@
                     cityCode: null,
                     hotelType: null,
                     hotelLevel: null,
+                    scheduledays: null,
+                    favorableprice: null,
+                    evenlive: null,
+                    present: null,
                     hotelCname: null,
                     hotelEname: null,
                     hotelAddr: null,
@@ -238,6 +317,7 @@
                     creatTime: null,
                     lastUpdateBy: null,
                     lastUpdateTime: null,
+
                 },
                 hotelNames: [],
                 sysPara: {},
@@ -280,6 +360,10 @@
                     hotelStar: null,
                     hotelCname: null,
                     hotelEname: null,
+                    scheduledays: null,
+                    favorableprice: null,
+                    evenlive: null,
+                    present: null,
                     hotelAddr: null,
                     hotelPhone: null,
                     hotelFax: null,
