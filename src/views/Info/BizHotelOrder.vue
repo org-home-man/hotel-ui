@@ -410,6 +410,10 @@
                 })
             },
             submitForm: function () {
+                if (this.commonDate.length <1) {
+                    this.$message({message: this.$t('action.pInOutDate') , type: 'error'})
+                    return;
+                }
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {

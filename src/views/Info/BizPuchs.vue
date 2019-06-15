@@ -283,6 +283,7 @@
                                         align="right"
                                         type="date"
                                         :placeholder="$t('hotel.lastCrtTime')"
+                                        value-format="yyyyMMdd"
                                         :picker-options="pickerOptions2" style="width: 200px">
                                     </el-date-picker>
                                 </el-form-item>
