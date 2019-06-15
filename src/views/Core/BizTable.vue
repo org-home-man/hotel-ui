@@ -91,7 +91,11 @@
                          :sortable="column.sortable==null?true:column.sortable" >
         </el-table-column>
 
-        <el-table-column prop="status" :label="$t('order.roomStatus')" :formatter="formatRole"></el-table-column>
+        <el-table-column prop="status" :label="$t('order.roomStatus')">
+            <template slot-scope="scope">
+                <el-tag>{{resolveRoomTypeName(roomStatus,scope.row.status)}}</el-tag>
+            </template>
+        </el-table-column>
 
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
