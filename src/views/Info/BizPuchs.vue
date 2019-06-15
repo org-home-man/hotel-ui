@@ -555,14 +555,14 @@
             submitConfirmForm: function () {
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
-                        this.$confirm('确认提交吗？', '提示', {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
                             this.$api.bizPuchs.save(params).then((res) => {
                                 if (res.code == 200) {
-                                    this.$message({message: '操作成功', type: 'success'})
+                                    this.$message({message: this.$t('action.success'), type: 'success'})
                                 } else {
-                                    this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+                                    this.$message({message: this.$t('action.fail') , type: 'error'})
                                 }
                                 this.editLoading = false
                                 this.$refs['dataForm'].resetFields()

@@ -214,9 +214,9 @@
             r0002ExportExcel() {
                 this.$api.report.exportR0002Report(this.dataForm,{responseType: 'blob'}).then((res) => {
                     if(res == 1) {
-                        this.$message({message: '操作成功', type: 'success'})
+                        this.$message({message: this.$t('action.success'), type: 'success'})
                     } else {
-                        this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
                     }
                 })
             },
