@@ -14,8 +14,8 @@ export const findR0002Report = (data) => {
     return request.post('/wrDetail/r0002Page',data);
 }
 //周报 R0002导出
-export const exportR0002Report = (data) => {
-    return request.post('/wrDetail/r0002ExportExcel',data);
+export const exportR0002Report = (data,header) => {
+    return request.post('/wrDetail/r0002ExportExcel',data,header);
 }
 
 //周报 R0003
