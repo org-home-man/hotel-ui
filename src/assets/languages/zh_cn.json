@@ -209,7 +209,11 @@
         "orderFirm": "订单确认",
         "orderCancel": "订单撤销",
         "orderServ": "订单维护",
-        "reportMng": "报表查询",
+        "reportMng": "报表管理",
+        "weekReportMng": "周报",
+        "monthReportMng": "月报",
+        "hotelRequestReport": "酒店客房请求书",
+        "orderConfirmReport": "订单确认书",
         "orderDetailRep": "订单明细报表",
         "houseStock": "未预定客房清单报表",
         "monthRep": "订单汇总月报表"
@@ -406,7 +410,14 @@
         "laterOneMonth": "最近一月",
         "laterThreeMonth": "最近三月",
         "stockNum": "库",
-        "sAverageSprice": "房间均价"
+        "sAverageSprice": "房间均价",
+        "reportId": "报表编号",
+        "reportTxt": "报表名称",
+        "reportYear": "报表年份",
+        "reportMonth": "报表月份",
+        "reportSeq": "报表批次",
+        "viewReport": "查看报表"
+
     },
     "order": {
         "roomStatus": "订单状态",
@@ -423,6 +434,12 @@
         "roomInfo": "房间信息",
         "priceDetail": "价格详情",
         "detail": "详情",
-        "date": "日期"
+        "date": "日期",
+        "totalSAmount": "销售总价",
+        "createTime": "订单产生日期",
+        "createName": "订单产生用户",
+        "updateTime": "最终修改日期",
+        "updateName": "最终修改用户"
+
     }
 }

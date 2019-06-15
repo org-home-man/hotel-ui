@@ -489,6 +489,7 @@
                                         v-model="dataForm.lastCrtTime"
                                         align="right"
                                         type="date"
+                                        value-format="yyyyMMdd"
                                         :placeholder="$t('hotel.lastCrtTime')"
                                         :picker-options="pickerOptions2" style="width: 200px">
                                     </el-date-picker>

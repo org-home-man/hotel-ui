@@ -353,7 +353,24 @@
                 roomType:[], //房间类型
                 breakType: [], //餐饮条件
                 bedType: [], //床铺类型
-                dataFormRules: {},
+                dataFormRules: {
+                    pName: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
+                    passport: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
+                    lastCrtTime: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
+                    phone: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
+                    emailAddress: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ]
+
+                },
                 // 新增编辑界面数据
                 dataForm: {
                     orderCode: null,
