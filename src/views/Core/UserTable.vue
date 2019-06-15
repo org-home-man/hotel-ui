@@ -33,6 +33,12 @@
                                @click="handleEdit(scope.$index, scope.row)"/>
                     <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size"
                                type="danger" @click="handleDelete(scope.$index, scope.row)"/>
+                    <el-switch
+                        v-model="scope.row.status==1?true:false"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        @change="changeStatus(scope.row)">
+                    </el-switch>
                 </template>
             </el-table-column>
         </el-table>
@@ -64,6 +70,10 @@
             permsEdit: String,  // 编辑权限标识
             permsDelete: String,  // 删除权限标识
             paraConfig:Object,
+            status:{
+                type:Boolean,
+                default : false
+            },
             size: { // 尺寸样式
                 type: String,
                 default: 'mini'
@@ -184,6 +194,9 @@
                     return 'success-row';
                 }
                 return '';
+            },
+            changeStatus(row) {
+                this.$emit('changeStatus', {row: row})
             }
         },
         mounted() {

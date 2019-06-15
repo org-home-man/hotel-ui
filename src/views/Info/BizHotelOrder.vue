@@ -70,7 +70,7 @@
                                     <label>{{$t('order.peopleNum')}}</label>
                                     <div style="width: 200px;">
                                         <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="children46" style="margin-bottom: 6px;margin-right: 0;">
-                                            <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
+                                            <el-input-number  v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                         </el-form-item>
 
                                         <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="children46"  style="margin-bottom: 6px;margin-right: 0;">
@@ -329,8 +329,8 @@
                     inDateStart: null,
                     outDateEnd: null,
                     roomNum: null,
-                    adultNum: null,
-                    childNum: null,
+                    adultNum: 0,
+                    childNum: 0,
                     lastCrtTime: null,
                     pName: null,
                     passport: null,
@@ -346,6 +346,12 @@
                     roomNight:null
                 },
                 dataFormRules: {
+                    adultNum: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
+                    childNum: [
+                        {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
+                    ],
                     pName: [
                         {required: true, message: this.$t('action.noNull'), trigger: 'blur'}
                     ],

@@ -57,7 +57,7 @@
     <!--表格内容栏-->
     <user-table permsEdit="sys:user:edit" permsDelete="sys:user:delete"
               :data="pageResult" :paraConfig="paraConfig"
-              @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete">
+              @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete" @changeStatus="changeStatus">
     </user-table>
 
     <!--新增编辑界面-->
@@ -410,7 +410,7 @@
       //取消按钮
       cancel: function (formName) {
         this.dialogVisible = false;
-        this.$refs[formName].resetFields();
+        this.$refs['dataForm'].resetFields();
       },
       // 获取部门列表
       findDeptTree: function () {
@@ -454,7 +454,29 @@
           message: '最多只能上传一个图片',
           duration: 6000
         });
-      }
+      },
+        //改变用户状态
+        changeStatus(row) {
+
+            this.$confirm(this.$t('action.sureChangeStatus'), this.$t('action.tips'), {}).then(() => {
+                let params = Object.assign({}, row.row)
+                if (params.status == 1) {
+                    params.status = 0
+                } else {
+                    params.status = 1
+                }
+                this.$api.user.save(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
+                    this.editLoading = false;
+                    if (res.code == 200) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                    this.findPage(null);
+                })
+
+            })
+        }
     },
       created() {
           this.getTypeValues("SEX,STATUS").then((res)=>{//加载性别
