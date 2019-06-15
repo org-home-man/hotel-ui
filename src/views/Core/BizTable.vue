@@ -287,9 +287,6 @@ export default {
                 this.loading = false
             })
         },
-        formatRole: function(row, roomStatus) {
-            return row.status == 1? this.$t('hotel.hotelStatus.hotelStatus1') : row.status == 2? this.$t('hotel.hotelStatus.hotelStatus2') : this.$t('hotel.hotelStatus.hotelStatus3');
-        },
         tableRowClassName({row, rowIndex}) {
             if (rowIndex % 2 !=0) {
                 return 'success-row';
