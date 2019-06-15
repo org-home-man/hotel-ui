@@ -89,6 +89,13 @@ instance.interceptors.response.use(function (response) {
             title: i18n.t('action.sysErr'),
             message: i18n.t('action.'+data.msg)
         });
+    } else if (data.code == 10002){
+        let num = JSON.parse(data.msg).num;
+        let curNum = JSON.parse(data.msg).curNum;
+        Notification.error({
+            title: i18n.t('action.sysErr'),
+            message: i18n.t('action.passwordErrors') + ':' + curNum + ',' + i18n.t('action.passwordErrorsNum') + num + i18n.t('action.lock')
+        });
     }else {
         if (data.rows) {
             return data;
