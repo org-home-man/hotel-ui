@@ -4,7 +4,7 @@
         <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
             <el-form :inline="true" :model="filters" :size="size">
                 <el-row>
-                    <el-col :span="24">
+                    <el-col :span="24" align="left">
                         <el-form-item>
                             <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
                         </el-form-item>
@@ -73,12 +73,7 @@
                 <!--<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>-->
                 <!--</el-form-item>-->
                 <el-row>
-                    <el-col :span="8" align="left">
-                        <el-form-item label="hotel.hotelCode" prop="hotelCode" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>
-                        </el-form-item>
 
-                    </el-col>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.countryCode.countryCode')" prop="countryCode" auto-complete="off">
                             <el-select v-model="dataForm.countryCode">
@@ -86,7 +81,6 @@
                                 <!--<el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>-->
                             </el-select>
                         </el-form-item>
-
                     </el-col>
                     <el-col :span="8" align="left">
                         <el-form-item prop="provinceCode" :label="$t('hotel.provinceCode.provinceCode')">
@@ -96,8 +90,6 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item prop="cityCode" :label="$t('hotel.cityCode.cityCode')">
                             <el-select v-model="dataForm.cityCode">
@@ -106,6 +98,8 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                </el-row>
+                <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.hotelType.hotelType')" prop="hotelType" auto-complete="off">
                             <el-select v-model="dataForm.hotelType">
@@ -122,6 +116,11 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                    <el-col :span="8" align="left">
+                        <el-form-item :label="$t('hotel.hotelWeb')" prop="hotelWeb">
+                            <el-input v-model="dataForm.hotelWeb" auto-complete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
 
                 <el-row>
@@ -135,11 +134,7 @@
                             <el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="8" align="left">
-                        <el-form-item :label="$t('hotel.hotelWeb')" prop="hotelWeb">
-                            <el-input v-model="dataForm.hotelWeb" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
+
                 </el-row>
                 <el-row>
                     <el-col :span="8" align="left">
@@ -183,25 +178,6 @@
                     </el-col>
                 </el-row>
 
-                <el-row>
-                    <el-col :span="24" align="left">
-                        <el-form-item :label="$t('hotel.lastUpdateBy')" prop="lastUpdateBy" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.creatCy')" prop="creatCy" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.creatCy" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.creatTime')" prop="creatTime" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.creatTime" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.lastUpdateBy')" prop="lastUpdateBy" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.lastUpdateBy" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item :label="$t('hotel.lastUpdateTime')" prop="lastUpdateTime" v-if="dataForm.isPrimaryKey">
-                            <el-input v-model="dataForm.lastUpdateTime" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
