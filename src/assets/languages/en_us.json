@@ -205,6 +205,10 @@
         "orderCancel": "Order Cancel",
         "orderServ": "Order Server",
         "reportMng": "Report Query",
+        "weekReportMng": "周报",
+        "monthReportMng": "月报",
+        "hotelRequestReport": "酒店客房请求书",
+        "orderConfirmReport": "订单确认书",
         "orderDetailRep": "Detail Report",
         "houseStock": "Stock Report",
         "monthRep": "Month Derail Report"
@@ -401,7 +405,13 @@
         "laterOneMonth": "最近一月",
         "laterThreeMonth": "最近三月",
         "stockNum": "available",
-        "sAverageSprice": "房间均价"
+        "sAverageSprice": "房间均价",
+        "reportId": "报表编号",
+        "reportTxt": "报表名称",
+        "reportYear": "报表年份",
+        "reportMonth": "报表月份",
+        "reportSeq": "报表批次",
+        "viewReport": "查看报表"
     },
     "order": {
         "roomStatus": "订单状态",
@@ -418,6 +428,11 @@
         "roomInfo": "房间信息",
         "priceDetail": "价格详情",
         "detail": "详情",
-        "date": "Date"
+        "date": "Date",
+        "totalSAmount": "销售总价",
+        "createTime": "订单产生日期",
+        "createName": "订单产生用户",
+        "updateTime": "最终修改日期",
+        "updateName": "最终修改用户"
     }
 }
