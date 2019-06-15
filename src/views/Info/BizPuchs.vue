@@ -546,7 +546,6 @@
                 });
 
                 this.$api.bizPuchs.findByDate(prm).then((res) => {
-                    console.log("bizPuchs",res)
                     this.gridData = res;
                 },() =>{
                 })

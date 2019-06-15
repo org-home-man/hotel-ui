@@ -81,6 +81,7 @@
         "delSuccess": "删除成功",
         "delFail": "删除失败",
         "sureSubmit": "确认提交吗?",
+        "sureChangeStatus": "确定改变用户状态吗？",
         "noNull": "不能为空",
         "roleMenu": "角色菜单授权",
         "incompleteInfo": "填入信息不全",
