@@ -50,10 +50,10 @@
                             <el-input-number v-model="filters.childNum" controls-position="right"  :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number  v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="500"></el-input-number>
+                            <el-input-number  v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="1000"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
-                            <el-input-number  v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="500"></el-input-number>
+                            <el-input-number  v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="1000"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="roomArea" style="margin-bottom: 0;vertical-align: middle;width: 140px;">
                             <el-input v-model="filters.roomArea" :placeholder="$t('hotel.roomarea')+'(m2)'" clearable></el-input>
