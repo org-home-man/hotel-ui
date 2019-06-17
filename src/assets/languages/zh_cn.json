@@ -125,7 +125,7 @@
         "OverSevenAfterExcetpion": "已过预定时间，无法预约",
         "noBodyException": "用户或密码输入不正确",
         "imgNotType": "上传客房图片格式只能为JPG",
-        "imgLtKb": "上传头像图片大小不能超过 512KB",
+        "imgLtKb": "上传头像图片大小不能超过 1MB",
         "noData": "暂无数据",
         "codeNotNull": "字典编码有误",
         "codeExist": "编码已存在",
