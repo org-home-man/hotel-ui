@@ -692,7 +692,7 @@
                     istrafic: null,
                     isrestau: null,
                     lowRoomPrice: 0,
-                    highRoomPrice: 1000,
+                    highRoomPrice: 5000,
                     inDateStart: null,
                     outDateEnd: null,
                     roomNum: 1,
