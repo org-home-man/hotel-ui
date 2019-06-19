@@ -367,7 +367,7 @@
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
                                             <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
-                                                <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="1" ></el-input-number>
+                                                <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
 
                                             <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
@@ -547,7 +547,7 @@
                                     <el-input-number v-model="dataForm.children4" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
                                 <el-form-item :label="$t('hotel.roomNum')" label-width="120px" prop="roomNum" >
-                                    <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :min="1" :max="dataForm.inventory" ></el-input-number>
+                                    <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :min="0" :max="dataForm.inventory" ></el-input-number>
                                 </el-form-item>
                                 <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
                                     <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
@@ -651,6 +651,7 @@
                 provinceCode: [], //地区编码
                 cityCode: [], //城市编码
                 systemDays:[],//系统参数 天数
+                advanceDays:null, //用于获取预定房间的日期与当前日期的天数
                 language: {},
                 starLevel:[],
                 filters: {
@@ -719,7 +720,7 @@
                     roomPrice: null,
                     inDateStart: null,
                     outDateEnd: null,
-                    roomNum: null,
+                    roomNum: 0,
                     adultNum: null,
                     childNum: null,
                     lastCrtTime: null,
@@ -836,12 +837,10 @@
                 }
                 var obj = Object.assign({},{'adultNum':this.filters.adultNum,
                     'childNum':this.filters.childNum,
-                    'roomNum':this.filters.roomNum,
                     'inDateStart':this.filters.inDateStart,
                     'outDateEnd':this.filters.outDateEnd
                 });
                 this.dataForm = Object.assign(this.dataForm,obj,row)
-                console.log("this.dataForm",this.dataForm)
                 if(row.photo){
                     this.$api.user.showFile({'relationId':row.photo}).then((res) =>{
                         this.roomPhoto = res;
@@ -849,6 +848,9 @@
                 }
                 this.$api.bizPuchs.findByDate({'inDateStart': obj.inDateStart,'outDateEnd': obj.outDateEnd,'roomCode':row.roomCode}).then((res) => {
                     this.gridData = res;
+                    if(this.dataForm.adultNum == 0 ) {
+                        this.dataForm.adultNum =1; //必须有一个成年人
+                    }
                 },() =>{
                 })
             },
@@ -923,41 +925,83 @@
         },
         watch:{
             'dataForm.roomNum'(){
-
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
                 var num = 0;
-                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice  - num;
             },
             'dataForm.sPrice'(){
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
                 var num = 0;
-                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice - num;
             },
             'filters.roomNight'(){
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
                 var num = 0;
-                if(this.filters.roomNight >= this.dataForm.scheduledays){
+                if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight - num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice - num;
             },
             'dataForm.adultNum'(){
-                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * this.dataForm.endPrice * this.filters.roomNight;
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
             },
             'dataForm.childNum'(){
-                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * this.dataForm.endPrice * this.filters.roomNight;
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
                 var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
-                var oDate1, oDate2, iDays ;
+                var oDate1, oDate2,nowDate, iDays ,aDays;
                 oDate1 = Date.parse(startDate);
                 oDate2 = Date.parse(endDate);
+                nowDate = new Date();
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                aDays = parseInt(Math.abs(nowDate -oDate1)/1000/60/60/24);
                 this.filters.roomNight = iDays;
+                this.advanceDays = aDays;
             },
             starLevel(n,o){
                 this.filters.hotelLevel = this.starLevel.join(",");

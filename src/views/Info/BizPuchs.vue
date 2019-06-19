@@ -423,6 +423,7 @@
                     roomNum: null,
                     currency: null,
                     totalSAmount: null,
+                    totalTAmount:null,
                     remark: null,
                     status: null,
                     provinceCode: '',
@@ -539,16 +540,15 @@
                 this.$api.hotelRoom.findPage(prm).then( res =>{
                     this.editDialogVisible = true;
                     this.operation = false;
-                    console.log("param.index",params.index);
-                    console.log("res.rows[0]",res.rows[0])
-                    this.dataForm = Object.assign({}, params.index,res.rows[0]);
-                    console.log("this.dataForm",this.dataForm)
+                    this.dataForm = Object.assign({}, res.rows[0]);
+                    this.$api.bizPuchs.findByDate(prm).then((resDate) => {
+                        this.gridData = resDate;
+                        this.dataForm = Object.assign({}, params.index,res.rows[0]);
+                    },() =>{
+                    })
                 });
 
-                this.$api.bizPuchs.findByDate(prm).then((res) => {
-                    this.gridData = res;
-                },() =>{
-                })
+
 
             },
             // 编辑
@@ -578,26 +578,7 @@
             handleConfirm:function (data) {
                 this.$api.bizPuchs.confirm(data.params).then(data!=null?data.callback:'' )
             },
-            //加载状态数据字典
-            findStatus:function(){
-                this.$api.sysParaConfig.findByCode({"paraSubCode2":"puchsState"}).then((res) => {
-                    this.states = res;
-                })
-            },
-            created(){
-                this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT,ROOM_STATUS').then( res =>{
-                    // console.log(res)
-                    this.roomStyle = res.ROOM_STYLE;
-                    this.roomType = res.ROOM_TYPE;
-                    this.hotelStar = res.HOTEL_STAR;
-                    this.hotelType = res.HOTEL_TYPE;
-                    this.breakType = res.BREAK_TYPE;
-                    this.bedType = res.BED_TYPE;
-                    this.provinceCode = res.PREFECTURE;
-                    this.cityCode = res.DISTRICT;
-                    this.roomStatus = res.ROOM_STATUS;
-                })
-            },
+
             inputUserFunc(){
                 if(this.filters.createName.length>0){
                     this.$api.user.findLikeByName({name:this.filters.createName}).then((res) =>{
@@ -633,25 +614,105 @@
         },
         watch:{
             'dataForm.roomNum'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
+
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
             },
             'dataForm.sPrice'(){
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice
+                    }
+                }
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+            },
+            'dataForm.adultNum'(){
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+            },
+            'dataForm.childNum'(){
+                var totlPrice = 0;
+                if(this.gridData.length<=0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
                 var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
-                var oDate1, oDate2, iDays ;
+                var oDate1, oDate2,nowDate, iDays ,aDays;
                 oDate1 = Date.parse(startDate);
                 oDate2 = Date.parse(endDate);
+                nowDate = new Date();
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                aDays = parseInt(Math.abs(nowDate -oDate1)/1000/60/60/24);
                 this.filters.roomNight = iDays;
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * this.dataForm.sPrice * this.filters.roomNight;
+                this.advanceDays = aDays;
+
+                var totlPrice = 0;
+                var tPrice = 0
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice;
+                        tPrice += this.gridData[i].tprice
+                    }
+                }
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+
+                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
             }
         },
         mounted() {
-            // this.findStatus();
-            this.created();
+
+        },
+        created(){
+            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,PREFECTURE,DISTRICT,ROOM_STATUS').then( res =>{
+                // console.log(res)
+                this.roomStyle = res.ROOM_STYLE;
+                this.roomType = res.ROOM_TYPE;
+                this.hotelStar = res.HOTEL_STAR;
+                this.hotelType = res.HOTEL_TYPE;
+                this.breakType = res.BREAK_TYPE;
+                this.bedType = res.BED_TYPE;
+                this.provinceCode = res.PREFECTURE;
+                this.cityCode = res.DISTRICT;
+                this.roomStatus = res.ROOM_STATUS;
+            })
         }
     }
 </script>

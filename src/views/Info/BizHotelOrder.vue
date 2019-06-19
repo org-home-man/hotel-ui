@@ -1,6 +1,6 @@
 <template>
     <div class="main-content" style="width: 100%;height: 100%">
-        <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+        <el-form :model="dataForm" label-width="120px" :rules="dataFormRules" ref="dataForm" :size="size"
                  :inline="true" v-loading="loading">
             <el-row>
 
@@ -69,12 +69,12 @@
                                 <li style="display: flex">
                                     <label>{{$t('order.peopleNum')}}</label>
                                     <div style="width: 200px;">
-                                        <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="children46" style="margin-bottom: 6px;margin-right: 0;">
+                                        <el-form-item label-width="70px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
                                             <el-input-number  v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                         </el-form-item>
 
-                                        <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="children46"  style="margin-bottom: 6px;margin-right: 0;">
-                                            <el-input-number v-model="dataForm.childrenNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
+                                        <el-form-item label-width="70px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
+                                            <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                         </el-form-item>
                                     </div>
                                 </li>
@@ -228,6 +228,7 @@
                                     v-model="dataForm.lastCrtTime"
                                     align="right"
                                     type="date"
+                                    value-format="yyyyMMdd"
                                     :placeholder="$t('hotel.lastCrtTime')"
                                     :picker-options="pickerOptions2" style="width: 200px">
                                 </el-date-picker>
@@ -297,6 +298,7 @@
                 bedType: [], //床铺类型
                 provinceCode: [], //地区编码
                 cityCode: [], //城市编码
+                advanceDays:null,//用于获取预定房间的日期与当前日期的天数
                 language: {},
                 filters: {
                     hotelType:null,
@@ -341,8 +343,10 @@
                     children416: 0,
                     children4: 0,
                     totalSAmount: null,
+                    totalTAmount: null,
                     remark: null,
                     sRoomPrice: null,
+                    endPrice:null,
                     roomNight:null
                 },
                 dataFormRules: {
@@ -371,7 +375,12 @@
                 },
                 pickerOptions:{
                     disabledDate : (time) => {
-                        return time.getTime() < Date.now() - 8.64e7
+                        var nowDate = new Date();
+                        var day = 7;
+                        if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                            day = 8;
+                        }
+                        return time.getTime() < Date.now() - 8.64e7 +  3600 * 1000 * 24 * day;
                     }
                 },
                 pickerOptions2:{
@@ -480,15 +489,19 @@
                     console.log("hotelRoom",res)
                     this.dataForm = res.rows[0];
                     this.dataForm.sRoomPrice = res.rows[0].sPrice
+                    //查询明细牌价
+                    this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
+                        console.log("bizPuchs",res)
+                        this.gridData = res;
+                        this.dataForm.adultNum = 1;
+                        this.dataForm.childNum = 0;
+                    },() =>{
+                    })
                 },() =>{
 
                 })
 
-                this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
-                    console.log("bizPuchs",res)
-                    this.gridData = res;
-                },() =>{
-                })
+
             },
             returnHome:function() {
                 this.mainTabs = this.mainTabs.filter(item => item.name !== this.mainTabsActiveName)
@@ -550,7 +563,11 @@
                     }
                 }
 
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
             },
             'dataForm.sPrice'(){
                 var totlPrice = 0;
@@ -561,28 +578,66 @@
                         totlPrice += this.gridData[i].sroomPrice
                     }
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
 
             },
-            commonDate(n,o){
-                var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
-                var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
-                var oDate1, oDate2, iDays ;
-                oDate1 = Date.parse(startDate);
-                oDate2 = Date.parse(endDate);
-                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
-                console.log("iDays",iDays);
-                this.filters.roomNight = iDays;
-
+            'dataForm.adultNum'(){
                 var totlPrice = 0;
                 if(this.gridData.length<0) {
                     return
                 } else {
                     for (var i = 0 ; i<this.gridData.length ; i++) {
-                        totlPrice += this.gridData[i].sroomPrice
+                        totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice;
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+            },
+            'dataForm.childNum'(){
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                console.log("totlPrice",totlPrice);
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+                console.log("this.dataForm.totalT",this.dataForm.totalTAmount);
+            },
+            commonDate(n,o){
+                var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
+                var endDate = n[1].substr(0,4) + "/" + n[1].substr(4,2) +"/" +n[1].substr(6,2) ;
+                var oDate1, oDate2,nowDate, iDays ,aDays;
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                nowDate = new Date();
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                aDays = parseInt(Math.abs(nowDate -oDate1)/1000/60/60/24);
+                this.filters.roomNight = iDays;
+                this.advanceDays = aDays;
+
+                var totlPrice = 0;
+                var tPrice = 0
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].sroomPrice;
+                        tPrice += this.gridData[i].tprice
+                    }
+                }
+                var num = 0;
+                if(this.advanceDays >= this.dataForm.scheduledays){
+                    num = this.dataForm.favorableprice;
+                }
+                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+
+                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
             }
         },
         destroyed() {

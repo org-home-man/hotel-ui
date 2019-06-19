@@ -2,38 +2,36 @@
     <div class="container" style="width:99%">
         <!--工具栏-->
         <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
-            <el-form :inline="true" :model="filters" :size="size">
+            <el-form :inline="true" :model="filters" :size="size" ref="filters">
                 <el-row>
                     <el-col :span="24">
-                        <el-form-item>
+                        <el-form-item prop="reportId">
                             <el-input v-model="filters.reportId" clearable :placeholder="$t('hotel.reportId')"></el-input>
                         </el-form-item>
 
-                        <el-form-item>
-                            <<el-input v-model="filters.reportText" clearable :placeholder="$t('hotel.reportText')"></el-input>
+                        <el-form-item prop="reportText">
+                            <el-input v-model="filters.reportTxt" clearable :placeholder="$t('hotel.reportTxt')"></el-input>
+                        </el-form-item>
+
+                        <el-form-item prop="reportMonth">
+                            <el-date-picker
+                                v-model="filters.reportMonth"
+                                type="month"
+                                format="MM"
+                                value-format="MM"
+                                :placeholder="$t('hotel.reportMonth')">
+                            </el-date-picker>
+                        </el-form-item>
+
+                        <el-form-item prop="reportSeq">
+                            <el-input v-model="filters.reportSeq" clearable :placeholder="$t('hotel.reportSeq')"></el-input>
                         </el-form-item>
 
                         <el-form-item>
-                            <el-select v-model="filters.reportMonth" clearable filterable
-                                       :placeholder="$t('hotel.cityCode.cityCode')">
-                                <el-option v-for="rt in cityCode" :key="rt.code"
-                                           :label="rt.name" :value="rt.code"></el-option>
-                            </el-select>
-                        </el-form-item>
-
-                        <el-form-item>
-                            <<el-select v-model="filters.reportReq" clearable filterable
-                                        :placeholder="$t('hotel.cityCode.cityCode')">
-                            <el-option v-for="rt in cityCode" :key="rt.code"
-                                       :label="rt.name" :value="rt.code"></el-option>
-                        </el-select>
-                        </el-form-item>
-
-                        <el-form-item>
-                            <kt-button :label="$t('action.search')" perms="sys:bizWeek:view" type="primary"
+                            <kt-button :label="$t('action.search')" perms="sys:bizMonth:view" type="primary"
                                        @click="findPage(null)"/>
+                            <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
                         </el-form-item>
-
 
                     </el-col>
                 </el-row>
@@ -42,11 +40,45 @@
             </el-form>
         </div>
         <!--表格内容栏-->
-        <total-report-table perms="sys:bizViewsDetail:edit"
-                     :data="pageResult" @findPage="findPage" :paraConfig="paraConfig">
+        <total-report-table perms="sys:bizMonthDetail:edit" @handleViewReport="handleViewReport" :data="pageResult" @findPage="findPage" >
         </total-report-table>
 
         <!--新增编辑界面-->
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0001DialogVisible"
+                   :close-on-click-modal="false">
+
+            <el-button  @click="r0001ExportExcel()">{{$t('common.export')}}</el-button>
+            <el-table  :data="r0001Table" highlight-current-row  v-loading="r0001TableLoading" :element-loading-text="$t('action.loading')" border
+                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
+                <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
+                </el-table-column>
+                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
+                </el-table-column>
+                <el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
+                </el-table-column>
+                <el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">
+                </el-table-column>
+                <el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">
+                </el-table-column>
+                <el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">
+                </el-table-column>
+                <el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">
+                </el-table-column>
+                <el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">
+                </el-table-column>
+                <el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">
+                </el-table-column>
+                <el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">
+                </el-table-column>
+            </el-table>
+            <!--分页栏-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+                <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+                               <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
+                <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
 
     </div>
 </template>
@@ -64,6 +96,12 @@
         data() {
             return {
                 size: 'small',
+                r0001TableLoading:false,//r0001报表加载
+                r0001DialogVisible:false,//月报r0001弹出框
+                r0004TableLoading:false,//r0004报表加载
+                r0004DialogVisible:false,//月报r0004弹出框
+                r0005TableLoading:false,//r0005报表加载
+                r0005DialogVisible:false,//月报r0005弹出框
                 hotelType: [], //酒店类型
                 hotelStar: [], //酒店星级
                 roomStyle: [], //房间样式
@@ -84,7 +122,10 @@
                 // 新增编辑界面数据
                 dataForm: {
 
-                }
+                },
+                r0001Table:[], //统计报表返回值
+                r0004Table:[], //
+                r0005Table:[]
             }
         },
         methods: {
@@ -94,14 +135,49 @@
                     this.pageRequest = data.pageRequest
                 }
 
-                this.$api.bizHotl.findPage({...this.pageRequest, ...this.filters}).then((res) => {
+                this.$api.report.findMonthPage({...this.pageRequest, ...this.filters}).then((res) => {
                     this.pageResult = res
                 }).then(data != null ? data.callback : '')
             },
             // 显示编辑界面
-            handleEdit: function (params) {
-
+            handleViewReport: function (params) {
+                this.dataForm = {};
                 this.dataForm = Object.assign({}, params.row)
+                var reportId = this.dataForm.reportId;
+                console.log(reportId);
+                if (reportId != '') {
+                    var reportNm = reportId.substring(4)
+                    if (reportNm == 'R0001') {
+                        this.r0001DialogVisible = true
+                        this.r0001TableLoading = true
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        this.$api.report.findR0001Report(this.dataForm).then((res) => {
+                            this.r0001Table = res
+                            this.r0001TableLoading = false;
+                        })
+                    }
+                    if (reportNm == 'R0004') {
+                        this.r0004DialogVisible = true
+                        this.r0004TableLoading = true
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        this.$api.report.findR0004Report(this.dataForm).then((res) => {
+                            this.r0004Table = res
+                            this.r0004TableLoading = false;
+                        })
+                    }
+
+                    if (reportNm == 'R0005') {
+                        this.r0005DialogVisible = true
+                        this.r0005TableLoading = true
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        this.$api.report.findR0005Report(this.dataForm).then((res) => {
+                            this.r0005Table = res
+                            this.r0005TableLoading = false;
+                        })
+                    }
+
+
+                }
             },
             // 编辑
             submitForm: function () {
@@ -112,10 +188,6 @@
                         })
                     }
                 })
-            },
-            // 时间格式化
-            dateFormat: function (row, column, cellValue, index) {
-                return format(row[column.property])
             }
         },
         created() {

@@ -90,13 +90,13 @@
                        show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
                 <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
                 </el-table-column>
-                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
+                <el-table-column  prop="deptName" header-align="center" align="center" :label="$t('user.org')">
                 </el-table-column>
                 <el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
                 </el-table-column>
                 <el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">
                 </el-table-column>
-                <el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">
+                <el-table-column  prop="totalTAmount" header-align="center" align="center" :label="$t('order.totalTAmount')">
                 </el-table-column>
                 <el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">
                 </el-table-column>
@@ -213,6 +213,17 @@
             //导出Excel
             r0002ExportExcel() {
                 this.$api.report.exportR0002Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
+            },
+
+            //导出Excel
+            r0003ExportExcel() {
+                this.$api.report.exportR0003Report(this.dataForm,{responseType: 'blob'}).then((res) => {
                     if(res == 1) {
                         this.$message({message: this.$t('action.success'), type: 'success'})
                     } else {

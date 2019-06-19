@@ -442,6 +442,7 @@
         "detail": "详情",
         "date": "日期",
         "totalSAmount": "销售总价",
+        "totalTAmount": "结算总价",
         "createTime": "订单产生日期",
         "createName": "订单产生用户",
         "updateTime": "最终修改日期",
