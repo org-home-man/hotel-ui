@@ -47,9 +47,9 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0001DialogVisible"
                    :close-on-click-modal="false">
 
-            <el-button  @click="r0001ExportExcel()">{{$t('common.export')}}</el-button>
+            <el-button  @click="r0001ExportExcel()">{{$t('common.exportExcel')}}</el-button>
             <el-table  :data="r0001Table" highlight-current-row  v-loading="r0001TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
+                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
                 <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
                 </el-table-column>
                 <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
@@ -76,6 +76,63 @@
                 <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
                                <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
                 <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
+
+
+        <!--新增编辑界面-->
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0004DialogVisible"
+                   :close-on-click-modal="false">
+            <el-button  @click="r0004ExportExcel()">{{$t('common.exportExcel')}}</el-button>
+            <el-table  :data="r0004Table" highlight-current-row  v-loading="r0004TableLoading" :element-loading-text="$t('action.loading')" border
+                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
+                <el-table-column  prop="deptId" header-align="center" align="center" :label="$t('user.org')">
+                </el-table-column>
+                <el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">
+                </el-table-column>
+                <el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">
+                </el-table-column>
+                <el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">
+                </el-table-column>
+                <el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">
+                </el-table-column>
+                <el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">
+                </el-table-column>
+            </el-table>
+            <!--分页栏-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+            <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+            <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
+            <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
+
+        <!--新增编辑界面-->
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0005DialogVisible"
+                   :close-on-click-modal="false">
+            <el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>
+            <el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border
+                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
+                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
+                </el-table-column>
+                <el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">
+                </el-table-column>
+                <el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">
+                </el-table-column>
+                <el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">
+                </el-table-column>
+                <el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">
+                </el-table-column>
+                <el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">
+                </el-table-column>
+            </el-table>
+            <!--分页栏-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+            <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+            <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
+            <!--</el-pagination>-->
             <!--</div>-->
 
         </el-dialog>
@@ -178,6 +235,33 @@
 
 
                 }
+            },
+            r0001ExportExcel:function() {
+                this.$api.report.exportR0001Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
+            },
+            r0004ExportExcel:function() {
+                this.$api.report.exportR0004Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
+            },
+            r0005ExportExcel:function() {
+                this.$api.report.exportR0005Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
             },
             // 编辑
             submitForm: function () {

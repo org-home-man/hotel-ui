@@ -35,3 +35,17 @@ export const findByDate = (data) => {
     return request.post('/bizPrise/findByDate',data);
 }
 
+// 订单结算
+export const accountsConfirm = (data) => {
+    return request.post('/bizPuchs/accountsConfirm',data);
+}
+
+// 订单导出
+export const exportExcel = (data,header) => {
+    return request.post('/bizPuchs/exportExcel',data,header);
+}
+// 订单导出
+export const exportManagerExcel = (data,header) => {
+    return request.post('/bizPuchs/exportManagerExcel',data,header);
+}
+

@@ -47,7 +47,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0002DialogVisible"
                    :close-on-click-modal="false">
 
-            <el-button  @click="r0002ExportExcel()">{{$t('common.export')}}</el-button>
+            <el-button  @click="r0002ExportExcel()">{{$t('common.exportExcel')}}</el-button>
             <el-table  :data="r0002Table" highlight-current-row  v-loading="r0002TableLoading" :element-loading-text="$t('action.loading')" border
                        show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
                 <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
@@ -85,7 +85,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0003DialogVisible"
                    :close-on-click-modal="false">
 
-            <el-button  @click="r0003ExportExcel()">{{$t('common.export')}}</el-button>
+            <el-button  @click="r0003ExportExcel()">{{$t('common.exportExcel')}}</el-button>
             <el-table  :data="r0003Table" highlight-current-row  v-loading="r0003TableLoading" :element-loading-text="$t('action.loading')" border
                        show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
                 <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">

@@ -24,7 +24,7 @@
                     <el-input v-model="filters.orderCode" clearable :placeholder="$t('order.orderCode')"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <!--<el-select v-model="filters.roomStatus" clearable :placeholder="$t('order.roomStatus')"-->
+                    <!--<el-select v-model="filters.roomSthandleConfirmatus" clearable :placeholder="$t('order.roomStatus')"-->
                                <!--style="width: 200px;">-->
                         <!--<el-option v-for="item in states" :key="item.paraCode"-->
                                    <!--:label="$t(item.paraCode)" :value="item.paraValue1">-->
@@ -63,9 +63,10 @@
             </el-form>
         </div>
         <!--表格内容栏-->
-        <kt-table permsEdit="sys:bizPuchs:edit" permsCancel="sys:bizPuchs:cancel"  permsConfirm="sys:bizPuchs:confirm"
+        <kt-table permsEdit="sys:bizPuchs:edit" permsCancel="sys:bizPuchs:cancel"  permsConfirm="sys:bizPuchs:confirm" excelManagerConfirm="sys:excelExport:confirm"
                   :data="pageResult" :columns="columns"
-                  @findPage="findPage" @handleEdit="handleEdit" @handleCancel="handleCancel"  @handleConfirm="handleConfirm">
+                  @findPage="findPage" @handleEdit="handleEdit" @handleCancel="handleCancel"  @handleConfirm="handleConfirm" @exportExcel="exportExcel"
+                  @accountsConfirm="accountsConfirm" @exportManagerExcel="exportManagerExcel">
         </kt-table>
 
         <!--新增编辑界面-->
@@ -575,8 +576,35 @@
                     }
                 })
             },
+            //确认按钮
             handleConfirm:function (data) {
                 this.$api.bizPuchs.confirm(data.params).then(data!=null?data.callback:'' )
+            },
+            //结算按钮
+            accountsConfirm:function (data) {
+                this.$api.bizPuchs.accountsConfirm(data.params).then(data!=null?data.callback:'' )
+            },
+            //导出excel按钮
+            exportExcel:function (data) {
+                data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                this.$api.bizPuchs.exportExcel(data.params,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
+            },
+            //管理员导出excel按钮
+            exportManagerExcel:function (data) {
+                data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                this.$api.bizPuchs.exportManagerExcel(data.params,{responseType: 'blob'}).then((res) => {
+                    if(res == 1) {
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail'), type: 'error'})
+                    }
+                })
             },
 
             inputUserFunc(){
