@@ -8,6 +8,15 @@
         <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline  class="demo-table-expand">
+                    <el-form-item>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 1" :label="$t('action.confirm')" :perms="permsConfirm" size="medium" type="primary" @click="confirm(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 5" :label="$t('order.accounts')" :perms="permsConfirm" size="medium" type="primary" @click="accountsConfirm(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcel')" :perms="permsConfirm" size="medium" type="primary" @click="exportExcel(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcelManager')" :perms="excelManagerConfirm" size="medium" type="primary" @click="exportManagerExcel(props.row)"></kt-button>
+                    </el-form-item>
+                </el-form>
+
+                <el-form label-position="left" inline  class="demo-table-expand">
                     <el-form-item label="护照号" style="width: 24%">
                         <span>{{ props.row.passport }}</span>
                     </el-form-item>
@@ -17,9 +26,7 @@
                     <el-form-item label="联系电话" style="width: 24%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
-                    <el-form-item>
-                        <kt-button icon="fa fa-success" v-show="props.row.status == 1" :label="$t('action.confirm')" :perms="permsConfirm" size="medium" type="primary" @click="confirm(props.row)"></kt-button>
-                    </el-form-item>
+
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
                     <el-form-item label="房间数" style="width: 24%">
@@ -139,6 +146,7 @@ export default {
     permsEdit: String,  // 编辑权限标识
     permsCancel: String,  // 删除权限标识
     permsConfirm: String,  // 确认权限标识
+      excelManagerConfirm:String, //管理员报表导出
     size: { // 尺寸样式
       type: String,
       default: 'mini'
@@ -194,17 +202,6 @@ export default {
         }
     },
     methods: {
-        created(){
-            this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,ROOM_STATUS').then( res =>{
-                this.roomStyle = res.ROOM_STYLE;
-                this.roomType = res.ROOM_TYPE;
-                this.hotelStar = res.HOTEL_STAR;
-                this.hotelType = res.HOTEL_TYPE;
-                this.breakType = res.BREAK_TYPE;
-                this.bedType = res.BED_TYPE;
-                this.roomStatus = res.ROOM_STATUS;
-            })
-        },
         // 分页查询
         findPage: function () {
             this.loading = true
@@ -288,6 +285,62 @@ export default {
                 this.loading = false
             })
         },
+
+        exportExcel:function (row) {
+
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+                this.$emit('exportExcel', {params: row})
+            }).catch(() => {
+                // this.loading = false
+            }).finally(()=>{
+                this.loading = false
+            })
+        },
+
+        exportManagerExcel:function (row) {
+
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+
+                this.$emit('exportManagerExcel', {params: row})
+            }).catch(() => {
+                // this.loading = false
+            }).finally(()=>{
+                this.loading = false
+            })
+        },
+
+        accountsConfirm:function (row) {
+
+    this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+        type: 'warning',
+        cancelButtonText: this.$t('action.cancel'),
+        confirmButtonText: this.$t('action.confirm')
+    }).then(() => {
+        this.loading = true;
+        let callback = res =>{
+            if(res.code == 200){
+                this.$message({message: this.$t('action.success'), type: 'success'})
+            } else {
+                this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
+            }
+            this.findPage()
+            this.loading = false;
+        }
+        this.$emit('accountsConfirm', {params: row, callback: callback})
+    }).catch(() => {
+        // this.loading = false
+    }).finally(()=>{
+        this.loading = false
+    })
+},
         tableRowClassName({row, rowIndex}) {
             if (rowIndex % 2 !=0) {
                 return 'success-row';
@@ -297,7 +350,17 @@ export default {
     },
     mounted() {
         this.refreshPageRequest(1)
-        this.created();
+    },
+    created(){
+        this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,ROOM_STATUS').then( res =>{
+            this.roomStyle = res.ROOM_STYLE;
+            this.roomType = res.ROOM_TYPE;
+            this.hotelStar = res.HOTEL_STAR;
+            this.hotelType = res.HOTEL_TYPE;
+            this.breakType = res.BREAK_TYPE;
+            this.bedType = res.BED_TYPE;
+            this.roomStatus = res.ROOM_STATUS;
+        })
     }
 }
 </script>
