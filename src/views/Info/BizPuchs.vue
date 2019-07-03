@@ -53,7 +53,7 @@
                         :range-separator="$t('hotel.dateSep')"
                         value-format="yyyyMMdd"
                         :start-placeholder="$t('hotel.lastCrtTime')"
-                        :end-placeholder="$t('hotel.lastCrtTime')">
+                        :end-placeholder="$t('hotel.lastCrtTime')" readonly>
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item>

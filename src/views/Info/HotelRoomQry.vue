@@ -526,7 +526,7 @@
                                         type="date"
                                         value-format="yyyyMMdd"
                                         :placeholder="$t('hotel.lastCrtTime')"
-                                        :picker-options="pickerOptions2" style="width: 200px">
+                                        :picker-options="pickerOptions2" style="width: 200px" readonly>
                                     </el-date-picker>
                                 </el-form-item>
                                 <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
@@ -1002,6 +1002,10 @@
                 aDays = parseInt(Math.abs(nowDate -oDate1)/1000/60/60/24);
                 this.filters.roomNight = iDays;
                 this.advanceDays = aDays;
+
+                var lastCrt = new Date(oDate1 - 3600 * 1000 * 24 * 7);
+                this.dataForm.lastCrtTime = formatDate(lastCrt,'yyyyMMdd');
+
             },
             starLevel(n,o){
                 this.filters.hotelLevel = this.starLevel.join(",");

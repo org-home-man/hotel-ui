@@ -223,14 +223,15 @@
                             <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
                                 <el-input v-model="dataForm.phone"></el-input>
                             </el-form-item>
-                            <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="pName" >
+                            <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="lastCrtTime" >
                                 <el-date-picker
                                     v-model="dataForm.lastCrtTime"
                                     align="right"
                                     type="date"
                                     value-format="yyyyMMdd"
                                     :placeholder="$t('hotel.lastCrtTime')"
-                                    :picker-options="pickerOptions2" style="width: 200px">
+                                    :picker-options="pickerOptions2" style="width: 200px"
+                                    readonly>
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
@@ -251,7 +252,7 @@
                                 <el-input-number v-model="dataForm.children4" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                             </el-form-item>
                             <el-form-item :label="$t('hotel.roomNum')" label-width="120px" prop="roomNum" >
-                                <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :min="1" :max="dataForm.inventory" ></el-input-number>
+                                <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :max="dataForm.inventory" ></el-input-number>
                             </el-form-item>
                             <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
                                 <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
@@ -277,6 +278,8 @@
 
 <script>
     import {baseUrl} from '@/utils/global'
+    import {parseStrToDate,formatDate} from "@/utils/datetime"
+
     export default {
         name: "BizHotelOrder",
         data() {
@@ -304,14 +307,8 @@
                     hotelType:null,
                     roomCode: null,
                     photo: null,
-                    lowRoomPrice: 0,
-                    highRoomPrice: 1000,
                     inDateStart: null,
-                    outDateEnd: null,
-                    roomNum: 1,
-                    adultNum: 0,
-                    childNum: 0,
-                    roomNight: 0
+                    outDateEnd: null
                 },
                 dataForm: {
                     roomCode: null,
@@ -411,7 +408,7 @@
                 this.filters.roomCode = this.$route.query.recommondCode
                 this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("resPage",res)
-                    this.dataForm = res.rows[0];
+                    this.dataForm = Object.assign(this.dataForm,res.rows[0]);
 
                     //查询图片
                     if(res.rows[0].photo){
@@ -487,14 +484,12 @@
                 this.filters.roomCode = this.$route.query.recommondCode
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("hotelRoom",res)
-                    this.dataForm = res.rows[0];
+                    this.dataForm = Object.assign(this.dataForm,res.rows[0]);
                     this.dataForm.sRoomPrice = res.rows[0].sPrice
                     //查询明细牌价
                     this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
                         console.log("bizPuchs",res)
                         this.gridData = res;
-                        this.dataForm.adultNum = 1;
-                        this.dataForm.childNum = 0;
                     },() =>{
                     })
                 },() =>{
@@ -567,7 +562,7 @@
                 if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
             },
             'dataForm.sPrice'(){
                 var totlPrice = 0;
@@ -621,6 +616,9 @@
                 this.filters.roomNight = iDays;
                 this.advanceDays = aDays;
 
+                var lastCrt = new Date(oDate1 - 3600 * 1000 * 24 * 7);
+                this.dataForm.lastCrtTime = formatDate(lastCrt,'yyyyMMdd');
+
                 var totlPrice = 0;
                 var tPrice = 0
                 if(this.gridData.length<0) {
@@ -635,9 +633,9 @@
                 if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
 
-                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
+                this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
             }
         },
         destroyed() {
