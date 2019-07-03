@@ -37,10 +37,11 @@ export default {
 				{prop:"id", label:"id", minWidth:60},
 				{prop:"userName", label:"name", minWidth:100},
 				// {prop:"operation", label:"操作", minWidth:120},
+				{prop:"operation", label:"操作", minWidth:120},
 				{prop:"method", label:"method", minWidth:180},
 				{prop:"params", label:"params", minWidth:220},
 				{prop:"ip", label:"IP", minWidth:120},
-				{prop:"time", label:"time", minWidth:80},
+				// {prop:"time", label:"time", minWidth:80},
 				{prop:"createName", label:"createBy", minWidth:100},
 				{prop:"createTime", label:"createTime", minWidth:120}
 				// {prop:"lastUpdateBy", label:"更新人", minWidth:100},
@@ -57,7 +58,7 @@ export default {
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
-			this.pageRequest.columnFilters = {userName: {name:'userName', value:this.filters.name}}
+			this.pageRequest.name = this.filters.name;
 			this.$api.log.findPage(this.pageRequest).then((res) => {
 				this.pageResult = res
 			}).then(data!=null?data.callback:'')
