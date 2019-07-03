@@ -107,7 +107,7 @@
                           <el-date-picker type="date" placeholder="选择出生日期" v-model="dataForm.birthday" auto-complete="off"
                                           style="width: 200px;"></el-date-picker>
                       </el-form-item>
-                      <el-form-item :label="$t('user.org')" prop="deptName" style="width: 100%">
+                      <el-form-item :label="$t('user.org')" prop="deptId" style="width: 100%">
                           <el-select v-model="dataForm.deptId" :placeholder="$t('action.select')"
                                      style="width: 200px;">
                               <el-option v-for="item in deptData" :key="item.id"
