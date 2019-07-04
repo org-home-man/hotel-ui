@@ -53,7 +53,7 @@
                         :range-separator="$t('hotel.dateSep')"
                         value-format="yyyyMMdd"
                         :start-placeholder="$t('hotel.lastCrtTime')"
-                        :end-placeholder="$t('hotel.lastCrtTime')" readonly>
+                        :end-placeholder="$t('hotel.lastCrtTime')" >
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item>
@@ -285,7 +285,7 @@
                                         type="date"
                                         :placeholder="$t('hotel.lastCrtTime')"
                                         value-format="yyyyMMdd"
-                                        :picker-options="pickerOptions2" style="width: 200px">
+                                        :picker-options="pickerOptions2" style="width: 200px" readonly>
                                     </el-date-picker>
                                 </el-form-item>
                                 <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
