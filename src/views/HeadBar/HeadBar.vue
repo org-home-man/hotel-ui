@@ -45,15 +45,15 @@
           <!--          <message-panel></message-panel>-->
           <!--          </el-popover>-->
           <!--          </el-menu-item>-->
-          <el-menu-item index="4" v-popover:popover-notice>
-          <!-- 系统通知 -->
-          <el-badge :value="noReadCount" :max="99" class="badge" type="success">
-                <li style="color:#fff;" class="fa fa-bell-o fa-lg"></li>
-          </el-badge>
-          <el-popover ref="popover-notice" placement="bottom-end" trigger="click">
-                <notice-panel></notice-panel>
-          </el-popover>
-          </el-menu-item>
+<!--          <el-menu-item index="4" v-popover:popover-notice>-->
+<!--          &lt;!&ndash; 系统通知 &ndash;&gt;-->
+<!--          <el-badge :value="noReadCount" :max="99" class="badge" type="success">-->
+<!--                <li style="color:#fff;" class="fa fa-bell-o fa-lg"></li>-->
+<!--          </el-badge>-->
+<!--          <el-popover ref="popover-notice" placement="bottom-end" trigger="click">-->
+<!--                <notice-panel></notice-panel>-->
+<!--          </el-popover>-->
+<!--          </el-menu-item>-->
         <el-menu-item index="5" v-popover:popover-personal>
           <!-- 用户信息 -->
           <span class="user-info"><img :src="user.path"/>{{user.name}}</span>
@@ -73,8 +73,8 @@
     import ThemePicker from "@/components/ThemePicker"
     import LangSelector from "@/components/LangSelector"
     import Action from "@/components/Toolbar/Action"
-    import NoticePanel from "@/views/Core/NoticePanel"
-    import MessagePanel from "@/views/Core/MessagePanel"
+    // import NoticePanel from "@/views/Core/NoticePanel"
+    // import MessagePanel from "@/views/Core/MessagePanel"
     import PersonalPanel from "@/views/Core/PersonalPanel"
 
     export default {
@@ -83,8 +83,8 @@
             ThemePicker,
             LangSelector,
             Action,
-            NoticePanel,
-            MessagePanel,
+            // NoticePanel,
+            // MessagePanel,
             PersonalPanel
         },
         data() {
@@ -141,17 +141,30 @@
                 })
             },
             findNoReadCount: function () {
-                this.$api.socketMess.findNoReadCount().then( res =>{
-                    if(!isNaN(res) && res > 0){
+                this.$api.socketMess.findAll().then( res =>{
+                    for (let i in res) {
+                        let tp = res[i];
+                        let mes;
+                        if("1" == tp){
+                            mes = this.$t('action.messOrder');
+                        }else if("2" == tp){
+                            mes = this.$t('action.messDay');
+                        }else if("3" == tp){
+                            mes = this.$t('action.messWeek');
+                        }else if("4" == tp){
+                            mes = this.$t('action.messMonth');
+                        }else if("5" == tp){
+                            mes = this.$t('action.messOther');
+                        }else{
+                            mes = this.$t('action.messOther');
+                        }
                         this.$notify.info({
                             title: this.$t('action.messTitle'),
-                            message:this.$t('action.messNoReadTitle'),
+                            message:mes,
                             duration:0,
                             position: 'bottom-right'
                         })
                     }
-                    this.noReadCount = res.data===0?0:res;
-
                 })
             },
             findRecommendRoom:function () {
