@@ -327,7 +327,7 @@
                     roomPrice: null,
                     inDateStart: null,
                     outDateEnd: null,
-                    roomNum: null,
+                    roomNum: 0,
                     adultNum: 0,
                     childNum: 0,
                     lastCrtTime: null,
@@ -577,7 +577,7 @@
                 if(this.advanceDays >= this.dataForm.scheduledays){
                     num = this.dataForm.favorableprice;
                 }
-                this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
+                this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
 
             },
             'dataForm.adultNum'(){
@@ -600,9 +600,7 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                console.log("totlPrice",totlPrice);
                 this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
-                console.log("this.dataForm.totalT",this.dataForm.totalTAmount);
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
