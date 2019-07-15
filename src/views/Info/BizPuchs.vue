@@ -364,13 +364,11 @@
                 user_result:[],
                 hotel_result:[],
                 columns: [
-                    {prop:"orderCode", label:"订单号", minWidth:60},
-                    {prop:"hotelCname", label:"酒店名称", minWidth:60},
-                    {prop:"roomCode", label:"客房编号", minWidth:60},
-                    {prop:"inDateStart", label:"入住日期", minWidth:60},
-                    {prop:"outDateEnd", label:"退房日期", minWidth:60},
-                    {prop:"pName", label:"代表者姓名", minWidth:60},
-                    {prop:"lastCrtTime", label:"确认时间", minWidth:60}
+                    {prop:"roomCode", label:this.$t('hotel.roomcode'), minWidth:60},
+                    {prop:"inDateStart", label:this.$t('hotel.inDateStart'), minWidth:60},
+                    {prop:"outDateEnd", label:this.$t('hotel.outDateEnd'), minWidth:60},
+                    {prop:"pName", label:this.$t('hotel.representName'), minWidth:60},
+                    {prop:"lastCrtTime", label:this.$t('hotel.lastCrtTime'), minWidth:60}
                 ],
                 pageRequest: { page: 1, rows: 8 },
                 pageResult: {},

@@ -17,30 +17,30 @@
                 </el-form>
 
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="护照号" style="width: 24%">
+                    <el-form-item :label="$t('hotel.passportNo')" style="width: 24%">
                         <span>{{ props.row.passport }}</span>
                     </el-form-item>
-                    <el-form-item label="出生年月" style="width: 24%">
+                    <el-form-item :label="$t('hotel.birthday')" style="width: 24%">
                         <span>{{ props.row.birth }}</span>
                     </el-form-item>
-                    <el-form-item label="联系电话" style="width: 24%">
+                    <el-form-item :label="$t('hotel.contactPhone')" style="width: 24%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
 
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="房间数" style="width: 24%">
+                    <el-form-item :label="$t('hotel.roomNum')" style="width: 24%">
                         <span>{{ props.row.roomNum }}</span>
                     </el-form-item>
-                    <el-form-item label="成人人数" style="width: 24%">
+                    <el-form-item :label="$t('hotel.adultNum')" style="width: 24%">
                         <span>{{ props.row.adultNum }}</span>
                     </el-form-item>
-                    <el-form-item label="儿童数" style="width: 24%">
+                    <el-form-item :label="$t('hotel.childrenNum')" style="width: 24%">
                         <span>{{ props.row.childNum }}</span>
                     </el-form-item>
-                    <el-form-item label="幼儿数" style="width: 24%">
-                        <span>{{ props.row.cNum }}</span>
-                    </el-form-item>
+                    <!--<el-form-item label="幼儿数" style="width: 24%">-->
+                        <!--<span>{{ props.row.cNum }}</span>-->
+                    <!--</el-form-item>-->
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
                     <el-form-item :label="$t('hotel.roomtype.roomtype')" style="width: 24%">
@@ -57,7 +57,7 @@
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item label="备注" style="width: 100%">
+                    <el-form-item :label="$t('hotel.reMark')" style="width: 100%">
                         <span>{{ props.row.remark }}</span>
                     </el-form-item>
                 </el-form>
@@ -93,11 +93,15 @@
 
             </template>
         </el-table-column>
+
+        <el-table-column prop="orderCode" :label="$t('order.orderCode')">
+        </el-table-column>
+        <el-table-column :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+        </el-table-column>
         <el-table-column v-for="column in columns" header-align="center" align="center"
                          :prop="column.prop" :label="$t(column.label)" :width="column.width" :key="column.prop"
                          :sortable="column.sortable==null?true:column.sortable" >
         </el-table-column>
-
         <el-table-column prop="status" :label="$t('order.roomStatus')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(roomStatus,scope.row.status)}}</el-tag>
@@ -199,6 +203,7 @@ export default {
             breakType: [], //餐饮条件
             bedType: [], //床铺类型
             roomStatus:[],
+            language:{}
         }
     },
     methods: {
@@ -346,10 +351,14 @@ export default {
                 return 'success-row';
             }
             return '';
-        }
+        },
+        localLanguageLoad:function () {
+            this.language={lge:this.$i18n.locale}
+        },
     },
     mounted() {
         this.refreshPageRequest(1)
+        this.localLanguageLoad()
     },
     created(){
         this.getTypeValues('ROOM_STYLE,ROOM_TYPE,HOTEL_STAR,HOTEL_TYPE,BREAK_TYPE,BED_TYPE,ROOM_STATUS').then( res =>{

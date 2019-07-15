@@ -457,6 +457,9 @@
         "totalSellAmt": "amt of the month sale",
         "totalSettlementAmt": "settlement of the month",
         "pendingAmt": "未结算总价",
-        "accounts": "settlement"
+        "accounts": "settlement",
+        "number": "number",
+        "type": "type",
+        "hotelStar": "hotel stars"
     }
 }

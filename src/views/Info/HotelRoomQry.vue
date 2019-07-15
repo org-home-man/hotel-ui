@@ -38,7 +38,7 @@
                 </div>
 
                 <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">数量</div>
+                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.number')}}</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="roomNum" :label="$t('hotel.roomNum')" style="margin-bottom: 0;vertical-align: middle;">
                             <el-input-number v-model="filters.roomNum" controls-position="right"  :placeholder="$t('hotel.roomNum')" :min="1"></el-input-number>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">类型</div>
+                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.type')}}</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="hotelType" style="margin-bottom: 0;vertical-align: middle;">
                             <el-select v-model="filters.hotelType"  clearable :placeholder="$t('hotel.hotelType.hotelType')">
@@ -98,7 +98,7 @@
                 </div>
 
                 <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">星级</div>
+                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.hotelStar')}}</div>
                     <div style="width: 100%;padding: 0 10px;">
                         <el-form-item prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
                             <el-checkbox-group v-model="starLevel">

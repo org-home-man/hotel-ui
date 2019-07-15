@@ -459,7 +459,9 @@
         "totalSellAmt": "月销售总价",
         "totalSettlementAmt": "月结算总价",
         "pendingAmt": "未结算总价",
-        "accounts": "结算"
-
+        "accounts": "结算",
+        "number": "数量",
+        "type": "类型",
+        "hotelStar": "星级"
     }
 }
