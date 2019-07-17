@@ -46,31 +46,36 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0001DialogVisible"
                    :close-on-click-modal="false">
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0001_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local+
+                                '&username='+dataForm.username"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
 
-            <el-button  @click="r0001ExportExcel()">{{$t('common.exportExcel')}}</el-button>
-            <el-table  :data="r0001Table" highlight-current-row  v-loading="r0001TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
-                <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
-                </el-table-column>
-                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
-                </el-table-column>
-                <el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
-                </el-table-column>
-                <el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">
-                </el-table-column>
-                <el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">
-                </el-table-column>
-                <el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">
-                </el-table-column>
-                <el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">
-                </el-table-column>
-                <el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">
-                </el-table-column>
-                <el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">
-                </el-table-column>
-                <el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">
-                </el-table-column>
-            </el-table>
+            <!--<el-button  @click="r0001ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0001Table" highlight-current-row  v-loading="r0001TableLoading" :element-loading-text="$t('action.loading')" border-->
+                       <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
+                <!--<el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">-->
+                <!--</el-table-column>-->
+            <!--</el-table>-->
             <!--分页栏-->
             <!--<div class="toolbar" style="padding:10px;">-->
                 <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
@@ -84,22 +89,28 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0004DialogVisible"
                    :close-on-click-modal="false">
-            <el-button  @click="r0004ExportExcel()">{{$t('common.exportExcel')}}</el-button>
-            <el-table  :data="r0004Table" highlight-current-row  v-loading="r0004TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
-                <el-table-column  prop="deptId" header-align="center" align="center" :label="$t('user.org')">
-                </el-table-column>
-                <el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">
-                </el-table-column>
-                <el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">
-                </el-table-column>
-                <el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">
-                </el-table-column>
-                <el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">
-                </el-table-column>
-                <el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">
-                </el-table-column>
-            </el-table>
+            <div class="iframe-container">
+                <iframe :src="'http://localhost:8081/birt/frameset?__report=r0004_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2"
+                        scrolling="auto" frameborder="0" class="frame" >
+                </iframe>
+            </div>
+            <!--<el-button  @click="r0004ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0004Table" highlight-current-row  v-loading="r0004TableLoading" :element-loading-text="$t('action.loading')" border-->
+                       <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
+                <!--<el-table-column  prop="deptId" header-align="center" align="center" :label="$t('user.org')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">-->
+                <!--</el-table-column>-->
+            <!--</el-table>-->
             <!--分页栏-->
             <!--<div class="toolbar" style="padding:10px;">-->
             <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
@@ -112,22 +123,87 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0005DialogVisible"
                    :close-on-click-modal="false">
-            <el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>
-            <el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >
-                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
-                </el-table-column>
-                <el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">
-                </el-table-column>
-                <el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">
-                </el-table-column>
-                <el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">
-                </el-table-column>
-                <el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">
-                </el-table-column>
-                <el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">
-                </el-table-column>
-            </el-table>
+            <!--<el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border-->
+                       <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
+                <!--<el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">-->
+                <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--分页栏-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+            <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+            <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
+            <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
+
+        <!--新增编辑界面-->
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0006DialogVisible"
+                   :close-on-click-modal="false">
+
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0006_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+            <!--<el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border-->
+            <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
+            <!--<el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">-->
+            <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--分页栏-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+            <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+            <!--:current-page="r0001Table.pageNum" :page-size="r0001Table.pageSize" :total="r0001Table.total" style="float:right;">-->
+            <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
+
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0008DialogVisible"
+                   :close-on-click-modal="false">
+
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0008_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+            <!--<el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border-->
+            <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
+            <!--<el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="orderNum" header-align="center" align="center" :label="$t('order.orderNum')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="roomNum" header-align="center" align="center" :label="$t('order.roomNum')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="totalSellAmt" header-align="center" align="center" :label="$t('order.totalSellAmt')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="totalSettlementAmt" header-align="center" align="center" :label="$t('order.totalSettlementAmt')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="pendingAmt" header-align="center" align="center" :label="$t('order.pendingAmt')">-->
+            <!--</el-table-column>-->
+            <!--</el-table>-->
             <!--分页栏-->
             <!--<div class="toolbar" style="padding:10px;">-->
             <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
@@ -144,6 +220,7 @@
     import TotalReportTable from "@/views/Core/TotalReportTable"
     import KtButton from "@/views/Core/KtButton"
     import {format} from "@/utils/datetime"
+    import {getUser} from "../../utils/token";
 
     export default {
         components: {
@@ -159,6 +236,8 @@
                 r0004DialogVisible:false,//月报r0004弹出框
                 r0005TableLoading:false,//r0005报表加载
                 r0005DialogVisible:false,//月报r0005弹出框
+                r0006DialogVisible:false, //月报r0006弹出框
+                r0008DialogVisible:false,//月报r0008弹出框
                 hotelType: [], //酒店类型
                 hotelStar: [], //酒店星级
                 roomStyle: [], //房间样式
@@ -205,22 +284,24 @@
                 if (reportId != '') {
                     var reportNm = reportId.substring(4)
                     if (reportNm == 'R0001') {
-                        this.r0001DialogVisible = true
-                        this.r0001TableLoading = true
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.$api.report.findR0001Report(this.dataForm).then((res) => {
-                            this.r0001Table = res
-                            this.r0001TableLoading = false;
-                        })
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
+                        this.getCurrentMonthFirst(strTime);
+                        this.getCurrentMonthLast(strTime);
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.dataForm.username = getUser();
+                        this.r0001DialogVisible = true
+
                     }
                     if (reportNm == 'R0004') {
-                        this.r0004DialogVisible = true
-                        this.r0004TableLoading = true
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.$api.report.findR0004Report(this.dataForm).then((res) => {
-                            this.r0004Table = res
-                            this.r0004TableLoading = false;
-                        })
+                        this.getCurrentMonthFirst(strTime);
+                        this.getCurrentMonthLast(strTime);
+                        this.r0004DialogVisible = true
+                        // this.$api.report.findR0004Report(this.dataForm).then((res) => {
+                        //     this.r0004Table = res
+                        //     this.r0004TableLoading = false;
+                        // })
                     }
 
                     if (reportNm == 'R0005') {
@@ -231,6 +312,26 @@
                             this.r0005Table = res
                             this.r0005TableLoading = false;
                         })
+                    }
+
+                    if (reportNm == 'R0006') {
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
+                        this.getCurrentMonthFirst(strTime);
+                        this.getCurrentMonthLast(strTime);
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.r0006DialogVisible = true
+
+                    }
+
+                    if (reportNm == 'R0008') {
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
+                        this.getCurrentMonthFirst(strTime);
+                        this.getCurrentMonthLast(strTime);
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.r0008DialogVisible = true
+
                     }
 
 
@@ -272,6 +373,38 @@
                         })
                     }
                 })
+            },
+            getCurrentMonthFirst:function(str) {
+                var strTime =  str+"-01";
+                var date = new Date(Date.parse(strTime.replace(/-/g, "/")));
+                date.setDate(1);
+                var month = parseInt(date.getMonth()+1);
+                var day = date.getDate();
+                if (month < 10) {
+                    month = '0' + month
+                }
+                if (day < 10) {
+                    day = '0' + day
+                }
+                this.dataForm.reportDate1 = date.getFullYear() + '-' + month + '-' + day;
+            },
+            getCurrentMonthLast:function(str) {
+                var strTime =  str+"-01";
+                var date = new Date(Date.parse(strTime.replace(/-/g, "/")));
+                var currentMonth=date.getMonth();
+                var nextMonth=++currentMonth;
+                var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+                var oneDay=1000*60*60*24;
+                var lastTime = new Date(nextMonthFirstDay-oneDay);
+                var month = parseInt(lastTime.getMonth()+1);
+                var day = lastTime.getDate();
+                if (month < 10) {
+                    month = '0' + month
+                }
+                if (day < 10) {
+                    day = '0' + day
+                }
+                this.dataForm.reportDate2 = date.getFullYear() + '-' + month + '-' + day ;
             }
         },
         created() {
@@ -305,6 +438,11 @@
     .query_room_container {
         padding-top: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
+
+    .frame {
+        width: 100%;
+        height: 800px;
     }
 
 </style>

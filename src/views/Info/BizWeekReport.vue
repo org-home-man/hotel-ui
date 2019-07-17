@@ -47,36 +47,41 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0002DialogVisible"
                    :close-on-click-modal="false">
 
-            <el-button  @click="r0002ExportExcel()">{{$t('common.exportExcel')}}</el-button>
-            <el-table  :data="r0002Table" highlight-current-row  v-loading="r0002TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
-                <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
-                </el-table-column>
-                <el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">
-                </el-table-column>
-                <el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
-                </el-table-column>
-                <el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">
-                </el-table-column>
-                <el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">
-                </el-table-column>
-                <el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">
-                </el-table-column>
-                <el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">
-                </el-table-column>
-                <el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">
-                </el-table-column>
-                <el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">
-                </el-table-column>
-                <el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">
-                </el-table-column>
-            </el-table>
-            <!--分页栏-->
-            <div class="toolbar" style="padding:10px;">
-                <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
-                               :current-page="r0002Table.pageNum" :page-size="r0002Table.pageSize" :total="r0002Table.total" style="float:right;">
-                </el-pagination>
-            </div>
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0002_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+
+            <!--<el-button  @click="r0002ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0002Table" highlight-current-row  v-loading="r0002TableLoading" :element-loading-text="$t('action.loading')" border-->
+                       <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >-->
+                <!--<el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="hotelName" header-align="center" align="center" :label="$t('hotel.hotelname')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalSAmount" header-align="center" align="center" :label="$t('order.totalSAmount')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">-->
+                <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--&lt;!&ndash;分页栏&ndash;&gt;-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+                <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+                               <!--:current-page="r0002Table.pageNum" :page-size="r0002Table.pageSize" :total="r0002Table.total" style="float:right;">-->
+                <!--</el-pagination>-->
+            <!--</div>-->
 
         </el-dialog>
 
@@ -85,36 +90,85 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0003DialogVisible"
                    :close-on-click-modal="false">
 
-            <el-button  @click="r0003ExportExcel()">{{$t('common.exportExcel')}}</el-button>
-            <el-table  :data="r0003Table" highlight-current-row  v-loading="r0003TableLoading" :element-loading-text="$t('action.loading')" border
-                       show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >
-                <el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">
-                </el-table-column>
-                <el-table-column  prop="deptName" header-align="center" align="center" :label="$t('user.org')">
-                </el-table-column>
-                <el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">
-                </el-table-column>
-                <el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">
-                </el-table-column>
-                <el-table-column  prop="totalTAmount" header-align="center" align="center" :label="$t('order.totalTAmount')">
-                </el-table-column>
-                <el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">
-                </el-table-column>
-                <el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">
-                </el-table-column>
-                <el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">
-                </el-table-column>
-                <el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">
-                </el-table-column>
-                <el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">
-                </el-table-column>
-            </el-table>
-            <!--分页栏-->
-            <div class="toolbar" style="padding:10px;">
-                <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
-                               :current-page="r0003Table.pageNum" :page-size="r0003Table.pageSize" :total="r0003Table.total" style="float:right;">
-                </el-pagination>
-            </div>
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0003_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                            '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq+
+                            '&status='+dataForm.local"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+
+            <!--<el-button  @click="r0003ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0003Table" highlight-current-row  v-loading="r0003TableLoading" :element-loading-text="$t('action.loading')" border-->
+                       <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >-->
+                <!--<el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="deptName" header-align="center" align="center" :label="$t('user.org')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="totalTAmount" header-align="center" align="center" :label="$t('order.totalTAmount')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">-->
+                <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--&lt;!&ndash;分页栏&ndash;&gt;-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+                <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+                               <!--:current-page="r0003Table.pageNum" :page-size="r0003Table.pageSize" :total="r0003Table.total" style="float:right;">-->
+                <!--</el-pagination>-->
+            <!--</div>-->
+
+        </el-dialog>
+
+        <!--新增编辑界面-->
+        <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0007DialogVisible"
+                   :close-on-click-modal="false">
+
+            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0007_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq+
+                                '&status='+dataForm.local"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+
+            <!--<el-button  @click="r0003ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
+            <!--<el-table  :data="r0003Table" highlight-current-row  v-loading="r0003TableLoading" :element-loading-text="$t('action.loading')" border-->
+            <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="600px" >-->
+            <!--<el-table-column  prop="orderCode" header-align="center" align="center" :label="$t('order.orderCode')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="deptName" header-align="center" align="center" :label="$t('user.org')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="roomType" header-align="center" align="center" :label="$t('hotel.roomtype.roomtype')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="inDateStart" header-align="center" align="center" :label="$t('hotel.inDateStart')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="totalTAmount" header-align="center" align="center" :label="$t('order.totalTAmount')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="createTime" header-align="center" align="center" :label="$t('order.createTime')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="createName" header-align="center" align="center" :label="$t('order.createName')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="updateTime" header-align="center" align="center" :label="$t('order.updateTime')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="updateName" header-align="center" align="center" :label="$t('order.updateName')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column  prop="status" header-align="center" align="center" :label="$t('order.roomStatus')">-->
+            <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--&lt;!&ndash;分页栏&ndash;&gt;-->
+            <!--<div class="toolbar" style="padding:10px;">-->
+            <!--<el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"-->
+            <!--:current-page="r0003Table.pageNum" :page-size="r0003Table.pageSize" :total="r0003Table.total" style="float:right;">-->
+            <!--</el-pagination>-->
+            <!--</div>-->
 
         </el-dialog>
     </div>
@@ -137,6 +191,7 @@
                 r0002DialogVisible:false,//周报r0002弹出框
                 r0003TableLoading:false,//r0002报表加载
                 r0003DialogVisible:false,//周报r0002弹出框
+                r0007DialogVisible:false,//周报r0007弹出框
                 hotelType: [], //酒店类型
                 hotelStar: [], //酒店星级
                 roomStyle: [], //房间样式
@@ -181,22 +236,40 @@
                 if (reportId != '') {
                     var reportNm = reportId.substring(4)
                     if (reportNm == 'R0002') {
-                        this.r0002DialogVisible = true
-                        this.r0002TableLoading = true
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.$api.report.findR0002Report(this.dataForm).then((res) => {
-                            this.r0002Table = res
-                            this.r0002TableLoading = false;
-                        })
+                        this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                        this.r0002DialogVisible = true
+                        // this.r0002TableLoading = true
+
+                        // this.$api.report.findR0002Report(this.dataForm).then((res) => {
+                        //     this.r0002Table = res
+                        //     this.r0002TableLoading = false;
+                        // })
                     }
                     if (reportNm == 'R0003') {
-                        this.r0003DialogVisible = true
-                        this.r0003TableLoading = true
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.$api.report.findR0003Report(this.dataForm).then((res) => {
-                            this.r0003Table = res
-                            this.r0003TableLoading = false;
-                        })
+                        this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                        this.r0003DialogVisible = true
+                        // this.$api.report.findR0003Report(this.dataForm).then((res) => {
+                        //     this.r0003Table = res
+                        //     this.r0003TableLoading = false;
+                        // })
+                    }
+                    if (reportNm == 'R0007') {
+                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                        this.r0007DialogVisible = true
+
+                        // this.$api.report.findR0003Report(this.dataForm).then((res) => {
+                        //     this.r0003Table = res
+                        //     this.r0003TableLoading = false;
+                        // })
                     }
                 }
             },
@@ -211,26 +284,26 @@
                 })
             },
             //导出Excel
-            r0002ExportExcel() {
-                this.$api.report.exportR0002Report(this.dataForm,{responseType: 'blob'}).then((res) => {
-                    if(res == 1) {
-                        this.$message({message: this.$t('action.success'), type: 'success'})
-                    } else {
-                        this.$message({message: this.$t('action.fail'), type: 'error'})
-                    }
-                })
-            },
+            // r0002ExportExcel() {
+            //     this.$api.report.exportR0002Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+            //         if(res == 1) {
+            //             this.$message({message: this.$t('action.success'), type: 'success'})
+            //         } else {
+            //             this.$message({message: this.$t('action.fail'), type: 'error'})
+            //         }
+            //     })
+            // },
 
             //导出Excel
-            r0003ExportExcel() {
-                this.$api.report.exportR0003Report(this.dataForm,{responseType: 'blob'}).then((res) => {
-                    if(res == 1) {
-                        this.$message({message: this.$t('action.success'), type: 'success'})
-                    } else {
-                        this.$message({message: this.$t('action.fail'), type: 'error'})
-                    }
-                })
-            },
+            // r0003ExportExcel() {
+            //     this.$api.report.exportR0003Report(this.dataForm,{responseType: 'blob'}).then((res) => {
+            //         if(res == 1) {
+            //             this.$message({message: this.$t('action.success'), type: 'success'})
+            //         } else {
+            //             this.$message({message: this.$t('action.fail'), type: 'error'})
+            //         }
+            //     })
+            // },
 
             // 时间格式化
             dateFormat: function (row, column, cellValue, index) {
@@ -243,6 +316,33 @@
             refreshPageRequest: function (pageNum) {
                 this.pageRequest.page = pageNum
                 this.findPage()
+            },
+            getWeekTime:function(year,month,weekday) {
+                var d = new Date();
+                // 该月第一天
+                d.setFullYear(year, month-1, 1);
+                var w1 = d.getDay();
+                if (w1 == 0) w1 = 7;
+                // 该月天数
+                d.setFullYear(year, month, 0);
+                var dd = d.getDate();
+                // 第一个周一
+                let d1;
+                if (w1 != 1) d1 = 7 - w1 + 2;
+                else d1 = 1;
+                var monday = d1+(weekday-1)*7;
+                var sunday = monday + 6;
+                var from = year+"-"+month+"-"+monday;
+                var to;
+                if (sunday <= dd) {
+                    to = year+"-"+month+"-"+sunday;
+                } else {
+                    d.setFullYear(year, month-1, sunday);
+                    let days=d.getDate();
+                    to = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+days;
+                }
+                this.dataForm.reportDate1 = from;
+                this.dataForm.reportDate2 = to ;
             }
         },
         created() {
@@ -275,6 +375,11 @@
     .query_room_container {
         padding-top: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
+
+    .frame {
+        width: 100%;
+        height: 800px;
     }
 
 </style>
