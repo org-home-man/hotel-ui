@@ -47,7 +47,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0002DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0002_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0002_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -90,7 +90,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0003DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0003_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0003_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                             '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq+
                             '&status='+dataForm.local"
                     scrolling="auto" frameborder="0" class="frame" >
@@ -133,7 +133,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0007DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0007_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0007_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq+
                                 '&status='+dataForm.local"
                     scrolling="auto" frameborder="0" class="frame" >
@@ -178,6 +178,7 @@
     import TotalReportTable from "@/views/Core/TotalReportTable"
     import KtButton from "@/views/Core/KtButton"
     import {format} from "@/utils/datetime"
+    import {reportBaseUrl} from '@/utils/global'
 
     export default {
         components: {
@@ -186,6 +187,7 @@
         },
         data() {
             return {
+                reportUrl:reportBaseUrl,
                 size: 'small',
                 r0002TableLoading:false,//r0002报表加载
                 r0002DialogVisible:false,//周报r0002弹出框

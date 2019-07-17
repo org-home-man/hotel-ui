@@ -46,7 +46,7 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0001DialogVisible"
                    :close-on-click-modal="false">
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0001_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0001_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local+
                                 '&username='+dataForm.username"
                     scrolling="auto" frameborder="0" class="frame" >
@@ -90,7 +90,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0004DialogVisible"
                    :close-on-click-modal="false">
             <div class="iframe-container">
-                <iframe :src="'http://localhost:8081/birt/frameset?__report=r0004_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                <iframe :src="reportUrl+'/birt/frameset?__report=r0004_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2"
                         scrolling="auto" frameborder="0" class="frame" >
                 </iframe>
@@ -152,7 +152,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0006DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0006_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0006_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -184,7 +184,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0008DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="'http://localhost:8081/birt/frameset?__report=r0008_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0008_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -221,6 +221,7 @@
     import KtButton from "@/views/Core/KtButton"
     import {format} from "@/utils/datetime"
     import {getUser} from "../../utils/token";
+    import {reportBaseUrl} from '@/utils/global';
 
     export default {
         components: {
@@ -229,6 +230,7 @@
         },
         data() {
             return {
+                reportUrl : reportBaseUrl,
                 size: 'small',
                 r0001TableLoading:false,//r0001报表加载
                 r0001DialogVisible:false,//月报r0001弹出框

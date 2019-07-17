@@ -12,7 +12,13 @@ export const baseUrl = 'http://localhost:8080/hotel'
 // export const backupBaseUrl = 'http://139.196.87.48:8002'
 export const backupBaseUrl = 'http://localhost:8002'
 
+//报表访问地址
+export const reportBaseUrl = 'http://localhost:8081'
+// export const reportBaseUrl = 'http://hotel.chishengwei.cn'
+
+
 export default {
     baseUrl,
-    backupBaseUrl
+    backupBaseUrl,
+    reportBaseUrl
 }
