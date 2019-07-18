@@ -122,6 +122,10 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0005DialogVisible"
                    :close-on-click-modal="false">
+            <iframe :src="reportUrl+'/birt/frameset?__report=r0005_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
             <!--<el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
             <!--<el-table  :data="r0005Table" highlight-current-row  v-loading="r0005TableLoading" :element-loading-text="$t('action.loading')" border-->
                        <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
@@ -183,7 +187,7 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0008DialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="reportUrl+'/birt/frameset?__report=r0008_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
+            <iframe :src="reportUrl+'/birt/frameset?__report='+dataForm.reportNm+'_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -284,6 +288,8 @@
                 console.log(reportId);
                 if (reportId != '') {
                     var reportNm = reportId.substring(4)
+                    this.dataForm.reportNm = reportNm;
+                    this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                     if (reportNm == 'R0001') {
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                         var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
@@ -298,21 +304,18 @@
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                         this.getCurrentMonthFirst(strTime);
                         this.getCurrentMonthLast(strTime);
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
                         this.r0004DialogVisible = true
-                        // this.$api.report.findR0004Report(this.dataForm).then((res) => {
-                        //     this.r0004Table = res
-                        //     this.r0004TableLoading = false;
-                        // })
+
                     }
 
                     if (reportNm == 'R0005') {
-                        this.r0005DialogVisible = true
-                        this.r0005TableLoading = true
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.$api.report.findR0005Report(this.dataForm).then((res) => {
-                            this.r0005Table = res
-                            this.r0005TableLoading = false;
-                        })
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
+                        this.getCurrentMonthFirst(strTime);
+                        this.getCurrentMonthLast(strTime);
+                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.r0005DialogVisible = true
                     }
 
                     if (reportNm == 'R0006') {
@@ -324,17 +327,6 @@
                         this.r0006DialogVisible = true
 
                     }
-
-                    if (reportNm == 'R0008') {
-                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
-                        this.getCurrentMonthFirst(strTime);
-                        this.getCurrentMonthLast(strTime);
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
-                        this.r0008DialogVisible = true
-
-                    }
-
 
                 }
             },
