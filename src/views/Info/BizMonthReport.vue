@@ -89,12 +89,11 @@
         <!--新增编辑界面-->
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0004DialogVisible"
                    :close-on-click-modal="false">
-            <div class="iframe-container">
+
                 <iframe :src="reportUrl+'/birt/frameset?__report=r0004_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                                 '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2"
                         scrolling="auto" frameborder="0" class="frame" >
                 </iframe>
-            </div>
             <!--<el-button  @click="r0004ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
             <!--<el-table  :data="r0004Table" highlight-current-row  v-loading="r0004TableLoading" :element-loading-text="$t('action.loading')" border-->
                        <!--show-overflow-tooltip align="center" style="width:100%;margin-top: 10px" height="850px" >-->
@@ -444,7 +443,7 @@
 
     .frame {
         width: 100%;
-        height: 800px;
+        height: 45rem;
     }
 
 </style>
