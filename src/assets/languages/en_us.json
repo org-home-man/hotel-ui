@@ -260,7 +260,8 @@
         "createTime": "create time",
         "code": "code",
         "name": "name",
-        "sequence": "order number"
+        "sequence": "order number",
+        "operation": "operation"
     },
     "dict": {
         "cnName": "name in chinese",

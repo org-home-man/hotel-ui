@@ -261,7 +261,8 @@
         "createTime": "创建时间",
         "code": "编码",
         "name": "名称",
-        "sequence": "排序号"
+        "sequence": "排序号",
+        "operation": "操作"
     },
     "dict": {
         "cnName": "中文名称",
