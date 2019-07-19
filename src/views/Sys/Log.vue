@@ -37,7 +37,7 @@ export default {
 				{prop:"id", label:"id", minWidth:60},
 				{prop:"userName", label:"name", minWidth:100},
 				// {prop:"operation", label:"操作", minWidth:120},
-				{prop:"operation", label:"操作", minWidth:120},
+				{prop:"operation", label:"operation", minWidth:120},
 				{prop:"method", label:"method", minWidth:180},
 				{prop:"params", label:"params", minWidth:220},
 				{prop:"ip", label:"IP", minWidth:120},
