@@ -161,7 +161,9 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                    <el-col :span="8">
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
                         <el-form-item  prop="photo" auto-complete="off">
                             <el-upload
                                 ref="upload"
@@ -176,7 +178,7 @@
                                 action="#"
                                 :file-list="files"
                                 multiple
-                                :limit="5">
+                                :limit="15">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
 
