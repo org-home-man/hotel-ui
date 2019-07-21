@@ -87,7 +87,9 @@ export default {
     // 退出登录
     logout: function() {
       this.$confirm(this.$t('action.loginOut'),this.$t('action.tips'), {
-        type: "warning"
+          type: "warning",
+          confirmButtonText: this.$t('action.confirm'),
+          cancelButtonText: this.$t('action.cancel')
       })
       .then(() => {
 
