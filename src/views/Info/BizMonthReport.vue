@@ -302,6 +302,7 @@
                     }
                     if (reportNm == 'R0004') {
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
                         this.getCurrentMonthFirst(strTime);
                         this.getCurrentMonthLast(strTime);
                         this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
