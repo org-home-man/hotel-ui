@@ -305,7 +305,7 @@
         <!--新增订单界面-->
         <el-dialog :title="$t('hotel.reservatRoom')" width="80%" style="margin-top: -120px" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
-            <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+            <el-form :model="dataForm" label-width="130px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
                 <el-row>
                     <!--<el-col :span="24">-->
@@ -519,7 +519,7 @@
                                 <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
                                     <el-input v-model="dataForm.phone"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="lastCrtTime" >
+                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')"  >
                                     <el-date-picker
                                         v-model="dataForm.lastCrtTime"
                                         align="right"
@@ -832,6 +832,7 @@
                 }
 
                 this.editDialogVisible = true;
+                console.log("dataForm",this.$refs.dataForm);
                 if(this.$refs.dataForm){
                     this.$refs.dataForm.resetFields();
                 }
@@ -1005,7 +1006,6 @@
 
                 var lastCrt = new Date(oDate1 - 3600 * 1000 * 24 * 7);
                 this.dataForm.lastCrtTime = formatDate(lastCrt,'yyyyMMdd');
-
             },
             starLevel(n,o){
                 this.filters.hotelLevel = this.starLevel.join(",");
