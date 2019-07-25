@@ -305,7 +305,7 @@
         <!--新增订单界面-->
         <el-dialog :title="$t('hotel.reservatRoom')" width="80%" style="margin-top: -120px" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
-            <el-form :model="dataForm" label-width="130px" :rules="dataFormRules" ref="dataForm" :size="size"
+            <el-form :model="dataForm" label-width="180px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
                 <el-row>
                     <!--<el-col :span="24">-->
@@ -366,11 +366,11 @@
                                     <li style="display: flex">
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
-                                            <el-form-item label-width="60px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
+                                            <el-form-item label-width="80px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
                                                 <el-input-number v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
 
-                                            <el-form-item label-width="60px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
+                                            <el-form-item label-width="80px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
                                                 <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                             </el-form-item>
                                         </div>
@@ -507,19 +507,19 @@
                             <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;text-align: center;">
                             </el-col>
                             <el-col :span="18" align="center">
-                                <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pName" >
+                                <el-form-item label-width="180px" :label="$t('hotel.representName')" prop="pName" >
                                     <el-input v-model="dataForm.pName"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.passportNo')" prop="passport" >
+                                <el-form-item label-width="180px" :label="$t('hotel.passportNo')" prop="passport" >
                                     <el-input v-model="dataForm.passport"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.contactEmail')" prop="emailAddress">
+                                <el-form-item label-width="180px" :label="$t('hotel.contactEmail')" prop="emailAddress">
                                     <el-input v-model="dataForm.emailAddress"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
+                                <el-form-item label-width="180px" :label="$t('hotel.contactPhone')" prop="phone">
                                     <el-input v-model="dataForm.phone"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')"  >
+                                <el-form-item label-width="180px" :label="$t('hotel.lastCrtTime')"  >
                                     <el-date-picker
                                         v-model="dataForm.lastCrtTime"
                                         align="right"
@@ -529,7 +529,7 @@
                                         :picker-options="pickerOptions2" style="width: 200px" readonly>
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
+                                <el-form-item label-width="180px" :label="$t('hotel.birthday')" prop="birth" >
                                     <el-date-picker
                                         v-model="dataForm.birth"
                                         type="date"
@@ -537,19 +537,19 @@
                                         :placeholder="$t('hotel.birthday')"  style="width: 200px" >
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children612')" prop="children612">
+                                <el-form-item label-width="180px" :label="$t('hotel.children612')" prop="children612">
                                     <el-input-number v-model="dataForm.children612" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children46')" prop="children46" >
+                                <el-form-item label-width="180px" :label="$t('hotel.children46')" prop="children46" >
                                     <el-input-number v-model="dataForm.children46" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children4" >
+                                <el-form-item label-width="180px" :label="$t('hotel.children04')" prop="children4" >
                                     <el-input-number v-model="dataForm.children4" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item :label="$t('hotel.roomNum')" label-width="120px" prop="roomNum" >
+                                <el-form-item :label="$t('hotel.roomNum')" label-width="180px" prop="roomNum" >
                                     <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :min="0" :max="dataForm.inventory" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
+                                <el-form-item label-width="180px" :label="$t('hotel.reMark')" prop="reMark">
                                     <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
                                 </el-form-item>
                                 <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" >

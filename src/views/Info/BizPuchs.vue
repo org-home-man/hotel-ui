@@ -70,9 +70,9 @@
         </kt-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%"  style="margin-top: -120px" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="90%"  style="margin-top: -120px" :visible.sync="editDialogVisible" :close-on-click-modal="false">
 
-            <el-form :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm" :size="size"
+            <el-form :model="dataForm" label-width="180px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true">
                 <el-row>
                     <!--<el-col :span="24">-->
@@ -266,19 +266,19 @@
                             <el-col :span="6" style="padding-top:10px;border-right: 1px solid #e6e6e6;text-align: center;">
                             </el-col>
                             <el-col :span="18" align="center">
-                                <el-form-item label-width="120px" :label="$t('hotel.representName')" prop="pName" >
+                                <el-form-item label-width="180px" :label="$t('hotel.representName')" prop="pName" >
                                     <el-input v-model="dataForm.pName"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.passportNo')" prop="passport" >
+                                <el-form-item label-width="180px" :label="$t('hotel.passportNo')" prop="passport" >
                                     <el-input v-model="dataForm.passport"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.contactEmail')" prop="emailAddress">
+                                <el-form-item label-width="180px" :label="$t('hotel.contactEmail')" prop="emailAddress">
                                     <el-input v-model="dataForm.emailAddress"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.contactPhone')" prop="phone">
+                                <el-form-item label-width="180px" :label="$t('hotel.contactPhone')" prop="phone">
                                     <el-input v-model="dataForm.phone"></el-input>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.lastCrtTime')" prop="pName" >
+                                <el-form-item label-width="180px" :label="$t('hotel.lastCrtTime')" prop="pName" >
                                     <el-date-picker
                                         v-model="dataForm.lastCrtTime"
                                         align="right"
@@ -288,7 +288,7 @@
                                         :picker-options="pickerOptions2" style="width: 200px" readonly>
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.birthday')" prop="birth" >
+                                <el-form-item label-width="180px" :label="$t('hotel.birthday')" prop="birth" >
                                     <el-date-picker
                                         v-model="dataForm.birth"
                                         type="date"
@@ -296,22 +296,22 @@
                                         :placeholder="$t('hotel.birthday')"  style="width: 200px" >
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children612')" prop="children612">
+                                <el-form-item label-width="180px" :label="$t('hotel.children612')" prop="children612">
                                     <el-input-number v-model="dataForm.children612" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children46')" prop="children46" >
+                                <el-form-item label-width="180px" :label="$t('hotel.children46')" prop="children46" >
                                     <el-input-number v-model="dataForm.children46" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.children04')" prop="children4" >
+                                <el-form-item label-width="180px" :label="$t('hotel.children04')" prop="children4" >
                                     <el-input-number v-model="dataForm.children4" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item :label="$t('hotel.roomNum')" label-width="120px" prop="roomNum" >
+                                <el-form-item :label="$t('hotel.roomNum')" label-width="180px" prop="roomNum" >
                                     <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :min="1" :max="dataForm.inventory" ></el-input-number>
                                 </el-form-item>
-                                <el-form-item label-width="120px" :label="$t('hotel.reMark')" prop="reMark">
+                                <el-form-item label-width="180px" :label="$t('hotel.reMark')" prop="reMark">
                                     <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
                                 </el-form-item>
-                                <el-form-item  :label="$t('hotel.totalPrice')" label-width="120px" prop="totalPrice">
+                                <el-form-item  :label="$t('hotel.totalPrice')" label-width="180px" prop="totalPrice">
                                     <span  style="width: 200px;display: inline-block;text-align: left;color: #bd0b38;font-size: 18px;font-weight: bold;">{{dataForm.totalSAmount}}</span>
                                 </el-form-item>
 
@@ -324,6 +324,37 @@
                 <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
                 <el-button :size="size" type="primary" @click.native="submitConfirmForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
             </div>
+        </el-dialog>
+
+
+        <!--新增编辑界面-->
+        <el-dialog :title="$t('sys.orderConfirmReport')" width="70%" :visible.sync="orderDialogVisible"
+                   :close-on-click-modal="false">
+
+            <iframe :src="reportUrl+'/birt/frameset?__report=order_confirm_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
+                                '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
+                                '&favorableprice='+reportData.favorableprice+'&present='+reportData.present+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
+                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight"
+
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+
+        </el-dialog>
+
+        <el-dialog :title="$t('sys.hotelRequestReport')" width="70%" :visible.sync="customDialogVisible"
+                   :close-on-click-modal="false">
+
+            <iframe :src="reportUrl+'/birt/frameset?__report=cutomers_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
+                                '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelFax='+reportData.hotelFax+'&breakType='+reportData.breaktype+
+                                '&adultNum='+reportData.adultNum+'&childNum='+reportData.childNum+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalTAmount='+reportData.totalTAmount+
+                                '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight"
+
+
+                    scrolling="auto" frameborder="0" class="frame" >
+            </iframe>
+
         </el-dialog>
 
     </div>
@@ -341,6 +372,8 @@
     import KtTable from "@/views/Core/BizTable"
     import KtButton from "@/views/Core/KtButton"
     import {format,formatDate} from "@/utils/datetime"
+    import {reportBaseUrl} from '@/utils/global'
+
     export default {
         components:{
             KtTable,
@@ -348,10 +381,13 @@
         },
         data() {
             return {
+                reportUrl:reportBaseUrl,
                 able:false,
                 size: 'small',
                 serch_result_user:false,
                 serch_result_hotel:false,
+                customDialogVisible:false,
+                orderDialogVisible:false,
                 filters: {
                     createName:'',
                     orderCode: '',
@@ -494,6 +530,7 @@
                         return time.getTime() > Date.now()
                     }
                 },
+                reportData:{}
             }
         },
         methods: {
@@ -584,25 +621,77 @@
             },
             //导出excel按钮
             exportExcel:function (data) {
+                var sDate =data.params.inDateStart
+                var eDate = data.params.outDateEnd
+                var startDate = sDate.substr(0,4) + "/" +sDate.substr(4,2) +"/" +sDate.substr(6,2) ;
+                var endDate = eDate.substr(0,4) + "/" + eDate.substr(4,2) +"/" +eDate.substr(6,2) ;
+                var oDate1, oDate2, iDays
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                this.$api.bizPuchs.exportExcel(data.params,{responseType: 'blob'}).then((res) => {
-                    if(res == 1) {
-                        this.$message({message: this.$t('action.success'), type: 'success'})
-                    } else {
-                        this.$message({message: this.$t('action.fail'), type: 'error'})
-                    }
-                })
+                this.reportData = data.params;
+                this.reportData.roomNight = iDays;
+                this.reportData.hotelName = this.$i18n.locale=='zh_cn'?this.reportData.hotelCname:this.reportData.hotelEname;
+                console.log("this.breakType",this.breakType);
+                this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
+                this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
+                console.log("this.reportData",this.reportData);
+                if (this.reportData.hotelAddr == null ||  this.reportData.hotelAddr == "") {
+                    this.reportData.hotelAddr = ' ';
+                }
+                if (this.reportData.hotelPhone == null ||  this.reportData.hotelPhone == "") {
+                    this.reportData.hotelPhone = ' ';
+                }
+                if (this.reportData.remark == null ||  this.reportData.remark == "") {
+                    this.reportData.remark = ' ';
+                }
+
+
+                this.orderDialogVisible = true;
+                // this.$api.bizPuchs.exportExcel(data.params,{responseType: 'blob'}).then((res) => {
+                //     if(res == 1) {
+                //         this.$message({message: this.$t('action.success'), type: 'success'})
+                //     } else {
+                //         this.$message({message: this.$t('action.fail'), type: 'error'})
+                //     }
+                // })
             },
             //管理员导出excel按钮
             exportManagerExcel:function (data) {
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                this.$api.bizPuchs.exportManagerExcel(data.params,{responseType: 'blob'}).then((res) => {
-                    if(res == 1) {
-                        this.$message({message: this.$t('action.success'), type: 'success'})
-                    } else {
-                        this.$message({message: this.$t('action.fail'), type: 'error'})
-                    }
-                })
+                var sDate =data.params.inDateStart
+                var eDate = data.params.outDateEnd
+                var startDate = sDate.substr(0,4) + "/" +sDate.substr(4,2) +"/" +sDate.substr(6,2) ;
+                var endDate = eDate.substr(0,4) + "/" + eDate.substr(4,2) +"/" +eDate.substr(6,2) ;
+                var oDate1, oDate2, iDays
+                oDate1 = Date.parse(startDate);
+                oDate2 = Date.parse(endDate);
+                iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
+                data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                this.reportData = data.params;
+                this.reportData.roomNight = iDays;
+                this.reportData.hotelName = this.$i18n.locale=='zh_cn'?this.reportData.hotelCname:this.reportData.hotelEname;
+                console.log("this.breakType",this.breakType);
+                this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
+                this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
+                console.log("this.reportData",this.reportData);
+                if (this.reportData.hotelFax == null ||  this.reportData.hotelFax == "") {
+                    this.reportData.hotelFax = ' ';
+                }
+                this.reportData.totalNum = this.reportData.adultNum + this.reportData.childNum;
+
+                this.customDialogVisible = true;
+
+
+
+                // this.$api.bizPuchs.exportManagerExcel(data.params,{responseType: 'blob'}).then((res) => {
+                //     if(res == 1) {
+                //         this.$message({message: this.$t('action.success'), type: 'success'})
+                //     } else {
+                //         this.$message({message: this.$t('action.fail'), type: 'error'})
+                //     }
+                // })
             },
 
             inputUserFunc(){
@@ -636,6 +725,15 @@
                     this.filters.hotelName = row.hotelEname
                 }
 
+            },
+            getKeyValue:function(key,arr) {
+                var obj;
+                for (var i = 0 ; i < arr.length ; i++) {
+                    obj = arr[i];
+                    if (key == obj.code) {
+                        return obj.name
+                    }
+                }
             }
         },
         watch:{
@@ -757,5 +855,9 @@
         width: 120px;
         display: inline-block;
 
+    }
+    .frame {
+        width: 100%;
+        height: 45rem;
     }
 </style>

@@ -66,10 +66,10 @@
         </room-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="90%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
 
-            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="140px" :rules="dataFormRules"
+            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="151px" :rules="dataFormRules"
                      ref="dataForm"
                      :size="size" :inline="true" label-position="right">
                 <!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
