@@ -24,7 +24,7 @@
           <el-input v-model="filters.status" :placeholder="$t('user.status')"></el-input>
         </el-form-item>-->
         <el-form-item>
-          <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:role:view" type="primary"
+          <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:user:view" type="primary"
                      @click="findPage(null)"/>
         </el-form-item>
         <el-form-item>
@@ -61,9 +61,9 @@
     </user-table>
 
     <!--新增编辑界面-->
-      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="840px" :visible.sync="dialogVisible"
+      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="80%" :visible.sync="dialogVisible"
                  :close-on-click-modal="false">
-          <el-form :inline="true" :model="dataForm" label-width="80px" :rules="dataFormRules" ref="dataForm"
+          <el-form :inline="true" :model="dataForm" label-width="190px" :rules="dataFormRules" ref="dataForm"
                    :size="size"
                    label-position="right">
               <div style="width: 100%;display: flex">
@@ -458,7 +458,10 @@
         //改变用户状态
         changeStatus(row) {
 
-            this.$confirm(this.$t('action.sureChangeStatus'), this.$t('action.tips'), {}).then(() => {
+            this.$confirm(this.$t('action.sureChangeStatus'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')}).then(() => {
                 let params = Object.assign({}, row.row)
                 if (params.status == 1) {
                     params.status = 0

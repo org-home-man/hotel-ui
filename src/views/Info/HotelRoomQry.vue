@@ -144,21 +144,17 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isheat')"
                                                      v-model="filters.isheat" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isicebox" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')"
-                                                     v-model="filters.isicebox" border></el-checkbox>
-                                    </el-form-item>
-                                    <el-form-item prop="isiron" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')"
-                                                     v-model="filters.isiron" border></el-checkbox>
-                                    </el-form-item>
                                     <el-form-item prop="isnosmk" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                                      v-model="filters.isnosmk" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="islandscape" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
-                                                     v-model="filters.islandscape" border></el-checkbox>
+                                    <el-form-item prop="isswmp" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
+                                                     v-model="filters.isswmp" border></el-checkbox>
+                                    </el-form-item>
+                                    <el-form-item prop="isbeach" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
+                                                     v-model="filters.isbeach" border></el-checkbox>
                                     </el-form-item>
                                 </template>
                                 <div style="width: 100%;padding: 4px 0;">
@@ -174,14 +170,7 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isgym')"
                                                      v-model="filters.isgym" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isswmp" style="margin-bottom: 0;vertical-align: middle;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
-                                                     v-model="filters.isswmp" border></el-checkbox>
-                                    </el-form-item>
-                                    <el-form-item prop="isbeach" style="margin-bottom: 0;vertical-align: middle;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
-                                                     v-model="filters.isbeach" border></el-checkbox>
-                                    </el-form-item>
+
                                     <el-form-item prop="ishotsp" style="margin-bottom: 0;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
                                                      v-model="filters.ishotsp" border></el-checkbox>
@@ -220,6 +209,19 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isrestau')"
                                                      v-model="filters.isrestau" border></el-checkbox>
                                     </el-form-item>
+                                    <el-form-item prop="isicebox" style="margin-bottom: 0;vertical-align: middle;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')"
+                                                     v-model="filters.isicebox" border></el-checkbox>
+                                    </el-form-item>
+                                    <el-form-item prop="isiron" style="margin-bottom: 0;vertical-align: middle;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')"
+                                                     v-model="filters.isiron" border></el-checkbox>
+                                    </el-form-item>
+                                    <el-form-item prop="islandscape" style="margin-bottom: 0;vertical-align: middle;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
+                                                     v-model="filters.islandscape" border></el-checkbox>
+                                    </el-form-item>
+
                                 </div>
                             </el-collapse-item>
                         </el-collapse>
