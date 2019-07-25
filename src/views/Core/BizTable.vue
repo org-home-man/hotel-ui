@@ -26,6 +26,9 @@
                     <el-form-item :label="$t('hotel.contactPhone')" style="width: 24%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
+                    <el-form-item :label="$t('hotel.sRoomPrice')" style="width: 24%">
+                        <span>{{ props.row.totalSAmount }}</span>
+                    </el-form-item>
 
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
@@ -293,33 +296,14 @@ export default {
 
         exportExcel:function (row) {
 
-            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
-                type: 'warning',
-                cancelButtonText: this.$t('action.cancel'),
-                confirmButtonText: this.$t('action.confirm')
-            }).then(() => {
-                this.$emit('exportExcel', {params: row})
-            }).catch(() => {
-                // this.loading = false
-            }).finally(()=>{
-                this.loading = false
-            })
+            this.$emit('exportExcel', {params: row})
+
         },
 
         exportManagerExcel:function (row) {
 
-            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
-                type: 'warning',
-                cancelButtonText: this.$t('action.cancel'),
-                confirmButtonText: this.$t('action.confirm')
-            }).then(() => {
+            this.$emit('exportManagerExcel', {params: row})
 
-                this.$emit('exportManagerExcel', {params: row})
-            }).catch(() => {
-                // this.loading = false
-            }).finally(()=>{
-                this.loading = false
-            })
         },
 
         accountsConfirm:function (row) {
