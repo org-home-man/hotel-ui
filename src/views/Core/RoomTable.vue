@@ -17,12 +17,12 @@
         </el-table-column>
       <el-table-column width="250px" :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
       </el-table-column>
-        <el-table-column width="80px" prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
+        <el-table-column width="100px" prop="provinceCode" header-align="center" align="center" :label="$t('hotel.provinceCode.provinceCode')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(paraConfig.PREFECTURE,scope.row.provinceCode)}}</el-tag>
             </template>
         </el-table-column>
-        <el-table-column width="100px" prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
+        <el-table-column width="110px" prop="cityCode" header-align="center" align="center" :label="$t('hotel.cityCode.cityCode')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(paraConfig.DISTRICT,scope.row.cityCode)}}</el-tag>
             </template>
@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column width="100px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
       </el-table-column>
-      <el-table-column width="80px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
+      <el-table-column width="150px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
