@@ -97,15 +97,15 @@
             </template>
         </el-table-column>
 
-        <el-table-column prop="orderCode" :label="$t('order.orderCode')">
+        <el-table-column prop="orderCode" :label="$t('order.orderCode')" width="150px">
         </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
+        <el-table-column width="160px" :show-overflow-tooltip="true" :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')">
         </el-table-column>
         <el-table-column v-for="column in columns" header-align="center" align="center"
                          :prop="column.prop" :label="$t(column.label)" :width="column.width" :key="column.prop"
                          :sortable="column.sortable==null?true:column.sortable" >
         </el-table-column>
-        <el-table-column prop="status" :label="$t('order.roomStatus')">
+        <el-table-column width="150px" prop="status" :label="$t('order.roomStatus')">
             <template slot-scope="scope">
                 <el-tag>{{resolveRoomTypeName(roomStatus,scope.row.status)}}</el-tag>
             </template>

@@ -33,7 +33,8 @@
         "tabsCloseAllHandle": "关闭全部标签",
         "tabsRefreshCurrentHandle": "刷新当前标签",
         "notice": "消息通知",
-        "warning": "警告"
+        "warning": "警告",
+        "sure": "确定"
     },
     "action": {
         "operation": "操作",

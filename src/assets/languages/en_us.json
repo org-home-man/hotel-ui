@@ -33,7 +33,8 @@
         "tabsCloseAllHandle": "close all tags",
         "tabsRefreshCurrentHandle": "refresh the current tag",
         "notice": "notice",
-        "warning": "warning"
+        "warning": "warning",
+        "sure": "define"
     },
     "action": {
         "operation": "operation",

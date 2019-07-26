@@ -428,7 +428,11 @@
                 }
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm,
                                 {'inDateStart':this.filters.inDateStart,

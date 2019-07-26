@@ -148,14 +148,8 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                                      v-model="filters.isnosmk" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isswmp" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
-                                                     v-model="filters.isswmp" border></el-checkbox>
-                                    </el-form-item>
-                                    <el-form-item prop="isbeach" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
-                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
-                                                     v-model="filters.isbeach" border></el-checkbox>
-                                    </el-form-item>
+
+
                                 </template>
                                 <div style="width: 100%;padding: 4px 0;">
                                     <el-form-item prop="ishighrise" style="margin-bottom: 0;vertical-align: middle;">
@@ -191,6 +185,10 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islounge')"
                                                      v-model="filters.islounge" border></el-checkbox>
                                     </el-form-item>
+                                    <el-form-item prop="isswmp" style="margin-bottom: 0;vertical-align: middle;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
+                                                     v-model="filters.isswmp" border></el-checkbox>
+                                    </el-form-item>
                                 </div>
                                 <div style="width: 100%;padding: 4px 0;">
                                     <el-form-item prop="issuper" style="margin-bottom: 0;vertical-align: middle;">
@@ -220,6 +218,10 @@
                                     <el-form-item prop="islandscape" style="margin-bottom: 0;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
                                                      v-model="filters.islandscape" border></el-checkbox>
+                                    </el-form-item>
+                                    <el-form-item prop="isbeach" style="margin-bottom: 0;vertical-align: middle;">
+                                        <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
+                                                     v-model="filters.isbeach" border></el-checkbox>
                                     </el-form-item>
 
                                 </div>
@@ -862,7 +864,11 @@
 
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
                             this.$api.hotelRoom.save(params).then((res) => {

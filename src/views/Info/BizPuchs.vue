@@ -400,11 +400,11 @@
                 user_result:[],
                 hotel_result:[],
                 columns: [
-                    {prop:"roomCode", label:this.$t('hotel.roomcode'), minWidth:60},
-                    {prop:"inDateStart", label:this.$t('hotel.inDateStart'), minWidth:60},
-                    {prop:"outDateEnd", label:this.$t('hotel.outDateEnd'), minWidth:60},
-                    {prop:"pName", label:this.$t('hotel.representName'), minWidth:60},
-                    {prop:"lastCrtTime", label:this.$t('hotel.lastCrtTime'), minWidth:60}
+                    {prop:"roomCode", label:this.$t('hotel.roomcode'), minWidth:60,width:170},
+                    {prop:"inDateStart", label:this.$t('hotel.inDateStart'), minWidth:60,width:170},
+                    {prop:"outDateEnd", label:this.$t('hotel.outDateEnd'), minWidth:60,width:170},
+                    {prop:"pName", label:this.$t('hotel.representName'), minWidth:60,width:190},
+                    {prop:"lastCrtTime", label:this.$t('hotel.lastCrtTime'), minWidth:60 ,width:170}
                 ],
                 pageRequest: { page: 1, rows: 8 },
                 pageResult: {},
@@ -591,7 +591,11 @@
             submitConfirmForm: function () {
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editLoading = true
                             let params = Object.assign({}, this.dataForm)
                             this.$api.bizPuchs.save(params).then((res) => {

@@ -81,7 +81,7 @@
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
-                                    <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName">
+                                    <el-select v-model="dataForm.hotelCode" :disabled="disableHotelName" :placeholder="$t('action.select')">
                                         <el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode"
                                                    :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname"
                                                    :value="hotelName.hotelCode"></el-option>
@@ -90,7 +90,7 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
-                                    <el-select v-model="dataForm.roomType" :disabled="operation?false:true">
+                                    <el-select v-model="dataForm.roomType" :disabled="operation?false:true" :placeholder="$t('action.select')">
                                         <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
                                                    :value="rt.code"></el-option>
                                     </el-select>
@@ -100,7 +100,7 @@
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.roomstyle.roomstyle')" prop="roomStyle" auto-complete="off">
-                                    <el-select v-model="dataForm.roomStyle">
+                                    <el-select v-model="dataForm.roomStyle" :placeholder="$t('action.select')">
                                         <el-option v-for="rs in paraConfig.ROOM_STYLE" :key="rs.code" :label="rs.name"
                                                    :value="rs.code"></el-option>
                                     </el-select>
@@ -108,7 +108,7 @@
                             </el-col>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="bedType" auto-complete="off">
-                                    <el-select v-model="dataForm.bedType">
+                                    <el-select v-model="dataForm.bedType" :placeholder="$t('action.select')">
                                         <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
                                                    :value="bt.code"></el-option>
                                     </el-select>
@@ -118,7 +118,7 @@
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.breaktype.breaktype')" prop="breakType" auto-complete="off">
-                                    <el-select v-model="dataForm.breakType">
+                                    <el-select v-model="dataForm.breakType" :placeholder="$t('action.select')">
                                         <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
                                                    :value="bk.code"></el-option>
                                     </el-select>
@@ -495,7 +495,7 @@
                     <el-row>
                         <el-col :span="24">
                             <el-form-item auto-complete="off">
-                                <el-button type="primary" round @click="producePriceData">输入</el-button>
+                                <el-button type="primary" round @click="producePriceData">{{$t('common.sure')}}</el-button>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -676,7 +676,7 @@
                     <el-row>
                         <el-col :span="24">
                             <el-form-item auto-complete="off">
-                                <el-button type="primary" round @click="produceStockData">输入</el-button>
+                                <el-button type="primary" round @click="produceStockData">{{$t('common.sure')}}</el-button>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -1160,7 +1160,11 @@
                     if (valid) {
                         console.log(valid);
                         console.log("+++++")
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editLoading = true;
                             this.formDate = new FormData();
                             this.$refs.upload.submit()
@@ -1272,7 +1276,11 @@
                 this.$refs.priceForm.validate((valid) => {
                     console.log(valid)
                     if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editPriceLoading = true;
                             this.priceForm.priceDateData = this.priceDateData;
 
@@ -1311,7 +1319,11 @@
                 }
                 this.$refs.stockForm.validate((valid) => {
                     if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                            type: 'warning',
+                            cancelButtonText: this.$t('action.cancel'),
+                            confirmButtonText: this.$t('action.confirm')
+                        }).then(() => {
                             this.editStockLoading = true
                             this.stockForm.stockDateData = this.stockDateData;
                             let params = Object.assign({}, this.stockForm)
