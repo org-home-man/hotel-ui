@@ -17,7 +17,7 @@
 	<!--表格树内容栏-->
       <div class="table_room_container">
     <el-table :data="tableTreeDdata" style="width: 100%;" :row-class-name="tableRowClassName"
-      v-loading="loading" :element-loading-text="$t('action.loading')">
+      v-loading="loading" :element-loading-text="$t('action.loading')" :empty-text="$t('action.noData')">
       <el-table-column
         prop="id" header-align="center" align="center" width="80" :label="$t('dept.id')">
       </el-table-column>
@@ -183,7 +183,11 @@ export default {
     submitForm () {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+					this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                        type: 'warning',
+                        cancelButtonText: this.$t('action.cancel'),
+                        confirmButtonText: this.$t('action.confirm')
+                    }).then(() => {
 						this.dialogVisible = true
 						let params = Object.assign({}, this.dataForm)
 						this.$api.dept.save(params).then((res) => {

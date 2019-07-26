@@ -2,7 +2,8 @@
   <div class="table_room_container" style="min-width: 1300px;">
     <!--表格栏-->
     <el-table  :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
-          @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
+               :empty-text="$t('action.noData')"
+               @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
           :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" >
       <el-table-column type="selection" width="40" v-if="showBatchDelete & showOperation"></el-table-column>
       <!--<el-table-column v-for="column in columns" header-align="center" align="center"-->

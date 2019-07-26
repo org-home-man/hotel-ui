@@ -3,7 +3,7 @@
     <!--表格栏-->
     <el-table :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
-          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable">
+          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" @row-click="expandChange" ref="refTable" :empty-text="$t('action.noData')">
 
         <el-table-column type="expand">
             <template slot-scope="props">

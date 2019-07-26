@@ -3,7 +3,7 @@
     <!--表格栏-->
     <el-table  :data="data.rows" :highlight-current-row="highlightCurrentRow" @selection-change="selectionChange" :row-class-name="tableRowClassName"
           @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')" :border="border"
-          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;" >
+          :show-overflow-tooltip="showOverflowTooltip" :align="align" style="width:100%;"  :empty-text="$t('action.noData')">
       <el-table-column type="selection" v-if="showBatchDelete & showOperation"></el-table-column>
       <el-table-column  prop="reportId" header-align="center" align="center" :label="$t('hotel.reportId')">
       </el-table-column>

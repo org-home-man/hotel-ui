@@ -76,7 +76,7 @@
 
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.countryCode.countryCode')" prop="countryCode" auto-complete="off">
-                            <el-select v-model="dataForm.countryCode">
+                            <el-select v-model="dataForm.countryCode" :placeholder="$t('action.select')">
                                 <el-option :label="$t('hotel.countryCode.countryCodeValue')" value="JPN"></el-option>
                                 <!--<el-option v-for=" hotelName in hotelNames" :key="hotelName.hotelCode" :label="language.lge=='zh_cn'?hotelName.hotelCname:hotelName.hotelEname" :value="hotelName.hotelCode"></el-option>-->
                             </el-select>
@@ -84,7 +84,7 @@
                     </el-col>
                     <el-col :span="8" align="left">
                         <el-form-item prop="provinceCode" :label="$t('hotel.provinceCode.provinceCode')">
-                            <el-select v-model="dataForm.provinceCode">
+                            <el-select v-model="dataForm.provinceCode" :placeholder="$t('action.select')">
                                 <el-option v-for="rt in provinceCode" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
@@ -92,7 +92,7 @@
                     </el-col>
                     <el-col :span="8" align="left">
                         <el-form-item prop="cityCode" :label="$t('hotel.cityCode.cityCode')">
-                            <el-select v-model="dataForm.cityCode">
+                            <el-select v-model="dataForm.cityCode"  :placeholder="$t('action.select')">
                                 <el-option v-for="rt in cityCode" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
@@ -102,7 +102,7 @@
                 <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.hotelType.hotelType')" prop="hotelType" auto-complete="off">
-                            <el-select v-model="dataForm.hotelType">
+                            <el-select v-model="dataForm.hotelType" :placeholder="$t('action.select')">
                                 <el-option v-for="rt in hotelType" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
@@ -110,7 +110,7 @@
                     </el-col>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.hotelLevel.hotelLevel')" prop="hotelLevel" auto-complete="off">
-                            <el-select v-model="dataForm.hotelLevel">
+                            <el-select v-model="dataForm.hotelLevel" :placeholder="$t('action.select')">
                                 <el-option v-for="rt in hotelStar" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>

@@ -3,7 +3,7 @@
         <!--表格栏-->
         <el-table :data="data.rows" ref="table" :highlight-current-row="highlightCurrentRow" @row-click="selectRow"
                   @current-change="handleCurrentChange" v-loading="loading" :element-loading-text="$t('action.loading')"
-                  :border="border" :stripe="stripe"
+                  :border="border" :stripe="stripe" :empty-text="$t('action.noData')"
                   :show-overflow-tooltip="showOverflowTooltip" :size="size" :align="align"
                   style="width:100%;">
             <el-table-column :label="$t('action.operation')" width="55">

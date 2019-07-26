@@ -322,6 +322,7 @@
               email: '',
               mobile: '',
               status: '',
+              path: null,
               phone: '',
               address: '',
               region: '',
@@ -359,7 +360,11 @@
         this.$refs.dataForm.validate((valid) => {
           if (valid) {
 
-            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {}).then(() => {
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
 
               if (this.files != null) {
                 let formDate = new FormData();
@@ -399,7 +404,8 @@
           if (res.code == 200) {
             this.$message({message: this.$t('action.success'), type: 'success'})
             this.dialogVisible = false;
-            this.$refs['dataForm'].resetFields()
+            this.$refs['dataForm'].resetFields();
+            this.files = null;
           } else {
             this.$message({message: this.$t('action.fail'), type: 'error'})
           }
