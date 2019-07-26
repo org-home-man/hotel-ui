@@ -65,9 +65,9 @@
 
         <!--新增编辑界面-->
         <div class="hotelDialog">
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="70%" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="90%" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
-            <el-form :model="dataForm" label-width="120px" :rules="dataFormRules" ref="dataForm" :size="size"
+            <el-form :model="dataForm" label-width="150px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true" label-position="right">
                 <!--<el-form-item label="酒店编号" prop="hotelCode"   v-if="dataForm.isPrimaryKey">-->
                 <!--<el-input v-model="dataForm.hotelCode" auto-complete="off"></el-input>-->
