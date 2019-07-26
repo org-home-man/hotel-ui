@@ -406,6 +406,8 @@
             this.dialogVisible = false;
             this.$refs['dataForm'].resetFields();
             this.files = null;
+            this.fileList = [];
+              this.fileId=[];
           } else {
             this.$message({message: this.$t('action.fail'), type: 'error'})
           }
@@ -417,6 +419,9 @@
       cancel: function (formName) {
         this.dialogVisible = false;
         this.$refs['dataForm'].resetFields();
+        this.files = null;
+          this.fileList = [];
+          this.fileId=[];
       },
       // 获取部门列表
       findDeptTree: function () {

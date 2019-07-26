@@ -234,7 +234,7 @@
                 <!--表格栏-->
                 <el-table :data="this.pageResult.rows" ref="table"  @row-click="selectRow"
                            v-loading="loading" :element-loading-text="$t('action.loading')"
-                          :border="border"
+                          :border="border" :empty-text="$t('action.noData')"
                           :row-class-name="tableRowClassName"
                           :show-overflow-tooltip="showOverflowTooltip" :align="align">
                     <!--<el-table-column :label="$t('action.operation')" width="55">
