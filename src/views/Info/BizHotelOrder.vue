@@ -291,7 +291,7 @@
                 gridData:[],
                 commonDate:[],
                 photoUrl: baseUrl + '/document/preview/',
-                pageRequest: {page: 1, rows: 10},
+                pageRequest: {},
                 roomPhoto:[],
                 hotelType: [], //酒店类型
                 hotelStar:[], //酒店星级

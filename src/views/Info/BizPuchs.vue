@@ -577,7 +577,8 @@
                     this.editDialogVisible = true;
                     this.operation = false;
                     this.dataForm = Object.assign({}, res.rows[0]);
-                    this.$api.bizPuchs.findByDate(prm).then((resDate) => {
+                    var rqm = {'inDateStart': params.index.inDateStart,'outDateEnd': params.index.outDateEnd,'roomCode':params.index.roomCode}
+                    this.$api.bizPuchs.findByDate(rqm).then((resDate) => {
                         this.gridData = resDate;
                         this.dataForm = Object.assign({}, params.index,res.rows[0]);
                     },() =>{
