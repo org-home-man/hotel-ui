@@ -268,7 +268,7 @@
     }
 
     .position-left {
-        left: 200px;
+        left: 240px;
     }
 
     .position-collapse-left {

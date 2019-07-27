@@ -143,7 +143,7 @@
         }
 
         .menu-bar-width {
-            width: 200px;
+            width: 240px;
         }
 
         .menu-bar-collapse-width {

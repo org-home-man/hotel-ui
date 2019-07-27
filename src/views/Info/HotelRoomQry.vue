@@ -2,8 +2,8 @@
     <div class="container room_container">
         <!--工具栏-->
         <div class="header query_room_container" style="min-width: 1300px;padding-bottom: 10px;">
-            <el-form :inline="true" ref="filters" :model="filters" :size="size" align="left" style="width: 1300px">
-                <div style="background: #daf6fa;display: inline-block;padding: 10px;width: 1300px;box-sizing: border-box;margin-bottom: 4px;">
+            <el-form :inline="true" ref="filters" :model="filters" :size="size" align="left" style="min-width: 1300px">
+                <div style="background: #daf6fa;display: inline-block;padding: 10px;min-width: 1300px;box-sizing: border-box;margin-bottom: 4px;">
                     <el-form-item prop="provinceCode" style="margin-bottom: 0;vertical-align: middle;">
                         <el-select v-model="filters.provinceCode" filterable clearable :placeholder="$t('hotel.provinceCode.provinceCode')">
                             <el-option v-for="rt in provinceCode" :key="rt.code"
@@ -37,22 +37,22 @@
                     </el-form-item>
                 </div>
 
-                <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.number')}}</div>
-                    <div style="width: 100%;padding: 0 10px;">
-                        <el-form-item prop="roomNum" :label="$t('hotel.roomNum')" style="margin-bottom: 0;vertical-align: middle;">
+                <div class="input-content">
+                    <div class="input-label">{{$t('order.number')}}</div>
+                    <div class="input-info">
+                        <el-form-item prop="roomNum" :label="$t('hotel.roomNum')" style="margin-bottom: 6px;vertical-align: middle;">
                             <el-input-number v-model="filters.roomNum" controls-position="right"  :placeholder="$t('hotel.roomNum')" :min="1"></el-input-number>
                         </el-form-item>
-                        <el-form-item prop="adultNum" :label="$t('hotel.adultNum')" style="margin-bottom: 0;vertical-align: middle;">
+                        <el-form-item prop="adultNum" :label="$t('hotel.adultNum')" style="margin-bottom: 6px;vertical-align: middle;">
                             <el-input-number v-model="filters.adultNum" controls-position="right"  :placeholder="$t('hotel.adultNum')" :min="0"></el-input-number>
                         </el-form-item>
-                        <el-form-item prop="childNum" :label="$t('hotel.childrenNum')" style="margin-bottom: 0;vertical-align: middle;">
+                        <el-form-item prop="childNum" :label="$t('hotel.childrenNum')" style="margin-bottom: 6px;vertical-align: middle;">
                             <el-input-number v-model="filters.childNum" controls-position="right"  :placeholder="$t('hotel.childrenNum')" :min="0"></el-input-number>
                         </el-form-item>
-                        <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
+                        <el-form-item prop="lowRoomPrice" :label="$t('hotel.lowRoomPrice')" style="margin-bottom: 6px;vertical-align: middle;">
                             <el-input-number  v-model="filters.lowRoomPrice" controls-position="right"  :placeholder="$t('hotel.lowRoomPrice')" :min="0" :step="1000"></el-input-number>
                         </el-form-item>
-                        <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 0;vertical-align: middle;">
+                        <el-form-item prop="highRoomPrice" :label="$t('hotel.highRoomPrice')" style="margin-bottom: 6px;vertical-align: middle;">
                             <el-input-number  v-model="filters.highRoomPrice" controls-position="right"  :placeholder="$t('hotel.highRoomPrice')" :min="0" :step="1000"></el-input-number>
                         </el-form-item>
                         <el-form-item prop="roomArea" style="margin-bottom: 0;vertical-align: middle;width: 140px;">
@@ -61,9 +61,9 @@
                     </div>
                 </div>
 
-                <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.type')}}</div>
-                    <div style="width: 100%;padding: 0 10px;">
+                <div class="input-content">
+                    <div class="input-label">{{$t('order.type')}}</div>
+                    <div class="input-info">
                         <el-form-item prop="hotelType" style="margin-bottom: 0;vertical-align: middle;">
                             <el-select v-model="filters.hotelType"  clearable :placeholder="$t('hotel.hotelType.hotelType')">
                                 <el-option v-for="rt in hotelType" :key="rt.code"
@@ -97,9 +97,9 @@
                     </div>
                 </div>
 
-                <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;">{{$t('order.hotelStar')}}</div>
-                    <div style="width: 100%;padding: 0 10px;">
+                <div class="input-content">
+                    <div class="input-label">{{$t('order.hotelStar')}}</div>
+                    <div class="input-info">
                         <el-form-item prop="hotelLevel" style="margin-bottom: 0;vertical-align: middle;margin-right: 14px">
                             <el-checkbox-group v-model="starLevel">
                                 <el-checkbox v-for="hs in hotelStar" style="width: 202px;box-sizing: border-box;margin-bottom: 0;vertical-align: middle;margin-right: 5px"
@@ -110,9 +110,9 @@
                 </div>
 
 
-                <div style="display: flex;margin-bottom: 6px;">
-                    <div style="width: 8%;background: #daf6fa;text-align: center;line-height: 50px;font-size:.9em;color: #14889a;">{{$t('hotel.information')}}</div>
-                    <div style="width: 100%;padding: 0 10px;">
+                <div class="input-content">
+                    <div class="input-label">{{$t('hotel.information')}}</div>
+                    <div class="input-info">
                         <el-collapse>
                             <el-collapse-item>
                                 <template slot="title">
@@ -144,82 +144,79 @@
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isheat')"
                                                      v-model="filters.isheat" border></el-checkbox>
                                     </el-form-item>
+
+                                </template>
+                                <div style="width: 100%;padding: 4px 0;">
                                     <el-form-item prop="isnosmk" style="margin-bottom: 0;vertical-align: middle;line-height: 32px;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                                      v-model="filters.isnosmk" border></el-checkbox>
                                     </el-form-item>
-
-
-                                </template>
-                                <div style="width: 100%;padding: 4px 0;">
-                                    <el-form-item prop="ishighrise" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="ishighrise" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
                                                      v-model="filters.ishighrise" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="ispark" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="ispark" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ispark')"
                                                      v-model="filters.ispark" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isgym" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isgym" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isgym')"
                                                      v-model="filters.isgym" border></el-checkbox>
                                     </el-form-item>
 
-                                    <el-form-item prop="ishotsp" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="ishotsp" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishotsp')"
                                                      v-model="filters.ishotsp" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="ischildct" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="ischildct" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ischildct')"
                                                      v-model="filters.ischildct" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isroomserv" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isroomserv" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isroomserv')"
                                                      v-model="filters.isroomserv" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isknead" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isknead" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isknead')"
                                                      v-model="filters.isknead" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="islounge" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="islounge" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islounge')"
                                                      v-model="filters.islounge" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isswmp" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isswmp" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isswmp')"
                                                      v-model="filters.isswmp" border></el-checkbox>
                                     </el-form-item>
-                                </div>
-                                <div style="width: 100%;padding: 4px 0;">
-                                    <el-form-item prop="issuper" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="issuper" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.issuper')"
                                                      v-model="filters.issuper" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isbus" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isbus" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbus')"
                                                      v-model="filters.isbus" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="istrafic" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="istrafic" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox  true-label="1" false-label="2" :label="$t('hotel.istrafic')"
                                                      v-model="filters.istrafic" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isrestau" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isrestau" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isrestau')"
                                                      v-model="filters.isrestau" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isicebox" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isicebox" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isicebox')"
                                                      v-model="filters.isicebox" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isiron" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isiron" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isiron')"
                                                      v-model="filters.isiron" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="islandscape" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="islandscape" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
                                                      v-model="filters.islandscape" border></el-checkbox>
                                     </el-form-item>
-                                    <el-form-item prop="isbeach" style="margin-bottom: 0;vertical-align: middle;">
+                                    <el-form-item prop="isbeach" style="margin-bottom: 10px;vertical-align: middle;">
                                         <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isbeach')"
                                                      v-model="filters.isbeach" border></el-checkbox>
                                     </el-form-item>
@@ -1034,7 +1031,7 @@
 
 <style scoped>
     .el-collapse-item__content{
-        padding-bottom: 0;
+        padding: 0;
     }
     .room_container{
         width:100%;
@@ -1062,5 +1059,15 @@
     .hotel-base>li>label{
         width: 120px;
         display: inline-block;
+    }
+    .input-content{
+        margin-bottom: 6px;
+        display: table;
+    }
+    .input-label{
+        width: 100px;background: #daf6fa;text-align: center;line-height: 32px;font-size:.9em;color: #14889a;display: table-cell;vertical-align: middle;
+    }
+    .input-info{
+        width: 100%;padding: 0 10px;
     }
 </style>

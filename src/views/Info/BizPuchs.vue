@@ -854,11 +854,16 @@
     .hotel-base>li{
         padding: 10px 20px;
         list-style: none;
+        display: table;
     }
     .hotel-base>li>label{
-        width: 120px;
+        width: 200px;
         display: inline-block;
-
+        margin-right: 6px;
+    }
+    .hotel-base>li>span{
+        display: table-cell;
+        vertical-align: middle;
     }
     .frame {
         width: 100%;

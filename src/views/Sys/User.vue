@@ -61,11 +61,11 @@
     </user-table>
 
     <!--新增编辑界面-->
-      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="80%" :visible.sync="dialogVisible"
+      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="900px" :visible.sync="dialogVisible"
                  :close-on-click-modal="false">
           <el-form :inline="true" :model="dataForm" label-width="190px" :rules="dataFormRules" ref="dataForm"
                    :size="size"
-                   label-position="right">
+                   label-position="right" align="left">
               <div style="width: 100%;display: flex">
                   <div style="width: 50%;">
                       <el-form-item :label="$t('user.name')" prop="name" style="width: 100%;display: block;">
@@ -82,7 +82,7 @@
                       </el-form-item>
                   </div>
                   <div style="width: 50%;">
-                      <el-form-item  prop="phto" style="width: 100%">
+                      <el-form-item  prop="phto" style="width: 100%;text-align: center;">
                           <el-upload action="string" :limit="1" :on-exceed="onExceed" :file-list="fileList"
                                      :on-change="beforeUpload" :auto-upload="false" list-type="picture-card">
                               <i class="el-icon-plus"></i>

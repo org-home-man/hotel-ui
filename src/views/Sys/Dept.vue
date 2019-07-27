@@ -22,7 +22,7 @@
         prop="id" header-align="center" align="center" width="80" :label="$t('dept.id')">
       </el-table-column>
       <table-tree-column
-        prop="name" header-align="center" treeKey="id" width="150" :label="$t('dept.name')">
+        prop="name" header-align="center" treeKey="id" align="center" width="150" :label="$t('dept.name')">
       </table-tree-column>
       <el-table-column
         prop="parentName" header-align="center" align="center" width="120" :label="$t('dept.preOrg')">

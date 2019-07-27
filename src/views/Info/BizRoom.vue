@@ -66,18 +66,18 @@
         </room-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="90%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="80%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
 
-            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="151px" :rules="dataFormRules"
+            <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="180px" :rules="dataFormRules"
                      ref="dataForm"
-                     :size="size" :inline="true" label-position="right">
+                     :size="size" :inline="true" label-position="top" align="left">
                 <!--<el-form-item label="客房编号" prop="roomCode"  v-if="dataForm.isPrimaryKey">-->
                 <!--<el-input v-model="dataForm.roomCode" auto-complete="off"></el-input>-->
                 <!--</el-form-item>-->
 
                 <el-row>
-                    <el-col :span="16">
+                    <el-col :span="14">
                         <el-row>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.hotelname')" prop="hotelCode" auto-complete="off">
@@ -161,33 +161,36 @@
                             </el-col>
                         </el-row>
                     </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-form-item  prop="photo" auto-complete="off">
-                            <el-upload
-                                ref="upload"
-                                :http-request="uploadFile"
-                                list-type="picture-card"
-                                :on-error="handlerror"
-                                :on-success="handlesuccess"
-                                :on-change="handlePictureChange"
-                                :on-remove="handlePictureRemove"
-                                :auto-upload="false"
-                                :on-preview="handlePictureCardPreview"
-                                action="#"
-                                :file-list="files"
-                                multiple
-                                :limit="15">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
+                    <el-col :span="10">
+                        <el-row>
+                            <el-col :span="24">
+                                <el-form-item  prop="photo" auto-complete="off">
+                                    <el-upload
+                                        ref="upload"
+                                        :http-request="uploadFile"
+                                        list-type="picture-card"
+                                        :on-error="handlerror"
+                                        :on-success="handlesuccess"
+                                        :on-change="handlePictureChange"
+                                        :on-remove="handlePictureRemove"
+                                        :auto-upload="false"
+                                        :on-preview="handlePictureCardPreview"
+                                        action="#"
+                                        :file-list="files"
+                                        multiple
+                                        :limit="15">
+                                        <i class="el-icon-plus"></i>
+                                    </el-upload>
 
-                            <el-dialog :visible.sync="dialogVisible" width="65%" append-to-body>
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
-                        </el-form-item>
+                                    <el-dialog :visible.sync="dialogVisible" width="65%" append-to-body>
+                                        <img width="100%" :src="dialogImageUrl" alt="">
+                                    </el-dialog>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
                     </el-col>
                 </el-row>
+
 
 
                 <br>
