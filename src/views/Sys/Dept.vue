@@ -3,9 +3,9 @@
 	<!--工具栏-->
 	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
 		<el-form :inline="true" :model="filters" :size="size">
-			<el-form-item>
-				<el-input v-model="filters.name" :placeholder="$t('dept.name')"></el-input>
-			</el-form-item>
+			<!--<el-form-item>-->
+				<!--<el-input v-model="filters.name" :placeholder="$t('dept.name')"></el-input>-->
+			<!--</el-form-item>-->
 			<el-form-item>
 				<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:dept:view" type="primary" @click="findTreeData(null)"/>
 			</el-form-item>
@@ -117,13 +117,13 @@ export default {
 	methods: {
 		// 获取数据
     findTreeData: function () {
-      this.loading = true
-			this.$api.dept.findDeptTree().then((res) => {
-        this.tableTreeDdata = res
-                console.log("tableTreeDdata",this.tableTreeDdata)
-        this.popupTreeData = this.getParentMenuTree(res)
-        this.loading = false
-			})
+        this.loading = true
+        this.$api.dept.findDeptTree().then((res) => {
+            this.tableTreeDdata = res
+            console.log("tableTreeDdata",this.tableTreeDdata)
+            this.popupTreeData = this.getParentMenuTree(res)
+            this.loading = false
+        })
     },
 		// 获取上级机构树
     getParentMenuTree: function (tableTreeDdata) {

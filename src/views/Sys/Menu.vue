@@ -3,9 +3,9 @@
         <!--工具栏-->
         <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
             <el-form :inline="true" :model="filters" :size="size">
-                <el-form-item>
-                    <el-input v-model="filters.name" placeholder="名称"></el-input>
-                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-input v-model="filters.name" placeholder="名称"></el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item>
                     <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:menu:view" type="primary"
                                @click="findTreeData(null)"/>

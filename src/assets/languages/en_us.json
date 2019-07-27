@@ -106,6 +106,7 @@
         "pRoleName": "请输入角色名",
         "noEdit": "without modify permission",
         "userInfoHav": "user already exists",
+        "havUserNoDelete": "user already exists can't delete org",
         "pModifyMenu": "needs super-administrator's rights！",
         "pInventory": "the amount of stock",
         "makeAppointment": "order",

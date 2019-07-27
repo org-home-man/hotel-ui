@@ -34,21 +34,21 @@
       </el-form>
     </div>
     <div class="toolbar" style="float:right;padding-top:10px;padding-right:15px;">
-      <el-form :inline="true" :size="size">
-        <el-form-item>
-          <el-button-group>
-            <el-tooltip :content="$t('common.refresh')" placement="top">
-              <el-button icon="fa fa-refresh" @click="findPage(null)"></el-button>
-            </el-tooltip>
-            <!--<el-tooltip content="列显示" placement="top">-->
-            <!--<el-button icon="fa fa-filter" @click="displayFilterColumnsDialog"></el-button>-->
+      <!--<el-form :inline="true" :size="size">-->
+        <!--<el-form-item>-->
+          <!--<el-button-group>-->
+            <!--<el-tooltip :content="$t('common.refresh')" placement="top">-->
+              <!--<el-button icon="fa fa-refresh" @click="findPage(null)"></el-button>-->
             <!--</el-tooltip>-->
-            <el-tooltip :content="$t('common.export')" placement="top">
-              <el-button icon="fa fa-file-excel-o"></el-button>
-            </el-tooltip>
-          </el-button-group>
-        </el-form-item>
-      </el-form>
+            <!--&lt;!&ndash;<el-tooltip content="列显示" placement="top">&ndash;&gt;-->
+            <!--&lt;!&ndash;<el-button icon="fa fa-filter" @click="displayFilterColumnsDialog"></el-button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</el-tooltip>&ndash;&gt;-->
+            <!--<el-tooltip :content="$t('common.export')" placement="top">-->
+              <!--<el-button icon="fa fa-file-excel-o"></el-button>-->
+            <!--</el-tooltip>-->
+          <!--</el-button-group>-->
+        <!--</el-form-item>-->
+      <!--</el-form>-->
       <!--表格显示列界面-->
       <table-column-filter-dialog ref="tableColumnFilterDialog" :columns="columns"
                                   @handleFilterColumns="handleFilterColumns">
