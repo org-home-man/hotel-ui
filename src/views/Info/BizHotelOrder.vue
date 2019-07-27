@@ -489,7 +489,11 @@
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("hotelRoom",res)
                     this.dataForm = Object.assign(this.dataForm,res.rows[0]);
-                    this.dataForm.sRoomPrice = res.rows[0].sPrice
+                    if(res.rows[0] == null|| res.rows[0] == "") {
+                        this.$message({ message: this.$t('action.invIsOutException'), type: 'warn' })
+                    } else {
+                        this.dataForm.sRoomPrice = res.rows[0].sPrice
+                    }
                     //查询明细牌价
                     this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
                         console.log("bizPuchs",res)
