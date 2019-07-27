@@ -412,6 +412,8 @@
             this.$message({message: this.$t('action.fail'), type: 'error'})
           }
           this.findPage(null)
+        }).catch(() => {
+            this.editLoading = false
         })
       }
       ,
