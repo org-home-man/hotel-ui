@@ -255,7 +255,6 @@ export default {
                 cancelButtonText: this.$t('action.cancel'),
                 confirmButtonText: this.$t('action.confirm')
             }).then(() => {
-                this.loading = true
                 let callback = res => {
                     if (res.code == 200) {
                         this.$message({message: this.$t('action.success'), type: 'success'})
@@ -263,7 +262,6 @@ export default {
                     } else {
                         this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
                     }
-                    this.loading = false
                 }
                 this.$emit('handleCancel', {params: row, callback: callback})
             }).catch(() => {
@@ -276,7 +274,6 @@ export default {
                 cancelButtonText: this.$t('action.cancel'),
                 confirmButtonText: this.$t('action.confirm')
             }).then(() => {
-                this.loading = true;
                 let callback = res =>{
                     if(res.code == 200){
                         this.$message({message: this.$t('action.success'), type: 'success'})
@@ -284,13 +281,12 @@ export default {
                         this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
                     }
                     this.findPage()
-                    this.loading = false;
                 }
                 this.$emit('handleConfirm', {params: row, callback: callback})
             }).catch(() => {
-                // this.loading = false
+
             }).finally(()=>{
-                this.loading = false
+
             })
         },
 
@@ -308,28 +304,27 @@ export default {
 
         accountsConfirm:function (row) {
 
-    this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
-        type: 'warning',
-        cancelButtonText: this.$t('action.cancel'),
-        confirmButtonText: this.$t('action.confirm')
-    }).then(() => {
-        this.loading = true;
-        let callback = res =>{
-            if(res.code == 200){
-                this.$message({message: this.$t('action.success'), type: 'success'})
-            } else {
-                this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
-            }
-            this.findPage()
-            this.loading = false;
-        }
-        this.$emit('accountsConfirm', {params: row, callback: callback})
-    }).catch(() => {
-        // this.loading = false
-    }).finally(()=>{
-        this.loading = false
-    })
-},
+            this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
+                type: 'warning',
+                cancelButtonText: this.$t('action.cancel'),
+                confirmButtonText: this.$t('action.confirm')
+            }).then(() => {
+                let callback = res =>{
+                    if(res.code == 200){
+                        this.$message({message: this.$t('action.success'), type: 'success'})
+                    } else {
+                        this.$message({message: this.$t('action.fail') + res.msg, type: 'error'})
+                    }
+                    this.findPage()
+
+                }
+                this.$emit('accountsConfirm', {params: row, callback: callback})
+            }).catch(() => {
+
+            }).finally(()=>{
+
+            })
+        },
         tableRowClassName({row, rowIndex}) {
             if (rowIndex % 2 !=0) {
                 return 'success-row';
