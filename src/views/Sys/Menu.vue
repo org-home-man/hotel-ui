@@ -67,15 +67,15 @@
         <el-dialog :title="!dataForm.id ?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible"
                    :close-on-click-modal="false">
             <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="submitForm()"
-                     label-width="80px" :size="size" style="text-align:left;">
+                     label-width="120px" :size="size" style="text-align:left;">
                 <el-form-item :label="$t('action.tree')" prop="type">
                     <el-radio-group v-model="dataForm.type">
                         <el-radio v-for="(type, index) in menuTypeList" :label="index" :key="index">{{ type }}
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="menuTypeList[dataForm.type] + '名称'" prop="name">
-                    <el-input v-model="dataForm.name" :placeholder="menuTypeList[dataForm.type] + '名称'"></el-input>
+                <el-form-item :label="menuTypeList[dataForm.type]" prop="name">
+                    <el-input v-model="dataForm.name" :placeholder="menuTypeList[dataForm.type]"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('table.preTree')" prop="parentName">
                     <popup-tree-input
