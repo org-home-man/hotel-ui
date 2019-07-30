@@ -786,10 +786,12 @@
             // 获取分页数据
             findPage: function () {
                 this.loading = true;
+                this.pageRequest = { page: 1, rows: 10 };
                 if(this.commonDate.length>0){
                     this.filters.inDateStart = this.commonDate[0];
                     this.filters.outDateEnd = this.commonDate[1];
                 }
+
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     this.pageResult = res;
                     this.loading = false;

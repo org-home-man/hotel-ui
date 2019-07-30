@@ -317,8 +317,7 @@
         methods: {
             // 获取分页数据
             findPage: function (data) {
-                console.log("licy");
-                console.log(data);
+                this.pageRequest = { page: 1, rows: 10 };
                 if (data !== null) {
                     this.pageRequest = data.pageRequest
                 }

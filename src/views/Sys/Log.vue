@@ -55,6 +55,8 @@ export default {
 	methods: {
 		// 获取分页数据
 		findPage: function (data) {
+            this.pageRequest = { page: 1, rows: 10 };
+            console.log("pageRequest",this.pageRequest);
 			if(data !== null) {
 				this.pageRequest = data.pageRequest
 			}
