@@ -41,6 +41,10 @@
                     <el-form-item :label="$t('hotel.childrenNum')" style="width: 24%">
                         <span>{{ props.row.childNum }}</span>
                     </el-form-item>
+
+                    <el-form-item :label="$t('order.totalTAmount')" v-if="props.row.mark==1 || props.row.mark==''" style="width: 24%">
+                        <span>{{ props.row.totalTAmount }}</span>
+                    </el-form-item>
                     <!--<el-form-item label="幼儿数" style="width: 24%">-->
                         <!--<span>{{ props.row.cNum }}</span>-->
                     <!--</el-form-item>-->
