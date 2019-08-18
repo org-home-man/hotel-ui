@@ -20,11 +20,11 @@
         <!--<span class="relation-item">friends</span>-->
     <!--</div>-->
     <div class="main-operation">
-        <!--<span class="main-operation-item">-->
-          <!--<el-button size="small" icon="fa fa-male"> 个人中心</el-button>-->
-        <!--</span>    -->
         <span class="main-operation-item">
           <el-button size="small" icon="fa fa-key" @click="openPassVisible"> {{$t('common.passwdUp')}}</el-button>
+        </span>
+        <span class="main-operation-item">
+          <el-button size="small" icon="fa fa-key" @click="openUserVisible"> {{$t('common.userMng')}}</el-button>
         </span>    
     </div>
 
@@ -53,6 +53,8 @@
     <!--备份还原界面-->
     <!--<backup ref="backupDialog" @afterRestore="afterRestore"></backup>-->
       <password-up :passVisible="passVisible" @changePasswordupVisible="changePasswordupVisible"></password-up>
+      <user-mng :userVisible="userVisible" @changeUserupVisible="changeUserupVisible"></user-mng>
+
   </div>
 </template>
 
@@ -60,10 +62,13 @@
 import Backup from "@/views/Backup/Backup"
 import {clearToken} from "@/utils/token"
 import PasswordUp from "@/views/PasswordUp/PasswordUp"
+// import UserUp from "@/views/PasswordUp/UserMng"
+import UserMng from "@/views/PasswordUp/UserMng";
 
 export default {
   name: 'PersonalPanel',
   components:{
+      UserMng,
       Backup,
       PasswordUp
   },
@@ -81,6 +86,7 @@ export default {
   data() {
     return {
         passVisible:false,
+        userVisible:false,
     }
   },
   methods: {
@@ -121,6 +127,12 @@ export default {
       },
       changePasswordupVisible:function (val) {
           this.passVisible = val;
+      },
+      openUserVisible:function () {
+          this.userVisible = true
+      },
+      changeUserupVisible:function (val) {
+          this.userVisible = val;
       },
 
   },

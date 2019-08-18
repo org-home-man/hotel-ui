@@ -52,28 +52,28 @@
                     callback();
                 }
             };
-          return {
-              passSubmitLoading:false,
-              passwordupVisible:this.passVisible,
-              passForm:{
-                  oldPass:null,
-                  pass:null,
-                  checkPass:null,
-                  username:null
-              },
-              passFormRules:{
-                  oldPass:[
-                      {required:true,message:this.$t('action.pPassword'),trigger:blur}
-                  ],
-                  pass:[
-                      {validator:validatePass,trigger:blur}
-                  ],
-                  checkPass:[
-                      {validator:validatePass2,trigger:blur}
-                  ]
-              }
+            return {
+                passSubmitLoading:false,
+                passwordupVisible:this.passVisible,
+                passForm:{
+                    oldPass:null,
+                    pass:null,
+                    checkPass:null,
+                    username:null
+                },
+                passFormRules:{
+                    oldPass:[
+                        {required:true,message:this.$t('action.pPassword'),trigger:blur}
+                    ],
+                    pass:[
+                        {validator:validatePass,trigger:blur}
+                    ],
+                    checkPass:[
+                        {validator:validatePass2,trigger:blur}
+                    ]
+                }
 
-          }
+            }
         },
         methods:{
             passwdUpdate:function () {
