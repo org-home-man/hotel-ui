@@ -464,6 +464,7 @@
         "accounts": "settlement",
         "number": "number",
         "type": "type",
-        "hotelStar": "hotel stars"
+        "hotelStar": "hotel stars",
+        "selectMore": "More screening conditions"
     }
 }

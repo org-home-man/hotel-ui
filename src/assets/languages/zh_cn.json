@@ -466,6 +466,7 @@
         "accounts": "结算",
         "number": "数量",
         "type": "类型",
-        "hotelStar": "星级"
+        "hotelStar": "星级",
+        "selectMore": "更多筛选条件"
     }
 }

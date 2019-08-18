@@ -13,10 +13,13 @@
         <el-menu class="el-menu-demo"
                  :background-color="themeColor" text-color="#fff" active-text-color="#303133" mode="horizontal"
                  @select="selectNavBar()">
-            <el-menu-item index="1" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:recommondHouse}})">{{$t('common.recommondHouse')}}  </el-menu-item>
-            <el-menu-item index="2" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:lowPriceHouse}})">{{$t("common.lowPriceHouse")}}</el-menu-item>
-            <el-menu-item index="3" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode: maxCountHouse}})">{{$t("common.maxCountHouse")}}</el-menu-item>
+            <el-submenu index="2">
+                <template slot="title">{{$t('common.recommondHouse')}}</template>
+                <el-menu-item index="2-1" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:recommondHouse}})">{{$t('common.recommondHouse')}}  </el-menu-item>
+                <el-menu-item index="2-2" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:lowPriceHouse}})">{{$t("common.lowPriceHouse")}}</el-menu-item>
+                <el-menu-item index="2-3" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode: maxCountHouse}})">{{$t("common.maxCountHouse")}}</el-menu-item>
             <!--<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>-->
+            </el-submenu>
         </el-menu>
         </span>
         <!-- 工具栏 -->
