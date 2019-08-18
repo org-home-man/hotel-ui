@@ -61,7 +61,11 @@
                 {{$t('common.login')}}
             </el-button>
         </el-form-item>
+        <el-form-item style="text-align: left;color: orangered">
+            <label>*{{$t('common.explain')}}</label>
+        </el-form-item>
     </el-form>
+
 </template>
 
 <script>
