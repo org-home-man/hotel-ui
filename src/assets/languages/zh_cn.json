@@ -19,6 +19,7 @@
         "exportExcel": "导出（excel）",
         "topTree": "顶级菜单",
         "title": "株式会社酒店/客房预订系统",
+        "explain":"推荐使用 Chrome 浏览器",
         "username": "账号",
         "passwd": "密码",
         "reset": "重置",
