@@ -30,7 +30,7 @@
             user: {
                 type: Object
             },
-            passVisible:Boolean
+            userVisible:Boolean
         },
         data() {
             var validatePass = (rule, value, callback) => {
@@ -54,7 +54,7 @@
             };
             return {
                 passSubmitLoading:false,
-                passwordupVisible:this.passVisible,
+                passwordupVisible:this.userVisible,
                 passForm:{
                     oldPass:null,
                     pass:null,
@@ -111,9 +111,9 @@
         },
         watch:{
             passwordupVisible : function(newVal,oldVal) {
-                this.$emit("changePasswordupVisible",newVal);
+                this.$emit("changeUserupVisible",newVal);
             },
-            passVisible:function (newVal,oldVal) {
+            userVisible:function (newVal,oldVal) {
                 this.passwordupVisible = newVal;
             }
         }

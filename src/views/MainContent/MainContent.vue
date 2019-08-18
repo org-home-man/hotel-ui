@@ -218,7 +218,7 @@
         // background: rgba(56, 5, 114, 0.5);
         .tabs {
             position: fixed;
-            top: 60px;
+            top: 120px;
             right: 50px;
             padding-left: 0px;
             padding-right: 2px;
@@ -236,7 +236,7 @@
 
         .tabs-tools {
             position: fixed;
-            top: 60px;
+            top: 120px;
             right: 0;
             z-index: 1020;
             height: 40px;
@@ -258,7 +258,7 @@
 
         .main-content {
             position: absolute;
-            top: 45px;
+            top: 105px;
             left: 5px;
             right: 5px;
             bottom: 5px;

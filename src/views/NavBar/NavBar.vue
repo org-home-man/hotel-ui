@@ -112,7 +112,7 @@
 
         .el-menu {
             position: absolute;
-            top: 60px;
+            top: 120px;
             bottom: 0px;
             text-align: left;
             // background-color: #2968a30c;
@@ -121,7 +121,7 @@
         .logo {
             position: absolute;
             top: 0px;
-            height: 60px;
+            height: 120px;
             line-height: 60px;
             background: #545c64;
             cursor: pointer;
