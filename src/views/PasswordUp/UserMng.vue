@@ -127,7 +127,7 @@
                     sex: null,
                     password: '',
                     deptId: '',
-                    birthday: '',
+                    birthday: null,
                     email: '',
                     mobile: '',
                     status: '',
@@ -182,7 +182,7 @@
                         this.passSubmitLoading = true;
                         this.passForm.username = sessionStorage.getItem("user")
                         let params = Object.assign({}, this.passForm)
-                        this.$api.user.updateUserInfor(params).then((res) => {
+                        this.$api.user.updateUserInfor(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
                             if (res.code == 200) {
                                 this.$message({message: this.$t('action.success'), type: 'success'})
                             } else {
