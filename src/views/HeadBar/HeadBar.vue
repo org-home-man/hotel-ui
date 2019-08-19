@@ -72,7 +72,7 @@
           <!-- 用户信息 -->
           <span class="user-info"><img :src="user.path"/>{{user.name}}</span>
           <el-popover ref="popover-personal" placement="bottom-end" trigger="click" :visible-arrow="false">
-            <personal-panel :user="user"></personal-panel>
+            <personal-panel :user="user" @updateHeadUserInfo="updateHeadUserInfo"></personal-panel>
           </el-popover>
         </el-menu-item>
       </el-menu>
@@ -213,6 +213,9 @@
                         }
                     }
                 })
+            },
+            updateHeadUserInfo:function () {
+                this.findUserRoles();
             }
         },
         mounted() {

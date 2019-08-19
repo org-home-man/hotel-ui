@@ -14,6 +14,7 @@
         "versionName": "version name",
         "exit": "exit",
         "refresh": "refresh",
+        "userMng" : "message modify",
         "export": "export",
         "exportExcelManager": "manager export（excel）",
         "exportExcel": "export（excel）",

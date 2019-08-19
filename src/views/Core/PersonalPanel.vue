@@ -53,7 +53,7 @@
     <!--备份还原界面-->
     <!--<backup ref="backupDialog" @afterRestore="afterRestore"></backup>-->
       <password-up :passVisible="passVisible" @changePasswordupVisible="changePasswordupVisible"></password-up>
-      <user-mng :userVisible="userVisible" :data="user" @changeUserupVisible="changeUserupVisible"></user-mng>
+      <user-mng :userVisible="userVisible" :data="user" @changeUserupVisible="changeUserupVisible" @updatePersonUserInfo="updatePersonUserInfo"></user-mng>
 
   </div>
 </template>
@@ -134,6 +134,10 @@ export default {
       changeUserupVisible:function (val) {
           this.userVisible = val;
       },
+
+      updatePersonUserInfo:function () {
+          this.$emit('updateHeadUserInfo')
+      }
 
   },
   mounted() {

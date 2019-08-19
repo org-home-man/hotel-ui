@@ -86,7 +86,7 @@
 
 <script>
     export default {
-        name: "Passwordup",
+        name: "UserMng",
         props:{
             user: {
                 type: Object
@@ -140,10 +140,8 @@
                     address: '',
                     region: '',
                     net: '',
-                    remark: '',
-                    userRoles: []
+                    remark: ''
                 },
-                roles:[],
                 paraConfig:{},
                 passFormRules:{
                     oldPass:[
@@ -165,7 +163,6 @@
                     if (valid) {
                         this.passSubmitLoading = true;
                         this.passForm = Object.assign({}, this.data);
-
                         if (this.files != null) {
                             let formDate = new FormData();
                             formDate.append("files", this.files.raw);
@@ -193,7 +190,7 @@
             sumbit:function(){
                 let params = Object.assign({}, this.passForm);
                 // this.$api.user.updateUserInfor(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
-                this.$api.user.save(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
+                this.$api.user.updateUserInfor(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
                 if (res.code == 200) {
                         this.$message({message: this.$t('action.success'), type: 'success'})
                     } else {
@@ -201,6 +198,7 @@
                     }
                     this.$refs['passForm'].resetFields()
                     this.passwordupVisible = false
+                    this.$emit('updatePersonUserInfo')
                 }).finally(
                     this.passSubmitLoading = false
                 )
@@ -229,9 +227,12 @@
         watch:{
             passwordupVisible : function(newVal,oldVal) {
                 //加载图片
-                let arr = new Array();
-                arr.push({url:this.data.path});
-                this.fileList = arr;
+                if (this.data.path !=null && this.data.path != '') {
+                    let arr = new Array();
+                    arr.push({url:this.data.path});
+                    this.fileList = arr;
+                }
+
                 this.$emit("changeUserupVisible",newVal);
             },
             userVisible:function (newVal,oldVal) {
@@ -241,10 +242,6 @@
         created() {
             this.getTypeValues("SEX,STATUS").then((res)=>{//加载性别
                 this.paraConfig = res
-            });
-            this.$api.role.findAll().then((res) => {// 加载用户角色信息
-                // 加载角色集合
-                this.roles = res
             });
 
         }
