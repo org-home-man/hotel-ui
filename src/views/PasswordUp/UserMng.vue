@@ -35,6 +35,7 @@
                     <el-form-item :label="$t('user.net')" prop="net" style="width: 100%">
                         <el-input v-model="data.net" auto-complete="off"></el-input>
                     </el-form-item>
+
                     <el-form-item :label="$t('user.remark')" prop="remark" style="width: 100%">
                         <el-input v-model="data.remark" type="textarea" resize="unset" auto-complete="off" :rows="5" style="width: 600px;"></el-input>
                     </el-form-item>
@@ -58,6 +59,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
+
                     <el-form-item :label="$t('user.birthday')" prop="birthday" style="width: 100%">
                         <el-date-picker type="date" :placeholder="$t('action.pBirthday')" v-model="data.birthday" auto-complete="off"
                                         style="width: 200px;"></el-date-picker>
@@ -141,6 +143,7 @@
                     remark: '',
                     userRoles: []
                 },
+                roles:[],
                 paraConfig:{},
                 passFormRules:{
                     oldPass:[
@@ -189,8 +192,9 @@
             },
             sumbit:function(){
                 let params = Object.assign({}, this.passForm);
-                this.$api.user.updateUserInfor(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
-                    if (res.code == 200) {
+                // this.$api.user.updateUserInfor(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
+                this.$api.user.save(params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
+                if (res.code == 200) {
                         this.$message({message: this.$t('action.success'), type: 'success'})
                     } else {
                         this.$message({message: this.$t('action.fail'), type: 'error'})
@@ -237,7 +241,11 @@
         created() {
             this.getTypeValues("SEX,STATUS").then((res)=>{//加载性别
                 this.paraConfig = res
-            })
+            });
+            this.$api.role.findAll().then((res) => {// 加载用户角色信息
+                // 加载角色集合
+                this.roles = res
+            });
 
         }
     }
