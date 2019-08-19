@@ -20,15 +20,15 @@
                 <!--<el-menu-item index="2-3" @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode: maxCountHouse}})">{{$t("common.maxCountHouse")}}</el-menu-item>-->
             <!--&lt;!&ndash;<el-menu-item index="4" @click="openWindow('https://www.cnblogs.com/xifengxiaoma/')">{{$t("common.blog")}}</el-menu-item>&ndash;&gt;-->
             <!--</el-submenu>-->
-            <ul style="list-style: none;">
+            <ul style="list-style: none;text-align: left">
                 <li @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:recommondHouse}})">
-                    <el-button type="primary">{{$t('common.recommondHouse')}}</el-button>
+                    <el-button type="primary">{{$t('common.recommondHouse')}}:——{{recommondHouseInfo}}</el-button>
                 </li>
                 <li @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode:lowPriceHouse}})">
-                    <el-button type="primary">{{$t("common.lowPriceHouse")}}</el-button>
+                    <el-button type="primary">{{$t("common.lowPriceHouse")}}：——{{lowPriceHouseInfo}}</el-button>
                 </li>
                 <li @click="$router.push({path:'/info/BizHotelOrder',query:{recommondCode: maxCountHouse}})">
-                    <el-button type="primary">{{$t("common.maxCountHouse")}}</el-button>
+                    <el-button type="primary">{{$t("common.maxCountHouse")}}：——{{maxCountHouseInfo}}</el-button>
                 </li>
             </ul>
         </el-menu>
@@ -78,6 +78,7 @@
       </el-menu>
     </span>
     </div>
+
 </template>
 
 <script>
@@ -116,7 +117,10 @@
                 noReadCount: 0,
                 recommondHouse:null,
                 lowPriceHouse:null,
-                maxCountHouse:null
+                maxCountHouse:null,
+                recommondHouseInfo:null,
+                lowPriceHouseInfo:null,
+                maxCountHouseInfo : null
 
             }
         },
@@ -182,19 +186,31 @@
                 })
             },
             findRecommendRoom:function () {
-                this.$api.hotelRoom.findCustroomInfo().then( res =>{
+                var l = this.$i18n.locale == 'zh_cn'?'1':"2";
+                this.$api.hotelRoom.findCustroomInfo({local:l},).then( res =>{
                     if (res) {
                         for (var i = 0 ; i<res.length;i++) {
                             if ("01" === res[i].custroomType) {
                                 this.lowPriceHouse = res[i].roomCode
+                                this.lowPriceHouseInfo = res[i].remark
                             } else if ("02" === res[i].custroomType) {
                                 this.maxCountHouse = res[i].roomCode
+                                this.maxCountHouseInfo = res[i].remark
                             } else if ("03" === res[i].custroomType) {
                                 this.recommondHouse = res[i].roomCode
+                                this.recommondHouseInfo = res[i].remark
 
                             }
                         }
-                        console.log("recommondHouse",this.recommondHouse)
+                        if (this.lowPriceHouse == null || this.lowPriceHouse == '') {
+                            this.lowPriceHouseInfo = this.$i18n.locale == 'zh_cn'?'没有匹配到相应酒店信息': 'No hotel information matched '
+                        }
+                        if (this.maxCountHouse == null || this.maxCountHouse == '') {
+                            this.maxCountHouseInfo = this.$i18n.locale == 'zh_cn'?'没有匹配到相应酒店信息': 'No hotel information matched '
+                        }
+                        if (this.recommondHouse == null || this.recommondHouse == '') {
+                            this.recommondHouseInfo = this.$i18n.locale == 'zh_cn'?'没有匹配到相应酒店信息': 'No hotel information matched '
+                        }
                     }
                 })
             }
@@ -229,11 +245,14 @@
 
     .hamburg, .navbar {
         float: left;
-        height: 125px;
+    }
+    .hamburg {
+        margin-top: 20px;
     }
 
     .toolbar {
         float: right;
+        margin-top: 20px;
     }
 
     .lang-item {
@@ -273,5 +292,8 @@
 
     .position-collapse-left {
         left: 65px;
+    }
+   .el-menu.el-menu--horizontal{
+        border-bottom: none;
     }
 </style>
