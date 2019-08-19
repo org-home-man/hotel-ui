@@ -3,16 +3,16 @@
     <div class="personal-desc" :style="{'background':this.$store.state.app.themeColor}">
         <div class="avatar-container">
           <img class="avatar" :src="user.path" />
-        </div>  
+        </div>
         <div class="name-role">
-          <span class="sender">{{ user.name }} - {{ user.role }}</span>  
-        </div>  
+          <span class="sender">{{ user.name }} - {{ user.role }}</span>
+        </div>
         <div class="registe-info">
           <span class="registe-info">
             <li class="fa fa-clock-o"></li>
             {{ user.registeInfo }}
           </span>
-        </div>  
+        </div>
     </div>
     <!--<div class="personal-relation">-->
         <!--<span class="relation-item">followers</span>  -->
@@ -25,7 +25,7 @@
         </span>
         <span class="main-operation-item">
           <el-button size="small" icon="fa fa-key" @click="openUserVisible"> {{$t('common.userMng')}}</el-button>
-        </span>    
+        </span>
     </div>
 
     <!--<div class="other-operation">-->
@@ -53,7 +53,7 @@
     <!--备份还原界面-->
     <!--<backup ref="backupDialog" @afterRestore="afterRestore"></backup>-->
       <password-up :passVisible="passVisible" @changePasswordupVisible="changePasswordupVisible"></password-up>
-      <user-mng :userVisible="userVisible" @changeUserupVisible="changeUserupVisible"></user-mng>
+      <user-mng :userVisible="userVisible" :data="user" @changeUserupVisible="changeUserupVisible"></user-mng>
 
   </div>
 </template>

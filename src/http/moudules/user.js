@@ -49,6 +49,6 @@ export const updatePassword = (data) => {
     return request.post('/user/updatePassword',data);
 }
 
-export const updateUserInfor = (data) => {
-    return request.post('/user/updateUserInfor',data);
+export const updateUserInfor = (data,header) => {
+    return request.post('/user/updateUserInfor',data,header);
 }

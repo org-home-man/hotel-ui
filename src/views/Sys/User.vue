@@ -305,7 +305,6 @@
 
       // 批量删除
       handleDelete: function (data) {
-          console.log(data.params)
         this.$api.user.batchDelete(data.params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(data != null ? data.callback : '')
       },
       // 显示新增界面
