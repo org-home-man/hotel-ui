@@ -442,8 +442,14 @@
                 this.loading = true;
 
                 this.initData(); //初始化客房编号字段
-                this.filters.roomCode = this.roomId;
-                console.log("roomCode",this.roomId);
+                //如果roomId为空，说明需要关闭当前页面
+                if (!this.roomId) {
+                    this.filters.roomCode = this.$route.query.recommondCode
+                } else {
+                    this.filters.roomCode = this.roomId;
+                }
+
+                console.log("roomCode",this.filters.roomCode);
                 this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("resPage",res)
                     this.dataForm = Object.assign(this.dataForm,res.rows[0]);
@@ -474,6 +480,7 @@
                             confirmButtonText: this.$t('action.confirm')
                         }).then(() => {
                             this.editLoading = true
+                            this.loading = true
                             let params = Object.assign({}, this.dataForm,
                                 {'inDateStart':this.filters.inDateStart,
                                     'outDateEnd':this.filters.outDateEnd})
@@ -484,10 +491,12 @@
                                     this.$message({message: this.$t('action.fail') , type: 'error'})
                                 }
                                 this.editLoading = false
+                                this.loading = true
                                 this.$refs['dataForm'].resetFields()
                                 this.tabsCloseCurrentHandle();
                             })
-                        }).finally(() =>{
+                        }).catch(() => {
+                            this.loading = true
                             this.editLoading = false
                         })
                     } else {
@@ -529,7 +538,6 @@
                     this.filters.inDateStart = this.commonDate[0];
                     this.filters.outDateEnd = this.commonDate[1];
                 } else {
-                    this.$message({ message: this.$t('action.pInOutDate'), type: 'warn' })
                     return
                 }
                 this.dataForm.roomNum = 0;
@@ -586,9 +594,11 @@
                 }
                 if (this.roomCd) {
                     this.roomId = this.roomCd;
+                    return;
                 }
                 if (this.$route.query.recommondCode) {
                     this.roomId = this.$route.query.recommondCode
+                    return;
                 }
 
             },
