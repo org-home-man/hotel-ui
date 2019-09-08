@@ -159,7 +159,8 @@
         "accountLockout": "account be locked,contack the Administrator",
         "passwordErrors": "password error times",
         "passwordErrorsNum": "the maximum number of times for wrong password",
-        "lock": "account will be locked"
+        "lock": "account will be locked",
+        "operErr": "operation error,settlement price is null,please operation again"
     },
     "user": {
         "id": "ID",
@@ -338,7 +339,7 @@
         },
         "countryCode": {
             "countryCode": "nation",
-            "countryCodeValue": "JNP"
+            "countryCodeValue": "JPN"
         },
         "information": "common information",
         "roomarea": "room area",
@@ -352,12 +353,12 @@
         "recommended": "rencommended resources",
         "photo": "publicity photos",
         "iswify": "free WIFI",
-        "isfront": "24-hour front service",
+        "isfront": "front service",
         "isbarrifr": "wheelchair accessible",
         "isbalcony": "with verandas / terrace",
         "iskitchen": "with kitchen",
         "iswindow": "with windows",
-        "isheat": "ari-conditioner / heating",
+        "isheat": "ari-conditioner / cool",
         "isicebox": "refrigerator",
         "isiron": "ironing",
         "isnosmk": "non-smoking",
@@ -433,7 +434,9 @@
         "reportYear": "year of the report",
         "reportMonth": "month of the report",
         "reportSeq": "report batches",
-        "viewReport": "view reports"
+        "viewReport": "view reports",
+        "priceErr": "Please maintain the price information,The number of days of stay does not match the price.",
+        "roomNumErr": "Please enter the number of rooms reserved"
 
     },
     "order": {

@@ -320,10 +320,14 @@
                     </el-col>
                 </el-row>
             </el-form>
+
+
             <div slot="footer" class="dialog-footer" align="center">
                 <el-button :size="size" @click.native="editDialogVisible = false">{{$t('action.cancel')}}</el-button>
                 <el-button :size="size" type="primary" @click.native="submitConfirmForm" :loading="editLoading">{{$t('action.submit')}}</el-button>
             </div>
+
+
         </el-dialog>
 
 
@@ -589,8 +593,30 @@
 
 
             },
+            validFunction:function () {
+                if (this.commonDate.length < 1) {
+                    this.$message({message: this.$t('action.pInOutDate'), type: 'error'})
+                    return false;
+                }
+                if (this.dataForm.roomNum < 1) {
+                    this.$message({message: this.$t('action.roomNumErr'), type: 'error'})
+                    return false;
+                }
+                if (this.gridData.length != this.filters.roomNight) {
+                    this.$message({message: this.$t('action.priceErr'), type: 'error'})
+                    return false;
+                }
+                if (this.dataForm.totalTAmount == '' || this.dataForm.totalTAmount == null) {
+                    this.$message({message: this.$t('action.operErr'), type: 'error'})
+                    return false;
+                }
+                return true
+            },
             // 编辑
             submitConfirmForm: function () {
+                if (!this.validFunction()) {
+                    return;
+                }
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
@@ -755,7 +781,7 @@
 
                 var num = 0;
                 if(this.advanceDays >= this.dataForm.scheduledays){
-                    num = this.dataForm.favorableprice;
+                    num = this.dataForm.favorableprice * this.filters.roomNight*this.dataForm.roomNum ;
                 }
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
             },
@@ -770,7 +796,7 @@
                 }
                 var num = 0;
                 if(this.advanceDays >= this.dataForm.scheduledays){
-                    num = this.dataForm.favorableprice;
+                    num = this.dataForm.favorableprice * this.filters.roomNight*this.dataForm.roomNum ;
                 }
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
             },
@@ -820,7 +846,7 @@
                 }
                 var num = 0;
                 if(this.advanceDays >= this.dataForm.scheduledays){
-                    num = this.dataForm.favorableprice;
+                    num = this.dataForm.favorableprice * iDays*this.dataForm.roomNum;
                 }
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
 

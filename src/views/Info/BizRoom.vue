@@ -335,14 +335,14 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear" auto-complete="off">
-                                <el-date-picker
-                                    v-model="priceForm.priceYear"
-                                    align="right"
-                                    type="year"
-                                    :placeholder="$t('action.pPriceYear')" style="width: 180px;">
-                                </el-date-picker>
-                            </el-form-item>
+                            <!--<el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear" auto-complete="off">-->
+                                <!--<el-date-picker-->
+                                    <!--v-model="priceForm.priceYear"-->
+                                    <!--align="right"-->
+                                    <!--type="year"-->
+                                    <!--:placeholder="$t('action.pPriceYear')" style="width: 180px;">-->
+                                <!--</el-date-picker>-->
+                            <!--</el-form-item>-->
                         </el-col>
                     </el-row>
 
@@ -541,14 +541,14 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
-                            <el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear" auto-complete="off">
-                                <el-date-picker
-                                    v-model="stockForm.stockYear"
-                                    align="right"
-                                    type="year"
-                                    :placeholder="$t('action.pPriceYear')" style="width: 180px">
-                                </el-date-picker>
-                            </el-form-item>
+                            <!--<el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear" auto-complete="off">-->
+                                <!--<el-date-picker-->
+                                    <!--v-model="stockForm.stockYear"-->
+                                    <!--align="right"-->
+                                    <!--type="year"-->
+                                    <!--:placeholder="$t('action.pPriceYear')" style="width: 180px">-->
+                                <!--</el-date-picker>-->
+                            <!--</el-form-item>-->
                         </el-col>
                     </el-row>
 

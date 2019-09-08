@@ -155,11 +155,6 @@
                 </el-row>
                 <el-row>
                     <el-col :span="8" align="left">
-                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
-                            <el-input v-model.number="dataForm.evenlive"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
                             <el-input v-model.number="dataForm.scheduledays"></el-input>
                         </el-form-item>
@@ -167,6 +162,13 @@
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.favorableprice')" prop="favorableprice" auto-complete="off">
                             <el-input v-model="dataForm.favorableprice"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8" align="left">
+                        <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
+                            <el-input v-model.number="dataForm.evenlive"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -263,22 +265,22 @@
                     label: [
                         {required: true, message: '请输入名称', trigger: 'blur'}
                     ],
-                    scheduledays: [
-                        {required: true, message: this.$t('action.pScheduledays'), trigger: 'blur'},
-                        {validator: checkNumber}
-                    ],
-                    evenlive: [
-                        {required: true, message: this.$t('action.pEvenlive'), trigger: 'blur'},
-                        {validator: checkNumber}
-                    ],
-                    favorableprice: [
-                        {required: true, message: this.$t('action.pFavorableprice'), trigger: 'blur'},
-                        {validator: checkDoubleNumber}
-                    ],
-                    present: [
-                        {required: true, message: this.$t('action.present'), trigger: 'blur'},
-                        {validator: checkLength2}
-                    ]
+                    // scheduledays: [
+                    //     {required: true, message: this.$t('action.pScheduledays'), trigger: 'blur'},
+                    //     {validator: checkNumber}
+                    // ],
+                    // evenlive: [
+                    //     {required: true, message: this.$t('action.pEvenlive'), trigger: 'blur'},
+                    //     {validator: checkNumber}
+                    // ],
+                    // favorableprice: [
+                    //     {required: true, message: this.$t('action.pFavorableprice'), trigger: 'blur'},
+                    //     {validator: checkDoubleNumber}
+                    // ],
+                    // present: [
+                    //     {required: true, message: this.$t('action.present'), trigger: 'blur'},
+                    //     {validator: checkLength2}
+                    // ]
                 },
                 // 新增编辑界面数据
                 dataForm: {
