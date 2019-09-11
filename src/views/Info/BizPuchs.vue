@@ -64,7 +64,7 @@
         </div>
         <!--表格内容栏-->
         <kt-table permsEdit="sys:bizPuchs:edit" permsCancel="sys:bizPuchs:cancel"  permsConfirm="sys:bizPuchs:confirm" excelManagerConfirm="sys:excelExport:confirm"
-                  :data="pageResult" :columns="columns"
+                  excelExportBody="sys:bodyExcel:export" :data="pageResult" :columns="columns"
                   @findPage="findPage" @handleEdit="handleEdit" @handleCancel="handleCancel"  @handleConfirm="handleConfirm" @exportExcel="exportExcel"
                   @accountsConfirm="accountsConfirm" @exportManagerExcel="exportManagerExcel">
         </kt-table>
