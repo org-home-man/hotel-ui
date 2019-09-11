@@ -152,6 +152,7 @@
         "messOther": "有新消息,请在消息中心查看",
         "messTitle": "新订单",
         "removeLogin": "账号已在别处登录",
+        "deleteLogin": "账号异常，强制登出",
         "canotCancel": "此订单不能被取消",
         "canotEdite": "此订单不能编辑",
         "noHaveRoomInfo": "没有相应的客房信息",
