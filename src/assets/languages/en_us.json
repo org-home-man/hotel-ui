@@ -207,7 +207,7 @@
     "sys": {
         "sysMng": "administration function",
         "userMng": "user administration",
-        "deptMng": "company organizition administration",
+        "deptMng": "company administration",
         "roleMng": "role administration",
         "menuMng": "menu manage",
         "logMng": "system logbook",
@@ -222,7 +222,7 @@
         "stockMng": "room stock manage",
         "orderMng": "order manage",
         "hotelRoomQry": "hotel / room search",
-        "orderQry": "order search",
+        "orderQry": "order",
         "orderCrt": "order create",
         "orderFirm": "order confirm",
         "orderCancel": "order cancel",
