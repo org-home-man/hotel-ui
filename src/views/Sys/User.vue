@@ -451,8 +451,8 @@
           {prop: "name", label: 'username', minWidth: 100},
           {prop: "deptName", label: 'org', minWidth: 120},
           {prop: "roleNames", label: 'role', minWidth: 100},
-          {prop: "email", label: 'mail', minWidth: 120},
-          {prop: "mobile", label: 'phone', minWidth: 100},
+          // {prop: "email", label: 'mail', minWidth: 120},
+          // {prop: "mobile", label: 'phone', minWidth: 100},
           {prop: "status", label: 'state', minWidth: 70},
         ]
         this.filterColumns = JSON.parse(JSON.stringify(this.columns));
