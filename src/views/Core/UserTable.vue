@@ -16,13 +16,19 @@
             </el-table-column>
             <el-table-column prop="roleNames" header-align="center" align="center" :label="$t('table.role')">
             </el-table-column>
-            <el-table-column prop="email" header-align="center" align="center" :label="$t('table.mail')">
-            </el-table-column>
-            <el-table-column prop="mobile" header-align="center" align="center" :label="$t('table.phone')">
-            </el-table-column>
+            <!--<el-table-column prop="email" header-align="center" align="center" :label="$t('table.mail')">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="mobile" header-align="center" align="center" :label="$t('table.phone')">-->
+            <!--</el-table-column>-->
             <el-table-column prop="status" header-align="center" align="center" :label="$t('table.state')">
                 <template slot-scope="scope">
-                    <el-tag>{{resolveRoomTypeName(paraConfig.STATUS,(String)(scope.row.status))}}</el-tag>
+                    <el-tag>{{resolveRoomTypeName(paraConfig.STATUS,(String)(scope.row.status))}}</el-tag><br>
+                    <el-switch
+                        v-model="scope.row.status==1?true:false"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        @change="changeStatus(scope.row)">
+                    </el-switch>
                 </template>
             </el-table-column>
 
@@ -33,12 +39,7 @@
                                @click="handleEdit(scope.$index, scope.row)"/>
                     <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size"
                                type="danger" @click="handleDelete(scope.$index, scope.row)"/>
-                    <el-switch
-                        v-model="scope.row.status==1?true:false"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        @change="changeStatus(scope.row)">
-                    </el-switch>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -58,7 +59,7 @@
 
 <script>
     import KtButton from "@/views/Core/KtButton"
-
+    import {getUser} from "@/utils/token"
     export default {
         name: 'KtTable',
         components: {
@@ -150,15 +151,27 @@
             },
             // 编辑
             handleEdit: function (index, row) {
+                if (row.name == getUser()) {
+                    this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
+                    return
+                }
                 this.$emit('handleEdit', {index: index, row: row})
             },
             // 删除
             handleDelete: function (index, row) {
-
+                if (row.name == getUser()) {
+                    this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
+                    return
+                }
                 this.delete(row.id)
             },
             // 批量删除
             handleBatchDelete: function () {
+                let names = this.selections.map(item => item.name).toString()
+                if (names.indexOf(getUser()) != -1) {
+                    this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
+                    return
+                }
                 let ids = this.selections.map(item => item.id).toString()
                 this.delete(ids)
             },
@@ -196,6 +209,10 @@
                 return '';
             },
             changeStatus(row) {
+                if (row.name == getUser()) {
+                    this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
+                    return
+                }
                 this.$emit('changeStatus', {row: row})
             }
         },

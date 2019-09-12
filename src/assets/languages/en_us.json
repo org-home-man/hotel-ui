@@ -161,7 +161,8 @@
         "passwordErrors": "password error times",
         "passwordErrorsNum": "the maximum number of times for wrong password",
         "lock": "account will be locked",
-        "operErr": "operation error,settlement price is null,please operation again"
+        "operErr": "operation error,settlement price is null,please operation again",
+        "operSelfErr": "can't modify by yourself!"
     },
     "user": {
         "id": "ID",

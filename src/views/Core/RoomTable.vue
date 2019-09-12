@@ -37,8 +37,7 @@
           <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.bedType)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="100px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
-      </el-table-column>
+
       <el-table-column width="150px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
@@ -50,7 +49,7 @@
             </el-col>
             <el-col style="padding-top: 5px">
               <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.editPrice')" :perms="permsPriceEdit" :size="size" @click="handlePriceEdit(scope.$index, scope.row)" />
-              <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.editStock')" :perms="permsStockEdit" :size="size" @click="handleStockEdit(scope.$index, scope.row)" />
+
             </el-col>
           </el-row>
 
@@ -165,10 +164,7 @@ export default {
     handlePriceEdit: function (index, row) {
       this.$emit('handlePriceEdit', {index:index, row:row})
     },
-    // 编辑牌价
-    handleStockEdit: function (index, row) {
-      this.$emit('handleStockEdit', {index:index, row:row})
-    },
+
     // 删除
 		handleDelete: function (index, row) {
       console.log("row",row);

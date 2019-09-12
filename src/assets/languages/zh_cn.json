@@ -164,7 +164,8 @@
         "OrderStatusNomatchException": "订单状态不是未结算状态，不能结算",
         "operErr": "操作不正确，结算价格为空，请重新录入",
         "priceErr": "请维护牌价信息，住宿日数与价格不匹配",
-        "roomNumErr": "请输入预定房间数"
+        "roomNumErr": "请输入预定房间数",
+        "operSelfErr": "不允许修改个人信息"
     },
     "user": {
         "id": "编号",

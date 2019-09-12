@@ -75,7 +75,7 @@
           dataRequest:{
             date:null,
             dateArray:this.dateData,//用户输入的牌价或者库存的值,
-            roomCode:this.roomId
+            hotelCode:this.roomId
           }
         }
       },
@@ -111,7 +111,7 @@
           console.log("str:"+str);
           this.dataRequest.date = str;
           this.dataRequest.dateArray= this.dateData;
-          this.dataRequest.roomCode = this.roomId;
+          this.dataRequest.hotelCode = this.roomId;
           this.$api.bizRoom.produceStockCalendar(this.dataRequest,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
             this.days.length=0;
             this.dataRequest={}

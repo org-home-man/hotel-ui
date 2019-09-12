@@ -46,6 +46,8 @@
       <!--</el-table-column>-->
       <el-table-column :prop="language.lge=='zh_cn'?'hotelCname':'hotelEname'" header-align="center" align="center" :label="$t('hotel.hotelname')" width="120">
       </el-table-column>
+        <el-table-column width="100px" prop="roomStock" header-align="center" align="center" :label="$t('hotel.roomstock')">
+        </el-table-column>
       <el-table-column prop="hotelAddr" header-align="center" align="center" :label="$t('hotel.hotelAddr')" width="170">
       </el-table-column>
       <el-table-column prop="hotelPhone" header-align="center" align="center" :label="$t('hotel.hotelPhone')"width="160">
@@ -64,8 +66,14 @@
       <!--</el-table-column>-->
       <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
         <template slot-scope="scope">
-          <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
-          <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+            <el-col>
+                <kt-button icon="fa fa-edit" :label="$t('action.edit')" :perms="permsEdit" :size="size" @click="handleEdit(scope.$index, scope.row)" />
+                <kt-button icon="fa fa-trash" :label="$t('action.delete')" :perms="permsDelete" :size="size" type="danger" @click="handleDelete(scope.$index, scope.row)" />
+
+            </el-col>
+            <el-col style="padding-top: 5px">
+                <kt-button icon="fa fa-edit" style="width: 100px" :label="$t('action.editStock')" :perms="permsStockEdit" :size="size" @click="handleStockEdit(scope.$index, scope.row)" />
+            </el-col>
         </template>
       </el-table-column>
     </el-table>
@@ -92,6 +100,7 @@ export default {
     data: Object, // 表格分页数据
     permsEdit: String,  // 编辑权限标识
     permsDelete: String,  // 删除权限标识
+      permsStockEdit:String, //库存权限标识
       paraConfig:Object,
 
       size: { // 尺寸样式
@@ -171,6 +180,10 @@ export default {
 		handleEdit: function (index, row) {
       this.$emit('handleEdit', {index:index, row:row})
 		},
+      // 编辑库存
+      handleStockEdit: function (index, row) {
+          this.$emit('handleStockEdit', {index:index, row:row})
+      },
     // 删除
 		handleDelete: function (index, row) {
 			this.delete(row.id)

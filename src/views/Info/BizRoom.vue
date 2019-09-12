@@ -59,10 +59,9 @@
         </div>
         <!--表格内容栏-->
         <room-table permsEdit="sys:bizRoom:edit" permsDelete="sys:bizRoom:delete" permsPriceEdit="sys:bizRoom:editPrice"
-                    permsStockEdit="sys:bizRoom:editStock"
                     :data="pageResult"
                     @findPage="findPage" @handleEdit="handleEdit" @handleDelete="handleDelete"
-                    @handlePriceEdit="handlePriceEdit" @handleStockEdit="handleStockEdit" :paraConfig="paraConfig">
+                    @handlePriceEdit="handlePriceEdit" :paraConfig="paraConfig">
         </room-table>
 
         <!--新增编辑界面-->
@@ -132,11 +131,6 @@
                         </el-row>
 
                         <el-row>
-                            <el-col :span="12">
-                                <el-form-item :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                                    <el-input v-model.number="dataForm.roomStock"></el-input>
-                                </el-form-item>
-                            </el-col>
                             <el-col :span="12">
                                 <el-form-item :label="$t('hotel.recommended')">
                                     <kt-checkbox trueLable="01" falseLable="02"
@@ -522,190 +516,7 @@
             </el-dialog>
 
 
-            <!--库存修改弹出框-->
-            <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.edit')" width="60%"
-                       :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{$t('sys.guestMng')}}</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{$t('sys.stockMng')}}</el-breadcrumb-item>
-                </el-breadcrumb>
 
-                <el-form style="margin-top: 20px" :model="stockForm" label-width="130px" :rules="stockFormRules"
-                         ref="stockForm" :size="size" :inline="true" label-position="right">
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.roomcode')" prop="hotelCode" auto-complete="off">
-                                <el-input v-model="stockForm.roomCode" v-show="stockBoolean"></el-input>
-                                <el-tag>{{stockForm.roomCode}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <!--<el-form-item :label="$t('action.pPriceYear')" prop="pPriceYear" auto-complete="off">-->
-                                <!--<el-date-picker-->
-                                    <!--v-model="stockForm.stockYear"-->
-                                    <!--align="right"-->
-                                    <!--type="year"-->
-                                    <!--:placeholder="$t('action.pPriceYear')" style="width: 180px">-->
-                                <!--</el-date-picker>-->
-                            <!--</el-form-item>-->
-                        </el-col>
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.provinceCode.provinceCode')" prop="provinceCode"
-                                          auto-complete="off">
-                                <el-input v-model="stockForm.provinceCode" v-show="stockBoolean"></el-input>
-                                <el-tag>{{resolveRoomTypeName(paraConfig.PREFECTURE,stockForm.provinceCode)}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.cityCode.cityCode')" prop="cityCode" auto-complete="off">
-                                <el-input v-model="stockForm.cityCode" v-show="stockBoolean"></el-input>
-                                <el-tag>{{resolveRoomTypeName(paraConfig.DISTRICT,stockForm.cityCode)}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.hotelCode')" prop="hotelCode" auto-complete="off">
-                                <el-input v-model="stockForm.hotelCode" v-show="stockBoolean"></el-input>
-                                <el-tag>{{stockForm.hotelCode}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-
-                            <el-form-item :label="$t('hotel.hotelname')" prop="hotelCName" auto-complete="off">
-                                <el-input v-model="language.lge=='zh_cn'?stockForm.hotelCname:stockForm.hotelEname"
-                                          v-show="stockBoolean"></el-input>
-                                <el-tag>{{language.lge=='zh_cn'?stockForm.hotelCname:stockForm.hotelEname}}</el-tag>
-                            </el-form-item>
-
-                        </el-col>
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.roomtype.roomtype')" prop="roomType" auto-complete="off">
-                                <el-select v-model="stockForm.roomType" v-show="stockBoolean">
-                                    <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
-                                               :value="rt.code"></el-option>
-                                </el-select>
-                                <el-tag>{{resolveRoomTypeName(paraConfig.ROOM_TYPE,stockForm.roomType)}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.bedtype.bedtype')" prop="roomType" auto-complete="off">
-                                <el-select v-model="stockForm.bedType" v-show="stockBoolean">
-                                    <el-option v-for="rt in paraConfig.BED_TYPE" :key="rt.code" :label="rt.name"
-                                               :value="rt.code"></el-option>
-                                </el-select>
-                                <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,stockForm.bedType)}}</el-tag>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="24">
-                            <el-form-item :label="$t('hotel.priceDateInterval')" prop="priceDateInterval"
-                                          auto-complete="off">
-                                <el-date-picker
-                                    v-model="stockForm.stockDateInterval"
-                                    type="daterange"
-                                    align="right"
-                                    unlink-panels
-                                    range-separator="-"
-                                    :start-placeholder="$t('hotel.priceDateStart')"
-                                    :end-placeholder="$t('hotel.priceDateEnd')"
-                                    :picker-options="pickerOptions">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="24">
-                            <el-form-item prop="isMonday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isMonday"
-                                             :label="$t('hotel.isMonday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isTuesday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isTuesday"
-                                             :label="$t('hotel.isTuesday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isThursday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isThursday"
-                                             :label="$t('hotel.isThursday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isFourday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFourday"
-                                             :label="$t('hotel.isFourday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isFriday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isFriday"
-                                             :label="$t('hotel.isFriday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isSaterday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSaterday"
-                                             :label="$t('hotel.isSaterday')" border></el-checkbox>
-                            </el-form-item>
-                            <el-form-item prop="isSunday">
-                                <el-checkbox true-label="1" false-label="2" v-model="stockForm.isSunday"
-                                             :label="$t('hotel.isSunday')" border></el-checkbox>
-                            </el-form-item>
-
-                        </el-col>
-
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="12">
-                            <el-form-item :label="$t('hotel.inventory')" prop="sPrice" auto-complete="off">
-                                <el-input v-model="stockForm.inventory"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item prop="autoClose" auto-complete="off">
-                                <el-checkbox true-label="Y" false-label="N" v-model="stockForm.autoClose"
-                                             :label="$t('hotel.autoClose')" border></el-checkbox>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="24">
-                            <el-form-item auto-complete="off">
-                                <el-button type="primary" round @click="produceStockData">{{$t('common.sure')}}</el-button>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-
-                    <el-row>
-                        <el-col :span="24">
-                            <!--<date-picker :dateData="stockDateData" :trType="stockState">-->
-
-                            <!--</date-picker>-->
-                            <stock-picker :dateData="stockDateData" :roomId="stockForm.roomCode" ref="init">
-
-                            </stock-picker>
-                        </el-col>
-
-                    </el-row>
-
-
-                </el-form>
-
-                <div slot="footer" class="dialog-footer">
-                    <el-button :size="size" @click.native="cancelStockForm">{{$t('action.cancel')}}</el-button>
-                    <el-button :size="size" type="primary" @click.native="submitStockForm" :loading="editStockLoading">
-                        {{$t('action.submit')}}
-                    </el-button>
-                </div>
-            </el-dialog>
         </div>
     </div>
 </template>
@@ -713,7 +524,7 @@
 <script>
     import Cookies from "js-cookie";
     import DatePicker from "@/views/Core/DatePicker"
-    import StockPicker from "@/views/Core/StockPicker"
+
     import RoomTable from "@/views/Core/RoomTable"
     import KtInput from "@/views/Core/KtInput"
     import KtCheckbox from "@/views/Core/KtCheckbox"
@@ -766,7 +577,6 @@
             return {
                 baseUrl: baseUrl,
                 priceBoolean: false,
-                stockBoolean: false,
                 disableHotelName: false,
                 dataurl: '/document/upload',
                 size: 'small',
@@ -788,10 +598,10 @@
                 operation: false, // true:新增, false:编辑
                 editDialogVisible: false, // 新增编辑界面是否显示
                 editPriceDialogVisible: false, // 编辑牌价界面是否显示
-                editStockDialogVisible: false, // 编辑库存界面是否显示
+
                 editLoading: false,
                 editPriceLoading: false,
-                editStockLoading: false,
+
                 dataFormRules: {
                     hotelCode: [
                         {required: true, message: this.$t('action.pHotelName'), trigger: 'blur'}
@@ -897,43 +707,12 @@
                     updateName: null,
                     updateTime: null
                 },
-                //库存界面新增数据
-                stockForm: {
-                    roomCode: null,
-                    hotelCode: null,
-                    provinceCode: null,
-                    cityCode: null,
-                    roomType: null,
-                    bedType: null,
-                    stockYear: null,
-                    stockDateData: null,
-                    stockDateInterval: null,
-                    inventory: null,
-                    hotelCname: null,
-                    hotelEname: null,
-                    autoClose: null,
-                    isMonday: null,
-                    isTuesday: null,
-                    isThursday: null,
-                    isFourday: null,
-                    isFriday: null,
-                    isSaterday: null,
-                    isSunday: null,
-                    createName: null,
-                    createTime: null,
-                    updateName: null,
-                    updateTime: null
-                },
                 priceFormRules: {//牌价界面规则限制
                     sprice: [
                         {required: true, message: this.$t('action.pSprice'), trigger: 'blur'}
                     ]
                 },
-                stockFormRules: { // 库存页面规则限制
-                    inventory: [
-                        {required: true, message: this.$t('action.pInventory'), trigger: 'blur'}
-                    ]
-                },
+
                 hotelNames: [],
                 paraConfig: {},
                 sysPara: {},
@@ -947,7 +726,6 @@
                 dialogVisible: false,
                 dialogImageUrl: '',
                 priceDateData: [],
-                stockDateData: [],
                 pickerOptions: {
                     shortcuts: [{
                         text: this.$t('hotel.laterOneWeek'),
@@ -1099,20 +877,7 @@
                 this.operation = false
                 this.priceForm = Object.assign({}, params.row)
             },
-            //库存编辑界面
-            handleStockEdit: function (params) {
-                console.log("param", params);
-                params.row.isMonday = null;
-                params.row.isTuesday = null;
-                params.row.isThursday = null;
-                params.row.isFourday = null;
-                params.row.isFriday = null;
-                params.row.isSaterday = null;
-                params.row.isSunday = null;
-                this.editStockDialogVisible = true
-                this.operation = false
-                this.stockForm = Object.assign({}, params.row)
-            },
+
             //上传 //图片上传代码
             async submitUpload() {
 
@@ -1315,47 +1080,7 @@
                 this.editPriceLoading = false;
                 this.editPriceDialogVisible = false;
             },
-            //库存编辑提交
-            submitStockForm: function () {
-                if (!this.stockForm.stockDateInterval && !this.stockForm.stockYear) {
-                    this.$message({message: this.$t('action.pAllDateNull'), type: 'error'})
-                    return
-                }
-                this.$refs.stockForm.validate((valid) => {
-                    if (valid) {
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
-                            type: 'warning',
-                            cancelButtonText: this.$t('action.cancel'),
-                            confirmButtonText: this.$t('action.confirm')
-                        }).then(() => {
-                            this.editStockLoading = true
-                            this.stockForm.stockDateData = this.stockDateData;
-                            let params = Object.assign({}, this.stockForm)
-                            this.$api.bizRoom.saveStock(params, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
-                                if (res.code == 200) {
-                                    this.$message({message: this.$t('action.success'), type: 'success'})
-                                } else {
-                                    this.$message({message: this.$t('action.fail'), type: 'error'})
-                                }
-                                this.editStockLoading = false
-                                this.$refs['stockForm'].resetFields()
-                                this.editStockDialogVisible = false
-                                this.stockDateData = []
-                                this.findPage(null)
-                            }).catch(()=>{
-                                this.editStockLoading = false
-                            })
-                        })
-                    } else {
-                        this.$message({message: this.$t('action.incompleteInfo'), type: 'error'})
-                    }
-                })
-            },
-            cancelStockForm: function () {
-                this.stockDateData = [];
-                this.editStockLoading = false
-                this.editStockDialogVisible = false;
-            },
+
             // 时间格式化
             dateFormat: function (row, column, cellValue, index) {
                 return format(row[column.property])
@@ -1401,36 +1126,11 @@
                     }
                 })
             },
-            produceStockData: function () {
-                this.$refs.stockForm.validate((valid) => {
-                    if (valid) {
-                        if (!this.stockForm.stockDateInterval && !this.stockForm.stockYear) {
-                            this.$message({message: this.$t('action.pAllDateNull'), type: 'error'})
-                            return
-                        }
-                        if (!this.stockForm.inventory) {
-                            this.$message({message: this.$t('action.pInventory'), type: 'error'})
-                        }
 
-                        this.stockForm.stockDateData = this.stockDateData;
-                        this.$api.bizRoom.stockDatePro(this.stockForm, {headers: {'Content-Type': 'application/json;charset=UTF-8'}}).then((res) => {
-                            if (res.code == "0000") {
-                                this.stockDateData = res.list;
-                            }
-                        })
-
-                    } else {
-                        this.$message({message: this.$t('action.incompleteInfo'), type: 'error'})
-                    }
-                })
-
-            },
             datePickerMethod: function () {
                 this.priceDateData = [];
             },
-            datePickerStockMethod: function () {
-                this.stockDateData = [];
-            }
+
         },
         created() {
             this.getTypeValues('ROOM_STYLE,ROOM_TYPE,BED_TYPE,BREAK_TYPE,PREFECTURE,DISTRICT').then(res => {
