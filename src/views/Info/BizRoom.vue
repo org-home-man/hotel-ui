@@ -538,8 +538,7 @@
             KtButton,
             KtCheckbox,
             KtInput,
-            DatePicker,
-            StockPicker
+            DatePicker
         },
         data() {
             var checkNumber = (rule, value, callback) => {
@@ -647,7 +646,6 @@
                     introC: null,
                     introE: null,
                     photo: null,
-                    roomStock: null,
                     recommended: null,
                     iswify: null,
                     isfront: null,
@@ -801,7 +799,6 @@
                     introE: null,
                     photo: null,
                     files: [],
-                    roomStock: null,
                     recommended: null,
                     iswify: null,
                     isfront: null,

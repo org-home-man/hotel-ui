@@ -37,7 +37,8 @@
           <el-tag>{{resolveRoomTypeName(paraConfig.BED_TYPE,scope.row.bedType)}}</el-tag>
         </template>
       </el-table-column>
-
+        <el-table-column width="100px" prop="inventory" header-align="center" align="center" :label="$t('hotel.roomstock')">
+        </el-table-column>
       <el-table-column width="150px" prop="sRoomPrice" header-align="center" align="center" :label="$t('table.sSprice')">
       </el-table-column>
       <el-table-column :label="$t('action.operation')" width="255" fixed="right" v-if="showOperation" header-align="center" align="center">
