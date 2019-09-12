@@ -11,7 +11,7 @@
                     <el-form-item>
                         <kt-button icon="fa fa-success" v-show="props.row.status == 1" :label="$t('action.confirm')" :perms="permsConfirm" size="medium" type="primary" @click="confirm(props.row)"></kt-button>
                         <kt-button icon="fa fa-success" v-show="props.row.status == 5" :label="$t('order.accounts')" :perms="permsConfirm" size="medium" type="primary" @click="accountsConfirm(props.row)"></kt-button>
-                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcel')" :perms="permsConfirm" size="medium" type="primary" @click="exportExcel(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcel')" :perms="excelExportBody" size="medium" type="primary" @click="exportExcel(props.row)"></kt-button>
                         <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcelManager')" :perms="excelManagerConfirm" size="medium" type="primary" @click="exportManagerExcel(props.row)"></kt-button>
                     </el-form-item>
                 </el-form>
@@ -157,6 +157,7 @@ export default {
     permsEdit: String,  // 编辑权限标识
     permsCancel: String,  // 删除权限标识
     permsConfirm: String,  // 确认权限标识
+      excelExportBody:String,//用户确认单导出
       excelManagerConfirm:String, //管理员报表导出
     size: { // 尺寸样式
       type: String,

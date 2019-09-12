@@ -152,6 +152,7 @@
         "messOther": "new information",
         "messTitle": "new order",
         "removeLogin": "the account is logged by another place",
+        "deleteLogin": "account abnormal, forced logout ",
         "canotCancel": "the order can't be canceled",
         "canotEdite": "the order can't be edited",
         "noHaveRoomInfo": "no corresponding information",

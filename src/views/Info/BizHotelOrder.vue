@@ -422,32 +422,6 @@
                 this.removeTabHandle(this.mainTabsActiveName)
             },
             dateChangeCanculate: function() {
-                // if(this.commonDate.length>1){
-                //     this.filters.inDateStart = this.commonDate[0];
-                //     this.filters.outDateEnd = this.commonDate[1];
-                // } else {
-                //     this.$message({ message: this.$t('action.pInOutDate'), type: 'warn' })
-                //     return
-                // }
-                // this.filters.roomCode = this.$route.query.recommondCode
-                // this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
-                //     console.log("hotelRoom",res)
-                //     this.dataForm = Object.assign(this.dataForm,res.rows[0]);
-                //     if(res.rows[0] == null|| res.rows[0] == "") {
-                //         this.$message({ message: this.$t('action.invIsOutException'), type: 'warn' })
-                //     } else {
-                //         this.dataForm.sRoomPrice = res.rows[0].sPrice
-                //     }
-                //     //查询明细牌价
-                //     this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
-                //         console.log("bizPuchs",res)
-                //         this.gridData = res;
-                //     },() =>{
-                //     })
-                // },() =>{
-                //
-                // })
-
 
             },
             returnHome:function() {
@@ -485,7 +459,24 @@
                 this.cityCode = res.DISTRICT;
             })
         },
-
+        computed: {
+            mainTabs: {
+                get() {
+                    return this.$store.state.tab.mainTabs
+                },
+                set(val) {
+                    this.$store.commit('updateMainTabs', val)
+                }
+            },
+            mainTabsActiveName: {
+                get() {
+                    return this.$store.state.tab.mainTabsActiveName
+                },
+                set(val) {
+                    this.$store.commit('updateMainTabsActiveName', val)
+                }
+            }
+        },
         mounted() {
             this.initData();
         },
