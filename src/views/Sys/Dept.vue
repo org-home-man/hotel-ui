@@ -24,9 +24,12 @@
       <table-tree-column
         prop="name" header-align="center" treeKey="id" align="center" width="150" :label="$t('dept.name')">
       </table-tree-column>
-      <el-table-column
-        prop="parentName" header-align="center" align="center" width="120" :label="$t('dept.preOrg')">
-      </el-table-column>
+      <!--<el-table-column-->
+        <!--prop="parentName" header-align="center" align="center" width="120" :label="$t('dept.preOrg')">-->
+      <!--</el-table-column>-->
+        <el-table-column
+        prop="countryName" header-align="center" align="center" width="120" :label="$t('dept.countryName')">
+        </el-table-column>
       <el-table-column
         prop="orderNum" header-align="center" align="center" :label="$t('dept.order')">
       </el-table-column>
@@ -52,12 +55,16 @@
         <el-form-item :label="$t('dept.name')" prop="name">
           <el-input v-model="dataForm.name" :placeholder="$t('dept.name')"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('dept.preOrg')" prop="parentName">
-            <popup-tree-input
-              :data="popupTreeData" :props="popupTreeProps" :prop="dataForm.parentName==null?$t('common.topTree'):dataForm.parentName"
-              :nodeKey="''+dataForm.parentId" :currentChangeHandle="handleTreeSelectChange" :placeholder="$t('dept.name')" >
-            </popup-tree-input>
-        </el-form-item>
+
+          <el-form-item :label="$t('dept.countryName')" prop="countryName">
+              <el-input v-model="dataForm.countryName" :placeholder="$t('dept.countryName')"></el-input>
+          </el-form-item>
+        <!--<el-form-item :label="$t('dept.preOrg')" prop="parentName">-->
+            <!--<popup-tree-input-->
+              <!--:data="popupTreeData" :props="popupTreeProps" :prop="dataForm.parentName==null?$t('common.topTree'):dataForm.parentName"-->
+              <!--:nodeKey="''+dataForm.parentId" :currentChangeHandle="handleTreeSelectChange" :placeholder="$t('dept.name')" >-->
+            <!--</popup-tree-input>-->
+        <!--</el-form-item>-->
         <el-form-item v-if="dataForm.type !== 2" :label="$t('dept.order')" prop="orderNum">
           <el-input-number v-model="dataForm.orderNum" controls-position="right" :min="0" :label="$t('dept.order')"></el-input-number>
         </el-form-item>
@@ -95,6 +102,7 @@ export default {
       dataForm: {
         id: 0,
         name: '',
+        countryName: '',
         parentId: 0,
         parentName: '',
         orderNum: 0
@@ -140,6 +148,7 @@ export default {
 			this.dataForm = {
         id: 0,
         name: '',
+        countryName: '',
         parentId: 0,
         parentName: '',
         orderNum: 0

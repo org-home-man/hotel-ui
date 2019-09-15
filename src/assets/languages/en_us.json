@@ -196,6 +196,7 @@
         "id": "ID",
         "name": "name",
         "preOrg": "higher level",
+        "countryName": "region information",
         "order": "sorting",
         "createName": "creator",
         "createTime": "create time"

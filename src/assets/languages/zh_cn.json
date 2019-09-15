@@ -199,6 +199,7 @@
         "id": "编号",
         "name": "名称",
         "preOrg": "上级机构",
+        "countryName": "地区信息",
         "order": "排序",
         "createName": "创建人",
         "createTime": "创建时间"
