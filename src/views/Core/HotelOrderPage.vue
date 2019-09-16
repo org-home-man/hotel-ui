@@ -472,25 +472,9 @@
                 } else {
                     this.filters.roomCode = this.roomId;
                 }
+                //调用查询
+                this.dateChangeCanculate();
 
-                console.log("roomCode",this.filters.roomCode);
-                this.$api.bizRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
-                    console.log("resPage",res)
-                    this.dataForm = Object.assign(this.dataForm,res.rows[0]);
-                    console.log("this.dataForm",this.dataForm)
-                    //查询图片
-                    if (res.rows[0].photo != null && res.rows[0].photo!='') {
-                        if(res.rows[0].photo){
-                            this.$api.user.showFile({'relationId':res.rows[0].photo}).then((res) =>{
-                                this.roomPhoto = res;
-                            })
-                        }
-                    }
-                    this.dateChangeCanculate();
-                    this.loading = false;
-                },() =>{
-                    this.loading = false;
-                })
             },
             submitForm: function () {
                 if (!this.agreeValue) {
@@ -576,7 +560,6 @@
                     return
                 }
                 this.dataForm.roomNum = 0;
-                this.filters.roomCode = this.roomId
                 this.$api.hotelRoom.findPage({...this.pageRequest,...this.filters}).then((res) => {
                     console.log("hotelRoom",res)
                     this.dataForm = Object.assign(this.dataForm,res.rows[0]);
@@ -585,40 +568,26 @@
                     } else {
                         this.dataForm.sRoomPrice = res.rows[0].sPrice
                     }
+                    if (res.rows[0].photo != null && res.rows[0].photo!='') {
+                        if(res.rows[0].photo){
+                            this.$api.user.showFile({'relationId':res.rows[0].photo}).then((res) =>{
+                                this.roomPhoto = res;
+                            })
+                        }
+                    }
                     //查询明细牌价
                     this.$api.bizPuchs.findByDate({...this.pageRequest,...this.filters}).then((res) => {
                         console.log("bizPuchs",res)
                         this.gridData = res;
+                        this.loading = false;
                     },() =>{
+                        this.loading = false;
                     })
                 },() =>{
-
                 })
 
 
             },
-            // returnHome:function() {
-            //     if(this.$route.query.recommondCode) {
-            //         this.mainTabs = this.mainTabs.filter(item => item.name !== this.mainTabsActiveName)
-            //         if (this.mainTabs.length >= 1) {
-            //             // 当前选中tab被删除
-            //             if (this.mainTabsActiveName === this.mainTabsActiveName) {
-            //                 this.$router.push({name: this.mainTabs[this.mainTabs.length - 1].name}, () => {
-            //                     this.mainTabsActiveName = this.$route.name
-            //                 })
-            //             }
-            //         }
-            //         this.$router.push("/info/hotelRoomQry")
-            //     } else {
-            //         this.commonDate = this.frameDate
-            //         if(this.$refs.dataForm){
-            //             this.$refs.dataForm.resetFields();
-            //         }
-            //         this.$emit('editDialog')
-            //     }
-            //
-            //
-            // },
             initData:function() {
                 if (!this.roomCd) {
                     if (!this.$route.query.recommondCode) {

@@ -282,6 +282,10 @@
     import {parseStrToDate,formatDate} from "@/utils/datetime"
     import HotelOrderPage from "@/views/Core/HotelOrderPage"
 
+    const invoice_start = new Date();
+    const invoice_end = new Date();
+    invoice_start.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 7);
+    invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 1);
     export default {
         name: "BizHotelOrder",
         components: {HotelOrderPage},
@@ -478,6 +482,12 @@
             }
         },
         mounted() {
+            var nowDate = new Date();
+            if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
+                invoice_start.setDate(invoice_start.getDate() + 1 );
+                invoice_end.setDate(invoice_end.getDate() + 1);
+            }
+            this.commonDate = [formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')];
             this.initData();
         },
 
