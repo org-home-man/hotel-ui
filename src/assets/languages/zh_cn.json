@@ -165,7 +165,8 @@
         "operErr": "操作不正确，结算价格为空，请重新录入",
         "priceErr": "请维护牌价信息，住宿日数与价格不匹配",
         "roomNumErr": "请输入预定房间数",
-        "operSelfErr": "不允许修改个人信息"
+        "operSelfErr": "不允许修改个人信息",
+        "agreement" : "请同意房间预定协议"
     },
     "user": {
         "id": "编号",
@@ -475,6 +476,7 @@
         "number": "数量",
         "type": "类型",
         "hotelStar": "星级",
-        "selectMore": "更多筛选条件"
+        "selectMore": "更多筛选条件",
+        "orderAgree": "订单协议"
     }
 }

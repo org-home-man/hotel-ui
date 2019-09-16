@@ -162,7 +162,8 @@
         "passwordErrorsNum": "the maximum number of times for wrong password",
         "lock": "account will be locked",
         "operErr": "operation error,settlement price is null,please operation again",
-        "operSelfErr": "can't modify by yourself!"
+        "operSelfErr": "can't modify by yourself!",
+        "agreement" : "请同意房间预定协议"
     },
     "user": {
         "id": "ID",
@@ -473,6 +474,7 @@
         "number": "number",
         "type": "type",
         "hotelStar": "hotel stars",
-        "selectMore": "More screening conditions"
+        "selectMore": "More screening conditions",
+        "orderAgree": "订单协议"
     }
 }

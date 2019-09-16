@@ -267,12 +267,33 @@
             </el-row>
         </el-form>
         <div slot="footer" class="form-footer" align="center">
-            <el-button icon="el-icon-s-order" type="primary" @click.native="submitForm" :loading="editLoading">
+            <el-button icon="el-icon-s-order" type="primary" @click.native="submitFormBefore" :loading="editLoading">
                 {{$t('action.makeAppointment')}}
             </el-button>
             <el-button  @click.native="tabsCloseCurrentHandle">{{$t('action.returnHome')}}
             </el-button>
         </div>
+
+        <el-dialog width="50%"  :title="$t('order.orderAgree')" :visible.sync="agreementDialog"  append-to-body>
+            <div align="center">
+                <h3>《协议内容如下》：</h3>
+                <p>
+                    1.酒店...
+                </p>
+                <el-checkbox v-model="agreeValue">同意该协议</el-checkbox>
+            </div>
+
+            <div slot="footer" class="form-footer" align="center">
+                <el-button icon="el-icon-s-order" type="primary" @click.native="submitForm" :loading="editLoading" :disabled="agreeButton">
+                    {{$t('action.makeAppointment')}}
+                </el-button>
+                <el-button  @click.native="closeAgreeDialog">{{$t('action.cancel')}}
+                </el-button>
+            </div>
+
+        </el-dialog>
+
+
     </div>
 </template>
 
@@ -290,6 +311,9 @@
             return {
                 loading:false,
                 editLoading:false,
+                agreementDialog:false,
+                agreeValue:false,
+                agreeButton:true,
                 able:false,
                 size: 'small',
                 gridData:[],
@@ -469,42 +493,51 @@
                 })
             },
             submitForm: function () {
+                if (!this.agreeValue) {
+                    this.$message({ message: this.$t('action.agreement'), type: 'warn' })
+                    return;
+                }
+                this.editLoading = true
+                this.loading = true
+                let params = Object.assign({}, this.dataForm,
+                    {'inDateStart':this.filters.inDateStart,
+                        'outDateEnd':this.filters.outDateEnd})
+                this.$api.hotelRoom.save(params).then((res) => {
+                    if(res.code == 200) {
+                        this.$message({ message: this.$t('action.success'), type: 'success' })
+                    } else {
+                        this.$message({message: this.$t('action.fail') , type: 'error'})
+                    }
+                    this.editLoading = false
+                    this.loading = true
+                    this.agreementDialog = false;
+                    this.agreeValue = false;
+                    this.$refs['dataForm'].resetFields()
+                    this.tabsCloseCurrentHandle();
+                }).catch(() => {
+                    this.loading = true
+                    this.editLoading = false
+                    this.agreementDialog = false;
+                    this.agreeValue = false;
+                })
+
+            },
+            submitFormBefore:function () {
                 if (!this.validFunction()) {
                     return;
                 }
                 this.$refs.dataForm.validate((valid) => {
-                    if (valid) {
-                        //弹出框提示用户需要同意协议
-
-                        this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
-                            type: 'warning',
-                            cancelButtonText: this.$t('action.cancel'),
-                            confirmButtonText: this.$t('action.confirm')
-                        }).then(() => {
-                            this.editLoading = true
-                            this.loading = true
-                            let params = Object.assign({}, this.dataForm,
-                                {'inDateStart':this.filters.inDateStart,
-                                    'outDateEnd':this.filters.outDateEnd})
-                            this.$api.hotelRoom.save(params).then((res) => {
-                                if(res.code == 200) {
-                                    this.$message({ message: this.$t('action.success'), type: 'success' })
-                                } else {
-                                    this.$message({message: this.$t('action.fail') , type: 'error'})
-                                }
-                                this.editLoading = false
-                                this.loading = true
-                                this.$refs['dataForm'].resetFields()
-                                this.tabsCloseCurrentHandle();
-                            })
-                        }).catch(() => {
-                            this.loading = true
-                            this.editLoading = false
-                        })
-                    } else {
-                        this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
-                    }
+                        if (valid) {
+                            //弹出框提示用户需要同意协议
+                            this.agreementDialog = true;
+                        } else {
+                            this.$message({message:this.$t('action.incompleteInfo'), type: 'error' })
+                        }
                 })
+            },
+            closeAgreeDialog: function() {
+                this.agreeValue = false;
+                this.agreementDialog = false;
             },
             localLanguageLoad: function () {
                 this.language = {lge: this.$i18n.locale}
@@ -726,6 +759,14 @@
                     }
                 }
                 this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+            },
+            agreeValue(n,o) {
+                console.log("....",n)
+                if (n) {
+                    this.agreeButton = false
+                } else {
+                    this.agreeButton=true
+                }
             },
             'dataForm.childNum'(){
                 var totlPrice = 0;
