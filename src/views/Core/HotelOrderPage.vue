@@ -462,6 +462,7 @@
                         endPrice:null,
                         roomNight:null
                 }
+                console.log(this.frameDate+this.roomCd)
                 this.commonDate = this.frameDate;
                 this.loading = true;
 
@@ -542,6 +543,7 @@
                     this.$router.push("/info/hotelRoomQry")
                 } else {
                     this.commonDate = this.frameDate
+                    console.log(this.$refs.dataForm);
                     if(this.$refs.dataForm){
                         this.$refs.dataForm.resetFields();
                     }
@@ -553,10 +555,12 @@
                 this.removeTabHandle(this.mainTabsActiveName)
             },
             dateChangeCanculate: function() {
+                console.log("+++++++",this.commonDate)
                 if(this.commonDate.length>1){
                     this.filters.inDateStart = this.commonDate[0];
                     this.filters.outDateEnd = this.commonDate[1];
                 } else {
+                    this.$message({ message: this.$t('action.invIsOutException'), type: 'warn' })
                     return
                 }
                 this.dataForm.roomNum = 0;
@@ -783,6 +787,9 @@
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
                 }
 
+            },
+            roomCd(n,o) {
+                this.findPage()
             }
         }
 

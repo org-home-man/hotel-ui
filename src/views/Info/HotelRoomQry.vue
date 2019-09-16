@@ -574,7 +574,7 @@
                 <!--<el-button  @click.native="editDialogVisible = false">{{$t('action.returnHome')}}-->
                 <!--</el-button>-->
             <!--</div>-->
-            <hotel-order-page :roomCd="roomCd" :frameDate="commonDate" @editDialog="editDialog"></hotel-order-page>
+            <hotel-order-page :roomCd="roomCd" :frameDate="commonDate" ref="orderPage" @editDialog="editDialog"></hotel-order-page>
 
         </el-dialog>
     </div>
@@ -849,7 +849,6 @@
                     this.$message({message: this.$t('action.OverSevenAfterExcetpion') , type: 'warn'})
                     return;
                 }
-                console.log("dataForm",this.$refs.dataForm);
                 if(this.$refs.dataForm){
                     this.$refs.dataForm.resetFields();
                 }
@@ -858,8 +857,7 @@
                     'inDateStart':this.filters.inDateStart,
                     'outDateEnd':this.filters.outDateEnd
                 });
-                this.dataForm = Object.assign(this.dataForm,obj,row)
-                this.roomCd = this.dataForm.roomCode;
+                this.roomCd = row.roomCode;
                 this.editDialogVisible = true;
                 // if(row.photo){
                 //     this.$api.user.showFile({'relationId':row.photo}).then((res) =>{

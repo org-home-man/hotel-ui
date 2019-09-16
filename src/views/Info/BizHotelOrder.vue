@@ -273,7 +273,7 @@
             <!--<el-button  @click.native="returnHome">{{$t('action.returnHome')}}-->
             <!--</el-button>-->
         <!--</div>-->
-        <hotel-order-page :roomCd="roomCd" :frameDate="commonDate"></hotel-order-page>
+        <hotel-order-page :roomCd="roomCd" :frameDate="commonDate" ></hotel-order-page>
     </div>
 </template>
 
@@ -440,6 +440,7 @@
                 }
                 this.$router.push("/info/hotelRoomQry")
 
+
             },
             initData:function() {
                 if (!this.$route.query.recommondCode) {
@@ -448,6 +449,13 @@
                     return;
                 }
                 this.roomCd = this.$route.query.recommondCode
+                var nowDate = new Date();
+                if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
+                    invoice_start.setDate(invoice_start.getDate() + 1 );
+                    invoice_end.setDate(invoice_end.getDate() + 1);
+                }
+                this.commonDate = [formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')];
+                console.log("commonDate",this.commonDate);
             },
         },
         created(){
@@ -462,6 +470,7 @@
                 this.provinceCode = res.PREFECTURE;
                 this.cityCode = res.DISTRICT;
             })
+
         },
         computed: {
             mainTabs: {
@@ -481,14 +490,11 @@
                 }
             }
         },
-        mounted() {
-            var nowDate = new Date();
-            if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
-                invoice_start.setDate(invoice_start.getDate() + 1 );
-                invoice_end.setDate(invoice_end.getDate() + 1);
-            }
-            this.commonDate = [formatDate(invoice_start,'yyyyMMdd'),formatDate(invoice_end,'yyyyMMdd')];
+        beforeMount() {
             this.initData();
+        },
+        mounted() {
+
         },
 
 
