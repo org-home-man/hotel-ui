@@ -774,7 +774,7 @@
                     disabledDate : (time) => {
                         var nowDate = new Date();
                         var day = 7;
-                        if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                        if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
                             day = 8;
                         }
                         return time.getTime() < Date.now() - 8.64e7 +  3600 * 1000 * 24 * day;
@@ -833,7 +833,7 @@
                 var y = date.getFullYear();
                 var m = date.getMonth() +1;
                 var d = date.getDate();
-                var t = y+"-"+m+"-"+d+" "+"18:30:00";
+                var t = y+"-"+m+"-"+d+" "+"17:30:00";
                 var tDate = new Date(Date.parse(t.replace(/-/g, "/")))
                 var inDateStart = this.filters.inDateStart;
                 inDateStart = inDateStart.substring(0,4)+"-"+inDateStart.substring(4,6)+"-"+inDateStart.substring(6)+ " "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
@@ -1041,7 +1041,7 @@
         // },
         mounted() {
             var nowDate = new Date();
-            if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+            if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
                 invoice_start.setDate(invoice_start.getDate() + 1 );
                 invoice_end.setDate(invoice_end.getDate() + 1);
             }

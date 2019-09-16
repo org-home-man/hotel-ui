@@ -339,7 +339,7 @@
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
                                 '&favorableprice='+reportData.favorableprice+'&present='+reportData.present+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
                                 '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
-                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight"
+                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum"
 
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -351,7 +351,7 @@
 
             <iframe :src="reportUrl+'/birt/frameset?__report=cutomers_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelFax='+reportData.hotelFax+'&breakType='+reportData.breaktype+
-                                '&adultNum='+reportData.adultNum+'&childNum='+reportData.childNum+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&personNum='+reportData.personNum+'&c12Num='+reportData.c12Num+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
                                 '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalTAmount='+reportData.totalTAmount+
                                 '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight"
 
@@ -408,7 +408,7 @@
                     {prop:"inDateStart", label:this.$t('hotel.inDateStart'), minWidth:60,width:170},
                     {prop:"outDateEnd", label:this.$t('hotel.outDateEnd'), minWidth:60,width:170},
                     {prop:"pName", label:this.$t('hotel.representName'), minWidth:60,width:190},
-                    {prop:"lastCrtTime", label:this.$t('hotel.lastCrtTime'), minWidth:60 ,width:170}
+                    {prop:"lastCrtTime", label:this.$t('hotel.lastCrtTime'), minWidth:60 ,width:190}
                 ],
                 pageRequest: { page: 1, rows: 8 },
                 pageResult: {},
@@ -668,6 +668,7 @@
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
+                this.reportData.personNum = this.reportData.adultNum+this.reportData.childNum
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelAddr == null ||  this.reportData.hotelAddr == "") {
                     this.reportData.hotelAddr = ' ';
@@ -707,11 +708,13 @@
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
+                this.reportData.personNum = this.reportData.adultNum+this.reportData.childNum
+                this.reportData.c12Num = this.reportData.children612+this.reportData.children46+this.reportData.children4
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelFax == null ||  this.reportData.hotelFax == "") {
                     this.reportData.hotelFax = ' ';
                 }
-                this.reportData.totalNum = this.reportData.adultNum + this.reportData.childNum;
+                this.reportData.totalNum = this.reportData.personNum + this.reportData.c12Num;
 
                 this.customDialogVisible = true;
 

@@ -379,7 +379,7 @@
                     disabledDate : (time) => {
                         var nowDate = new Date();
                         var day = 7;
-                        if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                        if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
                             day = 8;
                         }
                         return time.getTime() < Date.now() - 8.64e7 +  3600 * 1000 * 24 * day;

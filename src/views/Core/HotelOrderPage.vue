@@ -380,7 +380,7 @@
                     disabledDate : (time) => {
                         var nowDate = new Date();
                         var day = 7;
-                        if(nowDate.getHours()>18 || (nowDate.getHours()==18 && nowDate.getMinutes() >= 30)){
+                        if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
                             day = 8;
                         }
                         return time.getTime() < Date.now() - 8.64e7 +  3600 * 1000 * 24 * day;
@@ -474,6 +474,8 @@
                 }
                 this.$refs.dataForm.validate((valid) => {
                     if (valid) {
+                        //弹出框提示用户需要同意协议
+
                         this.$confirm(this.$t('action.sureSubmit'), this.$t('action.tips'), {
                             type: 'warning',
                             cancelButtonText: this.$t('action.cancel'),
@@ -627,7 +629,7 @@
                 var y = date.getFullYear();
                 var m = date.getMonth() +1;
                 var d = date.getDate();
-                var t = y+"-"+m+"-"+d+" "+"18:30:00";
+                var t = y+"-"+m+"-"+d+" "+"17:30:00";
                 var tDate = new Date(Date.parse(t.replace(/-/g, "/")))
                 var inDateStart = this.commonDate[0];
                 inDateStart = inDateStart.substring(0,4)+"-"+inDateStart.substring(4,6)+"-"+inDateStart.substring(6)+ " "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
