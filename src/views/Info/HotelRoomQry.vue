@@ -908,6 +908,7 @@
                 })
             },
             editDialog:function() {
+                this.roomCd = null;
                 this.editDialogVisible = false
             },
             localLanguageLoad: function () {

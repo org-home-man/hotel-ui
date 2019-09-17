@@ -317,7 +317,7 @@
                 able:false,
                 size: 'small',
                 gridData:[],
-                commonDate:null,
+                commonDate:[],
                 photoUrl: baseUrl + '/document/preview/',
                 roomId:null,
                 pageRequest: {page: 1, rows: 10},
@@ -462,7 +462,7 @@
                         endPrice:null,
                         roomNight:null
                 }
-                console.log(this.frameDate+this.roomCd)
+                // console.log(this.frameDate+this.roomCd)
                 this.commonDate = this.frameDate;
                 this.loading = true;
 
@@ -499,6 +499,7 @@
                     this.agreeValue = false;
                     this.$refs['dataForm'].resetFields()
                     this.tabsCloseCurrentHandle();
+
                 }).catch(() => {
                     this.loading = false
                     this.editLoading = false
@@ -587,6 +588,14 @@
                     },() =>{
                         this.loading = false;
                     })
+
+                    if (this.commonDate.length>1) {
+                        var n = this.commonDate;
+                        var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
+                        var oDate1 = Date.parse(startDate);
+                        var lastCrt = new Date(oDate1 - 3600 * 1000 * 24 * 7);
+                        this.dataForm.lastCrtTime = formatDate(lastCrt,'yyyyMMdd');
+                    }
                 },() =>{
                 })
 
@@ -734,7 +743,6 @@
                 this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
             },
             agreeValue(n,o) {
-                console.log("....",n)
                 if (n) {
                     this.agreeButton = false
                 } else {
@@ -789,7 +797,10 @@
 
             },
             roomCd(n,o) {
-                this.findPage()
+                if (n) {
+                    this.findPage()
+                }
+
             }
         }
 
