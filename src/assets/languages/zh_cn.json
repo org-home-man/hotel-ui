@@ -166,7 +166,8 @@
         "priceErr": "请维护牌价信息，住宿日数与价格不匹配",
         "roomNumErr": "请输入预定房间数",
         "operSelfErr": "不允许修改个人信息",
-        "agreement" : "请同意房间预定协议"
+        "agreement" : "请同意房间预定协议",
+        "pInvPriceErr": "库存不足或牌价信息需要管理员维护"
     },
     "user": {
         "id": "编号",

@@ -162,8 +162,11 @@
         "passwordErrorsNum": "the maximum number of times for wrong password",
         "lock": "account will be locked",
         "operErr": "operation error,settlement price is null,please operation again",
+        "priceErr": "Please maintain the price information. The number of days of stay does not match the price.",
+        "roomNumErr": "Please enter the number of rooms reserved ",
         "operSelfErr": "can't modify by yourself!",
-        "agreement" : "请同意房间预定协议"
+        "agreement" : "Please agree to the room reservation agreement. ",
+        "pInvPriceErr": "the stock is not enough or Price information needs to be maintained by administrators "
     },
     "user": {
         "id": "ID",

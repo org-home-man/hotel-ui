@@ -568,7 +568,7 @@
                     console.log("hotelRoom",res)
                     this.dataForm = Object.assign(this.dataForm,res.rows[0]);
                     if(res.rows[0] == null|| res.rows[0] == "") {
-                        this.$message({ message: this.$t('action.invIsOutException'), type: 'warn' })
+                        this.$message({ message: this.$t('action.pInvPriceErr'), type: 'warn' })
                     } else {
                         this.dataForm.sRoomPrice = res.rows[0].sPrice
                     }
