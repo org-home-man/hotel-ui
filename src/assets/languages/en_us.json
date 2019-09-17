@@ -222,7 +222,7 @@
         "configMng": "configuration manage",
         "infoMng": "hotel / room search",
         "hotelMng": "hotel manage",
-        "guestMng": "room / price / stock manage",
+        "guestMng": "room / price manage",
         "guestEdit": "room information manage",
         "guestPriceEdit": "price manage",
         "stockMng": "room stock manage",
