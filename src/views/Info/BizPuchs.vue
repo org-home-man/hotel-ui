@@ -361,7 +361,7 @@
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelFax='+reportData.hotelFax+'&breakType='+reportData.breaktype+
                                 '&personNum='+reportData.personNum+'&c12Num='+reportData.c12Num+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
                                 '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalTAmount='+reportData.totalTAmount+
-                                '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight"
+                                '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&hotelPhone='+reportData.hotelPhone+'&roomNight='+reportData.roomNight"
 
 
                     scrolling="auto" frameborder="0" class="frame" >
