@@ -494,13 +494,13 @@
                         this.$message({message: this.$t('action.fail') , type: 'error'})
                     }
                     this.editLoading = false
-                    this.loading = true
+                    this.loading = false
                     this.agreementDialog = false;
                     this.agreeValue = false;
                     this.$refs['dataForm'].resetFields()
                     this.tabsCloseCurrentHandle();
                 }).catch(() => {
-                    this.loading = true
+                    this.loading = false
                     this.editLoading = false
                     this.agreementDialog = false;
                     this.agreeValue = false;
