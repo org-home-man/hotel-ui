@@ -69,11 +69,11 @@
                                 <li style="display: flex">
                                     <label>{{$t('order.peopleNum')}}</label>
                                     <div style="width: 200px;">
-                                        <el-form-item label-width="140px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
+                                        <el-form-item label-width="180px" :label="$t('hotel.adultNum')" prop="adultNum" style="margin-bottom: 6px;margin-right: 0;">
                                             <el-input-number  v-model="dataForm.adultNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                         </el-form-item>
 
-                                        <el-form-item label-width="150px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
+                                        <el-form-item label-width="180px" :label="$t('hotel.childrenNum')" prop="childNum"  style="margin-bottom: 6px;margin-right: 0;">
                                             <el-input-number v-model="dataForm.childNum" controls-position="right" style="width: 120px"  :min="0" ></el-input-number>
                                         </el-form-item>
                                     </div>

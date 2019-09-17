@@ -131,7 +131,15 @@
                                     <li style="display: flex">
                                         <label>{{$t('order.peopleNum')}}</label>
                                         <div style="width: 200px;">
-                                            <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}    {{$t('hotel.childrenNum')}}  {{dataForm.childNum}}</span>
+                                            <ul class="hotel-base" >
+                                                <li>
+                                                    <span>{{$t('hotel.adultNum')}}  {{dataForm.adultNum}}</span>
+                                                </li>
+                                                <li>
+                                                    <span>{{$t('hotel.childrenNum')}}  {{dataForm.childNum}}</span>
+                                                </li>
+                                            </ul>
+
                                         </div>
                                     </li>
                                 </ul>
@@ -668,7 +676,7 @@
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
-                this.reportData.personNum = this.reportData.adultNum+this.reportData.childNum
+                this.reportData.personNum = this.reportData.adultNum
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelAddr == null ||  this.reportData.hotelAddr == "") {
                     this.reportData.hotelAddr = ' ';
@@ -708,8 +716,8 @@
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
-                this.reportData.personNum = this.reportData.adultNum+this.reportData.childNum
-                this.reportData.c12Num = this.reportData.children612+this.reportData.children46+this.reportData.children4
+                this.reportData.personNum = this.reportData.adultNum
+                this.reportData.c12Num = this.reportData.childNum
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelFax == null ||  this.reportData.hotelFax == "") {
                     this.reportData.hotelFax = ' ';
