@@ -464,9 +464,6 @@
                     birth: null,
                     phone: null,
                     emailAddress: null,
-                    aNum: null,
-                    bNum: null,
-                    cNum: null,
                     roomNum: null,
                     currency: null,
                     totalSAmount: null,
@@ -513,13 +510,14 @@
                     isbus: null,
                     istrafic: null,
                     isrestau: null,
-                    lowRoomPrice: null,
-                    highRoomPrice: 1000,
                     hotelname: null,
                     inDateStart: null,
                     outDateEnd: null,
                     adultNum: null,
                     childrenNum: null,
+                    children612: 0,
+                    children46: 0,
+                    children4: 0,
                     sPrice: null,
                     roomNight:null
                 },
@@ -820,18 +818,29 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
             },
-            'dataForm.childNum'(){
+            'dataForm.children612'(){
                 var totlPrice = 0;
-                if(this.gridData.length<=0) {
+                if(this.gridData.length<0) {
                     return
                 } else {
                     for (var i = 0 ; i<this.gridData.length ; i++) {
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+            },
+            'dataForm.children46'(){
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;

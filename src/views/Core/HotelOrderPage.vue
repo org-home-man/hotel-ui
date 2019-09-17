@@ -367,7 +367,7 @@
                     contactPhone: null,
                     emailAddress: null,
                     children612: 0,
-                    children416: 0,
+                    children46: 0,
                     children4: 0,
                     totalSAmount: null,
                     totalTAmount: null,
@@ -453,7 +453,7 @@
                         contactPhone: null,
                         emailAddress: null,
                         children612: 0,
-                        children416: 0,
+                        children46: 0,
                         children4: 0,
                         totalSAmount: null,
                         totalTAmount: null,
@@ -740,7 +740,7 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
             },
             agreeValue(n,o) {
                 if (n) {
@@ -749,7 +749,7 @@
                     this.agreeButton=true
                 }
             },
-            'dataForm.childNum'(){
+            'dataForm.children612'(){
                 var totlPrice = 0;
                 if(this.gridData.length<0) {
                     return
@@ -758,7 +758,18 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * totlPrice;
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+            },
+            'dataForm.children46'(){
+                var totlPrice = 0;
+                if(this.gridData.length<0) {
+                    return
+                } else {
+                    for (var i = 0 ; i<this.gridData.length ; i++) {
+                        totlPrice += this.gridData[i].tprice
+                    }
+                }
+                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
             },
             commonDate(n,o){
                 if (this.commonDate.length > 1) {
@@ -792,7 +803,7 @@
                     }
                     this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
 
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 }
 
             },
