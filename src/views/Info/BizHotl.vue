@@ -156,7 +156,7 @@
                 <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item  :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                            <el-input v-model.number="dataForm.roomStock"></el-input>
+                            <el-input readonly v-model.number="dataForm.roomStock" ></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" align="left">
@@ -424,7 +424,7 @@
                         {required: true, message: '请输入名称', trigger: 'blur'}
                     ],
                     roomStock: [
-                        {required: true, message: this.$t('action.pRoomStock'), trigger: 'blur'},
+                        // {required: true, message: this.$t('action.pRoomStock'), trigger: 'blur'},
                         {validator: checkNumber, trigger: 'blur'}
                     ],
                     scheduledays: [
@@ -471,7 +471,7 @@
                     creatTime: null,
                     lastUpdateBy: null,
                     lastUpdateTime: null,
-                    roomStock:null
+                    roomStock:0
 
                 },
                 //库存界面新增数据
@@ -576,7 +576,7 @@
                     creatTime: null,
                     lastUpdateBy: null,
                     lastUpdateTime: null,
-                    roomStock:null
+                    roomStock:0
                 }
                 /* 获取操作员 */
                 this.dataForm.creatCy = sessionStorage.getItem('user');
@@ -607,7 +607,9 @@
                             confirmButtonText: this.$t('action.confirm')
                         }).then(() => {
                             this.editLoading = true
+
                             let params = Object.assign({}, this.dataForm)
+                            params.roomStock = 0; //默认库存为零，因之前设计问题，为了不大改保留，因为至为 0
                             this.$api.bizHotl.save(params).then((res) => {
                                 if (res.code == 200) {
                                     this.$message({message: this.$t('action.success'), type: 'success'})
