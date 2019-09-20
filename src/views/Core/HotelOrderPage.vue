@@ -132,7 +132,8 @@
                                 <li>
                                     <label>{{$t('hotel.evenlive')}}</label>
                                     <input hidden v-model="dataForm.evenlive"/>
-                                    <span>{{dataForm.evenlive}}</span>
+                                    <span>{{dataForm.evenlive==0?"":dataForm.evenlive}}</span>
+
                                 </li>
                                 <li>
                                     <label>{{$t('hotel.present')}}</label>
@@ -252,7 +253,7 @@
                                 <el-input-number v-model="dataForm.children4" controls-position="right" style="width: 200px"  :min="0" ></el-input-number>
                             </el-form-item>
                             <el-form-item :label="$t('hotel.roomNum')" label-width="180px" prop="roomNum" >
-                                <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :max="dataForm.inventory" ></el-input-number>
+                                <el-input-number v-model="dataForm.roomNum" controls-position="right" style="width: 200px" :max="dataForm.inventory" :min="0"></el-input-number>
                             </el-form-item>
                             <el-form-item label-width="180px" :label="$t('hotel.reMark')" prop="reMark">
                                 <el-input type="textarea" style="width: 200px;letter-spacing: 1px" :rows="4" resize="none" v-model="dataForm.remark"></el-input>
