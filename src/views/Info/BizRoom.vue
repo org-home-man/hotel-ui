@@ -1154,6 +1154,9 @@
                 if (me.priceForm.roomType == "4") {
                     total = me.priceForm.sprice * 4
                 }
+                if (me.priceForm.roomType == "5") {
+                    total = me.priceForm.sprice * 1
+                }
                 if (isNaN(total)) {
                     total = '';
                 }

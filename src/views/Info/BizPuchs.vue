@@ -343,11 +343,12 @@
         <el-dialog :title="$t('sys.orderConfirmReport')" width="70%" :visible.sync="orderDialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="reportUrl+'/birt/frameset?__report=order_confirm_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
+            <iframe :src="reportUrl+'/birt/frameset?__report='+reportData.rpNm+'&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
                                 '&favorableprice='+reportData.favorableprice+'&present='+reportData.present+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
                                 '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
-                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum"
+                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.adultNum+'&childNum='+reportData.childNum+
+                                '&specialMatters='+reportData.specialMatters"
 
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -674,7 +675,7 @@
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
-                this.reportData.personNum = this.reportData.adultNum
+
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelAddr == null ||  this.reportData.hotelAddr == "") {
                     this.reportData.hotelAddr = ' ';
@@ -685,7 +686,26 @@
                 if (this.reportData.remark == null ||  this.reportData.remark == "") {
                     this.reportData.remark = ' ';
                 }
-
+                if (this.$i18n.locale=='zh_cn') {
+                    this.reportData.rpNm = "order_confirm_report_zh.rptdesign";
+                }  else {
+                    this.reportData.rpNm = "order_confirm_report_en.rptdesign";
+                }
+                if (this.reportData.confirmDate != "" && this.reportData.confirmDate != null) {
+                    var confirmDate = this.reportData.confirmDate;
+                    this.reportData.confirmDate = confirmDate.substr(0,4) + "年" +confirmDate.substr(4,2) +"月" +confirmDate.substr(6,2)+"日" ;
+                }
+                this.reportData.inDateStart = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" 至 "+
+                    eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+iDays+"晚";
+                this.reportData.personNum = "成人（12岁以上） "+this.reportData.adultNum+ " 人，儿童（未满12岁）"+this.reportData.childNum+" 人，房间数 "+this.roomNum+"间"
+                if (this.reportData.favorableprice !=null && this.reportData.favorableprice!="") {
+                    var favorableprice = this.reportData.favorableprice;
+                    this.reportData.favorableprice = "满足早割优惠条件，房价每天每室减 "+ favorableprice+" 元"
+                }
+                if (this.reportData.present!=null&& this.reportData.present!="") {
+                    var present = this.reportData.present;
+                    this.reportData.present = "满足获取连住馈赠条件，您将获得: " + present;
+                }
 
                 this.orderDialogVisible = true;
                 // this.$api.bizPuchs.exportExcel(data.params,{responseType: 'blob'}).then((res) => {
@@ -709,18 +729,33 @@
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
                 this.reportData = data.params;
-                this.reportData.roomNight = iDays;
+
                 this.reportData.hotelName = this.$i18n.locale=='zh_cn'?this.reportData.hotelCname:this.reportData.hotelEname;
                 console.log("this.breakType",this.breakType);
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
-                this.reportData.personNum = this.reportData.adultNum
-                this.reportData.c12Num = this.reportData.childNum
+
+
                 console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelFax == null ||  this.reportData.hotelFax == "") {
                     this.reportData.hotelFax = ' ';
                 }
+                if (this.reportData.confirmDate != "" && this.reportData.confirmDate != null) {
+                    var confirmDate = this.reportData.confirmDate;
+                    this.reportData.confirmDate = confirmDate.substr(0,4) + "年" +confirmDate.substr(4,2) +"月" +confirmDate.substr(6,2)+"日" ;
+                }
+                var totalPer = this.reportData.adultNum+this.reportData.childNum;
+                this.reportData.personNum = "大人 "+this.reportData.adultNum+ " 名   小人 "+this.reportData.childNum+" 名    合計 "+totalPer+"名"
+                this.reportData.c12Num = "(備考:  "+"6-12歳 "+ this.reportData.children612+" 名、4-6歳  "+this.reportData.children46+" 名、4歳以下  "+this.reportData.children4+"名";
+                this.reportData.inDateStart = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" ～ "+
+                    eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+iDays+"晚";
+
+                this.reportData.roomNight = iDays+ "泊 / "+ this.reportData.breaktype +" / " + this.reportData.roomNum + " 室;"
+
+
                 this.reportData.totalNum = this.reportData.personNum + this.reportData.c12Num;
+
+
 
                 this.customDialogVisible = true;
 
@@ -818,7 +853,11 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                if (this.dataForm.roomType != "5") {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                } else {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                }
             },
             'dataForm.children612'(){
                 var totlPrice = 0;
@@ -829,7 +868,11 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                if (this.dataForm.roomType != "5") {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                } else {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                }
             },
             'dataForm.children46'(){
                 var totlPrice = 0;
@@ -840,7 +883,11 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
-                this.dataForm.totalTAmount = this.dataForm.adultNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                if (this.dataForm.roomType != "5") {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                } else {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                }
             },
             commonDate(n,o){
                 var startDate = n[0].substr(0,4) + "/" + n[0].substr(4,2) +"/" +n[0].substr(6,2) ;
@@ -870,7 +917,11 @@
                 }
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
 
-                this.dataForm.totalTAmount = this.dataForm.roomNum==null?0:(this.dataForm.adultNum + this.dataForm.childNum) * tPrice;
+                if (this.dataForm.roomType != "5") {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                } else {
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: tPrice;
+                }
             }
         },
         mounted() {

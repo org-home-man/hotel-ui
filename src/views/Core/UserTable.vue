@@ -47,7 +47,7 @@
         <div class="toolbar" style="padding:10px;">
             <kt-button :label="$t('action.batchDelete')" :perms="permsDelete" :size="size" type="danger"
                        @click="handleBatchDelete()"
-                       :disabled="this.selections.length===0" style="float:left;"
+                       disabled style="float:left;"
                        v-if="showBatchDelete & showOperation"/>
             <el-pagination layout="prev, pager, next" @current-change="refreshPageRequest"
                            :current-page="pageRequest.page" :page-size="pageRequest.rows"
@@ -151,17 +151,17 @@
             },
             // 编辑
             handleEdit: function (index, row) {
-                if (row.name == getUser()) {
+                if (!this.valifunction(row)) {
                     this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
-                    return
+                    return;
                 }
                 this.$emit('handleEdit', {index: index, row: row})
             },
             // 删除
             handleDelete: function (index, row) {
-                if (row.name == getUser()) {
+                if (!this.valifunction(row)) {
                     this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
-                    return
+                    return;
                 }
                 this.delete(row.id)
             },
@@ -209,12 +209,26 @@
                 return '';
             },
             changeStatus(row) {
-                if (row.name == getUser()) {
+
+                if (!this.valifunction(row)) {
                     this.$message({message: this.$t('action.operSelfErr'), type: 'warn'})
-                    return
+                    return;
                 }
                 this.$emit('changeStatus', {row: row})
+            },
+            valifunction:function (row) {
+                if (getUser() != 'admin') {
+                    for (var i = 0 ; i< row.userRoles.length;i++) {
+                        var userRole = row.userRoles[i]
+                        if (userRole.roleId == 13) {
+                            return false;
+                        }
+                    }
+                }
+                return true
+
             }
+
         },
         mounted() {
             this.refreshPageRequest(1)
