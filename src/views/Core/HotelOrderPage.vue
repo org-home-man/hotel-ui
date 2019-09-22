@@ -121,39 +121,24 @@
 
                                 <li>
                                     <label>{{$t('hotel.scheduledays')}}</label>
-                                    <input hidden v-model="dataForm.scheduledays"/>
                                     <span>{{dataForm.scheduledays}}</span>
-                                    <span>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}</span>
+                                    <span>&nbsp;&nbsp;&nbsp;</span>
                                     <label>{{$t('hotel.favorableprice')}}</label>
-                                    <input hidden v-model="dataForm.favorableprice"/>
                                     <span>{{dataForm.favorableprice}}</span>
                                 </li>
                                 <li>
-
-                                </li>
-                                <li>
-                                    <label>{{$t('hotel.evenlive')}}</label>
-                                    <input hidden v-model="dataForm.evenlive"/>
+                                    <label >{{$t('hotel.evenlive')}}</label>
                                     <span>{{dataForm.evenlive==0?"":dataForm.evenlive}}</span>
 
-                                    <span>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}</span>
-
-                                    <label>{{$t('hotel.present')}}</label>
-                                    <input hidden v-model="dataForm.present"/>
-                                    <span>{{dataForm.present}}</span>
-
                                 </li>
-                                <!--<li>-->
-                                    <!--<label>{{$t('hotel.present')}}</label>-->
-                                    <!--<input hidden v-model="dataForm.present"/>-->
-                                    <!--<span>{{dataForm.present}}</span>-->
-                                <!--</li>-->
                                 <li>
+                                    <label width="60px">{{$t('hotel.present')}}</label>
+                                    <span>{{dataForm.present}}</span>
+                                </li>
+                                <li style="color: darkorange">
                                     <label>{{$t('hotel.SpecialMatters')}}</label>
                                     <input hidden v-model="dataForm.specialMatters"/>
-                                    <span>{{dataForm.specialMatters}}</span>
+                                    <span >{{dataForm.specialMatters}}</span>
                                 </li>
 
                             </ul>
@@ -761,10 +746,11 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
+                console.log("this.dataForm.roomType",this.dataForm.roomType);
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    this.dataForm.totalTAmount =  totlPrice;
                 }
             },
             agreeValue(n,o) {
@@ -784,9 +770,10 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    console.log(totlPrice)
+                    this.dataForm.totalTAmount =  totlPrice;
                 }
             },
             'dataForm.children46'(){
@@ -799,9 +786,9 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    this.dataForm.totalTAmount = totlPrice;
                 }
             },
             commonDate(n,o){
@@ -836,10 +823,12 @@
                     }
                     this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
                     if (this.dataForm.roomType != "5") {
-                        this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                        this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                     } else {
-                        this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: tPrice;
+                        console.log("tPrice",tPrice)
+                        this.dataForm.totalTAmount = tPrice;
                     }
+
 
                 }
 
