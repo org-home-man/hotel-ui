@@ -123,28 +123,39 @@
                                     <label>{{$t('hotel.scheduledays')}}</label>
                                     <input hidden v-model="dataForm.scheduledays"/>
                                     <span>{{dataForm.scheduledays}}</span>
-                                </li>
-                                <li>
+                                    <span>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}</span>
                                     <label>{{$t('hotel.favorableprice')}}</label>
                                     <input hidden v-model="dataForm.favorableprice"/>
                                     <span>{{dataForm.favorableprice}}</span>
+                                </li>
+                                <li>
+
                                 </li>
                                 <li>
                                     <label>{{$t('hotel.evenlive')}}</label>
                                     <input hidden v-model="dataForm.evenlive"/>
                                     <span>{{dataForm.evenlive==0?"":dataForm.evenlive}}</span>
 
-                                </li>
-                                <li>
+                                    <span>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}</span>
+
                                     <label>{{$t('hotel.present')}}</label>
                                     <input hidden v-model="dataForm.present"/>
                                     <span>{{dataForm.present}}</span>
+
                                 </li>
+                                <!--<li>-->
+                                    <!--<label>{{$t('hotel.present')}}</label>-->
+                                    <!--<input hidden v-model="dataForm.present"/>-->
+                                    <!--<span>{{dataForm.present}}</span>-->
+                                <!--</li>-->
                                 <li>
                                     <label>{{$t('hotel.SpecialMatters')}}</label>
                                     <input hidden v-model="dataForm.specialMatters"/>
                                     <span>{{dataForm.specialMatters}}</span>
                                 </li>
+
                             </ul>
                         </el-col>
                     </el-row>
