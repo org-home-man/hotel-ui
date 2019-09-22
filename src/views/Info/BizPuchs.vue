@@ -203,6 +203,11 @@
                                         <input hidden v-model="dataForm.present"/>
                                         <span>{{dataForm.present}}</span>
                                     </li>
+                                    <li>
+                                        <label>{{$t('hotel.SpecialMatters')}}</label>
+                                        <input hidden v-model="dataForm.specialMatters"/>
+                                        <span>{{dataForm.specialMatters}}</span>
+                                    </li>
                                 </ul>
                             </el-col>
                         </el-row>
@@ -250,7 +255,10 @@
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.isicebox==1">{{$t('hotel.isicebox')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.isiron==1">{{$t('hotel.isiron')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.isnosmk==1">{{$t('hotel.isnosmk')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isSeaviewRoom==1">{{$t('hotel.isSeaviewRoom')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isMountainViewRoom==1">{{$t('hotel.isMountainViewRoom')}}</el-tag>
+                                <el-tag style="margin: 6px" type="success" v-show="dataForm.isCityViewRoom==1">{{$t('hotel.isCityViewRoom')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.ishighrise==1">{{$t('hotel.ishighrise')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.ispark==1">{{$t('hotel.ispark')}}</el-tag>
                                 <el-tag style="margin: 6px" type="success" v-show="dataForm.isgym==1">{{$t('hotel.isgym')}}</el-tag>
@@ -519,6 +527,7 @@
                     children46: 0,
                     children4: 0,
                     sPrice: null,
+                    specialMatters: null,
                     roomNight:null
                 },
                 gridData:[],

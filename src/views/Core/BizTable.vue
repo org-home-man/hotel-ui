@@ -89,7 +89,10 @@
                         <el-tag type="success" v-show="props.row.isicebox==1">{{$t('hotel.isicebox')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isiron==1">{{$t('hotel.isiron')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isnosmk==1">{{$t('hotel.isnosmk')}}</el-tag>
-                        <el-tag type="success" v-show="props.row.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>
+                        <!--<el-tag type="success" v-show="props.row.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>-->
+                        <el-tag type="success" v-show="props.row.isSeaviewRoom==1">{{$t('hotel.isSeaviewRoom')}}</el-tag>
+                        <el-tag type="success" v-show="props.row.isMountainViewRoom==1">{{$t('hotel.isMountainViewRoom')}}</el-tag>
+                        <el-tag type="success" v-show="props.row.isCityViewRoom==1">{{$t('hotel.isCityViewRoom')}}</el-tag>
                         <el-tag type="success" v-show="props.row.ishighrise==1">{{$t('hotel.ishighrise')}}</el-tag>
                         <el-tag type="success" v-show="props.row.ispark==1">{{$t('hotel.ispark')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isgym==1">{{$t('hotel.isgym')}}</el-tag>
