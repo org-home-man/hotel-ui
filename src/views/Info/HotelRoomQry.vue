@@ -591,10 +591,7 @@
     import {baseUrl} from '@/utils/global'
     import {parseStrToDate,formatDate} from "@/utils/datetime"
 
-    const invoice_start = new Date();
-    const invoice_end = new Date();
-    invoice_start.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 7);
-    invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 1);
+
     export default {
         name: "HotelRoomQry",
         components: {
@@ -1042,6 +1039,10 @@
         //     },
         // },
         mounted() {
+            var invoice_start = new Date();
+            var invoice_end = new Date();
+            invoice_start.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 7);
+            invoice_end.setTime(invoice_start.getTime() + 3600 * 1000 * 24 * 1);
             var nowDate = new Date();
             if(nowDate.getHours()>17 || (nowDate.getHours()==17 && nowDate.getMinutes() >= 30)){
                 invoice_start.setDate(invoice_start.getDate() + 1 );

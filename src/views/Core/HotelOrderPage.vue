@@ -750,10 +750,11 @@
                         totlPrice += this.gridData[i].tprice
                     }
                 }
+                console.log("this.dataForm.roomType",this.dataForm.roomType);
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    this.dataForm.totalTAmount =  totlPrice;
                 }
             },
             agreeValue(n,o) {
@@ -773,9 +774,10 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    console.log(totlPrice)
+                    this.dataForm.totalTAmount =  totlPrice;
                 }
             },
             'dataForm.children46'(){
@@ -788,9 +790,9 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                 } else {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
+                    this.dataForm.totalTAmount = totlPrice;
                 }
             },
             commonDate(n,o){
@@ -825,10 +827,12 @@
                     }
                     this.dataForm.totalSAmount = this.dataForm.roomNum==0?0:this.dataForm.roomNum * totlPrice-num;
                     if (this.dataForm.roomType != "5") {
-                        this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                        this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                     } else {
-                        this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: tPrice;
+                        console.log("tPrice",tPrice)
+                        this.dataForm.totalTAmount = tPrice;
                     }
+
 
                 }
 
