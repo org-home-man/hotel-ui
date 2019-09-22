@@ -748,7 +748,7 @@
                 }
                 console.log("this.dataForm.roomType",this.dataForm.roomType);
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount =  totlPrice;
                 }
@@ -770,7 +770,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     console.log(totlPrice)
                     this.dataForm.totalTAmount =  totlPrice;
@@ -786,7 +786,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = totlPrice;
                 }
@@ -825,7 +825,6 @@
                     if (this.dataForm.roomType != "5") {
                         this.dataForm.totalTAmount = (this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
                     } else {
-                        console.log("tPrice",tPrice)
                         this.dataForm.totalTAmount = tPrice;
                     }
 

@@ -355,8 +355,8 @@
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
                                 '&favorableprice='+reportData.favorableprice+'&present='+reportData.present+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
                                 '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
-                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.adultNum+'&childNum='+reportData.childNum+
-                                '&specialMatters='+reportData.specialMatters"
+                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum+'&childNum='+reportData.childNum+
+                                '&specialMatters='+reportData.SpecialMatters"
 
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
@@ -669,6 +669,7 @@
             },
             //导出excel按钮
             exportExcel:function (data) {
+                this.reportData = {};
                 var sDate =data.params.inDateStart
                 var eDate = data.params.outDateEnd
                 var startDate = sDate.substr(0,4) + "/" +sDate.substr(4,2) +"/" +sDate.substr(6,2) ;
@@ -705,7 +706,7 @@
                     this.reportData.confirmDate = confirmDate.substr(0,4) + "年" +confirmDate.substr(4,2) +"月" +confirmDate.substr(6,2)+"日" ;
                 }
                 this.reportData.inDateStart = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" 至 "+
-                    eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+iDays+"晚";
+                    eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+this.reportData.roomNight+"晚";
                 this.reportData.personNum = "成人（12岁以上） "+this.reportData.adultNum+ " 人，儿童（未满12岁）"+this.reportData.childNum+" 人，房间数 "+this.roomNum+"间"
                 if (this.reportData.favorableprice !=null && this.reportData.favorableprice!="") {
                     var favorableprice = this.reportData.favorableprice;
@@ -727,6 +728,7 @@
             },
             //管理员导出excel按钮
             exportManagerExcel:function (data) {
+                this.reportData = {};
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
                 var sDate =data.params.inDateStart
                 var eDate = data.params.outDateEnd
@@ -863,7 +865,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
@@ -878,7 +880,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
@@ -893,7 +895,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
