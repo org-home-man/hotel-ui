@@ -17,32 +17,32 @@
                 </el-form>
 
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item :label="$t('hotel.passportNo')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.passportNo')" style="width: 17%">
                         <span>{{ props.row.passport }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.birthday')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.birthday')" style="width: 18%">
                         <span>{{ props.row.birth }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.contactPhone')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.contactPhone')" style="width: 18%">
                         <span>{{ props.row.phone }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.sRoomPrice')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.sRoomPrice')" style="width: 18%">
                         <span>{{ props.row.totalSAmount }}</span>
                     </el-form-item>
 
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item :label="$t('hotel.roomNum')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.roomNum')" style="width: 17%">
                         <span>{{ props.row.roomNum }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.adultNum')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.adultNum')" style="width: 18%">
                         <span>{{ props.row.adultNum }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.childrenNum')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.childrenNum')" style="width: 18%">
                         <span>{{ props.row.childNum }}</span>
                     </el-form-item>
 
-                    <el-form-item :label="$t('order.totalTAmount')" v-if="props.row.mark==1 || props.row.mark==''" style="width: 20%">
+                    <el-form-item :label="$t('order.totalTAmount')" v-if="props.row.mark==1 || props.row.mark==''" style="width: 18%">
                         <span>{{ props.row.totalTAmount }}</span>
                     </el-form-item>
                     <!--<el-form-item label="幼儿数" style="width: 24%">-->
@@ -50,27 +50,27 @@
                     <!--</el-form-item>-->
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item :label="$t('hotel.roomtype.roomtype')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.roomtype.roomtype')" style="width: 17%">
                         <span>{{resolveRoomTypeName(roomType,props.row.roomType)}}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.roomstyle.roomstyle')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.roomstyle.roomstyle')" style="width: 18%">
                         <span>{{resolveRoomTypeName(roomStyle,props.row.roomStyle)}}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.bedtype.bedtype')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.bedtype.bedtype')" style="width: 18%">
                         <span>{{resolveRoomTypeName(bedType,props.row.bedType)}}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.breaktype.breaktype')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.breaktype.breaktype')" style="width: 18%">
                         <span>{{resolveRoomTypeName(breakType,props.row.breakType)}}</span>
                     </el-form-item>
                 </el-form>
                 <el-form label-position="left" inline  class="demo-table-expand">
-                    <el-form-item :label="$t('hotel.children04')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.children04')" style="width: 17%">
                         <span>{{ props.row.children4 }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.children46')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.children46')" style="width: 18%">
                         <span>{{ props.row.children46 }}</span>
                     </el-form-item>
-                    <el-form-item :label="$t('hotel.children612')" style="width: 20%">
+                    <el-form-item :label="$t('hotel.children612')" style="width: 18%">
                         <span>{{ props.row.children612 }}</span>
                     </el-form-item>
                     <el-form-item :label="$t('hotel.reMark')" style="width: 100%">
@@ -89,7 +89,10 @@
                         <el-tag type="success" v-show="props.row.isicebox==1">{{$t('hotel.isicebox')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isiron==1">{{$t('hotel.isiron')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isnosmk==1">{{$t('hotel.isnosmk')}}</el-tag>
-                        <el-tag type="success" v-show="props.row.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>
+                        <!--<el-tag type="success" v-show="props.row.islandscape==1">{{$t('hotel.islandscape')}}</el-tag>-->
+                        <el-tag type="success" v-show="props.row.isSeaviewRoom==1">{{$t('hotel.isSeaviewRoom')}}</el-tag>
+                        <el-tag type="success" v-show="props.row.isMountainViewRoom==1">{{$t('hotel.isMountainViewRoom')}}</el-tag>
+                        <el-tag type="success" v-show="props.row.isCityViewRoom==1">{{$t('hotel.isCityViewRoom')}}</el-tag>
                         <el-tag type="success" v-show="props.row.ishighrise==1">{{$t('hotel.ishighrise')}}</el-tag>
                         <el-tag type="success" v-show="props.row.ispark==1">{{$t('hotel.ispark')}}</el-tag>
                         <el-tag type="success" v-show="props.row.isgym==1">{{$t('hotel.isgym')}}</el-tag>

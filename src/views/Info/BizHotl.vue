@@ -135,6 +135,12 @@
                         </el-form-item>
                     </el-col>
 
+                    <el-col :span="8" align="left">
+                        <el-form-item  :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
+                            <el-input readonly v-model.number="dataForm.roomStock" ></el-input>
+                        </el-form-item>
+                    </el-col>
+
                 </el-row>
                 <el-row>
                     <el-col :span="8" align="left">
@@ -154,11 +160,11 @@
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="8" align="left">
-                        <el-form-item  :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                            <el-input readonly v-model.number="dataForm.roomStock" ></el-input>
-                        </el-form-item>
-                    </el-col>
+                    <!--<el-col :span="8" align="left">-->
+                        <!--<el-form-item  :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">-->
+                            <!--<el-input readonly v-model.number="dataForm.roomStock" ></el-input>-->
+                        <!--</el-form-item>-->
+                    <!--</el-col>-->
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.scheduledays')" prop="scheduledays" auto-complete="off">
                             <el-input v-model.number="dataForm.scheduledays"></el-input>
@@ -169,8 +175,6 @@
                             <el-input v-model="dataForm.favorableprice"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
                             <el-input v-model.number="dataForm.evenlive"></el-input>
@@ -184,6 +188,12 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-col :span="24" align="left">
+                    <el-form-item :label="$t('hotel.SpecialMatters')" prop="specialMatters" auto-complete="off">
+                        <el-input style="width: 640px;" v-model="dataForm.specialMatters" type="textarea"></el-input>
+                    </el-form-item>
+                </el-col>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -461,6 +471,7 @@
                     favorableprice: null,
                     evenlive: null,
                     present: null,
+                    specialMatters: null,
                     hotelCname: null,
                     hotelEname: null,
                     hotelAddr: null,
@@ -568,6 +579,7 @@
                     favorableprice: null,
                     evenlive: null,
                     present: null,
+                    specialMatters: null,
                     hotelAddr: null,
                     hotelPhone: null,
                     hotelFax: null,

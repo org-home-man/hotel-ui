@@ -234,9 +234,21 @@
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isnosmk')"
                                          v-model="dataForm.isnosmk" border></el-checkbox>
                         </el-form-item>
+                        <!--<el-form-item>-->
+                            <!--<el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"-->
+                                         <!--v-model="dataForm.islandscape" border></el-checkbox>-->
+                        <!--</el-form-item>-->
                         <el-form-item>
-                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.islandscape')"
-                                         v-model="dataForm.islandscape" border></el-checkbox>
+                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isSeaviewRoom')"
+                                         v-model="dataForm.isSeaviewRoom" border></el-checkbox>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isMountainViewRoom')"
+                                         v-model="dataForm.isMountainViewRoom" border></el-checkbox>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-checkbox true-label="1" false-label="2" :label="$t('hotel.isCityViewRoom')"
+                                         v-model="dataForm.isCityViewRoom" border></el-checkbox>
                         </el-form-item>
                         <el-form-item>
                             <el-checkbox true-label="1" false-label="2" :label="$t('hotel.ishighrise')"
@@ -658,6 +670,9 @@
                     isiron: null,
                     isnosmk: null,
                     islandscape: null,
+                    isSeaviewRoom: null,
+                    isMountainViewRoom: null,
+                    isCityViewRoom: null,
                     ishighrise: null,
                     ispark: null,
                     isgym: null,
@@ -811,6 +826,9 @@
                     isiron: null,
                     isnosmk: null,
                     islandscape: null,
+                    isSeaviewRoom: null,
+                    isMountainViewRoom: null,
+                    isCityViewRoom: null,
                     ishighrise: null,
                     ispark: null,
                     isgym: null,
