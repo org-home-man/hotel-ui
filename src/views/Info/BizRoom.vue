@@ -1,40 +1,58 @@
 <template>
     <div class="container room_container">
         <!--工具栏-->
-        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
             <el-form :inline="true" :model="filters" :size="size" ref="filters" align="left">
-                <el-form-item prop="hotelCode">
-                    <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item prop="hotelCode">
+                            <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
+                        </el-form-item>
 
-                <el-form-item prop="hotelName">
-                    <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
-                </el-form-item>
+                        <el-form-item prop="hotelName">
+                            <el-input v-model="filters.hotelName" clearable :placeholder="$t('hotel.hotelname')"></el-input>
+                        </el-form-item>
 
-                <el-form-item prop="roomType">
-                    <el-select v-model="filters.roomType" clearable :placeholder="$t('hotel.roomtype.roomtype')">
-                        <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
-                                   :value="rt.code"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item prop="bedType">
-                    <el-select v-model="filters.bedType" clearable :placeholder="$t('hotel.bedtype.bedtype')">
-                        <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
-                                   :value="bt.code"></el-option>
-                    </el-select>
-                </el-form-item>
+                        <el-form-item prop="roomType">
+                            <el-select v-model="filters.roomType" clearable :placeholder="$t('hotel.roomtype.roomtype')">
+                                <el-option v-for="rt in paraConfig.ROOM_TYPE" :key="rt.code" :label="rt.name"
+                                           :value="rt.code"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item prop="bedType">
+                            <el-select v-model="filters.bedType" clearable :placeholder="$t('hotel.bedtype.bedtype')">
+                                <el-option v-for="bt in paraConfig.BED_TYPE" :key="bt.code" :label="bt.name"
+                                           :value="bt.code"></el-option>
+                            </el-select>
+                        </el-form-item>
 
-                <el-form-item prop="breakType">
-                    <el-select v-model="filters.breakType" clearable :placeholder="$t('hotel.breaktype.breaktype')">
-                        <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
-                                   :value="bk.code"></el-option>
-                    </el-select>
-                </el-form-item>
+                        <el-form-item prop="breakType">
+                            <el-select v-model="filters.breakType" clearable :placeholder="$t('hotel.breaktype.breaktype')">
+                                <el-option v-for="bk in paraConfig.BREAK_TYPE" :key="bk.code" :label="bk.name"
+                                           :value="bk.code"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item prop="inventory">
+                            <el-input v-model="filters.inventory" clearable :placeholder="$t('hotel.inventory')"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary"
+                                       @click="findPage(null)"/>
+                        </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd"/>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
+                        </el-form-item>
+                    </el-col>
 
+                </el-row>
 
-                <el-form-item prop="inventory">
-                    <el-input v-model="filters.inventory" clearable :placeholder="$t('hotel.inventory')"></el-input>
-                </el-form-item>
 
                 <!--<el-form-item>-->
                 <!--<el-select v-model="filters.roomStyle" :placeholder="$t('hotel.roomstyle.roomstyle')">-->
@@ -42,17 +60,7 @@
 
                 <!--</el-select>-->
                 <!--</el-form-item>-->
-                <el-form-item>
-                    <kt-button :label="$t('action.search')" perms="sys:bizRoom:view" type="primary"
-                               @click="findPage(null)"/>
-                </el-form-item>
-                <el-form-item>
-                    <kt-button :label="$t('action.add')" perms="sys:bizRoom:add" type="primary" @click="handleAdd"/>
-                </el-form-item>
 
-                <el-form-item>
-                    <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
-                </el-form-item>
 
 
             </el-form>

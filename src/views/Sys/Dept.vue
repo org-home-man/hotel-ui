@@ -1,17 +1,22 @@
 <template>
   <div class="page-container">
 	<!--工具栏-->
-	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
+	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
 		<el-form :inline="true" :model="filters" :size="size">
 			<!--<el-form-item>-->
 				<!--<el-input v-model="filters.name" :placeholder="$t('dept.name')"></el-input>-->
 			<!--</el-form-item>-->
-			<el-form-item>
-				<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:dept:view" type="primary" @click="findTreeData(null)"/>
-			</el-form-item>
-			<el-form-item>
-				<kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:dept:add" type="primary" @click="handleAdd"/>
-			</el-form-item>
+            <el-row>
+                <el-col :span="24" align="left">
+                    <el-form-item>
+                        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:dept:view" type="primary" @click="findTreeData(null)"/>
+                    </el-form-item>
+                    <el-form-item>
+                        <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:dept:add" type="primary" @click="handleAdd"/>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
 		</el-form>
 	</div>
 	<!--表格树内容栏-->

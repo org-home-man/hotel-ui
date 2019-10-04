@@ -1,36 +1,40 @@
 <template>
   <div class="page-container">
     <!--工具栏-->
-    <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
+    <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
       <el-form :inline="true" :model="filters" :size="size">
-        <el-form-item>
-          <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="filters.id" :placeholder="$t('user.id')"></el-input>
-        </el-form-item>
-        <!-- <el-form-item>
-          <el-select v-model="filters.userRoles" multiple :placeholder="$t('user.role')" style="width: 100%;">
-            <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-       <el-form-item>
-          <el-input v-model="filters.region" :placeholder="$t('user.region')"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="filters.org" :placeholder="$t('user.org')"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="filters.status" :placeholder="$t('user.status')"></el-input>
-        </el-form-item>-->
-        <el-form-item>
-          <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:user:view" type="primary"
-                     @click="findPage(null)"/>
-        </el-form-item>
-        <el-form-item>
-          <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary"
-                     @click="handleAdd"/>
-        </el-form-item>
+          <el-row>
+              <el-col :span="24" align="left">
+                  <el-form-item>
+                      <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                      <el-input v-model="filters.id" :placeholder="$t('user.id')"></el-input>
+                  </el-form-item>
+                  <!-- <el-form-item>
+                    <el-select v-model="filters.userRoles" multiple :placeholder="$t('user.role')" style="width: 100%;">
+                      <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
+                    </el-select>
+                  </el-form-item>
+                 <el-form-item>
+                    <el-input v-model="filters.region" :placeholder="$t('user.region')"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-input v-model="filters.org" :placeholder="$t('user.org')"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-input v-model="filters.status" :placeholder="$t('user.status')"></el-input>
+                  </el-form-item>-->
+                  <el-form-item>
+                      <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:user:view" type="primary"
+                                 @click="findPage(null)"/>
+                  </el-form-item>
+                  <el-form-item>
+                      <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary"
+                                 @click="handleAdd"/>
+                  </el-form-item>
+              </el-col>
+          </el-row>
       </el-form>
     </div>
     <div class="toolbar" style="float:right;padding-top:10px;padding-right:15px;">

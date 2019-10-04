@@ -1,7 +1,7 @@
 <template>
     <div class="container" style="width:99%">
         <!--工具栏-->
-        <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
             <el-form :inline="true" :model="filters" :size="size">
                 <el-row>
                     <el-col :span="24" align="left">
@@ -25,9 +25,15 @@
                             </el-select>
                         </el-form-item>
 
+
+                    </el-col>
+                </el-row>
+
+                <el-row>
+
+                    <el-col :span="24" align="left">
                         <el-form-item>
-                            <el-input v-model="filters.hotelname" clearable :placeholder="$t('hotel.hotelname')"
-                                      style="width:300px;"></el-input>
+                            <el-input v-model="filters.hotelname" clearable :placeholder="$t('hotel.hotelname')"></el-input>
                         </el-form-item>
 
                         <el-form-item>

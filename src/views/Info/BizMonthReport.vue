@@ -1,10 +1,10 @@
 <template>
     <div class="container" style="width:99%">
         <!--工具栏-->
-        <div class="toolbar query_room_container" style="padding-top:30px;padding-left:20px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
             <el-form :inline="true" :model="filters" :size="size" ref="filters">
                 <el-row>
-                    <el-col :span="24">
+                    <el-col :span="24" align="left">
                         <el-form-item prop="reportId">
                             <el-input v-model="filters.reportId" clearable :placeholder="$t('hotel.reportId')"></el-input>
                         </el-form-item>

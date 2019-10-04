@@ -1,65 +1,75 @@
 <template>
     <div class="page-container">
         <!--工具栏-->
-        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px;">
+        <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
             <el-form :inline="true" :model="filters" :size="size" align="left">
-                <el-form-item @mouseleave.native="serch_result_user = false">
-                    <el-input v-model="filters.createName" @input="inputUserFunc" clearable :placeholder="$t('user.name')"></el-input>
+                <el-row>
+                    <el-col :span="24">
+                            <el-form-item @mouseleave.native="serch_result_user = false">
+                                <el-input v-model="filters.createName" @input="inputUserFunc" clearable :placeholder="$t('user.name')"></el-input>
+                                <div class="serch_result" v-show="serch_result_user" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
+                                    <li v-for="item in user_result" class="serch-list" @click="filters.createName = item.name">
+                                        {{ item.name }}
+                                    </li>
+                                </div>
+                            </el-form-item>
+                            <el-form-item @mouseleave.native="serch_result_hotel = false">
+                                <el-input v-model="filters.hotelName" @input="inputHotelFunc" clearable :placeholder="$t('hotel.hotelname')"></el-input>
+                                <div class="serch_result" v-show="serch_result_hotel" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
+                                    <li v-for="item in hotel_result" class="serch-list" @click="hotelClick(item)">
+                                        {{ $i18n.locale === "zh_cn"?item.hotelCname:item.hotelEname }}
+                                    </li>
+                                </div>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-input v-model="filters.orderCode" clearable :placeholder="$t('order.orderCode')"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <!--<el-select v-model="filters.roomSthandleConfirmatus" clearable :placeholder="$t('order.roomStatus')"-->
+                                <!--style="width: 200px;">-->
+                                <!--<el-option v-for="item in states" :key="item.paraCode"-->
+                                <!--:label="$t(item.paraCode)" :value="item.paraValue1">-->
+                                <!--</el-option>-->
+                                <!--</el-select>-->
+                                <el-select v-model="filters.roomStatus" clearable filterable
+                                           :placeholder="$t('order.roomStatus')">
+                                    <el-option v-for="rt in roomStatus" :key="rt.code"
+                                               :label="rt.name" :value="rt.code"></el-option>
+                                </el-select>
+                            </el-form-item>
 
-                    <div class="serch_result" v-show="serch_result_user" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
-                        <li v-for="item in user_result" class="serch-list" @click="filters.createName = item.name">
-                            {{ item.name }}
-                        </li>
-                    </div>
-                </el-form-item>
-                <el-form-item @mouseleave.native="serch_result_hotel = false">
-                    <el-input v-model="filters.hotelName" @input="inputHotelFunc" clearable :placeholder="$t('hotel.hotelname')"></el-input>
-                    <div class="serch_result" v-show="serch_result_hotel" style="position: absolute; z-index: 100;width: 100%;box-sizing: border-box; background: #fff; list-style: none; border: 1px solid #DCDFE6; border-top: 0;">
-                        <li v-for="item in hotel_result" class="serch-list" @click="hotelClick(item)">
-                            {{ $i18n.locale === "zh_cn"?item.hotelCname:item.hotelEname }}
-                        </li>
-                    </div>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="filters.orderCode" clearable :placeholder="$t('order.orderCode')"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <!--<el-select v-model="filters.roomSthandleConfirmatus" clearable :placeholder="$t('order.roomStatus')"-->
-                               <!--style="width: 200px;">-->
-                        <!--<el-option v-for="item in states" :key="item.paraCode"-->
-                                   <!--:label="$t(item.paraCode)" :value="item.paraValue1">-->
-                        <!--</el-option>-->
-                    <!--</el-select>-->
-                    <el-select v-model="filters.roomStatus" clearable filterable
-                               :placeholder="$t('order.roomStatus')">
-                        <el-option v-for="rt in roomStatus" :key="rt.code"
-                                   :label="rt.name" :value="rt.code"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-date-picker
-                        v-model="filters.createTimes"
-                        type="daterange"
-                        :range-separator="$t('hotel.dateSep')"
-                        value-format="yyyyMMdd"
-                        :start-placeholder="$t('hotel.creatTime')"
-                        :end-placeholder="$t('hotel.creatTime')">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                    <el-date-picker
-                        v-model="filters.confirmTimes"
-                        type="daterange"
-                        :range-separator="$t('hotel.dateSep')"
-                        value-format="yyyyMMdd"
-                        :start-placeholder="$t('hotel.lastCrtTime')"
-                        :end-placeholder="$t('hotel.lastCrtTime')" >
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                    <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary"
-                               @click="findPage(null)"/>
-                </el-form-item>
+                    </el-col>
+
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item>
+                            <el-date-picker
+                                v-model="filters.createTimes"
+                                type="daterange"
+                                :range-separator="$t('hotel.dateSep')"
+                                value-format="yyyyMMdd"
+                                :start-placeholder="$t('hotel.creatTime')"
+                                :end-placeholder="$t('hotel.creatTime')">
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-date-picker
+                                v-model="filters.confirmTimes"
+                                type="daterange"
+                                :range-separator="$t('hotel.dateSep')"
+                                value-format="yyyyMMdd"
+                                :start-placeholder="$t('hotel.lastCrtTime')"
+                                :end-placeholder="$t('hotel.lastCrtTime')" >
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-form-item>
+                            <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary"
+                                       @click="findPage(null)"/>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
             </el-form>
         </div>
         <!--表格内容栏-->
@@ -979,5 +989,9 @@
     .frame {
         width: 100%;
         height: 45rem;
+    }
+    .query_room_container {
+        padding-top: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
 </style>

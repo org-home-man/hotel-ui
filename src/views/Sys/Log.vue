@@ -1,15 +1,20 @@
 <template>
   <div class="page-container">
 	<!--工具栏-->
-	<div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
-		<el-form :inline="true" :model="filters" :size="size">
-			<el-form-item>
-				<el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:log:view" type="primary" @click="findPage(null)"/>
-			</el-form-item>
-		</el-form>
+	<div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
+        <el-row>
+            <el-col :span="24" align="left">
+                <el-form :inline="true" :model="filters" :size="size">
+                    <el-form-item>
+                        <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:log:view" type="primary" @click="findPage(null)"/>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+
 	</div>
 	<!--表格内容栏-->
 	<kt-table
@@ -76,5 +81,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .query_room_container{
+        padding-top:10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    }
 </style>
