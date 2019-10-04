@@ -351,11 +351,11 @@
         <el-dialog :title="$t('sys.orderConfirmReport')" width="70%" :visible.sync="orderDialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="reportUrl+'/birt/frameset?__report='+reportData.rpNm+'&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
+            <iframe :src="reportUrl+'/birt/frameset?__report='+reportData.rpNm+'&orderCode='+reportData.orderCode+'&confirmDate='+reportData.confirmDate+
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
-                                '&favorableprice='+reportData.favorableprice+'&present='+reportData.present+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
-                                '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
-                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum+'&childNum='+reportData.childNum+
+                                '&favorableprice='+reportData.favorableprice1+'&present='+reportData.present1+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&inDateStart='+reportData.inDateStart1+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
+                                '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum1+'&childNum='+reportData.childNum+
                                 '&specialMatters='+reportData.SpecialMatters"
 
                     scrolling="auto" frameborder="0" class="frame" >
@@ -366,11 +366,11 @@
         <el-dialog :title="$t('sys.hotelRequestReport')" width="70%" :visible.sync="customDialogVisible"
                    :close-on-click-modal="false">
 
-            <iframe :src="reportUrl+'/birt/frameset?__report=cutomers_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.lastCrtTime+
+            <iframe :src="reportUrl+'/birt/frameset?__report=cutomers_report.rptdesign&orderCode='+reportData.orderCode+'&confirmDate='+reportData.confirmDate+
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelFax='+reportData.hotelFax+'&breakType='+reportData.breaktype+
-                                '&personNum='+reportData.personNum+'&c12Num='+reportData.c12Num+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
-                                '&inDateStart='+reportData.inDateStart+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalTAmount='+reportData.totalTAmount+
-                                '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&hotelPhone='+reportData.hotelPhone+'&roomNight='+reportData.roomNight"
+                                '&personNum='+reportData.personNum1+'&c12Num='+reportData.c12Num1+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&inDateStart='+reportData.inDateStart1+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalTAmount='+reportData.totalTAmount+
+                                '&totalNum='+reportData.totalNum+'&pName='+reportData.pName+'&hotelPhone='+reportData.hotelPhone+'&roomNight='+reportData.roomNight1"
 
 
                     scrolling="auto" frameborder="0" class="frame" >
@@ -679,14 +679,14 @@
                 oDate2 = Date.parse(endDate);
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                this.reportData = data.params;
+                var report = data.params;
+                this.reportData = report
                 this.reportData.roomNight = iDays;
                 this.reportData.hotelName = this.$i18n.locale=='zh_cn'?this.reportData.hotelCname:this.reportData.hotelEname;
-                console.log("this.breakType",this.breakType);
+
                 this.reportData.breaktype =  this.getKeyValue(this.reportData.breakType,this.breakType);
                 this.reportData.roomtype = this.getKeyValue(this.reportData.roomType,this.roomType);
 
-                console.log("this.reportData",this.reportData);
                 if (this.reportData.hotelAddr == null ||  this.reportData.hotelAddr == "") {
                     this.reportData.hotelAddr = ' ';
                 }
@@ -701,20 +701,20 @@
                 }  else {
                     this.reportData.rpNm = "order_confirm_report_en.rptdesign";
                 }
-                if (this.reportData.confirmDate != "" && this.reportData.confirmDate != null) {
-                    var confirmDate = this.reportData.confirmDate;
+                if (this.reportData.lastCrtTime != "" & this.reportData.lastCrtTime != null) {
+                    var confirmDate = this.reportData.lastCrtTime;
                     this.reportData.confirmDate = confirmDate.substr(0,4) + "年" +confirmDate.substr(4,2) +"月" +confirmDate.substr(6,2)+"日" ;
                 }
-                this.reportData.inDateStart = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" 至 "+
+                this.reportData.inDateStart1 = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" 至 "+
                     eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+this.reportData.roomNight+"晚";
-                this.reportData.personNum = "成人（12岁以上） "+this.reportData.adultNum+ " 人，儿童（未满12岁）"+this.reportData.childNum+" 人，房间数 "+this.roomNum+"间"
-                if (this.reportData.favorableprice !=null && this.reportData.favorableprice!="") {
+                this.reportData.personNum1 = "成人（12岁以上） "+this.reportData.adultNum+ " 人，儿童（未满12岁）"+this.reportData.childNum+" 人，房间数 "+this.reportData.roomNum+"间"
+                if (this.reportData.favorableprice !=null & this.reportData.favorableprice!="") {
                     var favorableprice = this.reportData.favorableprice;
-                    this.reportData.favorableprice = "满足早割优惠条件，房价每天每室减 "+ favorableprice+" 元"
+                    this.reportData.favorableprice1 = "满足早割优惠条件，房价每天每室减 "+ favorableprice+" 元"
                 }
-                if (this.reportData.present!=null&& this.reportData.present!="") {
+                if (this.reportData.present!=null& this.reportData.present!="") {
                     var present = this.reportData.present;
-                    this.reportData.present = "满足获取连住馈赠条件，您将获得: " + present;
+                    this.reportData.present1 = "满足获取连住馈赠条件，您将获得: " + present;
                 }
 
                 this.orderDialogVisible = true;
@@ -739,7 +739,8 @@
                 oDate2 = Date.parse(endDate);
                 iDays = parseInt(Math.abs(oDate1 -oDate2)/1000/60/60/24); //把相差的毫秒数转换为天数
                 data.params.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                this.reportData = data.params;
+                var report = data.params;
+                this.reportData = report;
 
                 this.reportData.hotelName = this.$i18n.locale=='zh_cn'?this.reportData.hotelCname:this.reportData.hotelEname;
                 console.log("this.breakType",this.breakType);
@@ -751,17 +752,17 @@
                 if (this.reportData.hotelFax == null ||  this.reportData.hotelFax == "") {
                     this.reportData.hotelFax = ' ';
                 }
-                if (this.reportData.confirmDate != "" && this.reportData.confirmDate != null) {
-                    var confirmDate = this.reportData.confirmDate;
+                if (this.reportData.lastCrtTime != "" && this.reportData.lastCrtTime != null) {
+                    var confirmDate = this.reportData.lastCrtTime;
                     this.reportData.confirmDate = confirmDate.substr(0,4) + "年" +confirmDate.substr(4,2) +"月" +confirmDate.substr(6,2)+"日" ;
                 }
                 var totalPer = this.reportData.adultNum+this.reportData.childNum;
-                this.reportData.personNum = "大人 "+this.reportData.adultNum+ " 名   小人 "+this.reportData.childNum+" 名    合計 "+totalPer+"名"
-                this.reportData.c12Num = "(備考:  "+"6-12歳 "+ this.reportData.children612+" 名、4-6歳  "+this.reportData.children46+" 名、4歳以下  "+this.reportData.children4+"名";
-                this.reportData.inDateStart = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" ～ "+
+                this.reportData.personNum1 = "大人 "+this.reportData.adultNum+ " 名   小人 "+this.reportData.childNum+" 名    合計 "+totalPer+"名"
+                this.reportData.c12Num1 = "(備考:  "+"6-12歳 "+ this.reportData.children612+" 名、4-6歳  "+this.reportData.children46+" 名、4歳以下  "+this.reportData.children4+"名";
+                this.reportData.inDateStart1 = sDate.substr(0,4) + "年" +sDate.substr(4,2) +"月" +sDate.substr(6,2)+"日"+" ～ "+
                     eDate.substr(0,4) + "年" + eDate.substr(4,2) +"月" +eDate.substr(6,2) +"日"+" "+iDays+"晚";
 
-                this.reportData.roomNight = iDays+ "泊 / "+ this.reportData.breaktype +" / " + this.reportData.roomNum + " 室;"
+                this.reportData.roomNight1 = iDays+ "泊 / "+ this.reportData.breaktype +" / " + this.reportData.roomNum + " 室;"
 
 
                 this.reportData.totalNum = this.reportData.personNum + this.reportData.c12Num;
@@ -865,7 +866,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum ) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
@@ -880,7 +881,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
@@ -895,7 +896,7 @@
                     }
                 }
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * totlPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum ) * totlPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: totlPrice;
                 }
@@ -929,7 +930,7 @@
                 this.dataForm.totalSAmount = this.dataForm.roomNum==null?0:this.dataForm.roomNum * totlPrice-num;
 
                 if (this.dataForm.roomType != "5") {
-                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum + this.dataForm.children612+this.dataForm.children46) * tPrice;
+                    this.dataForm.totalTAmount = this.dataForm.roomNum==0?0:(this.dataForm.adultNum ) * tPrice;
                 } else {
                     this.dataForm.totalTAmount = this.dataForm.roomNum==0?0: tPrice;
                 }
