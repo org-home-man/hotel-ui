@@ -20,12 +20,19 @@
         <!--<span class="relation-item">friends</span>-->
     <!--</div>-->
     <div class="main-operation">
-        <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key" @click="openPassVisible"> {{$t('common.passwdUp')}}</el-button>
-        </span>
-        <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key" @click="openUserVisible"> {{$t('common.userMng')}}</el-button>
-        </span>
+        <el-row>
+            <el-col :span="12">
+                <span class="main-operation-item">
+                  <el-button size="small" icon="fa fa-key" @click="openPassVisible"> {{$t('common.passwdUp')}}</el-button>
+                </span>
+            </el-col>
+            <el-col :span="12">
+                <span class="main-operation-item">
+                  <el-button size="small" icon="fa fa-key" @click="openUserVisible"> {{$t('common.userMng')}}</el-button>
+                </span>
+            </el-col>
+        </el-row>
+
     </div>
 
     <!--<div class="other-operation">-->
