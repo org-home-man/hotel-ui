@@ -126,6 +126,8 @@
                 <el-tag>{{resolveRoomTypeName(roomStatus,scope.row.status)}}</el-tag>
             </template>
         </el-table-column>
+        <el-table-column prop="createName" :label="$t('order.createName')" width="150px">
+        </el-table-column>
 
         <el-table-column :label="$t('action.operation')" width="185" fixed="right" v-if="showOperation" header-align="center" align="center">
             <template slot-scope="scope">
