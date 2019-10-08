@@ -2,16 +2,16 @@
   <div class="page-container">
     <!--工具栏-->
     <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
-      <el-form :inline="true" :model="filters" :size="size">
+      <el-form :inline="true" :model="filters"  ref="filters" :size="size">
           <el-row>
               <el-col :span="24" align="left">
-                  <el-form-item>
+                  <el-form-item prop="name">
                       <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
                   </el-form-item>
-                  <el-form-item>
+                  <el-form-item prop="org">
                       <el-input v-model="filters.org" :placeholder="$t('user.org')"></el-input>
                   </el-form-item>
-                  <el-form-item>
+                  <el-form-item prop="userRoles">
                      <el-select v-model="filters.userRoles"  clearable filterable :placeholder="$t('user.role')" style="width: 100%;">
                          <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
                      </el-select>

@@ -2,14 +2,14 @@
     <div class="container" style="width:99%">
         <!--工具栏-->
         <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
-            <el-form :inline="true" :model="filters" :size="size">
+            <el-form :inline="true" :model="filters"  ref="filters" :size="size">
                 <el-row>
                     <el-col :span="24" align="left">
-                        <el-form-item>
+                        <el-form-item prop="hotelCode">
                             <el-input v-model="filters.hotelCode" clearable :placeholder="$t('hotel.hotelCode')"></el-input>
                         </el-form-item>
 
-                        <el-form-item>
+                        <el-form-item prop="provinceCode">
                             <el-select v-model="filters.provinceCode" clearable filterable
                                        :placeholder="$t('hotel.provinceCode.provinceCode')">
                                 <el-option v-for="rt in provinceCode" :key="rt.code"
@@ -17,7 +17,7 @@
                             </el-select>
                         </el-form-item>
 
-                        <el-form-item>
+                        <el-form-item prop="cityCode">
                             <el-select v-model="filters.cityCode" clearable filterable
                                        :placeholder="$t('hotel.cityCode.cityCode')">
                                 <el-option v-for="rt in cityCode" :key="rt.code"
@@ -32,18 +32,18 @@
                 <el-row>
 
                     <el-col :span="24" align="left">
-                        <el-form-item>
+                        <el-form-item prop="hotelname">
                             <el-input v-model="filters.hotelname" clearable :placeholder="$t('hotel.hotelname')"></el-input>
                         </el-form-item>
 
-                        <el-form-item>
+                        <el-form-item prop="hotelType">
                             <el-select v-model="filters.hotelType" clearable :placeholder="$t('hotel.hotelType.hotelType')">
                                 <el-option v-for="rt in hotelType" :key="rt.code"
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
 
-                        <el-form-item>
+                        <el-form-item prop="hotelLevel">
                             <el-select v-model="filters.hotelLevel" clearable :placeholder="$t('hotel.hotelLevel.hotelLevel')">
                                 <el-option v-for="hs in hotelStar" :key="hs.code"
                                            :label="hs.name" :value="hs.code"></el-option>
@@ -572,6 +572,7 @@
                 }).then(data != null ? data.callback : '')
             },
             clearAll: function (formName) {
+                console.log("+++")
                 this.$refs[formName].resetFields();
             },
             // 批量删除
