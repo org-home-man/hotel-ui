@@ -480,7 +480,7 @@
         "totalSAmount": "销售总价",
         "totalTAmount": "结算总价",
         "createTime": "订单产生日期",
-        "createName": "订单产生用户",
+        "createName": "产生订单账号",
         "updateTime": "最终修改日期",
         "updateName": "最终修改用户",
         "orderNum" : "月成交笔数",
