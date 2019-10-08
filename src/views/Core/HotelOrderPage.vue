@@ -967,6 +967,9 @@
 </script>
 
 <style scoped>
+    .el-input__inner {
+        width: 200px;
+    }
     .main-content {
         margin-top: 10px;
         padding-top: 10px;
@@ -989,7 +992,5 @@
         width: 80px;
         display: inline-block;
     }
-    .el-input__inner {
-        width: 200px;
-    }
+
 </style>
