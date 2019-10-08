@@ -22,23 +22,23 @@
                         <el-input v-model="data.password" type="password" auto-complete="off"></el-input>
                     </el-form-item>
 
-                    <el-form-item :label="$t('user.role')" prop="userRoles">
-                        <el-select v-model="data.userRoles" :disabled="true" :placeholder="$t('action.select')"
-                                   style="width: 205px;">
-                            <el-option v-for="item in roles" :key="item.id"
-                                       :label="item.remark" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
+                    <!--<el-form-item :label="$t('user.role')" prop="userRoles">-->
+                        <!--<el-select v-model="data.userRoles" :disabled="true" :placeholder="$t('action.select')"-->
+                                   <!--style="width: 205px;">-->
+                            <!--<el-option v-for="item in roles" :key="item.id"-->
+                                       <!--:label="item.remark" :value="item.id">-->
+                            <!--</el-option>-->
+                        <!--</el-select>-->
+                    <!--</el-form-item>-->
 
-                    <el-form-item :label="$t('user.status')" prop="status" style="width: 100%">
-                        <el-select v-model="data.status"  :disabled="true" :placeholder="$t('action.select')"
-                                   style="width: 205px;">
-                            <el-option v-for="item in paraConfig.STATUS" :key="item.code"
-                                       :label="$t(item.name)" :value="item.code">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
+                    <!--<el-form-item :label="$t('user.status')" prop="status" style="width: 100%">-->
+                        <!--<el-select v-model="data.status"  :disabled="true" :placeholder="$t('action.select')"-->
+                                   <!--style="width: 205px;">-->
+                            <!--<el-option v-for="item in paraConfig.STATUS" :key="item.code"-->
+                                       <!--:label="$t(item.name)" :value="item.code">-->
+                            <!--</el-option>-->
+                        <!--</el-select>-->
+                    <!--</el-form-item>-->
                 </div>
                 <div style="width: 50%;">
                     <el-form-item  prop="phto" style="width: 100%;text-align: center;">

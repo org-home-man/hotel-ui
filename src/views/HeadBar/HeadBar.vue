@@ -155,6 +155,7 @@
                     }).then(() => {
                         // 加载角色集合
                         this.user = rs;
+                        console.log("user",this.user)
                     });
                 })
             },
