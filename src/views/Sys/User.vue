@@ -9,8 +9,16 @@
                       <el-input v-model="filters.name" :placeholder="$t('user.name')"></el-input>
                   </el-form-item>
                   <el-form-item>
-                      <el-input v-model="filters.id" :placeholder="$t('user.id')"></el-input>
+                      <el-input v-model="filters.org" :placeholder="$t('user.org')"></el-input>
                   </el-form-item>
+                  <el-form-item>
+                     <el-select v-model="filters.userRoles"  clearable filterable :placeholder="$t('user.role')" style="width: 100%;">
+                         <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
+                     </el-select>
+                  </el-form-item>
+<!--<el-form-item>-->
+                      <!--<el-input v-model="filters.id" :placeholder="$t('user.id')"></el-input>-->
+                  <!--</el-form-item>-->
                   <!-- <el-form-item>
                     <el-select v-model="filters.userRoles" multiple :placeholder="$t('user.role')" style="width: 100%;">
                       <el-option v-for="item in roles" :key="item.id" :label="item.remark" :value="item.id"></el-option>
@@ -32,6 +40,9 @@
                   <el-form-item>
                       <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:user:add" type="primary"
                                  @click="handleAdd"/>
+                  </el-form-item>
+                  <el-form-item>
+                      <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
                   </el-form-item>
               </el-col>
           </el-row>
@@ -65,7 +76,7 @@
     </user-table>
 
     <!--新增编辑界面-->
-      <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="900px" :visible.sync="dialogVisible"
+      <el-dialog :title="operation?$t('action.addUser'):$t('action.editUser')" width="900px" :visible.sync="dialogVisible"
                  :close-on-click-modal="false">
           <el-form :inline="true" :model="dataForm" label-width="190px" :rules="dataFormRules" ref="dataForm"
                    :size="size"
@@ -73,17 +84,33 @@
               <div style="width: 100%;display: flex">
                   <div style="width: 50%;">
                       <el-form-item :label="$t('user.name')" prop="name" style="width: 100%;display: block;">
-                          <el-input v-model="dataForm.name" auto-complete="off"></el-input>
+                          <el-input v-model="dataForm.name"  :disabled="operation?false:true" auto-complete="off"></el-input>
                       </el-form-item>
                       <el-form-item :label="$t('user.password')" prop="password" style="width: 100%;display: block;">
                           <el-input v-model="dataForm.password" type="password" auto-complete="off"></el-input>
                       </el-form-item>
-                      <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
-                          <el-input v-model="dataForm.realName" auto-complete="off"></el-input>
+
+                      <el-form-item :label="$t('user.role')" prop="userRoles">
+                          <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
+                                     style="width: 185px;">
+                              <el-option v-for="item in roles" :key="item.id"
+                                         :label="item.remark" :value="item.id">
+                              </el-option>
+                          </el-select>
                       </el-form-item>
-                      <el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">
-                          <el-input v-model="dataForm.mobile" auto-complete="off"></el-input>
+
+                      <el-form-item :label="$t('user.status')" prop="sex" style="width: 100%">
+                          <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
+                                     style="width: 185px;">
+                              <el-option v-for="item in paraConfig.STATUS" :key="item.code"
+                                         :label="$t(item.name)" :value="item.code">
+                              </el-option>
+                          </el-select>
                       </el-form-item>
+
+                      <!--<el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">-->
+                          <!--<el-input v-model="dataForm.mobile" auto-complete="off"></el-input>-->
+                      <!--</el-form-item>-->
                   </div>
                   <div style="width: 50%;">
                       <el-form-item  prop="phto" style="width: 100%;text-align: center;">
@@ -99,56 +126,45 @@
               </div>
               <div style="width: 100%;display: flex">
                   <div style="width: 50%;">
-                      <el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">
-                          <el-select v-model="dataForm.sex" :placeholder="$t('action.select')"
-                                     style="width: 200px;">
-                              <el-option v-for="item in paraConfig.SEX" :key="item.code"
-                                         :label="item.name" :value="item.code">
-                              </el-option>
-                          </el-select>
+                      <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
+                          <el-input v-model="dataForm.realName" auto-complete="off"></el-input>
                       </el-form-item>
-                      <el-form-item :label="$t('user.birthday')" prop="birthday" style="width: 100%">
-                          <el-date-picker type="date" :placeholder="$t('action.pBirthday')" v-model="dataForm.birthday" auto-complete="off"
-                                          style="width: 200px;"></el-date-picker>
+                      <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
+                          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
                       </el-form-item>
+                      <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
+                          <el-input v-model="dataForm.email" auto-complete="off"></el-input>
+                      </el-form-item>
+                      <!--<el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">-->
+                          <!--<el-select v-model="dataForm.sex" :placeholder="$t('action.select')"-->
+                                     <!--style="width: 200px;">-->
+                              <!--<el-option v-for="item in paraConfig.SEX" :key="item.code"-->
+                                         <!--:label="item.name" :value="item.code">-->
+                              <!--</el-option>-->
+                          <!--</el-select>-->
+                      <!--</el-form-item>-->
+                      <!--<el-form-item :label="$t('user.birthday')" prop="birthday" style="width: 100%">-->
+                          <!--<el-date-picker type="date" :placeholder="$t('action.pBirthday')" v-model="dataForm.birthday" auto-complete="off"-->
+                                          <!--style="width: 200px;"></el-date-picker>-->
+                      <!--</el-form-item>-->
+                  </div>
+                  <div style="width: 50%;">
                       <el-form-item :label="$t('user.org')" prop="deptId" style="width: 100%">
                           <el-select v-model="dataForm.deptId" :placeholder="$t('action.select')"
-                                     style="width: 200px;">
+                                     style="width: 185px;">
                               <el-option v-for="item in deptData" :key="item.id"
                                          :label="item.name" :value="item.id">
                               </el-option>
                           </el-select>
                       </el-form-item>
-                      <el-form-item :label="$t('user.role')" prop="userRoles" style="width: 100%">
-                          <el-select v-model="dataForm.userRoles" multiple :placeholder="$t('action.select')"
-                                     style="width: 200px;">
-                              <el-option v-for="item in roles" :key="item.id"
-                                         :label="item.remark" :value="item.id">
-                              </el-option>
-                          </el-select>
-                      </el-form-item>
-                      <el-form-item :label="$t('user.status')" prop="sex" style="width: 100%">
-                          <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
-                                     style="width: 200px;">
-                              <el-option v-for="item in paraConfig.STATUS" :key="item.code"
-                                         :label="$t(item.name)" :value="item.code">
-                              </el-option>
-                          </el-select>
-                      </el-form-item>
-                  </div>
-                  <div style="width: 50%;">
-                      <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
-                          <el-input v-model="dataForm.email" auto-complete="off"></el-input>
-                      </el-form-item>
+
                       <el-form-item :label="$t('user.phone')" prop="phone" style="width: 100%">
                           <el-input v-model="dataForm.phone" auto-complete="off"></el-input>
                       </el-form-item>
-                      <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
-                          <el-input v-model="dataForm.region" auto-complete="off"></el-input>
-                      </el-form-item>
-                      <el-form-item :label="$t('user.address')" prop="address" style="width: 100%">
-                          <el-input v-model="dataForm.address" auto-complete="off"></el-input>
-                      </el-form-item>
+
+                      <!--<el-form-item :label="$t('user.address')" prop="address" style="width: 100%">-->
+                          <!--<el-input v-model="dataForm.address" auto-complete="off"></el-input>-->
+                      <!--</el-form-item>-->
                       <el-form-item :label="$t('user.net')" prop="net" style="width: 100%">
                           <el-input v-model="dataForm.net" auto-complete="off"></el-input>
                       </el-form-item>
@@ -311,6 +327,9 @@
       handleDelete: function (data) {
         this.$api.user.batchDelete(data.params,{headers:{'Content-Type': 'application/json;charset=UTF-8'}}).then(data != null ? data.callback : '')
       },
+        clearAll: function (formName) {
+            this.$refs[formName].resetFields();
+        },
       // 显示新增界面
       handleAdd: function () {
         this.dialogVisible = true

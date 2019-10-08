@@ -73,7 +73,7 @@
         </room-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="80%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.addRoom'):$t('action.editRoom')" width="80%" style="margin-top: -80px;" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
 
             <el-form id="roomForm" :model="dataForm" style="margin-top: 20px" label-width="180px" :rules="dataFormRules"
@@ -331,7 +331,7 @@
 
         <div class="priceDialog">
             <!--牌价修改弹出框-->
-            <el-dialog @open="datePickerMethod" :title="operation?$t('action.add'):$t('action.edit')" width="60%"
+            <el-dialog @open="datePickerMethod" :title="operation?$t('action.add'):$t('action.editRoomPrice')" width="60%"
                        :visible.sync="editPriceDialogVisible" :close-on-click-modal="false">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
                     <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>

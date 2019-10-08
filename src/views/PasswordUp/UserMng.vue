@@ -1,7 +1,8 @@
 <template>
     <!--修改密码-->
-    <el-dialog :title="$t('common.userMng')" width="70%" :visible.sync="passwordupVisible" :close-on-click-modal="false" :modal=false>
-        <el-form :model="data" status-icon :rules="passFormRules" ref="passForm" label-width="100px" class="demo-ruleForm">
+    <el-dialog :title="$t('common.userMng')" width="900px" :visible.sync="passwordupVisible" :close-on-click-modal="false" :modal=false>
+        <!--<el-form :model="data" status-icon :rules="passFormRules" ref="passForm" label-width="190px" class="demo-ruleForm">-->
+            <el-form :inline="true" :model="data" label-width="190px" ref="passForm" label-position="right" align="left">
             <!--<el-form-item :label="$t('user.oldPass')" prop="oldPass">-->
                 <!--<el-input type="password" v-model="data.oldPass" auto-complete="off"></el-input>-->
             <!--</el-form-item>-->
@@ -12,32 +13,31 @@
                 <!--<el-input type="password" v-model="passForm.checkPass" auto-complete="off"></el-input>-->
             <!--</el-form-item>-->
 
-            <div style="width: 70%;display: flex">
-                <div style="width: 70%;">
-                    <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
-                        <el-input v-model="data.realName" auto-complete="off"></el-input>
+            <div style="width: 100%;display: flex">
+                <div style="width: 50%;">
+                    <el-form-item :label="$t('user.name')"  prop="name" style="width: 100%;display: block;">
+                        <el-input v-model="data.name" :disabled="true" auto-complete="off"></el-input>
                     </el-form-item>
-                    <el-form-item :label="$t('user.mobile')" prop="mobile" style="width: 100%">
-                        <el-input v-model="data.mobile" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
-                        <el-input v-model="data.email" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('user.phone')" prop="phone" style="width: 100%">
-                        <el-input v-model="data.phone" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
-                        <el-input v-model="data.region" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('user.address')" prop="address" style="width: 100%">
-                        <el-input v-model="data.address" auto-complete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item :label="$t('user.net')" prop="net" style="width: 100%">
-                        <el-input v-model="data.net" auto-complete="off"></el-input>
+                    <el-form-item :label="$t('user.password')" prop="password" style="width: 100%;display: block;">
+                        <el-input v-model="data.password" type="password" auto-complete="off"></el-input>
                     </el-form-item>
 
-                    <el-form-item :label="$t('user.remark')" prop="remark" style="width: 100%">
-                        <el-input v-model="data.remark" type="textarea" resize="unset" auto-complete="off" :rows="5" style="width: 600px;"></el-input>
+                    <el-form-item :label="$t('user.role')" prop="userRoles">
+                        <el-select v-model="data.userRoles" :disabled="true" :placeholder="$t('action.select')"
+                                   style="width: 205px;">
+                            <el-option v-for="item in roles" :key="item.id"
+                                       :label="item.remark" :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item :label="$t('user.status')" prop="status" style="width: 100%">
+                        <el-select v-model="data.status"  :disabled="true" :placeholder="$t('action.select')"
+                                   style="width: 205px;">
+                            <el-option v-for="item in paraConfig.STATUS" :key="item.code"
+                                       :label="$t(item.name)" :value="item.code">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                 </div>
                 <div style="width: 50%;">
@@ -50,34 +50,59 @@
                             <img width="100%" src="">
                         </el-dialog>
                     </el-form-item>
+                </div>
+            </div>
 
-                    <el-form-item :label="$t('user.sex')" prop="sex" style="width: 100%">
-                        <el-select v-model="data.sex" :placeholder="$t('action.select')"
-                                   style="width: 200px;">
-                            <el-option v-for="item in paraConfig.SEX" :key="item.code"
-                                       :label="item.name" :value="item.code">
+            <div style="width: 100%;display: flex">
+                <div style="width: 50%;">
+                    <el-form-item :label="$t('user.realName')" prop="realName" style="width: 100%">
+                        <el-input v-model="data.realName" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('user.region')" prop="region" style="width: 100%">
+                        <el-input v-model="data.region" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('user.email')" prop="email" style="width: 100%">
+                        <el-input v-model="data.email" auto-complete="off"></el-input>
+                    </el-form-item>
+                </div>
+                <div style="width: 50%;">
+                    <el-form-item :label="$t('user.org')" prop="deptId" style="width: 100%">
+                        <el-select v-model="data.deptId"  :disabled="true"  :placeholder="$t('action.select')"
+                                   style="width: 205px;">
+                            <el-option v-for="item in deptData" :key="item.id"
+                                       :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item :label="$t('user.birthday')" prop="birthday" style="width: 100%">
-                        <el-date-picker type="date" :placeholder="$t('action.pBirthday')" v-model="data.birthday" auto-complete="off"
-                                        style="width: 200px;"></el-date-picker>
+                    <el-form-item :label="$t('user.phone')" prop="phone" style="width: 100%">
+                        <el-input v-model="data.phone" auto-complete="off"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="ID" prop="id" v-if="false" style="width: 40%">
-                        <el-input v-model="data.id" :disabled="true" auto-complete="off"></el-input>
+                    <!--<el-form-item :label="$t('user.address')" prop="address" style="width: 100%">-->
+                    <!--<el-input v-model="dataForm.address" auto-complete="off"></el-input>-->
+                    <!--</el-form-item>-->
+                    <el-form-item :label="$t('user.net')" prop="net" style="width: 100%">
+                        <el-input v-model="data.net" auto-complete="off"></el-input>
                     </el-form-item>
-
                 </div>
             </div>
-            <el-form-item>
-                <!--<el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>-->
-                <el-button size="small"  @click="cancelPassword">{{$t('action.cancel')}}</el-button>
-                <el-button size="small" @click="resetForm('passForm')">{{$t('action.reset')}}</el-button>
-                <el-button size="small" :loading="passSubmitLoading" type="primary" @click="passwdUpdate">{{$t('action.submit')}}</el-button>
+            <div style="width: 100%;">
+                <el-form-item :label="$t('user.remark')" prop="remark" style="width: 100%">
+                    <el-input v-model="data.remark" type="textarea" resize="unset" auto-complete="off" :rows="5" style="width: 600px;"></el-input>
+                </el-form-item>
+            </div>
+
+            <el-form-item label="ID" prop="id" v-if="false" style="width: 40%">
+                <el-input v-model="data.id" :disabled="true" auto-complete="off"></el-input>
             </el-form-item>
+
         </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button size="small"  @click="cancelPassword">{{$t('action.cancel')}}</el-button>
+            <el-button size="small" @click="resetForm('passForm')">{{$t('action.reset')}}</el-button>
+            <el-button size="small" :loading="passSubmitLoading" type="primary" @click="passwdUpdate">{{$t('action.submit')}}</el-button>
+        </div>
     </el-dialog>
 
 
@@ -120,6 +145,14 @@
                 fileList: [],
                 files: null,
                 fileId:[],
+                filters: {
+                    id:"",
+                    name: '',
+                    userRoles:[],
+                    region:'',
+                    org:'',
+                    status:''
+                },
                 passForm:{
                     oldPass:null,
                     pass:null,
@@ -131,10 +164,11 @@
                     sex: null,
                     password: '',
                     deptId: '',
+                    userRoles:[],
                     birthday: null,
                     email: '',
                     mobile: '',
-                    status: '',
+                    status: null,
                     path: null,
                     phone: '',
                     address: '',
@@ -143,12 +177,18 @@
                     remark: ''
                 },
                 paraConfig:{},
+                deptData: [],
+                roles:[],
+                userRoles:[],
                 passFormRules:{
                     oldPass:[
                         {required:true,message:this.$t('action.pPassword'),trigger:blur}
                     ],
                     pass:[
                         {validator:validatePass,trigger:blur}
+                    ],
+                    userRoles:[
+                        {required: true, message: this.$t('action.pUserRoles'), trigger: 'blur'}
                     ],
                     checkPass:[
                         {validator:validatePass2,trigger:blur}
@@ -203,6 +243,11 @@
                     this.passSubmitLoading = false
                 )
             },
+            findDeptTree: function () {
+                this.$api.dept.findDeptTree().then((res) => {
+                    this.deptData = res
+                })
+            },
             resetForm:function () {
                 this.$refs['passForm'].resetFields();
                 this.passSubmitLoading = false;
@@ -239,11 +284,16 @@
                 this.passwordupVisible = newVal;
             }
         },
+
         created() {
+            this.findDeptTree()
             this.getTypeValues("SEX,STATUS").then((res)=>{//加载性别
                 this.paraConfig = res
             });
-
+            this.$api.role.findAll().then((res) => {// 加载用户角色信息
+                // 加载角色集合
+                this.roles = res
+            });
         }
     }
 

@@ -8,9 +8,9 @@
 			<!--</el-form-item>-->
             <el-row>
                 <el-col :span="24" align="left">
-                    <el-form-item>
-                        <kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:dept:view" type="primary" @click="findTreeData(null)"/>
-                    </el-form-item>
+                    <!--<el-form-item>-->
+                        <!--<kt-button icon="fa fa-search" :label="$t('action.search')" perms="sys:dept:view" type="primary" @click="findTreeData(null)"/>-->
+                    <!--</el-form-item>-->
                     <el-form-item>
                         <kt-button icon="fa fa-plus" :label="$t('action.add')" perms="sys:dept:add" type="primary" @click="handleAdd"/>
                     </el-form-item>
@@ -24,20 +24,20 @@
     <el-table :data="tableTreeDdata" style="width: 100%;" :row-class-name="tableRowClassName"
       v-loading="loading" :element-loading-text="$t('action.loading')" :empty-text="$t('action.noData')">
       <el-table-column
-        prop="id" header-align="center" align="center" width="80" :label="$t('dept.id')">
+        prop="id" header-align="center" align="center" width="100" :label="$t('dept.id')">
       </el-table-column>
       <table-tree-column
-        prop="name" header-align="center" treeKey="id" align="center" width="150" :label="$t('dept.name')">
+        prop="name" header-align="center" treeKey="id" align="center" width="220" :label="$t('dept.name')">
       </table-tree-column>
       <!--<el-table-column-->
         <!--prop="parentName" header-align="center" align="center" width="120" :label="$t('dept.preOrg')">-->
       <!--</el-table-column>-->
         <el-table-column
-        prop="countryName" header-align="center" align="center" width="120" :label="$t('dept.countryName')">
+        prop="countryName" header-align="center" align="center" width="220" :label="$t('dept.countryName')">
         </el-table-column>
-      <el-table-column
-        prop="orderNum" header-align="center" align="center" :label="$t('dept.order')">
-      </el-table-column>
+      <!--<el-table-column-->
+        <!--prop="orderNum" header-align="center" align="center" :label="$t('dept.order')">-->
+      <!--</el-table-column>-->
       <el-table-column
         prop="createName" header-align="center" align="center" :label="$t('dept.createName')">
       </el-table-column>
@@ -54,7 +54,7 @@
     </el-table>
       </div>
     <!-- 新增修改界面 -->
-    <el-dialog :title="!dataForm.id ?$t('action.add'):$t('action.edit')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
+    <el-dialog :title="!dataForm.id ?$t('action.addCompany'):$t('action.editCompany')" width="40%" :visible.sync="dialogVisible" :close-on-click-modal="false">
       <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="submitForm()"
         label-width="100px" :size="size" style="text-align:left;">
         <el-form-item :label="$t('dept.name')" prop="name">
@@ -70,9 +70,9 @@
               <!--:nodeKey="''+dataForm.parentId" :currentChangeHandle="handleTreeSelectChange" :placeholder="$t('dept.name')" >-->
             <!--</popup-tree-input>-->
         <!--</el-form-item>-->
-        <el-form-item v-if="dataForm.type !== 2" :label="$t('dept.order')" prop="orderNum">
-          <el-input-number v-model="dataForm.orderNum" controls-position="right" :min="0" :label="$t('dept.order')"></el-input-number>
-        </el-form-item>
+        <!--<el-form-item v-if="dataForm.type !== 2" :label="$t('dept.order')" prop="orderNum">-->
+          <!--<el-input-number v-model="dataForm.orderNum" controls-position="right" :min="0" :label="$t('dept.order')"></el-input-number>-->
+        <!--</el-form-item>-->
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button :size="size"  @click="dialogVisible = false">{{$t('action.cancel')}}</el-button>

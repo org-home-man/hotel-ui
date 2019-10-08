@@ -56,6 +56,9 @@
                         <el-form-item>
                             <kt-button :label="$t('action.add')" perms="sys:bizHotl:add" type="primary" @click="handleAdd"/>
                         </el-form-item>
+                        <el-form-item>
+                            <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
+                        </el-form-item>
                     </el-col>
                 </el-row>
 
@@ -71,7 +74,7 @@
 
         <!--新增编辑界面-->
         <div class="hotelDialog">
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="800px" :visible.sync="editDialogVisible"
+        <el-dialog :title="operation?$t('action.addHotel'):$t('action.editHotel')" width="800px" :visible.sync="editDialogVisible"
                    :close-on-click-modal="false">
             <el-form :model="dataForm" label-width="150px" :rules="dataFormRules" ref="dataForm" :size="size"
                      :inline="true" label-position="top">
@@ -105,6 +108,27 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+
+                <el-row>
+                    <el-col :span="8" align="left">
+                        <el-form-item :label="$t('hotel.hotelCname')" prop="hotelCname">
+                            <el-input v-model="dataForm.hotelCname" auto-complete="off" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8" align="left">
+                        <el-form-item :label="$t('hotel.hotelEname')" prop="hotelEname">
+                            <el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="8" align="left">
+                        <el-form-item  :label="$t('hotel.roomstockNow')" prop="roomStock" auto-complete="off">
+                            <el-input readonly v-model.number="dataForm.roomStock" ></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+
                 <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.hotelType.hotelType')" prop="hotelType" auto-complete="off">
@@ -129,25 +153,6 @@
                     </el-col>
                 </el-row>
 
-                <el-row>
-                    <el-col :span="8" align="left">
-                        <el-form-item :label="$t('hotel.hotelCname')" prop="hotelCname">
-                            <el-input v-model="dataForm.hotelCname" auto-complete="off" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8" align="left">
-                        <el-form-item :label="$t('hotel.hotelEname')" prop="hotelEname">
-                            <el-input v-model="dataForm.hotelEname" auto-complete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                    <el-col :span="8" align="left">
-                        <el-form-item  :label="$t('hotel.roomstock')" prop="roomStock" auto-complete="off">
-                            <el-input readonly v-model.number="dataForm.roomStock" ></el-input>
-                        </el-form-item>
-                    </el-col>
-
-                </el-row>
                 <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.hotelAddr')" prop="hotelAddr">
@@ -181,12 +186,15 @@
                             <el-input v-model="dataForm.favorableprice"></el-input>
                         </el-form-item>
                     </el-col>
+                </el-row>
+                <el-row>
                     <el-col :span="8" align="left">
                         <el-form-item :label="$t('hotel.evenlive')" prop="evenlive" auto-complete="off">
                             <el-input v-model.number="dataForm.evenlive"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
+
                 <el-row>
                     <el-col :span="24" align="left">
                         <el-form-item :label="$t('hotel.present')" prop="present" auto-complete="off">
@@ -212,7 +220,7 @@
         </div>
 
         <!--库存修改弹出框-->
-        <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.edit')" width="60%"
+        <el-dialog @open="datePickerStockMethod" :title="operation?$t('action.add'):$t('action.editHotelStock')" width="60%"
                    :visible.sync="editStockDialogVisible" :close-on-click-modal="false">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/' }">{{$t('common.home')}}</el-breadcrumb-item>
@@ -562,6 +570,9 @@
                 this.$api.bizHotl.findPage({...this.pageRequest, ...this.filters}).then((res) => {
                     this.pageResult = res
                 }).then(data != null ? data.callback : '')
+            },
+            clearAll: function (formName) {
+                this.$refs[formName].resetFields();
             },
             // 批量删除
             handleDelete: function (data) {
