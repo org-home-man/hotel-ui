@@ -247,7 +247,7 @@
         "reportMng": "统计表管理",
         "weekReportMng": "统计表（周）",
         "monthReportMng": "统计表（月）",
-        "hotelRequestReport": "酒店客房请求书",
+        "hotelRequestReport": "手配依赖书",
         "orderConfirmReport": "订单确认书",
         "orderDetailRep": "订单明细报表",
         "houseStock": "未预定客房清单报表",

@@ -1462,6 +1462,7 @@
 
     .frame {
         width: 100%;
+        height: 45rem;
     }
 
     .query_room_container {
