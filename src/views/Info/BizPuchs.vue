@@ -812,10 +812,10 @@
 
             <iframe :src="reportUrl+'/birt/frameset?__report='+reportData.rpNm+'&orderCode='+reportData.orderCode+'&confirmDate='+reportData.confirmDate+
                                 '&hotelName='+reportData.hotelName+'&hoteladdr='+reportData.hotelAddr+'&hotelPhone='+reportData.hotelPhone+'&breakType='+reportData.breaktype+
-                                '&favorableprice='+reportData.favorableprice1+'&present='+reportData.present1+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum+
+                                '&favorableprice='+reportData.favorableprice1+'&present='+reportData.present1+'&roomType='+reportData.roomtype+'&roomNum='+reportData.roomNum1+
                                 '&inDateStart='+reportData.inDateStart1+'&outDateEnd='+reportData.outDateEnd+'&createTime='+reportData.createTime+'&totalSAmount='+reportData.totalSAmount+
                                 '&remark='+reportData.remark+'&pName='+reportData.pName+'&phone='+reportData.phone+'&roomNight='+reportData.roomNight+'&personNum='+reportData.personNum1+'&childNum='+reportData.childNum+
-                                '&specialMatters='+reportData.SpecialMatters"
+                                '&specialMatters='+reportData.SpecialMatters+'&intro='+reportData.intro"
 
                     scrolling="auto" frameborder="0" class="frame">
             </iframe>
@@ -1190,16 +1190,28 @@
                 } else {
                     this.reportData.rpNm = "order_confirm_report_en.rptdesign";
                 }
+                if (this.$i18n.locale == 'zh_cn') {
+                    this.reportData.intro = this.reportData.introC
+                } else {
+                    this.reportData.intro = this.reportData.introE
+                }
                 if (this.reportData.lastCrtTime != "" & this.reportData.lastCrtTime != null) {
                     var confirmDate = this.reportData.lastCrtTime;
                     this.reportData.confirmDate = confirmDate.substr(0, 4) + "年" + confirmDate.substr(4, 2) + "月" + confirmDate.substr(6, 2) + "日";
                 }
                 this.reportData.inDateStart1 = sDate.substr(0, 4) + "年" + sDate.substr(4, 2) + "月" + sDate.substr(6, 2) + "日" + " 至 " +
                     eDate.substr(0, 4) + "年" + eDate.substr(4, 2) + "月" + eDate.substr(6, 2) + "日" + " " + this.reportData.roomNight + "晚";
-                this.reportData.personNum1 = "成人（12岁以上） " + this.reportData.adultNum + " 人，儿童（未满12岁）" + this.reportData.childNum + " 人，房间数 " + this.reportData.roomNum + "间"
+                if (this.$i18n.locale == 'zh_cn') {
+                    this.reportData.personNum1 = "成人（12岁以上） " + this.reportData.adultNum + " 人 / 儿童（未满12岁）" + this.reportData.childNum + " 人";
+                    this.reportData.roomNum1 =  this.reportData.roomNum + " 间"
+                } else {
+                    this.reportData.personNum1 = "成人（12岁以上） " + this.reportData.adultNum + " 人 , 儿童（未满12岁）" + this.reportData.childNum + " 人 , 房间数 "+this.reportData.roomNum + " 间"
+                }
+
+
                 if (this.reportData.favorableprice != null & this.reportData.favorableprice != "") {
                     var favorableprice = this.reportData.favorableprice;
-                    this.reportData.favorableprice1 = "满足早割优惠条件，房价每天每室减 " + favorableprice + " 元"
+                    this.reportData.favorableprice1 = "满足提前预定优惠条件，房价每天每室减 " + favorableprice + " 元"
                 }
                 if (this.reportData.present != null & this.reportData.present != "") {
                     var present = this.reportData.present;
@@ -1246,12 +1258,12 @@
                     this.reportData.confirmDate = confirmDate.substr(0, 4) + "年" + confirmDate.substr(4, 2) + "月" + confirmDate.substr(6, 2) + "日";
                 }
                 var totalPer = this.reportData.adultNum + this.reportData.childNum;
-                this.reportData.personNum1 = "大人 " + this.reportData.adultNum + " 名     小人 " + this.reportData.childNum + " 名      合計 " + totalPer + "名"
+                this.reportData.personNum1 = "大人 " + this.reportData.adultNum + " 名   小人 " + this.reportData.childNum + " 名   合計 " + totalPer + "名"
                 this.reportData.c12Num1 = "(備考:  " + "6-12歳 " + this.reportData.children612 + " 名    4-6歳  " + this.reportData.children46 + " 名    4歳以下  " + this.reportData.children4 + "名)";
                 this.reportData.inDateStart1 = sDate.substr(0, 4) + "年" + sDate.substr(4, 2) + "月" + sDate.substr(6, 2) + "日" + " ～ " +
                     eDate.substr(0, 4) + "年" + eDate.substr(4, 2) + "月" + eDate.substr(6, 2) + "日" + " " + iDays + "晚";
 
-                this.reportData.roomNight1 = iDays + "泊    /    " + this.reportData.breaktype + "    /    " + this.reportData.roomNum + " 室;"
+                this.reportData.roomNight1 = iDays + "泊  /  " + this.reportData.breaktype + "  /  " + this.reportData.roomNum + " 室;"
 
 
                 this.reportData.totalNum = this.reportData.personNum + this.reportData.c12Num;
