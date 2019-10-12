@@ -65,6 +65,7 @@
         "pRealName": "input username",
         "pPassword": "input password",
         "pPassword2": "input password again",
+        "passErrException" : "old password errors",
         "pCheckPass": "worng password!",
         "pPasswordLength":"the password must be longer than 6 bits.",
         "pSex":"sexual",
