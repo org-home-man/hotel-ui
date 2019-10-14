@@ -4,7 +4,7 @@
         <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
             <el-form :inline="true" :model="filters" :size="size" align="left">
                 <el-row>
-                    <el-col :span="24">
+                    <el-col :span="40">
                         <el-form-item @mouseleave.native="serch_result_user = false">
                             <el-input v-model="filters.createName" @input="inputUserFunc" clearable
                                       :placeholder="$t('order.createName')"></el-input>
@@ -43,7 +43,11 @@
                                            :label="rt.name" :value="rt.code"></el-option>
                             </el-select>
                         </el-form-item>
+                    </el-col>
+                </el-row>
 
+                <el-row>
+                    <el-col :span="24" align="left">
                         <el-form-item>
                             <el-date-picker
                                 v-model="filters.createTimes"
@@ -52,6 +56,17 @@
                                 value-format="yyyyMMdd"
                                 :start-placeholder="$t('hotel.creatTime')"
                                 :end-placeholder="$t('hotel.creatTime')">
+                            </el-date-picker>
+                        </el-form-item>
+
+                        <el-form-item>
+                            <el-date-picker
+                                v-model="filters.inDateStart"
+                                type="daterange"
+                                :range-separator="$t('hotel.dateSep')"
+                                value-format="yyyyMMdd"
+                                :start-placeholder="$t('hotel.inDateStart')"
+                                :end-placeholder="$t('hotel.inDateStart')">
                             </el-date-picker>
                         </el-form-item>
                         <!--<el-form-item>-->
@@ -70,10 +85,7 @@
                         </el-form-item>
 
                     </el-col>
-
                 </el-row>
-
-
             </el-form>
         </div>
         <!--表格内容栏-->
@@ -874,6 +886,7 @@
                     orderCode: '',
                     roomStatus: '',
                     createTimes: '',
+                    inDateStart: '',
                     confirmTimes: '',
                     hotelName: '',
                     roomNight: ''
@@ -1050,6 +1063,13 @@
                 } else {
                     this.filters.createTimeStart = null;
                     this.filters.createTimeEnd = null;
+                }
+                if (this.filters.inDateStart != null && this.filters.inDateStart.length > 0) {
+                    this.filters.inDateStartIn = this.filters.inDateStart[0];
+                    this.filters.inDateStartOut = this.filters.inDateStart[1];
+                } else {
+                    this.filters.inDateStartIn = null;
+                    this.filters.inDateStartOut = null;
                 }
                 this.pageRequest = {...this.pageRequest, ...this.filters};
                 this.$api.bizPuchs.findPage(this.pageRequest).then((res) => {
