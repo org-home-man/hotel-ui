@@ -494,6 +494,7 @@
         "type": "type",
         "hotelStar": "hotel stars",
         "selectMore": "More screening conditions",
-        "orderAgree": "订单协议"
+        "orderAgree": "订单协议",
+        "orderEdit": "edit order information"
     }
 }

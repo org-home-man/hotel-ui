@@ -2,10 +2,10 @@
     <div class="page-container">
         <!--工具栏-->
         <div class="toolbar query_room_container" style="padding-top:10px;padding-left:15px; background: #daf6fa;">
-            <el-form :inline="true" :model="filters" :size="size" align="left">
+            <el-form :inline="true" :model="filters" :size="size" align="left" ref="filters">
                 <el-row>
                     <el-col :span="40">
-                        <el-form-item @mouseleave.native="serch_result_user = false">
+                        <el-form-item @mouseleave.native="serch_result_user = false" prop="createName">
                             <el-input v-model="filters.createName" @input="inputUserFunc" clearable
                                       :placeholder="$t('order.createName')"></el-input>
                             <div class="serch_result" v-show="serch_result_user"
@@ -16,7 +16,7 @@
                                 </li>
                             </div>
                         </el-form-item>
-                        <el-form-item @mouseleave.native="serch_result_hotel = false">
+                        <el-form-item @mouseleave.native="serch_result_hotel = false" prop="hotelName">
                             <el-input v-model="filters.hotelName" @input="inputHotelFunc" clearable
                                       :placeholder="$t('hotel.hotelname')"></el-input>
                             <div class="serch_result" v-show="serch_result_hotel"
@@ -26,11 +26,11 @@
                                 </li>
                             </div>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="orderCode">
                             <el-input v-model="filters.orderCode" clearable
                                       :placeholder="$t('order.orderCode')"></el-input>
                         </el-form-item>
-                        <el-form-item>
+                        <el-form-item prop="roomStatus">
                             <!--<el-select v-model="filters.roomSthandleConfirmatus" clearable :placeholder="$t('order.roomStatus')"-->
                             <!--style="width: 200px;">-->
                             <!--<el-option v-for="item in states" :key="item.paraCode"-->
@@ -48,7 +48,7 @@
 
                 <el-row>
                     <el-col :span="24" align="left">
-                        <el-form-item>
+                        <el-form-item prop="createTimes">
                             <el-date-picker
                                 v-model="filters.createTimes"
                                 type="daterange"
@@ -59,7 +59,7 @@
                             </el-date-picker>
                         </el-form-item>
 
-                        <el-form-item>
+                        <el-form-item prop="inDateStart">
                             <el-date-picker
                                 v-model="filters.inDateStart"
                                 type="daterange"
@@ -83,6 +83,9 @@
                             <kt-button :label="$t('action.search')" perms="sys:bizPuchs:view" type="primary"
                                        @click="findPage(null)"/>
                         </el-form-item>
+                        <el-form-item>
+                            <el-button @click="clearAll('filters')">{{$t('action.clearAll')}}</el-button>
+                        </el-form-item>
 
                     </el-col>
                 </el-row>
@@ -98,7 +101,7 @@
         </kt-table>
 
         <!--新增编辑界面-->
-        <el-dialog :title="operation?$t('action.add'):$t('action.edit')" width="90%" style="margin-top: -120px"
+        <el-dialog :title="operation?$t('action.add'):$t('order.orderEdit')" width="90%" style="margin-top: -120px"
                    :visible.sync="editDialogVisible" :close-on-click-modal="false">
 
             <!--<el-form :model="dataForm" label-width="180px" :rules="dataFormRules" ref="dataForm" :size="size"-->
@@ -1341,7 +1344,10 @@
                         return obj.name
                     }
                 }
-            }
+            },
+            clearAll: function (formName) {
+                this.$refs[formName].resetFields();
+            },
         },
         watch: {
             'dataForm.roomNum'() {
