@@ -99,7 +99,7 @@
                           </el-select>
                       </el-form-item>
 
-                      <el-form-item :label="$t('user.status')" prop="sex" style="width: 100%">
+                      <el-form-item :label="$t('user.status')" prop="status" style="width: 100%">
                           <el-select v-model="dataForm.status" :placeholder="$t('action.select')"
                                      style="width: 185px;">
                               <el-option v-for="item in paraConfig.STATUS" :key="item.code"
@@ -237,9 +237,12 @@
                 {required: true, message: this.$t('action.pRealName'), trigger: 'blur'},
                 /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
             ],
-            sex: [
-                {required: true, message: this.$t('action.pSex'), trigger: 'blur'},
-                /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
+            // sex: [
+            //     {required: true, message: this.$t('action.pSex'), trigger: 'blur'},
+            //     /*{validator:isUserName,message:this.$t('action.pUsername'), trigger: 'blur'}*/
+            // ],
+            status: [
+                {required: true, message: this.$t('action.noNull'), trigger: 'blur'},
             ],
             password:[
                 {required: true, message: this.$t('action.pPassword'), trigger: 'blur'},
@@ -249,12 +252,9 @@
             email:[
                 {required: true, message: this.$t('action.pEmail'), trigger: 'blur'}
             ],
-            birthday:[
-                {required: true, message: this.$t('action.pBirthday'), trigger: 'blur'}
-            ],
-            mobile:[
-                {required: true, message: this.$t('action.pMobile'), trigger: 'blur'}
-            ],
+            // mobile:[
+            //     {required: true, message: this.$t('action.pMobile'), trigger: 'blur'}
+            // ],
             deptId:[
                 {required: true, message: this.$t('action.pDeptId'), trigger: 'blur'}
             ],
@@ -263,9 +263,6 @@
             ],
             region:[
                 {required: true, message: this.$t('action.pRegion'), trigger: 'blur'}
-            ],
-            address:[
-                {required: true, message: this.$t('action.pAddress'), trigger: 'blur'}
             ],
             net:[
                 {required: true, message: this.$t('action.pNet'), trigger: 'blur'}

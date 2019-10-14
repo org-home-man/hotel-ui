@@ -18,8 +18,8 @@
                     <el-form-item :label="$t('user.name')"  prop="name" style="width: 100%;display: block;">
                         <el-input v-model="data.name" :disabled="true" auto-complete="off"></el-input>
                     </el-form-item>
-                    <el-form-item :label="$t('user.password')" prop="password"  style="width: 100%;display: block;">
-                        <el-input v-model="data.password" type="password" :disabled="true" auto-complete="off"></el-input>
+                    <el-form-item :label="$t('user.password')" prop="password" style="width: 100%;display: block;">
+                        <el-input v-model="data.password" type="password" auto-complete="off" disabled></el-input>
                     </el-form-item>
 
                     <!--<el-form-item :label="$t('user.role')" prop="userRoles">-->
