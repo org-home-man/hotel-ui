@@ -11,8 +11,8 @@
                     <el-form-item>
                         <kt-button icon="fa fa-success" v-show="props.row.status == 1" :label="$t('action.confirm')" :perms="permsConfirm" size="medium" type="primary" @click="confirm(props.row)"></kt-button>
                         <kt-button icon="fa fa-success" v-show="props.row.status == 5" :label="$t('order.accounts')" :perms="permsConfirm" size="medium" type="primary" @click="accountsConfirm(props.row)"></kt-button>
-                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcel')" :perms="excelExportBody" size="medium" type="primary" @click="exportExcel(props.row)"></kt-button>
-                        <kt-button icon="fa fa-success" v-show="props.row.status == 2 || props.row.status == 5 || props.row.status == 6" :label="$t('common.exportExcelManager')" :perms="excelManagerConfirm" size="medium" type="primary" @click="exportManagerExcel(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 2" :label="$t('common.exportExcel')" :perms="excelExportBody" size="medium" type="primary" @click="exportExcel(props.row)"></kt-button>
+                        <kt-button icon="fa fa-success" v-show="props.row.status == 2" :label="$t('common.exportExcelManager')" :perms="excelManagerConfirm" size="medium" type="primary" @click="exportManagerExcel(props.row)"></kt-button>
                     </el-form-item>
                 </el-form>
 

@@ -17,7 +17,6 @@
                                             <el-form-item prop="commonDate" style="margin-bottom: 0;vertical-align: middle;width: 100px">
                                                 <el-date-picker
                                                     size="mini"
-                                                    width="100px"
                                                     v-model="commonDate"
                                                     type="daterange"
                                                     :clearable="false"
@@ -967,7 +966,7 @@
 </script>
 
 <style scoped>
-    .el-input__inner {
+    .hotel-base >>> .el-date-editor {
         width: 200px;
     }
     .main-content {
