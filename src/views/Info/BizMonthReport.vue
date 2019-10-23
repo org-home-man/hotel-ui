@@ -91,7 +91,8 @@
                    :close-on-click-modal="false">
 
                 <iframe :src="reportUrl+'/birt/frameset?__report=r0004_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
-                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2"
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&price1='+dataForm.price1
+                                +'&price2='+dataForm.price2+'&totlPrice='+dataForm.totlPrice"
                         scrolling="auto" frameborder="0" class="frame" >
                 </iframe>
             <!--<el-button  @click="r0004ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
@@ -123,7 +124,8 @@
         <el-dialog :title="dataForm.reportTxt" width="70%" :visible.sync="r0005DialogVisible"
                    :close-on-click-modal="false">
             <iframe :src="reportUrl+'/birt/frameset?__report=r0005_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
-                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local"
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&status='+dataForm.local
+                                +'&price1='+dataForm.price1+'&price2='+dataForm.price2+'&totlPrice='+dataForm.totlPrice"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
             <!--<el-button  @click="r0005ExportExcel()">{{$t('common.exportExcel')}}</el-button>-->
@@ -266,7 +268,8 @@
                 },
                 r0001Table:[], //统计报表返回值
                 r0004Table:[], //
-                r0005Table:[]
+                r0005Table:[],
+                reportRequest:{}
             }
         },
         methods: {
@@ -302,22 +305,41 @@
 
                     }
                     if (reportNm == 'R0004') {
-                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
-                        this.getCurrentMonthFirst(strTime);
-                        this.getCurrentMonthLast(strTime);
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
-                        this.r0004DialogVisible = true
+                        this.reportRequest =  Object.assign({}, params.row);
+                        this.$api.report.findR0004Data(this.reportRequest).then((res) => {
+                            var priceData = res
+                            this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                            var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
+                            this.getCurrentMonthFirst(strTime);
+                            this.getCurrentMonthLast(strTime);
+                            this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                            this.dataForm.price1 = priceData.sumTotlSell;
+                            this.dataForm.price2 = priceData.sumTotlSettle;
+                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.r0004DialogVisible = true
+                        })
+
+                        this.reportRequest = {}
+
 
                     }
 
                     if (reportNm == 'R0005') {
-                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
-                        this.getCurrentMonthFirst(strTime);
-                        this.getCurrentMonthLast(strTime);
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
-                        this.r0005DialogVisible = true
+                        this.reportRequest =  Object.assign({}, params.row);
+                        this.$api.report.findR0004Data(this.reportRequest).then((res) => {
+                            var priceData = res;
+                            this.dataForm.price1 = priceData.sumTotlSell;
+                            this.dataForm.price2 = priceData.sumTotlSettle;
+                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.local = this.$i18n.locale == 'zh_cn' ? '1' : '2';
+                            var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth;
+                            this.getCurrentMonthFirst(strTime);
+                            this.getCurrentMonthLast(strTime);
+                            this.dataForm.reportTxt = strTime + " " + this.dataForm.reportTxt
+                            this.r0005DialogVisible = true
+
+                        })
+                        this.reportRequest ={}
                     }
 
                     if (reportNm == 'R0006') {

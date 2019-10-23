@@ -48,7 +48,8 @@
                    :close-on-click-modal="false">
 
             <iframe :src="reportUrl+'/birt/frameset?__report=r0002_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
-                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq"
+                                '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq
+                                +'&price1='+dataForm.price1+'&price2='+dataForm.price2+'&totlPrice='+dataForm.totlPrice"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
 
@@ -92,7 +93,7 @@
 
             <iframe :src="reportUrl+'/birt/frameset?__report=r0003_report.rptdesign&report_id='+dataForm.reportId+'&report_month='+dataForm.reportMonth+
                             '&report_txt='+dataForm.reportTxt+'&report_date1='+dataForm.reportDate1+'&report_date2='+dataForm.reportDate2+'&report_seq='+dataForm.reportSeq+
-                            '&status='+dataForm.local"
+                            '&status='+dataForm.local+'&price1='+dataForm.price1+'&price2='+dataForm.price2+'&totlPrice='+dataForm.totlPrice"
                     scrolling="auto" frameborder="0" class="frame" >
             </iframe>
 
@@ -214,7 +215,8 @@
                 // 新增编辑界面数据
                 dataForm: {},
                 r0002Table:[], //报表r0002统计的值
-                r0003Table:[]  //报表r0003统计的值
+                r0003Table:[],  //报表r0003统计的值
+                reportRequest:{}
 
             }
         },
@@ -239,24 +241,35 @@
                 if (reportId != '') {
                     var reportNm = reportId.substring(4)
                     if (reportNm == 'R0002') {
-                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
-                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
-                        this.r0002DialogVisible = true
-                        // this.r0002TableLoading = true
+                        this.reportRequest = Object.assign({}, params.row);
+                        this.$api.report.wrQuery(this.reportRequest).then((res) => {
+                            var priceData = res;
+                            this.dataForm.price1 = priceData.sumTotlSell;
+                            this.dataForm.price2 = priceData.sumTotlSettle;
+                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
+                            this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
+                            var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
+                            this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                            this.r0002DialogVisible = true
+                        })
+                        this.reportRequest ={}
 
-                        // this.$api.report.findR0002Report(this.dataForm).then((res) => {
-                        //     this.r0002Table = res
-                        //     this.r0002TableLoading = false;
-                        // })
                     }
                     if (reportNm == 'R0003') {
-                        this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
-                        this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
-                        var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
-                        this.r0003DialogVisible = true
+                        this.reportRequest = Object.assign({}, params.row);
+                        this.$api.report.wrQuery(this.reportRequest).then((res) => {
+                            var priceData = res;
+                            this.dataForm.price1 = priceData.sumTotlSell;
+                            this.dataForm.price2 = priceData.sumTotlSettle;
+                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.local = this.$i18n.locale == 'zh_cn' ? '1' : '2';
+                            this.getWeekTime(reportId.substring(0, 4), this.dataForm.reportMonth, this.dataForm.reportSeq);
+                            var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth + '第' + this.dataForm.reportSeq + '周';
+                            this.dataForm.reportTxt = strTime + " " + this.dataForm.reportTxt;
+                            this.r0003DialogVisible = true
+                        })
+                        this.reportRequest ={}
                         // this.$api.report.findR0003Report(this.dataForm).then((res) => {
                         //     this.r0003Table = res
                         //     this.r0003TableLoading = false;
