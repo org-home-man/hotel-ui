@@ -244,9 +244,9 @@
                         this.reportRequest = Object.assign({}, params.row);
                         this.$api.report.wrQuery(this.reportRequest).then((res) => {
                             var priceData = res;
-                            this.dataForm.price1 = priceData.sumTotlSell;
-                            this.dataForm.price2 = priceData.sumTotlSettle;
-                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.price1 = priceData.sumTotlSell?priceData.sumTotlSell:0;
+                            this.dataForm.price2 = priceData.sumTotlSettle?priceData.sumTotlSettle:0;
+                            this.dataForm.totlPrice = priceData.sumTotl?priceData.sumTotl:0;
                             this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                             this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
                             var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
@@ -258,11 +258,16 @@
                     }
                     if (reportNm == 'R0003') {
                         this.reportRequest = Object.assign({}, params.row);
+                        if(this.reportRequest.reportId) {
+                            var reportId = this.reportRequest.reportId.substring(0,4);
+                            reportId = reportId + 'R0002'
+                            this.reportRequest.reportId = reportId;
+                        }
                         this.$api.report.wrQuery(this.reportRequest).then((res) => {
                             var priceData = res;
-                            this.dataForm.price1 = priceData.sumTotlSell;
-                            this.dataForm.price2 = priceData.sumTotlSettle;
-                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.price1 = priceData.sumTotlSell?priceData.sumTotlSell:0;
+                            this.dataForm.price2 = priceData.sumTotlSettle?priceData.sumTotlSettle:0;
+                            this.dataForm.totlPrice = priceData.sumTotl?priceData.sumTotl:0;
                             this.dataForm.local = this.$i18n.locale == 'zh_cn' ? '1' : '2';
                             this.getWeekTime(reportId.substring(0, 4), this.dataForm.reportMonth, this.dataForm.reportSeq);
                             var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth + '第' + this.dataForm.reportSeq + '周';

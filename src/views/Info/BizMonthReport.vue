@@ -313,9 +313,9 @@
                             this.getCurrentMonthFirst(strTime);
                             this.getCurrentMonthLast(strTime);
                             this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
-                            this.dataForm.price1 = priceData.sumTotlSell;
-                            this.dataForm.price2 = priceData.sumTotlSettle;
-                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.price1 = priceData.sumTotlSell?priceData.sumTotlSell:0;
+                            this.dataForm.price2 = priceData.sumTotlSettle?priceData.sumTotlSettle:0;
+                            this.dataForm.totlPrice = priceData.sumTotl?priceData.sumTotl:0;
                             this.r0004DialogVisible = true
                         })
 
@@ -328,9 +328,9 @@
                         this.reportRequest =  Object.assign({}, params.row);
                         this.$api.report.findR0004Data(this.reportRequest).then((res) => {
                             var priceData = res;
-                            this.dataForm.price1 = priceData.sumTotlSell;
-                            this.dataForm.price2 = priceData.sumTotlSettle;
-                            this.dataForm.totlPrice = priceData.sumTotl;
+                            this.dataForm.price1 = priceData.sumTotlSell?priceData.sumTotlSell:0;
+                            this.dataForm.price2 = priceData.sumTotlSettle?priceData.sumTotlSettle:0;
+                            this.dataForm.totlPrice = priceData.sumTotl?priceData.sumTotl:0;
                             this.dataForm.local = this.$i18n.locale == 'zh_cn' ? '1' : '2';
                             var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth;
                             this.getCurrentMonthFirst(strTime);
