@@ -250,7 +250,7 @@
                             this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                             this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
                             var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
-                            this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                            this.dataForm.reportTxt = this.dataForm.reportTxt;
                             this.r0002DialogVisible = true
                         })
                         this.reportRequest ={}
@@ -260,7 +260,7 @@
                         this.reportRequest = Object.assign({}, params.row);
                         if(this.reportRequest.reportId) {
                             var reportId = this.reportRequest.reportId.substring(0,4);
-                            reportId = reportId + 'R0002'
+                            reportId = reportId + 'R0002'  //由于生成的周报表数据只有R0002明细统计数据， 则只能用R0002来查询
                             this.reportRequest.reportId = reportId;
                         }
                         this.$api.report.wrQuery(this.reportRequest).then((res) => {
@@ -271,7 +271,7 @@
                             this.dataForm.local = this.$i18n.locale == 'zh_cn' ? '1' : '2';
                             this.getWeekTime(reportId.substring(0, 4), this.dataForm.reportMonth, this.dataForm.reportSeq);
                             var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth + '第' + this.dataForm.reportSeq + '周';
-                            this.dataForm.reportTxt = strTime + " " + this.dataForm.reportTxt;
+                            this.dataForm.reportTxt = this.dataForm.reportTxt;
                             this.r0003DialogVisible = true
                         })
                         this.reportRequest ={}
@@ -284,7 +284,7 @@
                         this.dataForm.local = this.$i18n.locale=='zh_cn'?'1':'2';
                         this.getWeekTime(reportId.substring(0,4),this.dataForm.reportMonth,this.dataForm.reportSeq);
                         var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth+'第'+this.dataForm.reportSeq+'周';
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt;
+                        this.dataForm.reportTxt = this.dataForm.reportTxt;
                         this.r0007DialogVisible = true
 
                         // this.$api.report.findR0003Report(this.dataForm).then((res) => {

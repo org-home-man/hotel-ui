@@ -299,7 +299,7 @@
                         var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
                         this.getCurrentMonthFirst(strTime);
                         this.getCurrentMonthLast(strTime);
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.dataForm.reportTxt = this.dataForm.reportTxt
                         this.dataForm.username = getUser();
                         this.r0001DialogVisible = true
 
@@ -312,7 +312,7 @@
                             var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
                             this.getCurrentMonthFirst(strTime);
                             this.getCurrentMonthLast(strTime);
-                            this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                            this.dataForm.reportTxt = this.dataForm.reportTxt
                             this.dataForm.price1 = priceData.sumTotlSell?priceData.sumTotlSell:0;
                             this.dataForm.price2 = priceData.sumTotlSettle?priceData.sumTotlSettle:0;
                             this.dataForm.totlPrice = priceData.sumTotl?priceData.sumTotl:0;
@@ -335,7 +335,7 @@
                             var strTime = reportId.substring(0, 4) + "-" + this.dataForm.reportMonth;
                             this.getCurrentMonthFirst(strTime);
                             this.getCurrentMonthLast(strTime);
-                            this.dataForm.reportTxt = strTime + " " + this.dataForm.reportTxt
+                            this.dataForm.reportTxt =  this.dataForm.reportTxt
                             this.r0005DialogVisible = true
 
                         })
@@ -347,7 +347,7 @@
                         var strTime = reportId.substring(0,4)+"-"+this.dataForm.reportMonth;
                         this.getCurrentMonthFirst(strTime);
                         this.getCurrentMonthLast(strTime);
-                        this.dataForm.reportTxt = strTime+" "+this.dataForm.reportTxt
+                        this.dataForm.reportTxt =this.dataForm.reportTxt
                         this.r0006DialogVisible = true
 
                     }
