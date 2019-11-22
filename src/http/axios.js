@@ -4,6 +4,7 @@ import Qs from 'qs';
 import router from '@/router';
 import i18n from '@/i18n';
 import {getToken,clearToken} from '@/utils/token';
+import {clearAgree} from '@/utils/agree';
 import {Notification} from 'element-ui';
 
 // 使用vuex做全局loading时使用
@@ -83,6 +84,7 @@ instance.interceptors.response.use(function (response) {
             message: i18n.t('action.loginExpired')
         });
         clearToken();
+        clearAgree();
         router.push('/login')
     } else if (data.code == 10001){
         Notification.error({
@@ -123,6 +125,7 @@ instance.interceptors.response.use(function (response) {
             });
             // 重定向到登录页面
             clearToken();
+            clearAgree();
             router.push('/login');
             return ;
         }

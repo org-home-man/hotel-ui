@@ -68,6 +68,7 @@
 <script>
 import Backup from "@/views/Backup/Backup"
 import {clearToken} from "@/utils/token"
+import {clearAgree} from "@/utils/agree"
 import PasswordUp from "@/views/PasswordUp/PasswordUp"
 // import UserUp from "@/views/PasswordUp/UserMng"
 import UserMng from "@/views/PasswordUp/UserMng";
@@ -109,6 +110,7 @@ export default {
         // store.state.app.menuRouteLoaded = false
         this.$api.login.logout().then((res) => {
             clearToken();
+            clearAgree();
             window.location.href = "/";
           }).catch(function(res) {
         })

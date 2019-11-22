@@ -72,6 +72,7 @@
     import {mapState} from 'vuex'
     import {baseUrl} from '../utils/global'
     import {setToken,setUser} from "@/utils/token"
+    import {setAgreeZh,setAgreeEn} from "@/utils/agree"
     import ThemePicker from "@/components/ThemePicker"
     import LangSelector from "@/components/LangSelector"
 
@@ -122,6 +123,20 @@
                     setToken(res.token);
                     setUser(userInfo.account);
                     this.$store.commit('menuRouteLoaded', false); // 要求重新加载导航菜单
+                    this.$api.bizAgreement.findPage({}).then((rs) => { // 查询协议内容
+                        console.log("rs",rs[0]);
+                        if (rs != null && rs != "") {
+                            for (var i = 0 ; i<rs.length;i++) {
+                                if (rs[i].lanType == '01') {
+                                    setAgreeZh(rs[i].remark);
+                                }
+                                if (rs[i].lanType == '02') {
+                                    setAgreeEn(rs[i].remark);
+                                }
+                            }
+                        }
+                    })
+
                     this.$router.push('/info/hotelRoomQry'); // 登录成功，跳转到主页
                     this.loading = false;
                 },() =>{

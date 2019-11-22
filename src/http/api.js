@@ -16,6 +16,7 @@ import * as hotelRoom from './moudules/hotelRoom'
 import * as bizPuchs from './moudules/bizPuchs'
 import * as socketMess from './moudules/message'
 import * as report from './moudules/report'
+import * as bizAgreement from './moudules/bizAgreement'
 
 // 默认全部导出
 export default {
@@ -33,5 +34,6 @@ export default {
     hotelRoom,
     bizPuchs,
     socketMess,
-    report
+    report,
+    bizAgreement
 }

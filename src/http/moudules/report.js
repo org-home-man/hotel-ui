@@ -27,6 +27,10 @@ export const findR0003Report = (data) => {
 export const exportR0003Report = (data,header) => {
     return request.post('/wrDetail/r0003ExportExcel',data,header);
 }
+//周报查询
+export const wrQuery = (data) => {
+    return request.post('/wrDetail/wrQuery',data);
+}
 
 //分页查询
 export const findMonthPage = (data) => {
@@ -46,6 +50,13 @@ export const exportR0001Report = (data,header) => {
 export const findR0004Report = (data) => {
     return request.post('/mrDetail/r0004Page',data);
 }
+
+//月报R0004
+export const findR0004Data = (data) => {
+    return request.post('/mrDetail/r0004Data',data);
+}
+
+
 
 //周报 R0004导出
 export const exportR0004Report = (data,header) => {
