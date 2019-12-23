@@ -439,6 +439,7 @@
                                     v-model="priceForm.priceDateInterval"
                                     type="daterange"
                                     align="right"
+                                    value-format="yyyyMMdd"
                                     unlink-panels
                                     range-separator="-"
                                     :start-placeholder="$t('hotel.priceDateStart')"
