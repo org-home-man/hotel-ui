@@ -92,12 +92,7 @@
             date = new Date(cur);
           } else {
             var now=new Date();
-            var d = new Date(this.formatDate(now.getFullYear() , now.getMonth() , 1));
-            d.setDate(35);
-            console.log("d.getFullYear:"+d.getFullYear())
-            console.log("Moth:"+(d.getMonth()+1));
-            console.log("day:"+d.getDate());
-            date = new Date(this.formatDate(d.getFullYear(),d.getMonth() + 1,1));
+            date = new Date(this.formatDate(now.getFullYear(),now.getMonth() + 1,1));
           }
 
           this.currentDay = date.getDate();
@@ -120,7 +115,7 @@
               for (var i = 0;i<res.list.length;i++) {
                 this.days.push(res.list[i]);
               }
-              console.log(this.days);
+              // console.log(this.days);
             }
           })
 
